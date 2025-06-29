@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+@import "./token/colors.css";
+@import "./token/fonts.css";
+
+@layer base {
+  * {
+    border-color: theme('color.stroke.100');
+  }
+  body {
+    @apply bg-white text-black antialiased;
+    font-family: var(--font-pretendard), sans-serif;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}

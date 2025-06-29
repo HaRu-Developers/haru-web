@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang='ko'>
       <body
-        className={`${pretendard.variable} antialiased font-pretendard flex min-h-screen flex-col items-center`}
+        className={`${pretendard.variable} flex min-h-screen flex-col items-center`}
       >
         {children}
       </body>

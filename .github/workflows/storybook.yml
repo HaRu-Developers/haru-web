@@ -10,6 +10,10 @@ on:
     paths:
       - "**.stories.tsx"
 
+permissions:
+  contents: read
+  pull-requests: write
+
 jobs:
   chromatic-deployment:
     runs-on: ubuntu-latest
@@ -48,4 +52,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
+          pull-request-number: ${{ github.event.pull_request.number }}
           message: "🚀 **storybook**: ${{ steps.publish_chromatic.outputs.storybookUrl }}"

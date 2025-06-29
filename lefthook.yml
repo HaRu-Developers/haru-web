@@ -9,14 +9,14 @@ pre-commit:
 prepare-commit-msg:
   commands:
     add-prefix:
-      run: node scripts/prepare-commit-msg.js {{1}}
+      run: node scripts/prepare-commit-msg.cjs {{1}}
 
 commit-msg:
   commands:
     lint-message:
-      run: node scripts/run-commitlint.js {{1}}
+      run: node scripts/run-commitlint.cjs {{1}}
 
 pre-rebase:
   commands:
     check-clean:
-      run: node scripts/pre-rebase-check.js
+      run: node scripts/pre-rebase-check.cjs

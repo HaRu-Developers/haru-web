@@ -10,7 +10,7 @@ const config: StorybookConfig = {
     "@storybook/addon-vitest",
   ],
   framework: {
-    name: "@storybook/nextjs", // ✅ 유지
+    name: "@storybook/nextjs",
     options: {},
   },
   staticDirs: ["../public"],

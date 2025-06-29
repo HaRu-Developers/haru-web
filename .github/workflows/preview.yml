@@ -1,0 +1,41 @@
+name: Preview
+
+on:
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  vercel-preview:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+      pull-requests: write
+
+    env:
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Pull Vercel Environment
+        run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }} --cwd=haru-web
+
+      - name: Build Project
+        run: vercel build --token=${{ secrets.VERCEL_TOKEN }} --cwd=haru-web
+
+      - name: Deploy to Preview
+        id: deploy
+        run: |
+          DEPLOY_URL=$(vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }} --cwd=haru-web)
+          echo "preview_url=$DEPLOY_URL" >> $GITHUB_OUTPUT
+
+      - name: Comment Preview URL
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          message: |
+            🎉 구현한 기능 Preview: ${{ steps.deploy.outputs.preview_url }}

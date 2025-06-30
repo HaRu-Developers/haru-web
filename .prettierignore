@@ -2,4 +2,8 @@
 node_modules
 dist
 coverage
+.prettierignore
+lefthook.yml
+
 *.lock
+*.sh

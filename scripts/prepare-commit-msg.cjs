@@ -3,23 +3,23 @@ const fs = require('fs');
 
 const rawCommitMsgFilePath = process.argv[2];
 const commitMsgFilePath = rawCommitMsgFilePath
-	? rawCommitMsgFilePath.replace(/^{/, '').replace(/}$/, '')
-	: undefined;
+  ? rawCommitMsgFilePath.replace(/^{/, '').replace(/}$/, '')
+  : undefined;
 
 if (!commitMsgFilePath) {
-	console.error('Error: Commit message file path not provided.');
-	process.exit(1);
+  console.error('Error: Commit message file path not provided.');
+  process.exit(1);
 }
 
 try {
-	if (!fs.existsSync(commitMsgFilePath)) {
-		console.error(`Error: Commit message file not found at ${commitMsgFilePath}`);
-		console.error(`(Original raw path: ${rawCommitMsgFilePath})`);
-		process.exit(1);
-	}
+  if (!fs.existsSync(commitMsgFilePath)) {
+    console.error(`Error: Commit message file not found at ${commitMsgFilePath}`);
+    console.error(`(Original raw path: ${rawCommitMsgFilePath})`);
+    process.exit(1);
+  }
 
-	let commitMessage = fs.readFileSync(commitMsgFilePath, 'utf8').trim();
-	/*
+  let commitMessage = fs.readFileSync(commitMsgFilePath, 'utf8').trim();
+  /*
 		const gitmojiEmojis = [
 			'✨',
 			'🔨',
@@ -76,9 +76,9 @@ try {
 		);
 	*/
 
-	fs.writeFileSync(commitMsgFilePath, commitMessage.trim(), 'utf8');
-	console.log('Commit message prefix handled successfully.');
+  fs.writeFileSync(commitMsgFilePath, commitMessage.trim(), 'utf8');
+  console.log('Commit message prefix handled successfully.');
 } catch (error) {
-	console.error('Failed to modify commit message:', error);
-	process.exit(1);
+  console.error('Failed to modify commit message:', error);
+  process.exit(1);
 }

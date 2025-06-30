@@ -3,8 +3,8 @@ import localFont from "next/font/local";
 
 import "@/styles/globals.css";
 
-export const pretendard = localFont({
-  src: '../../public/fonts/pretendard/PretendardVariable.woff2',
+const pretendard = localFont({
+  src: '../assets/fonts/pretendard/PretendardVariable.woff2',
   variable: "--font-pretendard",
   display: "swap",
   weight: "45 920",
@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang='ko'>
       <body
-        className={`${pretendard.variable} antialiased font-pretendard flex min-h-screen flex-col items-center`}
+        className={`${pretendard.variable} flex min-h-screen flex-col items-center`}
       >
         {children}
       </body>

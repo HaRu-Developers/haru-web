@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-import { axiosInstance } from '@/lib/axios';
+import { axiosInstance } from '@lib/axios';
 
 const TestPage = () => {
   const [crash, setCrash] = useState(false);

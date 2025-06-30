@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 
-import { captureRenderError } from '@/lib/sentry';
+import { captureRenderError } from '@lib/sentry';
 
 const Error = ({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) => {
   useEffect(() => {

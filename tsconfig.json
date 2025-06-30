@@ -22,6 +22,7 @@
     "paths": {
       "@styles/*": ["styles/*"],
       "@assets/*": ["assets/*"],
+      "@lib/*": ["lib/*"],
       "@common/types/*": ["common/types/*"],
       "@common/constants/*": ["common/constants/*"],
       "@common/utils/*": ["common/utils/*"],

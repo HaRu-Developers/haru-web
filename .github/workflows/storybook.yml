@@ -1,43 +1,56 @@
-# Workflow name
 name: "Chromatic Deployment"
 
 on:
   pull_request:
-    branches: [main]
+    branches: [main, develop]
     paths:
       - "**.stories.tsx"
   push:
-    branches: [main]
+    branches: [main, develop]
     paths:
       - "**.stories.tsx"
+
+permissions:
+  contents: read
+  pull-requests: write
 
 jobs:
   chromatic-deployment:
     runs-on: ubuntu-latest
+
     steps:
-      - name: actions/checkout
+      - name: Checkout source
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
-      - name: Set node linker to nodeModules
-        run: yarn config set nodeLinker "node-modules"
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 8
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
 
       - name: Install dependencies
-        run: yarn install --immutable --check-cache
+        run: pnpm install --no-frozen-lockfile
 
       - name: Publish to Chromatic
         id: publish_chromatic
         uses: chromaui/action@v1
         with:
-          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN  }}
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           buildScriptName: build-storybook
           onlyChanged: true
 
-      - name: comment PR
-        uses: thollander/actions-comment-pull-request@v1
+      - name: Comment on PR
         if: ${{ github.event_name == 'pull_request' }}
+        uses: thollander/actions-comment-pull-request@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
+          pull-request-number: ${{ github.event.pull_request.number }}
           message: "🚀 **storybook**: ${{ steps.publish_chromatic.outputs.storybookUrl }}"

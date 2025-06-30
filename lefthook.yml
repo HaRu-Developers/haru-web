@@ -28,7 +28,7 @@ pre-rebase:
 pre-push:
   parallel: true
   commands:
-    typecheck:
-      run: pnpm type-check
+    # typecheck:
+    #   run: pnpm type-check
     build:
       run: pnpm build

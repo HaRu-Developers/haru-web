@@ -266,6 +266,3 @@ $RECYCLE.BIN/
 # End of https://www.toptal.com/developers/gitignore/api/nextjs,windows,linux,macos,git,dotenv,visualstudiocode,webstorm
 *storybook.log
 storybook-static
-
-# Sentry Config File
-.env.sentry-build-plugin

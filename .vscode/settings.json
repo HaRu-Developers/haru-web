@@ -1,7 +1,8 @@
 {
   "css.customData": [".vscode/tailwind.json"],
   "editor.tabSize": 2,
-  "editor.insertSpaces": false,
+  "editor.insertSpaces": true,
+  "editor.detectIndentation": false,
   "prettier.tabWidth": 2,
-  "prettier.useTabs": true
+  "prettier.useTabs": false
 }

@@ -1,10 +1,9 @@
 ---
 name: "\U0001F41B Fix / Bug"
 about: "수정해요 \U0001F6E0️"
-title: "[Fix/Bug] "
-labels: ":bug: Bug"
+title: '[Fix/Bug] '
+labels: ':bug: Bug'
 assignees: ''
-
 ---
 
 ### 🧨 발생 원인 (추정)

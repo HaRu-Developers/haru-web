@@ -1,15 +1,15 @@
 # Workflow name
-name: "Chromatic Deployment"
+name: 'Chromatic Deployment'
 
 on:
   pull_request:
     branches: [main]
     paths:
-      - "**.stories.tsx"
+      - '**.stories.tsx'
   push:
     branches: [main]
     paths:
-      - "**.stories.tsx"
+      - '**.stories.tsx'
 
 jobs:
   chromatic-deployment:
@@ -40,4 +40,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          message: "🚀 **storybook**: ${{ steps.publish_chromatic.outputs.storybookUrl }}"
+          message: '🚀 **storybook**: ${{ steps.publish_chromatic.outputs.storybookUrl }}'

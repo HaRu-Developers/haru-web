@@ -17,6 +17,8 @@
 		"chromatic": "npx chromatic --project-token=$CHROMATIC_PROJECT_TOKEN"
 	},
 	"dependencies": {
+		"@sentry/nextjs": "^9.33.0",
+		"axios": "^1.10.0",
 		"next": "15.3.4",
 		"react": "^19.0.0",
 		"react-dom": "^19.0.0",

@@ -1,22 +1,22 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
-@import "./token/colors.css";
-@import "./token/fonts.css";
+@import './token/colors.css';
+@import './token/fonts.css';
 
 @layer base {
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
+	* {
+		box-sizing: border-box;
+		margin: 0;
+		padding: 0;
+	}
 
-  body {
-    @apply bg-white text-black antialiased;
-    font-family: var(--font-pretendard), sans-serif;
-  }
+	body {
+		@apply bg-white text-black antialiased;
+		font-family: var(--font-pretendard), sans-serif;
+	}
 
-  p {
-    word-break: keep-all;
-    text-wrap: pretty;
-  }
+	p {
+		word-break: keep-all;
+		text-wrap: pretty;
+	}
 }

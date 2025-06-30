@@ -1,10 +1,9 @@
 ---
-name: "✅ Test"
+name: '✅ Test'
 about: 테스트해요 ✅
-title: "[Test] "
-labels: ":pencil2: Test"
+title: '[Test] '
+labels: ':pencil2: Test'
 assignees: ''
-
 ---
 
 ### 🔍 테스트 대상

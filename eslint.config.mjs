@@ -61,6 +61,12 @@ const eslintConfig = [
 
       // 환경 설정 파일
       '.env*',
+
+      // 기타 무시 대상
+      '*.sh',
+      '*.css',
+      '*.yml',
+      '*.yaml',
     ],
   },
   // Next.js의 core-web-vitals와 typescript 설정을 확장

@@ -1,7 +1,0 @@
-*.sh
-*.css
-*.yml
-*.yaml
-
-package.json
-.prettierignore

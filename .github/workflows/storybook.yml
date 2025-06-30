@@ -1,14 +1,14 @@
-name: "Chromatic Deployment"
+name: 'Chromatic Deployment'
 
 on:
   pull_request:
     branches: [main, develop]
     paths:
-      - "**.stories.tsx"
+      - '**.stories.tsx'
   push:
     branches: [main, develop]
     paths:
-      - "**.stories.tsx"
+      - '**.stories.tsx'
 
 permissions:
   contents: read
@@ -33,7 +33,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: "pnpm"
+          cache: 'pnpm'
 
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
@@ -53,4 +53,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           pull-request-number: ${{ github.event.pull_request.number }}
-          message: "🚀 **storybook**: ${{ steps.publish_chromatic.outputs.storybookUrl }}"
+          message: '🚀 **storybook**: ${{ steps.publish_chromatic.outputs.storybookUrl }}'

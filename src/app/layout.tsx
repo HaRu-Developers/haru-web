@@ -22,7 +22,9 @@ const RootLayout = ({
 }>) => {
   return (
     <html lang="ko">
-      <body className={`${pretendard.variable} flex min-h-screen flex-col items-center`}>
+      <body
+        className={`${pretendard.variable} scrollbar-page flex min-h-screen flex-col items-center overflow-y-auto`}
+      >
         {children}
       </body>
     </html>

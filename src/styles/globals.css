@@ -1,5 +1,6 @@
 @import 'tailwindcss';
 
+@import './token/scrollbar.css';
 @import './token/colors.css';
 @import './token/fonts.css';
 

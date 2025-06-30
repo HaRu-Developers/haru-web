@@ -2,9 +2,13 @@ pre-commit:
   parallel: true
   commands:
     lint:
-      run: pnpm lint
+      run: pnpm lint:staged {staged_files}
+      stage_fixed: true
     prettier:
-      run: pnpm format:check
+      run: pnpm format:staged {staged_files}
+      stage_fixed: true
+    type-check:
+      run: pnpm type-check
 
 prepare-commit-msg:
   commands:

@@ -1,50 +1,49 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
-   /* 기본 색상 */
-   --color-black: #111111;
-   --color-white: #FFFFFF;
- 
-   /* 회색 계열 */
-   --color-gray-100: #303030;
-   --color-gray-200: #505050;
-   --color-gray-300: #767676;
-   --color-gray-400: #999999;
-   --color-gray-500: #D9D9D9;
-   --color-gray-600: #F4F4F6;
-   --color-gray-700: #F8F8FA;
-   --color-gray-800: #FAFAFB;
- 
-   /* 브랜드 컬러 */
-   --color-primary: #E65787;
-   --color-secondary-green: #27998D;
-   --color-secondary-blue: #6664E3;
- 
-   /* 기능별 */
-   --color-file-icon: #89A4BB;
-   --color-audio-bar: #007AFF;
- 
-   /* 선 색상 */
-   --color-stroke-100: #D8DADC;
-   --color-stroke-200: #E6E9EF;
- 
-   /* 시스템 */
-   --color-system-red: #C83028;
- 
-   /* 배경 딤 */
-   --color-background-dimmed: rgba(0, 0, 0, 0.6);
- 
-   /* 그라디언트 */
-   --gradient-primary: linear-gradient(90deg, rgba(230,87,135,0.7), #E65787);
-   --gradient-white: linear-gradient(-90deg, rgba(255,255,255,0), #FFFFFF);
- }
+	/* 기본 색상 */
+	--color-black: #111111;
+	--color-white: #ffffff;
 
+	/* 회색 계열 */
+	--color-gray-100: #303030;
+	--color-gray-200: #505050;
+	--color-gray-300: #767676;
+	--color-gray-400: #999999;
+	--color-gray-500: #d9d9d9;
+	--color-gray-600: #f4f4f6;
+	--color-gray-700: #f8f8fa;
+	--color-gray-800: #fafafb;
+
+	/* 브랜드 컬러 */
+	--color-primary: #e65787;
+	--color-secondary-green: #27998d;
+	--color-secondary-blue: #6664e3;
+
+	/* 기능별 */
+	--color-file-icon: #89a4bb;
+	--color-audio-bar: #007aff;
+
+	/* 선 색상 */
+	--color-stroke-100: #d8dadc;
+	--color-stroke-200: #e6e9ef;
+
+	/* 시스템 */
+	--color-system-red: #c83028;
+
+	/* 배경 딤 */
+	--color-background-dimmed: rgba(0, 0, 0, 0.6);
+
+	/* 그라디언트 */
+	--gradient-primary: linear-gradient(90deg, rgba(230, 87, 135, 0.7), #e65787);
+	--gradient-white: linear-gradient(-90deg, rgba(255, 255, 255, 0), #ffffff);
+}
 
 /* 그라디언트 배경 */
 @utility bg-gradient-primary {
-  background-image: var(--gradient-primary);
+	background-image: var(--gradient-primary);
 }
 
 @utility bg-gradient-white {
-  background-image: var(--gradient-white);
+	background-image: var(--gradient-white);
 }

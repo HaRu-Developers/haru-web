@@ -1,27 +1,40 @@
 {
-  "compilerOptions": {
-    "target": "ES2017",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
-    "paths": {
-      "@/*": ["./src/*"]
-    }
-  },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+	"compilerOptions": {
+		"target": "ES2017",
+		"lib": ["dom", "dom.iterable", "esnext"],
+		"allowJs": true,
+		"skipLibCheck": true,
+		"strict": true,
+		"noEmit": true,
+		"esModuleInterop": true,
+		"module": "esnext",
+		"moduleResolution": "bundler",
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"jsx": "preserve",
+		"incremental": true,
+		"plugins": [
+			{
+				"name": "next"
+			}
+		],
+		"baseUrl": "./src",
+		"paths": {
+			"@styles/*": ["styles/*"],
+			"@assets/*": ["assets/*"],
+			"@common/types/*": ["common/types/*"],
+			"@common/constants/*": ["common/constants/*"],
+			"@common/utils/*": ["common/utils/*"],
+			"@common/hooks/*": ["common/hooks/*"],
+			"@common/queries/*": ["common/queries/*"],
+			"@common/mutations/*": ["common/mutations/*"],
+			"@common/apis/*": ["common/apis/*"],
+			"@common/components/*": ["common/components/*"],
+			"@common/*": ["common/*"],
+			"@features/*": ["features/*"],
+			"@/*": ["*"]
+		}
+	},
+	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+	"exclude": ["node_modules"]
 }

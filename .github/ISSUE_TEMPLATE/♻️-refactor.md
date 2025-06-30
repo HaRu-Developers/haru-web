@@ -1,10 +1,9 @@
 ---
-name: "♻️ Refactor"
+name: '♻️ Refactor'
 about: 개선해요 ♻️
-title: "[Refactor] "
-labels: ":recycle: Refactor"
+title: '[Refactor] '
+labels: ':recycle: Refactor'
 assignees: ''
-
 ---
 
 ### 📝 리팩토링 이유

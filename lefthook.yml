@@ -24,3 +24,11 @@ pre-rebase:
   commands:
     check-clean:
       run: node scripts/pre-rebase-check.cjs
+
+pre-push:
+  parallel: true
+  commands:
+    typecheck:
+      run: pnpm type-check
+    build:
+      run: pnpm build

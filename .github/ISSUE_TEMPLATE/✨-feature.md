@@ -1,10 +1,9 @@
 ---
-name: "✨ Feature"
+name: '✨ Feature'
 about: 기능을 만들어요 ✨
-title: "[Feat] "
-labels: ":sparkles: Feature"
+title: '[Feat] '
+labels: ':sparkles: Feature'
 assignees: ''
-
 ---
 
 ### ✅ 해결하고자 하는 것

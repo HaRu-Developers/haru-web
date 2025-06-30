@@ -1,10 +1,9 @@
 ---
 name: "\U0001F4DD Docs"
 about: "문서화해요 \U0001F4DD"
-title: "[Docs] "
-labels: ":memo: Docs"
+title: '[Docs] '
+labels: ':memo: Docs'
 assignees: ''
-
 ---
 
 ### 📄 문서화 대상

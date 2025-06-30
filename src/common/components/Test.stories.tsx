@@ -1,8 +1,9 @@
-import { Meta, StoryObj } from "@storybook/nextjs";
-import TestButton from "./Test";
+import { Meta, StoryObj } from '@storybook/nextjs';
+
+import TestButton from './Test';
 
 const meta: Meta<typeof TestButton> = {
-  title: "Test/TestButton",
+  title: 'Test/TestButton',
   component: TestButton,
 };
 
@@ -12,6 +13,6 @@ type Story = StoryObj<typeof TestButton>;
 
 export const Default: Story = {
   args: {
-    label: "Test Button",
+    label: 'Test Button',
   },
 };

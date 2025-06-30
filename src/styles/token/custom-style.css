@@ -1,0 +1,7 @@
+@import 'tailwindcss';
+
+@utility border-inner-w-1-stroke-200 {
+  box-shadow: inset 0 0 0 2px var(--tw-border-opacity, 1);
+  border-color: var(--color-stroke-200);
+  border-width: 1px;
+}

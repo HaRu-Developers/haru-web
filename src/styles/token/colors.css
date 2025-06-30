@@ -41,7 +41,7 @@
 
 /* 그라디언트 배경 */
 @utility bg-gradient-primary {
-  background-image: var(--gradient-primary);
+	background-image: var(--gradient-primary);
 }
 
 @utility bg-gradient-white {

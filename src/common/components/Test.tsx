@@ -1,5 +1,5 @@
 interface TestButtonProps {
-  label: string;
+	label: string;
 }
 
 const TestButton = ({ label }: TestButtonProps) => {

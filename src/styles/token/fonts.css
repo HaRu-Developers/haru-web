@@ -2,95 +2,95 @@
 
 /* Headline */
 @utility text-headline-1 {
-  font-size: 32px;
-  line-height: 42px;
-  letter-spacing: -0.025em;
+	font-size: 32px;
+	line-height: 42px;
+	letter-spacing: -0.025em;
 }
 @utility text-headline-2 {
-  font-size: 28px;
-  line-height: 38px;
-  letter-spacing: -0.025em;
+	font-size: 28px;
+	line-height: 38px;
+	letter-spacing: -0.025em;
 }
 @utility text-headline-3 {
-  font-size: 24px;
-  line-height: 34px;
-  letter-spacing: -0.025em;
+	font-size: 24px;
+	line-height: 34px;
+	letter-spacing: -0.025em;
 }
 @utility text-headline-4 {
-  font-size: 20px;
-  line-height: 28px;
-  letter-spacing: -0.025em;
+	font-size: 20px;
+	line-height: 28px;
+	letter-spacing: -0.025em;
 }
 
 /* Title */
 @utility text-title-1 {
-  font-size: 24px;
-  line-height: 34px;
-  letter-spacing: -0.025em;
+	font-size: 24px;
+	line-height: 34px;
+	letter-spacing: -0.025em;
 }
 @utility text-title-2 {
-  font-size: 20px;
-  line-height: 28px;
-  letter-spacing: -0.025em;
+	font-size: 20px;
+	line-height: 28px;
+	letter-spacing: -0.025em;
 }
 @utility text-title-3 {
-  font-size: 18px;
-  line-height: 26px;
-  letter-spacing: -0.025em;
+	font-size: 18px;
+	line-height: 26px;
+	letter-spacing: -0.025em;
 }
 @utility text-title-4 {
-  font-size: 16px;
-  line-height: 24px;
-  letter-spacing: -0.025em;
+	font-size: 16px;
+	line-height: 24px;
+	letter-spacing: -0.025em;
 }
 
 /* Body */
 @utility text-body-1 {
-  font-size: 15px;
-  line-height: 22px;
-  letter-spacing: -0.025em;
+	font-size: 15px;
+	line-height: 22px;
+	letter-spacing: -0.025em;
 }
 @utility text-body-2 {
-  font-size: 14px;
-  line-height: 20px;
-  letter-spacing: -0.025em;
+	font-size: 14px;
+	line-height: 20px;
+	letter-spacing: -0.025em;
 }
 @utility text-body-3 {
-  font-size: 13px;
-  line-height: 18px;
-  letter-spacing: -0.025em;
+	font-size: 13px;
+	line-height: 18px;
+	letter-spacing: -0.025em;
 }
 @utility text-body-4 {
-  font-size: 12px;
-  line-height: 18px;
-  letter-spacing: -0.025em;
+	font-size: 12px;
+	line-height: 18px;
+	letter-spacing: -0.025em;
 }
 
 /* Caption */
 @utility text-caption-1 {
-  font-size: 13px;
-  line-height: 18px;
-  letter-spacing: -0.025em;
+	font-size: 13px;
+	line-height: 18px;
+	letter-spacing: -0.025em;
 }
 @utility text-caption-2 {
-  font-size: 12px;
-  line-height: 18px;
-  letter-spacing: -0.025em;
+	font-size: 12px;
+	line-height: 18px;
+	letter-spacing: -0.025em;
 }
 
 /* Button */
 @utility text-button-1 {
-  font-size: 16px;
-  line-height: 24px;
-  letter-spacing: -0.025em;
+	font-size: 16px;
+	line-height: 24px;
+	letter-spacing: -0.025em;
 }
 @utility text-button-2 {
-  font-size: 14px;
-  line-height: 20px;
-  letter-spacing: -0.025em;
+	font-size: 14px;
+	line-height: 20px;
+	letter-spacing: -0.025em;
 }
 @utility text-button-3 {
-  font-size: 13px;
-  line-height: 18px;
-  letter-spacing: -0.025em;
+	font-size: 13px;
+	line-height: 18px;
+	letter-spacing: -0.025em;
 }

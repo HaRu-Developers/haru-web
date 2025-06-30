@@ -37,8 +37,10 @@ module.exports = {
     // 외부 라이브러리
     '<THIRD_PARTY_MODULES>',
 
-    // 정적 자산
-    '^@assets/(.*)$', // 이미지, 폰트 등
+		// 전역 스타일
+		'^@styles/(.*)$',
+		// 정적 자산
+		'^@assets/(.*)$',
 
     // 공통 모듈
     '^@common/types/(.*)$',
@@ -62,9 +64,12 @@ module.exports = {
     '^@features/.*/components/(.*)$',
     '^@features/(.*)$', // 나머지 도메인 루트
 
-    // 마지막에 상대 경로
-    '^[./]',
-  ],
+		// 기타 src 하위 경로
+		'^@/(.*)$',
+
+		// 마지막에 상대 경로
+		'^[./]',
+	],
 
   // import 그룹 구분(빈 줄 추가)
   importOrderSeparation: true,

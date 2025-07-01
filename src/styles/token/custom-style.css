@@ -1,0 +1,22 @@
+@import 'tailwindcss';
+
+/* 로딩 바 */
+@utility animate-loading-bar {
+  background-image: linear-gradient(to right, #0075ff, #00a3ff 48.4375%, #00ffff);
+  animation: loading-bar 1.5s ease infinite;
+}
+
+@keyframes loading-bar {
+  0% {
+    width: 0%;
+    opacity: 1;
+  }
+  70% {
+    width: 100%;
+    opacity: 1;
+  }
+  100% {
+    width: 100%;
+    opacity: 0;
+  }
+}

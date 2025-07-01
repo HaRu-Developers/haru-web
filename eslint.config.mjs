@@ -61,6 +61,9 @@ const eslintConfig = [
 
       // 환경 설정 파일
       '.env*',
+
+      // svg 파일들
+      '**/*.svg',
     ],
   },
   // Next.js의 core-web-vitals와 typescript 설정을 확장

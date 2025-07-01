@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 import clsx from 'clsx';
 
-import { InputFileTitleProps } from './InputFiletitle.types';
+import { InputFileTitleProps } from './InputFileTitle.types';
 
 /**
  * 인풋 파일 타이틀 컴포넌트

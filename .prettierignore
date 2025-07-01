@@ -7,3 +7,4 @@ lefthook.yml
 
 *.lock
 *.sh
+**/*.svg

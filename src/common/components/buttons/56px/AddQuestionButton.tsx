@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 
-import PlusIcon from '@/common/svgs/component-set/PlusIcon.svg';
+import PlusIcon from '@common/svgs/component-set/PlusIcon.svg';
 
 interface AddQuestionButtonProps {
   onClick?: () => void;

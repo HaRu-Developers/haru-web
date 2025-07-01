@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 
-import RecordingEndIcon from '@/common/svgs/component-set/RecordingEndIcon.svg';
+import RecordingEndIcon from '@common/svgs/component-set/RecordingEndIcon.svg';
 
 interface StopRecordingButtonProps {
   onClick?: () => void;

@@ -20,9 +20,9 @@ const ArrowButton = ({ direction, onClick }: ArrowButtonProps) => {
       onClick={onClick}
     >
       {direction == 'LEFT' ? (
-        <ArrowLeftIcon width={20} height={20} />
+        <ArrowLeftIcon width="20" height="20" />
       ) : (
-        <ArrowRightIcon width={20} height={20} />
+        <ArrowRightIcon width="20" height="20" />
       )}
     </button>
   );

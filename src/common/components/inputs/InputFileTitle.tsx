@@ -1,0 +1,57 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+
+import clsx from 'clsx';
+
+import { InputFileTitleProps } from './InputFiletitle.types';
+
+/**
+ * 인풋 파일 타이틀 컴포넌트
+ */
+
+const InputFileTitle = ({ mode = 'default', value, onSave, onCancel }: InputFileTitleProps) => {
+  const [inputValue, setInputValue] = useState<string>(value);
+  useEffect(() => {
+    setInputValue(value);
+  }, [value]);
+
+  const containerClass = clsx(
+    'flex w-[676px] h-[40px] items-center px-2 py-[2px] rounded font-semibold text-title-1 text-black',
+    {
+      'bg-gray-600': mode === 'hover',
+      'border border-stroke-100': mode === 'editable',
+    },
+  );
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      onSave?.(inputValue);
+    } else if (e.key === 'Escape') {
+      setInputValue(value);
+      onCancel?.();
+    }
+  };
+
+  const handleBlur = () => {
+    onSave?.(inputValue);
+  };
+
+  if (mode === 'editable') {
+    return (
+      <input
+        type="text"
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
+        onKeyDown={handleKeyDown}
+        onBlur={handleBlur}
+        className={clsx(containerClass, 'outline-none focus:outline-none')}
+        autoFocus
+      />
+    );
+  }
+
+  return <span className={containerClass}>{value}</span>;
+};
+
+export default InputFileTitle;

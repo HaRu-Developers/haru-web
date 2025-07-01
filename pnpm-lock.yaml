@@ -10,12 +10,18 @@ importers:
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+      lucide-react:
+        specifier: ^0.525.0
+        version: 0.525.0(react@19.1.0)
       next:
         specifier: 15.3.4
         version: 15.3.4(@babel/core@7.27.7)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       react:
         specifier: ^19.0.0
         version: 19.1.0
+      react-calendar:
+        specifier: ^6.0.0
+        version: 6.0.0(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       react-dom:
         specifier: ^19.0.0
         version: 19.1.0(react@19.1.0)
@@ -74,6 +80,9 @@ importers:
       '@types/react':
         specifier: ^19
         version: 19.1.8
+      '@types/react-calendar':
+        specifier: ^4.1.0
+        version: 4.1.0(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@types/react-dom':
         specifier: ^19
         version: 19.1.6(@types/react@19.1.8)
@@ -2660,6 +2669,13 @@ packages:
         integrity: sha512-dISoDXWWQwUquiKsyZ4Ng+HX2KsPL7LyHKHQwgGFEA3IaKac4Obd+h2a/a6waisAoepJlBcx9paWqjA8/HVjCw==,
       }
 
+  '@types/react-calendar@4.1.0':
+    resolution:
+      {
+        integrity: sha512-CZL0+bOJ43+ZxnScd6n6SbA3RvoT/FurMIKevvTnRhLdncTRO7LyvBaFu3Bmwoad8ApVBJsMyAiPO79vGWRbbA==,
+      }
+    deprecated: This is a stub types definition. react-calendar provides its own type definitions, so you do not need this installed.
+
   '@types/react-dom@19.1.6':
     resolution:
       {
@@ -3095,6 +3111,12 @@ packages:
     resolution:
       {
         integrity: sha512-kPSSXE6De1XOR820C90RIo2ogvZG+c3KiHzqUoO/F34Y2shGzesfqv7o57xrxovZJH/MetF5UjroJ/R/3isoiw==,
+      }
+
+  '@wojtekmaj/date-utils@2.0.2':
+    resolution:
+      {
+        integrity: sha512-Do66mSlSNifFFuo3l9gNKfRMSFi26CRuQMsDJuuKO/ekrDWuTTtE4ZQxoFCUOG+NgxnpSeBq/k5TY8ZseEzLpA==,
       }
 
   '@xtuc/ieee754@1.2.0':
@@ -4935,6 +4957,12 @@ packages:
         integrity: sha512-auHyJ4AgMz7vgS8Hp3N6HXSmlMdUyhSUrfBF16w153rxtLIEOE+HGqaBppczZvnHLqQJfiHotCYpNhl0lUROFQ==,
       }
 
+  get-user-locale@3.0.0:
+    resolution:
+      {
+        integrity: sha512-iJfHSmdYV39UUBw7Jq6GJzeJxUr4U+S03qdhVuDsR9gCEnfbqLy9gYDJFBJQL1riqolFUKQvx36mEkp2iGgJ3g==,
+      }
+
   git-raw-commits@4.0.0:
     resolution:
       {
@@ -5965,6 +5993,14 @@ packages:
         integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==,
       }
 
+  lucide-react@0.525.0:
+    resolution:
+      {
+        integrity: sha512-Tm1txJ2OkymCGkvwoHt33Y2JpN5xucVq1slHcgE6Lk0WjDfjgKWor5CdVER8U6DvcfMwh4M8XxmpTiyzfmfDYQ==,
+      }
+    peerDependencies:
+      react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
+
   lz-string@1.5.0:
     resolution:
       {
@@ -6018,6 +6054,13 @@ packages:
       }
     engines: { node: '>= 4.0.0' }
 
+  memoize@10.1.0:
+    resolution:
+      {
+        integrity: sha512-MMbFhJzh4Jlg/poq1si90XRlTZRDHVqdlz2mPyGJ6kqMpyHUyVpDd5gpFAvVehW64+RA1eKE9Yt8aSLY7w2Kgg==,
+      }
+    engines: { node: '>=18' }
+
   meow@12.1.1:
     resolution:
       {
@@ -6065,6 +6108,13 @@ packages:
         integrity: sha512-ZDY+bPm5zTTF+YpCrAU9nK0UgICYPT0QtT1NZWFv4s++TNkcgVaT0g6+4R2uI4MjQjzysHB1zxuWL50hzaeXiw==,
       }
     engines: { node: '>= 0.6' }
+
+  mimic-function@5.0.1:
+    resolution:
+      {
+        integrity: sha512-VP79XUPxV2CigYP3jWwAUFSku2aKqBH7uTAapFWCBqutsbmDo96KY5o8uh6U+/YSIn5OxJnXp73beVkpqMIGhA==,
+      }
+    engines: { node: '>=18' }
 
   min-indent@1.0.1:
     resolution:
@@ -6812,6 +6862,19 @@ packages:
         integrity: sha512-Hrgsx+orqoygnmhFbKaHE6c296J+HTAQXoxEF6gNupROmmGJRoyzfG3ccAveqCBrwr/2yxQ5BVd/GTl5agOwSg==,
       }
     engines: { node: '>= 0.6' }
+
+  react-calendar@6.0.0:
+    resolution:
+      {
+        integrity: sha512-6wqaki3Us0DNDjZDr0DYIzhSFprNoy4FdPT9Pjy5aD2hJJVjtJwmdMT9VmrTUo949nlk35BOxehThxX62RkuRQ==,
+      }
+    peerDependencies:
+      '@types/react': ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
 
   react-docgen-typescript@2.4.0:
     resolution:
@@ -8032,6 +8095,12 @@ packages:
     resolution:
       {
         integrity: sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==,
+      }
+
+  warning@4.0.3:
+    resolution:
+      {
+        integrity: sha512-rpJyN222KWIvHJ/F53XSZv0Zl/accqHR8et1kpaMTD/fLCRxtV8iX8czMzY7sVZupTI3zcUTg8eycS2kNF9l6w==,
       }
 
   watchpack@2.4.4:
@@ -9987,6 +10056,14 @@ snapshots:
 
   '@types/parse-json@4.0.2': {}
 
+  '@types/react-calendar@4.1.0(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+    dependencies:
+      react-calendar: 6.0.0(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+    transitivePeerDependencies:
+      - '@types/react'
+      - react
+      - react-dom
+
   '@types/react-dom@19.1.6(@types/react@19.1.8)':
     dependencies:
       '@types/react': 19.1.8
@@ -10307,6 +10384,8 @@ snapshots:
     dependencies:
       '@webassemblyjs/ast': 1.14.1
       '@xtuc/long': 4.2.2
+
+  '@wojtekmaj/date-utils@2.0.2': {}
 
   '@xtuc/ieee754@1.2.0': {}
 
@@ -11630,6 +11709,10 @@ snapshots:
     dependencies:
       resolve-pkg-maps: 1.0.0
 
+  get-user-locale@3.0.0:
+    dependencies:
+      memoize: 10.1.0
+
   git-raw-commits@4.0.0:
     dependencies:
       dargs: 8.1.0
@@ -12167,6 +12250,10 @@ snapshots:
     dependencies:
       yallist: 3.1.1
 
+  lucide-react@0.525.0(react@19.1.0):
+    dependencies:
+      react: 19.1.0
+
   lz-string@1.5.0: {}
 
   magic-string@0.30.17:
@@ -12199,6 +12286,10 @@ snapshots:
     dependencies:
       fs-monkey: 1.0.6
 
+  memoize@10.1.0:
+    dependencies:
+      mimic-function: 5.0.1
+
   meow@12.1.1: {}
 
   merge-stream@2.0.0: {}
@@ -12220,6 +12311,8 @@ snapshots:
   mime-types@2.1.35:
     dependencies:
       mime-db: 1.52.0
+
+  mimic-function@5.0.1: {}
 
   min-indent@1.0.1: {}
 
@@ -12638,6 +12731,17 @@ snapshots:
       safe-buffer: 5.2.1
 
   range-parser@1.2.1: {}
+
+  react-calendar@6.0.0(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
+    dependencies:
+      '@wojtekmaj/date-utils': 2.0.2
+      clsx: 2.1.1
+      get-user-locale: 3.0.0
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
+      warning: 4.0.3
+    optionalDependencies:
+      '@types/react': 19.1.8
 
   react-docgen-typescript@2.4.0(typescript@5.8.3):
     dependencies:
@@ -13541,6 +13645,10 @@ snapshots:
       - yaml
 
   vm-browserify@1.1.2: {}
+
+  warning@4.0.3:
+    dependencies:
+      loose-envify: 1.4.0
 
   watchpack@2.4.4:
     dependencies:

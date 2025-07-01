@@ -1,5 +1,7 @@
 import React from 'react';
 
+import VerticalLine from '@common/svgs/component-set/VerticalLine.svg';
+
 import AiManager from '@/common/svgs/component-set/AiManagerIcon.svg';
 import AiQuestionHover from '@/common/svgs/component-set/AiQuestionHoverIcon.svg';
 import AiQuestion from '@/common/svgs/component-set/AiQuestionIcon.svg';
@@ -97,6 +99,7 @@ const LogoTest = () => {
       <User5 height="100" width="100" />
       <User6 height="100" width="100" />
       <User7 height="100" width="100" />
+      <VerticalLine height="15" width="2" />
       <ArrowDown height="100" width="100" />
       <Calender height="100" width="100" />
       <Congratulation height="100" width="100" />

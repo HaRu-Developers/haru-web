@@ -5,27 +5,10 @@ const meta: Meta<typeof NextStepButton> = {
   title: 'Components/NextStepButton',
   component: NextStepButton,
   tags: ['autodocs'],
-  argTypes: {
-    isActive: {
-      control: 'boolean',
-      description: '활성화 여부',
-      defaultValue: true,
-    },
-  },
 };
 
 export default meta;
-
 type Story = StoryObj<typeof NextStepButton>;
 
-export const Active: Story = {
-  args: {
-    isActive: true,
-  },
-};
-
-export const Inactive: Story = {
-  args: {
-    isActive: false,
-  },
-};
+// 기본 스토리만 정의하고 Controls에서 disabled 상태를 변경
+export const Default: Story = {};

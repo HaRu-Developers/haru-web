@@ -25,9 +25,9 @@ const TestPage = () => {
         버튼 스타일 테스트
       </button>
       <br />
-      <NextStepButton isActive={true} />
+      <NextStepButton disabled />
       <br />
-      <NextStepButton isActive={false} />
+      <NextStepButton />
       <br />
       <EditCompleteButton />
       <br />
@@ -51,14 +51,14 @@ const TestPage = () => {
       <br />
       <DeleteButton />
       <br />
-      <LoginButton isActive={true} />
-      <LoginButton isActive={false} />
+      <LoginButton disabled />
+      <LoginButton />
       <br />
-      <RegisterButton isActive={true} />
-      <RegisterButton isActive={false} />
+      <RegisterButton disabled />
+      <RegisterButton />
       <br />
-      <NavigateToMainButton isActive={true} />
-      <NavigateToMainButton isActive={false} />
+      <NavigateToMainButton disabled />
+      <NavigateToMainButton />
       <br />
       <AddQuestionButton />
       <br />

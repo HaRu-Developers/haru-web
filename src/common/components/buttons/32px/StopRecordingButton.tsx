@@ -1,5 +1,7 @@
 import clsx from 'clsx';
 
+import RecordingEndIcon from '@/common/svgs/component-set/RecordingEndIcon.svg';
+
 interface StopRecordingButtonProps {
   onClick?: () => void;
 }
@@ -15,7 +17,7 @@ const StopRecordingButton = ({ onClick }: StopRecordingButtonProps) => {
       )}
       onClick={onClick}
     >
-      <svg width={14} height={14} /> {/* TODO: Add actual SVG icon here */}
+      <RecordingEndIcon width={14} height={14} fill="gray-600" />
       <p>녹음 종료</p>
     </button>
   );

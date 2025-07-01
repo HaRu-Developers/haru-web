@@ -1,5 +1,7 @@
 import clsx from 'clsx';
 
+import DownloadIcon from '@common/svgs/individual/DownloadIcon.svg';
+
 interface DownloadButtonProps {
   onClick?: () => void;
 }
@@ -15,7 +17,7 @@ const DownloadButton = ({ onClick }: DownloadButtonProps) => {
       )}
       onClick={onClick}
     >
-      <svg width={18} height={18} /> {/* TODO: Add actual SVG icon here */}
+      <DownloadIcon width={18} height={18} stroke="white" />
       <p>다운로드</p>
     </button>
   );

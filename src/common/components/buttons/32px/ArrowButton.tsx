@@ -1,5 +1,8 @@
 import clsx from 'clsx';
 
+import ArrowLeftIcon from '@common/svgs/component-set/ArrowLeftIcon.svg';
+import ArrowRightIcon from '@common/svgs/component-set/ArrowRightIcon.svg';
+
 interface ArrowButtonProps {
   direction: 'LEFT' | 'RIGHT';
   onClick?: () => void;
@@ -16,8 +19,11 @@ const ArrowButton = ({ direction, onClick }: ArrowButtonProps) => {
       )}
       onClick={onClick}
     >
-      {direction == 'LEFT' ? <svg width={20} height={20} /> : <svg width={20} height={20} />}
-      {/* TODO: Add actual SVG icon here */}
+      {direction == 'LEFT' ? (
+        <ArrowLeftIcon width={20} height={20} />
+      ) : (
+        <ArrowRightIcon width={20} height={20} />
+      )}
     </button>
   );
 };

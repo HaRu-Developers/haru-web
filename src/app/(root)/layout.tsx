@@ -6,8 +6,8 @@ const MainLayout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <div className="flex-1">
-      <main>{children}</main>
+    <div className="flex min-h-screen flex-col">
+      <main className="flex-1">{children}</main>
       <Footer />
     </div>
   );

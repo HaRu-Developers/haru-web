@@ -17,7 +17,7 @@ const StopRecordingButton = ({ onClick }: StopRecordingButtonProps) => {
       )}
       onClick={onClick}
     >
-      <RecordingEndIcon width={14} height={14} fill="gray-600" />
+      <RecordingEndIcon width={14} height={14} />
       <p>녹음 종료</p>
     </button>
   );

@@ -35,9 +35,17 @@ const TestPage = () => {
       <br />
       <DownloadButton />
       <br />
-      <Cancel32pxButton />
+      <Cancel32pxButton
+        onClick={() => {
+          console.log('cancel');
+        }}
+      />
       <br />
-      <CompleteSelectButton />
+      <CompleteSelectButton
+        onClick={() => {
+          console.log('complete');
+        }}
+      />
       <br />
       <ArrowButton direction="LEFT" />
       <ArrowButton direction="RIGHT" />

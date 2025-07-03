@@ -20,53 +20,26 @@ const nextConfig: NextConfig = {
   // Webpack 설정:
   // `next build` 시에 적용되며, `next dev` (Turbopack 비활성화 시)에도 적용됩니다.
   webpack: (config, { isServer }) => {
-    // 1. 기존 SVG 처리 규칙을 완전히 제거 (또는 강력하게 제외)합니다.
-    // Next.js는 내부적으로 file-loader 또는 asset module type으로 SVG를 처리하려 합니다.
-    // 이를 `@svgr/webpack`이 가로채도록 하려면 기존 규칙을 비활성화해야 합니다.
-    const fileLoaderRule = config.module.rules.find(
-      (rule: any) => rule.test && rule.test.toString().includes('svg'),
+    const fileLoaderRule = config.module.rules.find((rule: any) => rule.test?.test?.('.svg'));
+
+    config.module.rules.push(
+      // Reapply the existing rule, but only for svg imports ending in ?url
+      {
+        ...fileLoaderRule,
+        test: /\.svg$/i,
+        resourceQuery: /url/, // *.svg?url
+      },
+      // Convert all other *.svg imports to React components
+      {
+        test: /\.svg$/i,
+        issuer: fileLoaderRule.issuer,
+        resourceQuery: { not: [...fileLoaderRule.resourceQuery.not, /url/] }, // exclude if *.svg?url
+        use: ['@svgr/webpack'],
+      },
     );
 
-    if (fileLoaderRule) {
-      // 해당 로더가 SVG 파일을 더 이상 처리하지 않도록 합니다.
-      // Next.js 11+에서는 `file-loader` 대신 `asset/resource` 모듈을 사용할 수 있습니다.
-      // 따라서 `fileLoaderRule.loader = undefined;` 또는 `fileLoaderRule.type = 'javascript/auto';`
-      // 와 같이 설정하여 기본 처리를 무력화할 수 있습니다.
-      // 가장 간단하고 강력한 방법은 `exclude`에 추가하는 것입니다.
-      fileLoaderRule.exclude = /\.svg$/;
-    }
-
-    // 2. @svgr/webpack 로더 규칙을 추가합니다.
-    // 이 로더는 SVG 파일을 React 컴포넌트로 변환해줍니다.
-    config.module.rules.push({
-      test: /\.svg$/,
-      // SVG 파일이 JS/TS/MD(X) 파일에서 import 될 때만 이 로더를 적용합니다.
-      issuer: {
-        and: [/\.(ts|tsx|js|jsx|md|mdx)$/],
-      },
-      use: [
-        {
-          loader: '@svgr/webpack',
-          options: {
-            prettier: false, // Prettier는 별도로 실행하므로 SVGR 내부에서는 비활성화
-            svgo: true, // SVGO를 사용하여 SVG 최적화 활성화
-            svgoConfig: {
-              plugins: [
-                {
-                  name: 'preset-default',
-                  params: {
-                    overrides: {
-                      removeViewBox: false, // viewBox 제거 방지 (SVG 크기 조절에 중요)
-                    },
-                  },
-                },
-                'removeDimensions', // width, height 속성 제거 (CSS로 크기 제어 용이)
-              ],
-            },
-          },
-        },
-      ],
-    });
+    // Modify the file loader rule to ignore *.svg, since we have it handled now.
+    fileLoaderRule.exclude = /\.svg$/i;
 
     return config;
   },

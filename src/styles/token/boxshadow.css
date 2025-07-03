@@ -1,0 +1,9 @@
+@import 'tailwindcss';
+
+@utility shadow-boxed-file {
+  box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.04);
+}
+
+@utility shadow-select-box {
+  box-shadow: 2px 6px 24px 0px rgba(0, 0, 0, 0.1);
+}

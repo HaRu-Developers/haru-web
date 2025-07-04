@@ -94,3 +94,27 @@
   line-height: 18px;
   letter-spacing: -0.025em;
 }
+
+/* 이후 통합 수정 */
+@utility text-title-5-sb {
+  font-size: 16px;
+  line-height: 20.8px;
+  font-weight: 600;
+  letter-spacing: -0.32px;
+}
+
+/* B3_Rg → 14px / 400 / 160% / -0.28px */
+@utility text-body-3-rg {
+  font-size: 14px;
+  line-height: 22.4px;
+  font-weight: 400;
+  letter-spacing: -0.28px;
+}
+
+/* deadline → 12px / 400 / 130% / Gray-300 */
+@utility text-deadline {
+  font-size: 12px;
+  line-height: 15.6px;
+  font-weight: 400;
+  color: #767676; /* Use theme color if defined: var(--Gray-300) */
+}

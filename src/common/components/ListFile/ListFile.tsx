@@ -13,12 +13,12 @@ import SnsAssistIcon from '@/common/svgs/component-set/SnsAssistIcon.svg';
 import TeamMoodIcon from '@/common/svgs/component-set/TeamMoodIcon.svg';
 
 import IconWithText from './IconWithText/IconWithText';
-import { ListFileProps, ListRole } from './ListFile.types';
+import { ListFileProps, listRole } from './ListFile.types';
 
 const roleIcon = {
-  [ListRole.AI_MANAGER]: AiManagerIcon,
-  [ListRole.TEAM_MOOD_MAKER]: TeamMoodIcon,
-  [ListRole.SNS_ASSISTANT]: SnsAssistIcon,
+  [listRole.AI_MANAGER]: AiManagerIcon,
+  [listRole.TEAM_MOOD_MAKER]: TeamMoodIcon,
+  [listRole.SNS_ASSISTANT]: SnsAssistIcon,
 } as const;
 
 const ListFile = ({
@@ -42,7 +42,7 @@ const ListFile = ({
     onCheck(id);
   };
 
-  const RoleIcon = roleIcon[role as ListRole];
+  const RoleIcon = roleIcon[role as listRole];
 
   const renderLeftIcon = () => {
     if (isHovered || selectionActive) {
@@ -63,7 +63,7 @@ const ListFile = ({
 
   const renderRightSideInfo = () => {
     switch (role) {
-      case ListRole.SNS_ASSISTANT:
+      case listRole.SNS_ASSISTANT:
         if (instagramLink) {
           return (
             <div className="text-body-3-rg mr-10 flex cursor-pointer items-center">
@@ -87,7 +87,7 @@ const ListFile = ({
           </div>
         );
 
-      case ListRole.TEAM_MOOD_MAKER:
+      case listRole.TEAM_MOOD_MAKER:
         return (
           <div className="flex items-center gap-x-20">
             {deadline && <span className="text-body-3-rg text-gray-200">{deadline}</span>}
@@ -97,7 +97,7 @@ const ListFile = ({
           </div>
         );
 
-      case ListRole.AI_MANAGER:
+      case listRole.AI_MANAGER:
       default:
         return null;
     }

@@ -116,7 +116,7 @@ const MeetingItem = ({
         </div>
         <div className="flex flex-col gap-y-[5px]">
           <h3 className="text-title-5-sb cursor-pointer text-black">{title}</h3>
-          <p className="text-deadline text-gray-300">{date}</p>
+          <p className="text-caption-2-rg text-gray-300">{date}</p>
         </div>
       </div>
 

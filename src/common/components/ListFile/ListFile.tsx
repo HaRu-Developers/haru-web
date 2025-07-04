@@ -13,15 +13,15 @@ import SnsAssistIcon from '@/common/svgs/component-set/SnsAssistIcon.svg';
 import TeamMoodIcon from '@/common/svgs/component-set/TeamMoodIcon.svg';
 
 import IconWithText from './IconWithText/IconWithText';
-import { MeetingItemProps, MeetingRole } from './ListFile.types';
+import { ListFileProps, ListRole } from './ListFile.types';
 
 const roleIcon = {
-  [MeetingRole.AI_MANAGER]: AiManagerIcon,
-  [MeetingRole.TEAM_MOOD_MAKER]: TeamMoodIcon,
-  [MeetingRole.SNS_ASSISTANT]: SnsAssistIcon,
+  [ListRole.AI_MANAGER]: AiManagerIcon,
+  [ListRole.TEAM_MOOD_MAKER]: TeamMoodIcon,
+  [ListRole.SNS_ASSISTANT]: SnsAssistIcon,
 } as const;
 
-const MeetingItem = ({
+const ListFile = ({
   id,
   title,
   date,
@@ -33,7 +33,7 @@ const MeetingItem = ({
   isChecked,
   onCheck,
   selectionActive,
-}: MeetingItemProps) => {
+}: ListFileProps) => {
   const [isHovered, setIsHovered] = useState<boolean>(false);
 
   const handleCheck = (e: React.MouseEvent) => {
@@ -42,7 +42,7 @@ const MeetingItem = ({
     onCheck(id);
   };
 
-  const RoleIcon = roleIcon[role as MeetingRole];
+  const RoleIcon = roleIcon[role as ListRole];
 
   const renderLeftIcon = () => {
     if (isHovered || selectionActive) {
@@ -63,7 +63,7 @@ const MeetingItem = ({
 
   const renderRightSideInfo = () => {
     switch (role) {
-      case MeetingRole.SNS_ASSISTANT:
+      case ListRole.SNS_ASSISTANT:
         if (instagramLink) {
           return (
             <div className="text-body-3-rg mr-10 flex cursor-pointer items-center">
@@ -87,7 +87,7 @@ const MeetingItem = ({
           </div>
         );
 
-      case MeetingRole.TEAM_MOOD_MAKER:
+      case ListRole.TEAM_MOOD_MAKER:
         return (
           <div className="flex items-center gap-x-20">
             {deadline && <span className="text-body-3-rg text-gray-200">{deadline}</span>}
@@ -97,7 +97,7 @@ const MeetingItem = ({
           </div>
         );
 
-      case MeetingRole.AI_MANAGER:
+      case ListRole.AI_MANAGER:
       default:
         return null;
     }
@@ -125,4 +125,4 @@ const MeetingItem = ({
   );
 };
 
-export default MeetingItem;
+export default ListFile;

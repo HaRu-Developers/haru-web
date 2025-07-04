@@ -1,11 +1,11 @@
 import { Meta, StoryObj } from '@storybook/nextjs';
 
-import MeetingItem from './ListFile';
-import { MeetingRole } from './ListFile.types';
+import ListFile from './ListFile';
+import { ListRole } from './ListFile.types';
 
-const meta: Meta<typeof MeetingItem> = {
+const meta: Meta<typeof ListFile> = {
   title: '컴포넌트/MeetingItem',
-  component: MeetingItem,
+  component: ListFile,
   parameters: {
     layout: 'fullscreen',
   },
@@ -25,7 +25,7 @@ export const AIManager: Story = {
   args: {
     ...baseArgs,
     id: 1,
-    role: MeetingRole.AI_MANAGER,
+    role: ListRole.AI_MANAGER,
     title: 'AI 모델 성능 분석 회의',
     date: '2025년 7월 7일, 16:30 PM',
   },
@@ -36,7 +36,7 @@ export const TeamMoodMaker: Story = {
   args: {
     ...baseArgs,
     id: 2,
-    role: MeetingRole.TEAM_MOOD_MAKER,
+    role: ListRole.TEAM_MOOD_MAKER,
     title: '7월 팀 회식 장소 투표',
     date: '2025년 7월 7일, 16:30 PM',
     deadline: '2025.07.15',
@@ -49,7 +49,7 @@ export const SNSAssistantWithLink: Story = {
   args: {
     ...baseArgs,
     id: 3,
-    role: MeetingRole.SNS_ASSISTANT,
+    role: ListRole.SNS_ASSISTANT,
     title: '여름 이벤트 홍보 게시물',
     date: '2025년 7월 7일, 16:30',
     instagramLink: '@event_promotion_post',
@@ -61,7 +61,7 @@ export const SNSAssistantWithCounts: Story = {
   args: {
     ...baseArgs,
     id: 4,
-    role: MeetingRole.SNS_ASSISTANT,
+    role: ListRole.SNS_ASSISTANT,
     title: '댓글 이벤트 당첨자 발표',
     date: '2025년 7월 7일, 16:30 PM',
     attendees: 152,

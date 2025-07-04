@@ -1,6 +1,7 @@
+# 빌드 산출물
 .next
-node_modules
 dist
 coverage
-*.lock
-**/*.svg
+
+# 패키지
+node_modules

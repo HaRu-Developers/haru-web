@@ -3,11 +3,8 @@ import { Meta, StoryObj } from '@storybook/nextjs';
 import LoadingBar from './LoadingBar';
 
 const meta: Meta<typeof LoadingBar> = {
-  title: 'LoadingBar',
+  title: 'Components/LoadingBar',
   component: LoadingBar,
-  parameters: {
-    layout: 'centered',
-  },
 };
 
 export default meta;

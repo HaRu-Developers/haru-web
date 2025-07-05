@@ -45,28 +45,6 @@ const eslintConfig = [
       // 테스트 및 문서 폴더
       'coverage/**',
       'public/**',
-
-      // 설정 파일들
-      '*.config.js',
-      '*.config.ts',
-      '.eslintrc.*',
-
-      // 임시 파일
-      '*.tmp',
-      '*.temp',
-
-      // 로그 파일
-      '*.log',
-      'logs/**',
-
-      // 환경 설정 파일
-      '.env*',
-
-      // 기타 무시 대상
-      '*.sh',
-      '*.css',
-      '*.yml',
-      '*.yaml',
     ],
   },
   // Next.js의 core-web-vitals와 typescript 설정을 확장

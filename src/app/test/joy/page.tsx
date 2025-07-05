@@ -2,14 +2,14 @@
 
 import { useState } from 'react';
 
-import { axiosInstance } from '@lib/axios';
+import { defaultApi } from '@lib/axios';
 
 const TestPage = () => {
   const [crash, setCrash] = useState(false);
 
   const triggerApiError = async () => {
     try {
-      await axiosInstance.get('/blabla');
+      await defaultApi.get('/blabla');
     } catch (_error) {
       setCrash(true);
     }

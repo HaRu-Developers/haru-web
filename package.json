@@ -7,12 +7,11 @@
     "build": "next build",
     "start": "next start",
     "test:ci": "vitest run --coverage",
-    "lint": "eslint .",
-    "lint:staged": "eslint --fix .",
-    "eslint": "eslint .",
-    "format": "prettier --write . --ignore-unknown",
-    "format:check": "prettier --check . --ignore-unknown",
-    "format:staged": "prettier --write --ignore-unknown",
+    "lint": "next lint",
+    "eslint:check": "eslint '**/*.{js,ts,jsx,tsx}'",
+    "eslint": "eslint --fix '**/*.{js,ts,jsx,tsx}'",
+    "format:check": "prettier --check '**/*.{js,ts,jsx,tsx,json,yaml,md,css}'",
+    "format": "prettier --write '**/*.{js,ts,jsx,tsx,json,yaml,md,css}'",
     "type-check": "tsc --noEmit",
     "prepare": "lefthook install",
     "storybook": "storybook dev -p 6006",
@@ -40,6 +39,7 @@
     "@storybook/addon-vitest": "^9.0.14",
     "@storybook/nextjs": "^9.0.14",
     "@storybook/nextjs-vite": "^9.0.14",
+    "@svgr/webpack": "^8.1.0",
     "@tailwindcss/postcss": "^4",
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",
     "@types/node": "^20",
@@ -63,6 +63,7 @@
     "storybook": "^9.0.14",
     "tailwindcss": "^4",
     "typescript": "^5",
-    "vitest": "^3.2.4"
+    "vitest": "^3.2.4",
+    "webpack": "^5.99.9"
   }
 }

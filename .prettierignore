@@ -1,9 +1,7 @@
+# 빌드 산출물
 .next
-node_modules
 dist
 coverage
-.prettierignore
-lefthook.yml
 
-*.lock
-*.sh
+# 패키지
+node_modules

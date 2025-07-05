@@ -42,6 +42,8 @@ import User4 from '@svgs/component-set/User4Icon.svg';
 import User5 from '@svgs/component-set/User5Icon.svg';
 import User6 from '@svgs/component-set/User6Icon.svg';
 import User7 from '@svgs/component-set/User7Icon.svg';
+import ProfileAdd from '@svgs/component-set/profileAdd.svg';
+import ProfileCircle from '@svgs/component-set/profileCircle.svg';
 import ArrowDown from '@svgs/individual/ArrowUnderIcon.svg';
 import Calender from '@svgs/individual/CalenderIcon.svg';
 import Congratulation from '@svgs/individual/CongratulationIcon.svg';
@@ -82,6 +84,8 @@ const LogoTest = () => {
       <GnbSetting height="100" width="100" />
       <GnbSnsAssist height="100" width="100" />
       <GnbTeamMood height="100" width="100" />
+      <ProfileAdd height="100" width="100" />
+      <ProfileCircle height="100" width="100" />
       <Link height="100" width="100" />
       <Plus height="100" width="100" />
       <RecordingEnd height="100" width="100" />

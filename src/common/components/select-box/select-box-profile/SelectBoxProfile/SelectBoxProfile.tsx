@@ -9,6 +9,7 @@ import WorkSpaceItem from '../WorkSpaceItem/WorkSpaceItem';
 
 // 임시 데이터
 const profile = {
+  userId: 'user1234',
   imagePath: '/assets/images/profileImage.jpg',
   name: 'UMC 8기 운영진',
   email: 'tngh9509@gmail.com',
@@ -29,7 +30,7 @@ const SelectBoxProfile = () => {
       <div className="flex flex-col items-start gap-2.5 self-stretch">
         <div className="flex flex-col gap-4">
           <div className="flex items-center gap-3.5">
-            <ProfileImage src={profile.imagePath} name={profile.name} />
+            <ProfileImage userId={profile.userId} src={profile.imagePath} name={profile.name} />
             <div>
               <p className="self-stretch text-[15px] leading-[130%] font-semibold tracking-[-0.3px] text-black not-italic">
                 {profile.name}

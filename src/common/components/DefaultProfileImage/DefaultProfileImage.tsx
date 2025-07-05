@@ -1,11 +1,13 @@
 import { profileColors } from '@common/constants/profile';
 
+import hashCode from '@common/utils/hashCode';
+
 import { DefaultProfileImageProps } from './DefaultProfileImage.types';
 
-const DefaultProfileImage = ({ name = '', color, size = 'large' }: DefaultProfileImageProps) => {
+const DefaultProfileImage = ({ name, userId, color, size = 'large' }: DefaultProfileImageProps) => {
   const initial = name.slice(0, 2);
-  // 같은 이름이면 같은 색상을 가지게
-  const colorIndex = name ? name.charCodeAt(0) % profileColors.length : 0;
+  // 같은 사용자면 같은 색상을 가지게
+  const colorIndex = hashCode(userId) % profileColors.length;
   const backgroundColor = color ?? profileColors[colorIndex];
 
   const sizeClass =

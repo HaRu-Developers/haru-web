@@ -8,11 +8,11 @@ import DefaultProfileImage from '@common/components/DefaultProfileImage/DefaultP
 
 import { ProfileImageProps } from './ProfileImage.types';
 
-const ProfileImage = ({ src, name }: ProfileImageProps) => {
+const ProfileImage = ({ src, userId, name }: ProfileImageProps) => {
   const [hasError, setHasError] = useState(false);
 
   if (!src || hasError) {
-    return <DefaultProfileImage name={name} size="large" />;
+    return <DefaultProfileImage userId={userId} name={name} size="large" />;
   }
 
   return (

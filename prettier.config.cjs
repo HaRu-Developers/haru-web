@@ -41,6 +41,7 @@ module.exports = {
     '^@styles/(.*)$',
     // 정적 자산
     '^@assets/(.*)$',
+    '^@svgs/(.*)$',
 
     // 공통 모듈
     '^@common/types/(.*)$',

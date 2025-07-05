@@ -1,11 +1,13 @@
 pre-commit:
   parallel: true
   commands:
-    lint:
-      run: pnpm lint:staged {staged_files}
+    eslint:
+      glob: '**/*.{js,ts,jsx,tsx}'
+      run: pnpm exec eslint {staged_files} --fix
       stage_fixed: true
     prettier:
-      run: pnpm format:staged {staged_files}
+      glob: '**/*.{js,ts,jsx,tsx,json,yaml,md,css}'
+      run: pnpm exec prettier --write {staged_files}
       stage_fixed: true
     type-check:
       run: pnpm type-check
@@ -26,7 +28,6 @@ pre-rebase:
       run: node scripts/pre-rebase-check.cjs
 
 pre-push:
-  parallel: true
   commands:
     build:
       run: pnpm build

@@ -6,6 +6,53 @@ interface CreateFetcherOptions {
   fetchOptions?: RequestInit;
 }
 
+// 정상 응답 처리 함수
+const handleResponse = async (res: Response) => {
+  return res.json();
+};
+
+// 비정상 응답 처리 함수
+const handleResponseError = async (res: Response, url: string, requestBodyRaw: unknown) => {
+  const contentType = res.headers.get('content-type');
+  let requestBody: string;
+  const responseBodyText = await res.text();
+  let responseBody: unknown = responseBodyText;
+
+  // 직렬화 불가 값 처리
+  try {
+    requestBody =
+      typeof requestBodyRaw === 'string' ? requestBodyRaw : JSON.stringify(requestBodyRaw);
+  } catch {
+    requestBody = '[Non-serializable body]';
+  }
+
+  // JSON인 경우에만 파싱 시도
+  if (contentType?.includes('application/json')) {
+    try {
+      responseBody = JSON.parse(responseBodyText);
+    } catch (_error) {
+      // 파싱 실패시 문자열 유지
+    }
+  }
+
+  const error = new Error(`❌ API error ${res.status}`);
+  if (res.status >= 500) {
+    captureApiError(
+      error,
+      {
+        url,
+        status: res.status,
+        requestBody,
+        responseHeaders: Object.fromEntries(res.headers.entries()),
+        responseBody,
+      },
+      'server-error',
+    );
+  }
+
+  throw error;
+};
+
 export const createFetcher =
   ({
     baseURL = process.env.SERVER_API_BASE_URL,
@@ -32,43 +79,13 @@ export const createFetcher =
     try {
       const res = await fetch(url, mergedOptions);
 
-      // 응답 에러 인터셉터
-      if (!res.ok) {
-        const contentType = res.headers.get('content-type');
-        const responseBodyText: string = await res.text(); // fetch의 응답을 텍스트로 변환
-        let responseBody: unknown = responseBodyText;
-
-        // JSON 응답이면 파싱
-        if (contentType?.includes('application/json')) {
-          try {
-            responseBody = JSON.parse(responseBodyText);
-          } catch (_) {
-            // 파싱 실패 시 그대로 유지
-          }
-        }
-
-        const error = new Error(`API error ${res.status}`);
-
-        // 500번대만 Sentry 전송
-        if (res.status >= 500) {
-          captureApiError(
-            error,
-            {
-              url,
-              status: res.status,
-              requestBody: mergedOptions.body,
-              responseHeaders: Object.fromEntries(res.headers.entries()),
-
-              responseBody,
-            },
-            'server-error',
-          );
-        }
-
-        throw error;
+      // 응답 인터셉터
+      // 응답 성공시
+      if (res.ok) {
+        return handleResponse(res);
       }
-
-      return res.json();
+      // 응답 에러시
+      return handleResponseError(res, url, mergedOptions.body);
     } catch (error) {
       // 네트워크 관련 오류 Sentry에 전송
       // - fetch 자체가 실패한 경우 (인터넷 연결 끊김, DNS 오류, CORS 등)
@@ -100,10 +117,3 @@ export const createFetcher =
   };
 
 export const defaultApi = createFetcher({ fetchOptions: { cache: 'no-store' } });
-
-// export const externalApi = createFetcher({
-//   fetchOptions: {
-//     cache: 'no-store',
-//     credentials: 'include',
-//   },
-// });

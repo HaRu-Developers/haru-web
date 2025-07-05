@@ -2,6 +2,7 @@
 
 @import './token/colors.css';
 @import './token/fonts.css';
+@import './animation.css';
 
 @layer base {
   * {

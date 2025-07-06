@@ -39,10 +39,12 @@
 }
 
 /* 그라디언트 배경 */
-@utility bg-primary-gradient {
-  background-image: var(--primary-gradient);
-}
+@layer utilities {
+  .bg-primary-gradient {
+    background-image: var(--primary-gradient);
+  }
 
-@utility bg-white-gradient {
-  background-image: var(--white-gradient);
+  .bg-white-gradient {
+    background-image: var(--white-gradient);
+  }
 }

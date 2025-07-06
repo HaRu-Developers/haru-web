@@ -1,7 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 
-import CopyIcon from '@svgs/component-set/CopyIcon.svg';
-
 import CategoryOption from './CategoryOption.client';
 
 const meta: Meta<typeof CategoryOption> = {

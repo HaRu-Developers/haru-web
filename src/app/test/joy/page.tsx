@@ -1,9 +1,6 @@
 import { Suspense } from 'react';
 
-import {
-  AiMeetingAssistantLeftTabType,
-  AiMeetingAssistantRightTabType,
-} from '@features/ai-meeting-assistant/constants/tabs';
+import { AiMeetingAssistantLeftTabType } from '@features/ai-meeting-assistant/constants/tabs';
 
 import AiMeetingAssistantLeftPanel from '@features/ai-meeting-assistant/components/panels/AiMeetingAssistantLeftPanel/AiMeetingAssistantLeftPanel.server';
 import AiMeetingAssistantRightPanel from '@features/ai-meeting-assistant/components/panels/AiMeetingAssistantRightPanel/AiMeetingAssistantRightPanel.client';

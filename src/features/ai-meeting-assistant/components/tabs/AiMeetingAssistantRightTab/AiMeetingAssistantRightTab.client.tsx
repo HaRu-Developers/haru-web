@@ -9,7 +9,7 @@ import {
 
 import { useTabInfo } from '@features/ai-meeting-assistant/hooks/stores/useTabStore';
 
-const AiMeetingAssistantLeftTab = () => {
+const AiMeetingAssistantRightTab = () => {
   const { rightTab } = useTabInfo();
 
   return (
@@ -22,4 +22,4 @@ const AiMeetingAssistantLeftTab = () => {
   );
 };
 
-export default AiMeetingAssistantLeftTab;
+export default AiMeetingAssistantRightTab;

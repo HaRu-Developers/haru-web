@@ -9,7 +9,6 @@ interface tabStoreState {
   rightTab: AiMeetingAssistantRightTabType;
   actions: {
     setEditing: (val: boolean) => void;
-    toggleEditing: () => void;
     setRightTab: (tab: AiMeetingAssistantRightTabType) => void;
   };
 }
@@ -21,7 +20,6 @@ const tabStore = create<tabStoreState>()(
       rightTab: AiMeetingAssistantRightTabType.AiQuestions,
       actions: {
         setEditing: (val) => set({ isEditing: val }),
-        toggleEditing: () => set((state) => ({ isEditing: !state.isEditing })),
         setRightTab: (tab) => set({ rightTab: tab }),
       },
     })),

@@ -6,6 +6,7 @@ import { usePathname, useSearchParams } from 'next/navigation';
 import Copy from '@svgs/component-set/CopyIcon.svg';
 import Edit from '@svgs/component-set/EditIcon.svg';
 
+import CategoryOption from '@common/components/CategoryOption/CategoryOption.client';
 import IconButton from '@common/components/button/IconButton/IconButton.client';
 
 import {
@@ -20,20 +21,20 @@ import { AiMeetingAssistantLeftTabProps } from './AiMeetingAssistantLeftTab.type
 const TABS = Object.values(AiMeetingAssistantLeftTabType);
 
 const AiMeetingAssistantLeftTab = ({ current }: AiMeetingAssistantLeftTabProps) => {
-  const pathname = usePathname();
   const searchParams = useSearchParams();
+  const pathname = usePathname();
 
   const { isEditing } = useTabInfo();
-  const { toggleEditing } = useTabActions();
+  const { setEditing } = useTabActions();
 
   const handleEditClick = (tab: AiMeetingAssistantLeftTabType) => {
     console.log(`${tab} 수정 클릭`);
-    toggleEditing();
+    setEditing(true);
   };
 
   const handleEditDoneClick = (tab: AiMeetingAssistantLeftTabType) => {
     console.log(`${tab} 수정 완료 클릭`);
-    toggleEditing();
+    setEditing(false);
   };
 
   const handleCopyClick = (tab: AiMeetingAssistantLeftTabType) => {
@@ -45,22 +46,19 @@ const AiMeetingAssistantLeftTab = ({ current }: AiMeetingAssistantLeftTabProps) 
   };
 
   return (
-    <div className="border-b-stroke-200 flex h-14 w-[720px] shrink-0 justify-between border-b border-solid bg-white px-4">
+    <div className="border-b-stroke-200 flex h-14 w-[720px] shrink-0 justify-between border-b border-solid bg-white px-5 py-[13px]">
       {/* 탭 영역 */}
       <div className="inline-flex gap-[9px]">
         {TABS.map((tab) => {
           const params = new URLSearchParams(searchParams.toString());
-          params.set('leftTab', tab);
+          params.set('leftTab', tab); // 현재 탭 값 설정
 
           return (
-            <Link
-              key={tab}
-              href={`${pathname}?${params.toString()}`}
-              className={
-                current === tab ? 'text-bt3-sb bg-gray-600' : 'text-cap1-md bg-white text-gray-200'
-              }
-            >
-              {AiMeetingAssistantLeftTabLabels[tab as AiMeetingAssistantLeftTabType]}
+            <Link key={tab} href={`${pathname}?${params.toString()}`}>
+              <CategoryOption
+                label={AiMeetingAssistantLeftTabLabels[tab as AiMeetingAssistantLeftTabType]}
+                active={current === tab}
+              />
             </Link>
           );
         })}

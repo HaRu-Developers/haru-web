@@ -1,5 +1,7 @@
 'use client';
 
+import CategoryOption from '@common/components/CategoryOption/CategoryOption.client';
+
 import {
   AiMeetingAssistantRightTabLabels,
   AiMeetingAssistantRightTabType,
@@ -12,9 +14,10 @@ const AiMeetingAssistantLeftTab = () => {
 
   return (
     <div className="border-b-stroke-200 flex h-14 w-[480px] shrink-0 flex-col items-start justify-center gap-2.5 border-b border-solid bg-white px-5 py-[13px]">
-      <div className="text-bt3-sb flex h-[30px] items-center justify-center gap-2.5 rounded-[7px] bg-gray-600 px-[9px] py-1.5">
-        {AiMeetingAssistantRightTabLabels[rightTab as AiMeetingAssistantRightTabType]}
-      </div>
+      <CategoryOption
+        label={AiMeetingAssistantRightTabLabels[rightTab as AiMeetingAssistantRightTabType]}
+        active={true}
+      />
     </div>
   );
 };

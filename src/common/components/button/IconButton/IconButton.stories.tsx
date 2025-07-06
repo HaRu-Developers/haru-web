@@ -34,7 +34,6 @@ export const Default: Story = {
   args: {
     ariaLabel: '복사 버튼',
     className: '',
-    onClick: () => alert('복사 클릭됨'),
     children: <CopyIcon width="30" height="30" />,
   },
 };

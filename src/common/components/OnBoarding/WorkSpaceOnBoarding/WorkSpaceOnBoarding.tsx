@@ -1,10 +1,13 @@
 'use client';
 
+import Image from 'next/image';
+
+import WorkSpaceOnBoardingImage from '@assets/images/onboarding/WorkSpaceOnBoardingImage.png';
+
 import CalendarIcon from '@svgs/component-set/CalendarIcon.svg';
 import EventsIcon from '@svgs/component-set/EventsIcon.svg';
 import MeetingsIcon from '@svgs/component-set/MeetingsIcon.svg';
 import MoodTrackerIcon from '@svgs/component-set/MoodTrackerIcon.svg';
-import WorkSpaceOnBoardingImage from '@svgs/component-set/WorkSpaceOnBoardingImage.svg';
 
 import FeatureCard from './FeatureCard/FeatureCard';
 import { Feature, Position } from './WorkSpaceOnBoarding.types';
@@ -47,7 +50,7 @@ const WorkSpaceOnBoarding = () => {
   return (
     <section className="flex h-screen w-[50vw] items-center justify-center bg-gray-700">
       <div className="relative">
-        <WorkSpaceOnBoardingImage />
+        <Image src={WorkSpaceOnBoardingImage} alt="워크스페이스 온보딩 이미지" />
 
         {features.map((feature) => (
           <div key={feature.title} className={`${positionClass[feature.position]} z-20`}>

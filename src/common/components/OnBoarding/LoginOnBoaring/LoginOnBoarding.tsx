@@ -27,7 +27,7 @@ const slides = [
   },
 ];
 
-const OnBoarding = () => {
+const LoginOnBoarding = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
@@ -70,4 +70,4 @@ const OnBoarding = () => {
   );
 };
 
-export default OnBoarding;
+export default LoginOnBoarding;

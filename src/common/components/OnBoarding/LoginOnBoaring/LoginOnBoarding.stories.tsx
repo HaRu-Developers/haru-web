@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 
-import OnBoarding from './OnBoarding';
+import LoginOnBoarding from './LoginOnBoarding';
 
-const meta: Meta<typeof OnBoarding> = {
-  title: 'Onboarding/OnBoarding',
-  component: OnBoarding,
+const meta: Meta<typeof LoginOnBoarding> = {
+  title: 'Onboarding/LoginOnBoarding',
+  component: LoginOnBoarding,
   decorators: [
     (Story) => (
       <div
@@ -22,8 +22,8 @@ const meta: Meta<typeof OnBoarding> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof OnBoarding>;
+type Story = StoryObj<typeof LoginOnBoarding>;
 
 export const Default: Story = {
-  render: () => <OnBoarding />,
+  render: () => <LoginOnBoarding />,
 };

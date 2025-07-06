@@ -1,8 +1,8 @@
 export enum Position {
-  topLeft = 'top-left',
-  topRight = 'top-right',
-  bottomLeft = 'bottom-left',
-  bottomRight = 'bottom-right',
+  TOP_LEFT = 'top-left',
+  TOP_RIGHT = 'top-right',
+  BOTTOM_LEFT = 'bottom-left',
+  BOTTOM_RIGHT = 'bottom-right',
 }
 
 export interface Feature {

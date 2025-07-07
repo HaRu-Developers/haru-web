@@ -3,5 +3,8 @@
 dist
 coverage
 
+# custom type 정의 파일은 제외합니다.
+**/svgr.d.ts
+
 # 패키지
 node_modules

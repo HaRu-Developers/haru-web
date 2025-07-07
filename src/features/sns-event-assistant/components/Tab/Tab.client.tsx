@@ -62,6 +62,16 @@ import { TabProps } from './Tab.types';
 
 // ✅ SNS 링크
 
+// ✅ 참여자 리스트 (count 포함)
+// 복사
+// 다운로드 - 파일 형식 모달
+
+// ✅ 당첨자 리스트 (count 포함)
+// 복사
+// 다운로드 - 파일 형식 모달
+
+// ✅ SNS 링크
+
 const tabs = Object.values(TabType);
 
 const Tab = ({ current, counts }: TabProps) => {
@@ -81,7 +91,7 @@ const Tab = ({ current, counts }: TabProps) => {
       <div className="inline-flex gap-[9px]">
         {tabs.map((tab) => {
           const params = new URLSearchParams(searchParams.toString());
-          params.set('tab', tab); // 현재 탭 값 설정
+          params.set('snsTab', tab); // 현재 탭 값 설정
 
           return (
             <Link key={tab} href={`${pathname}?${params.toString()}`}>

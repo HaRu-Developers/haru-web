@@ -30,6 +30,13 @@ import { TeamMoodReportTabProps } from './TeamMoodReportTab.types';
 // ✅ 설문 문항
 // 파일버튼 - 설문 링크 모달
 
+// ✅ 팀 분위기 리포트
+// 복사
+// 다운로드 - 파일 형식 모달
+// ✅ 응답 count
+// ✅ 설문 문항
+// 파일버튼 - 설문 링크 모달
+
 const tabs = Object.values(TeamMoodReportTabType);
 
 const TeamMoodReportTab = ({ current, counts }: TeamMoodReportTabProps) => {
@@ -54,7 +61,7 @@ const TeamMoodReportTab = ({ current, counts }: TeamMoodReportTabProps) => {
       <div className="inline-flex gap-[9px]">
         {tabs.map((tab) => {
           const params = new URLSearchParams(searchParams.toString());
-          params.set('tab', tab); // 현재 탭 값 설정
+          params.set('moodTab', tab); // 현재 탭 값 설정
 
           return (
             <Link key={tab} href={`${pathname}?${params.toString()}`}>

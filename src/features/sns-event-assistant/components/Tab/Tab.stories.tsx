@@ -14,6 +14,10 @@ const meta: Meta<typeof Tab> = {
       options: Object.values(TabType),
       description: '현재 선택된 탭',
     },
+    counts: {
+      control: 'object',
+      description: '참여자, 당첨자 탭별 count 값',
+    },
   },
 };
 
@@ -24,5 +28,9 @@ type Story = StoryObj<typeof Tab>;
 export const Default: Story = {
   args: {
     current: TabType.PARTICIPANT_LIST,
+    counts: {
+      [TabType.PARTICIPANT_LIST]: 10,
+      [TabType.WINNER_LIST]: 10,
+    },
   },
 };

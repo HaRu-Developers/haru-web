@@ -32,26 +32,6 @@ import { TabProps } from './Tab.types';
 
 // ✅ SNS 링크
 
-// ✅ 참여자 리스트 (count 포함)
-// 복사
-// 다운로드 - 파일 형식 모달
-
-// ✅ 당첨자 리스트 (count 포함)
-// 복사
-// 다운로드 - 파일 형식 모달
-
-// ✅ SNS 링크
-
-// ✅ 참여자 리스트 (count 포함)
-// 복사
-// 다운로드 - 파일 형식 모달
-
-// ✅ 당첨자 리스트 (count 포함)
-// 복사
-// 다운로드 - 파일 형식 모달
-
-// ✅ SNS 링크
-
 const tabs = Object.values(TabType);
 
 const Tab = ({ current, counts }: TabProps) => {

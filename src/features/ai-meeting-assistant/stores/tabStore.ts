@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 
-import { RightTabType } from '@/features/ai-meeting-assistant/constants/tabs';
+import { RightTabType } from '@features/ai-meeting-assistant/constants/tabs';
 
 interface tabStoreState {
   isEditing: boolean;

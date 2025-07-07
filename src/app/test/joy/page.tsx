@@ -4,6 +4,10 @@ import { SearchParamsType } from '@common/types/routing.types';
 
 import { LeftTabType } from '@features/ai-meeting-assistant/constants/tabs';
 import { TabType } from '@features/sns-event-assistant/constants/tabs';
+import {
+  SurveyQuestionTabType,
+  TeamMoodReportTabType,
+} from '@features/team-mood-tracker/constants/tabs';
 
 import LeftPanel from '@features/ai-meeting-assistant/components/panels/LeftPanel/LeftPanel.server';
 import RightPanel from '@features/ai-meeting-assistant/components/panels/RightPanel/RightPanel.client';
@@ -12,13 +16,18 @@ import RightTab from '@features/ai-meeting-assistant/components/tabs/RightTab/Ri
 import Panel from '@features/sns-event-assistant/components/Panel/Panel.server';
 import Tab from '@features/sns-event-assistant/components/Tab/Tab.client';
 
+import SurveyQuestionPanel from '@features/team-mood-tracker/componets/panels/SurveyQuestionPanel/SurveyQuestionPanel.server';
+import TeamMoodReportPanel from '@features/team-mood-tracker/componets/panels/TeamMoodReportPanel/TeamMoodReportPanel.server';
+import SurveyQuestionTab from '@features/team-mood-tracker/componets/tabs/SurveyQuestionTab/SurveyQuestionTab.client';
+import TeamMoodReportTab from '@features/team-mood-tracker/componets/tabs/TeamMoodReportTab/TeamMoodReportTab.client';
+
 const TestPage = async ({ searchParams }: { searchParams: Promise<SearchParamsType> }) => {
-  // TAB_AI 회의 진행 매니저_좌측
-  const { leftTab } = await searchParams;
-  const formattedLeftTab =
-    typeof leftTab === 'string' && Object.values(LeftTabType).includes(leftTab as LeftTabType)
-      ? (leftTab as LeftTabType)
-      : LeftTabType.AI_NOTES; // 기본값
+  // // TAB_AI 회의 진행 매니저_좌측
+  // const { leftTab } = await searchParams;
+  // const formattedLeftTab =
+  //   typeof leftTab === 'string' && Object.values(LeftTabType).includes(leftTab as LeftTabType)
+  //     ? (leftTab as LeftTabType)
+  //     : LeftTabType.AI_NOTES; // 기본값
 
   // TAB_SNS 이벤트 어시스턴트
   // const { tab } = await searchParams;
@@ -26,17 +35,31 @@ const TestPage = async ({ searchParams }: { searchParams: Promise<SearchParamsTy
   //   typeof tab === 'string' && Object.values(TabType).includes(tab as TabType)
   //     ? (tab as TabType)
   //     : TabType.PARTICIPANT_LIST; // 기본값
-  // // count 가져오기 (예시: 서버에서 fetch)
-  // // const participantCount = await getParticipantCount();
-  // // const winnerCount = await getWinnerCount();
+  // // 실제로는 서버에서 count 가져오기
   // const participantCount = 10;
   // const winnerCount = 10;
 
+  // TAB_팀 분위기 트래커
+  // 실제로는 서버에서 설문 정보 가져오기
+  // const survey = {
+  //   isSubmitted: false,
+  // };
+
+  const { tab } = await searchParams;
+  const formattedTab =
+    typeof tab === 'string' &&
+    Object.values(TeamMoodReportTabType).includes(tab as TeamMoodReportTabType)
+      ? (tab as TeamMoodReportTabType)
+      : TeamMoodReportTabType.TEAM_MOOD_REPORT; // 기본값
+  // 실제로는 서버에서 count 가져오기
+  const ResponseSummary = 10;
+
   return (
-    <div className="flex gap-4">
+    // <div className="flex gap-4">
+    <div>
       {/* TODO: 로딩 UI를 어느 단위로 처리할지 결정 필요 */}
       {/* TAB_AI 회의 진행 매니저_좌측 */}
-      <div>
+      {/* <div>
         <Suspense fallback={<div>탭 로딩 중...</div>}>
           <LeftTab current={formattedLeftTab} />
         </Suspense>
@@ -47,7 +70,7 @@ const TestPage = async ({ searchParams }: { searchParams: Promise<SearchParamsTy
       <div>
         <RightTab />
         <RightPanel />
-      </div>
+      </div> */}
       {/* TAB_SNS 이벤트 어시스턴트 */}
       {/* <div>
         <Suspense fallback={<div>탭 로딩 중...</div>}>
@@ -63,6 +86,22 @@ const TestPage = async ({ searchParams }: { searchParams: Promise<SearchParamsTy
           <Panel tab={formattedTab} />
         </Suspense>
       </div> */}
+      {/* TAB_팀 분위기 트래커 */}
+      {/* <SurveyQuestionTab survey={survey} />
+      <SurveyQuestionPanel survey={survey} /> */}
+      <div>
+        <Suspense fallback={<div>탭 로딩 중...</div>}>
+          <TeamMoodReportTab
+            current={formattedTab}
+            counts={{
+              [TeamMoodReportTabType.RESPONSE_SUMMARY]: ResponseSummary,
+            }}
+          />
+        </Suspense>
+        <Suspense fallback={<div>패널 로딩 중...</div>}>
+          <TeamMoodReportPanel tab={formattedTab} />
+        </Suspense>
+      </div>
     </div>
   );
 };

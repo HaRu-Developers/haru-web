@@ -79,7 +79,8 @@ module.exports = {
   importOrderSortSpecifiers: true,
 
   // 플러그인 등록(Tailwind 정렬, import 정렬)
-  plugins: ['@trivago/prettier-plugin-sort-imports', 'prettier-plugin-tailwindcss', '@prettier/plugin-xml'],
+  // plugins: ['@trivago/prettier-plugin-sort-imports', 'prettier-plugin-tailwindcss', '@prettier/plugin-xml'],
+  plugins: ['@trivago/prettier-plugin-sort-imports', 'prettier-plugin-tailwindcss'],
   // XML/SVG 파일 전용 설정
   overrides: [
     {

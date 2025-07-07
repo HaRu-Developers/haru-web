@@ -4,7 +4,10 @@ dist
 coverage
 
 # custom type 정의 파일은 제외합니다.
-**/svgr.d.ts
+svgr.d.ts
+
+# parse가 불가능한 파일
+*.svg
 
 # 패키지
 node_modules

@@ -9,18 +9,15 @@ import Edit from '@svgs/component-set/EditIcon.svg';
 import CategoryOption from '@common/components/CategoryOption/CategoryOption.client';
 import IconButton from '@common/components/button/IconButton/IconButton.client';
 
-import {
-  AiMeetingAssistantLeftTabLabels,
-  AiMeetingAssistantLeftTabType,
-} from '@features/ai-meeting-assistant/constants/tabs';
+import { LeftTabLabels, LeftTabType } from '@features/ai-meeting-assistant/constants/tabs';
 
 import { useTabActions, useTabInfo } from '@features/ai-meeting-assistant/hooks/stores/useTabStore';
 
-import { AiMeetingAssistantLeftTabProps } from './AiMeetingAssistantLeftTab.types';
+import { LeftTabProps } from './LeftTab.types';
 
-const TABS = Object.values(AiMeetingAssistantLeftTabType);
+const TABS = Object.values(LeftTabType);
 
-const AiMeetingAssistantLeftTab = ({ current }: AiMeetingAssistantLeftTabProps) => {
+const LeftTab = ({ current }: LeftTabProps) => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
 
@@ -41,8 +38,8 @@ const AiMeetingAssistantLeftTab = ({ current }: AiMeetingAssistantLeftTabProps) 
     console.log('다운로드 클릭');
   };
 
-  const handleCopyClick = (tab: AiMeetingAssistantLeftTabType) => {
-    console.log(`${tab} 복사 클릭`);
+  const handleCopyClick = (tab: LeftTabType) => {
+    console.log(`${tab} 탭에서 복사 클릭`);
   };
 
   return (
@@ -55,10 +52,7 @@ const AiMeetingAssistantLeftTab = ({ current }: AiMeetingAssistantLeftTabProps) 
 
           return (
             <Link key={tab} href={`${pathname}?${params.toString()}`}>
-              <CategoryOption
-                label={AiMeetingAssistantLeftTabLabels[tab as AiMeetingAssistantLeftTabType]}
-                active={current === tab}
-              />
+              <CategoryOption label={LeftTabLabels[tab as LeftTabType]} active={current === tab} />
             </Link>
           );
         })}
@@ -66,7 +60,7 @@ const AiMeetingAssistantLeftTab = ({ current }: AiMeetingAssistantLeftTabProps) 
 
       {/* 버튼 영역 */}
       <div className="inline-flex items-center">
-        {current === AiMeetingAssistantLeftTabType.AiNotes &&
+        {current === LeftTabType.AiNotes &&
           (isEditing ? (
             // TODO: 수정 완료 버튼으로 변경 필요
             <button onClick={handleEditDoneClick}>수정 완료</button>
@@ -77,7 +71,7 @@ const AiMeetingAssistantLeftTab = ({ current }: AiMeetingAssistantLeftTabProps) 
               </IconButton>
               <IconButton
                 onClick={() => handleCopyClick(current)}
-                ariaLabel={`${AiMeetingAssistantLeftTabLabels[current]} 복사`}
+                ariaLabel={`${LeftTabLabels[current]} 복사`}
               >
                 <Copy width="30px" height="30px" />
               </IconButton>
@@ -85,10 +79,10 @@ const AiMeetingAssistantLeftTab = ({ current }: AiMeetingAssistantLeftTabProps) 
               <button onClick={handleDownloadClick}>다운로드</button>
             </>
           ))}
-        {current === AiMeetingAssistantLeftTabType.VoiceRecordings && (
+        {current === LeftTabType.VoiceRecordings && (
           <IconButton
-            onClick={handleDownloadClick}
-            ariaLabel={`${AiMeetingAssistantLeftTabLabels[current]} 복사`}
+            onClick={() => handleCopyClick(current)}
+            ariaLabel={`${LeftTabLabels[current]} 복사`}
           >
             <Copy width="30px" height="30px" />
           </IconButton>
@@ -98,4 +92,4 @@ const AiMeetingAssistantLeftTab = ({ current }: AiMeetingAssistantLeftTabProps) 
   );
 };
 
-export default AiMeetingAssistantLeftTab;
+export default LeftTab;

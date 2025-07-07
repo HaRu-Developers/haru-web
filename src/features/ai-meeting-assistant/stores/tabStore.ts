@@ -2,14 +2,14 @@ import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 
-import { AiMeetingAssistantRightTabType } from '@/features/ai-meeting-assistant/constants/tabs';
+import { RightTabType } from '@/features/ai-meeting-assistant/constants/tabs';
 
 interface tabStoreState {
   isEditing: boolean;
-  rightTab: AiMeetingAssistantRightTabType;
+  rightTab: RightTabType;
   actions: {
     setEditing: (val: boolean) => void;
-    setRightTab: (tab: AiMeetingAssistantRightTabType) => void;
+    setRightTab: (tab: RightTabType) => void;
   };
 }
 
@@ -17,7 +17,7 @@ const tabStore = create<tabStoreState>()(
   devtools(
     immer((set) => ({
       isEditing: false,
-      rightTab: AiMeetingAssistantRightTabType.AiQuestions,
+      rightTab: RightTabType.AiQuestions,
       actions: {
         setEditing: (val) => set({ isEditing: val }),
         setRightTab: (tab) => set({ rightTab: tab }),

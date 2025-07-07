@@ -32,6 +32,36 @@ import { TabProps } from './Tab.types';
 
 // ✅ SNS 링크
 
+// ✅ 참여자 리스트 (count 포함)
+// 복사
+// 다운로드 - 파일 형식 모달
+
+// ✅ 당첨자 리스트 (count 포함)
+// 복사
+// 다운로드 - 파일 형식 모달
+
+// ✅ SNS 링크
+
+// ✅ 참여자 리스트 (count 포함)
+// 복사
+// 다운로드 - 파일 형식 모달
+
+// ✅ 당첨자 리스트 (count 포함)
+// 복사
+// 다운로드 - 파일 형식 모달
+
+// ✅ SNS 링크
+
+// ✅ 참여자 리스트 (count 포함)
+// 복사
+// 다운로드 - 파일 형식 모달
+
+// ✅ 당첨자 리스트 (count 포함)
+// 복사
+// 다운로드 - 파일 형식 모달
+
+// ✅ SNS 링크
+
 const tabs = Object.values(TabType);
 
 const Tab = ({ current, counts }: TabProps) => {
@@ -46,7 +76,7 @@ const Tab = ({ current, counts }: TabProps) => {
     console.log(`${tab} 탭에서 복사 클릭`);
   };
   return (
-    <div className="border-b-stroke-200 flex h-14 w-[720px] shrink-0 justify-between border-b border-solid bg-white px-5 py-[13px]">
+    <div className="border-b-stroke-200 flex h-14 w-[1200px] shrink-0 items-center justify-between border-b border-solid bg-white px-[266px] py-[13px]">
       {/* 탭 영역 */}
       <div className="inline-flex gap-[9px]">
         {tabs.map((tab) => {

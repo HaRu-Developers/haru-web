@@ -23,6 +23,6 @@ type Story = StoryObj<typeof RightTab>;
 
 export const Default: Story = {
   args: {
-    current: RightTabType.AiQuestions,
+    current: RightTabType.AI_QUESTIONS,
   },
 };

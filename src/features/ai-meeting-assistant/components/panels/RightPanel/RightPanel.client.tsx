@@ -11,9 +11,9 @@ const RightPanel = () => {
   const handleTabChange = () => {
     // TODO: 실제로는 조건에 맞춰 탭 전환 필요
     const nextTab =
-      rightTab === RightTabType.AiQuestions
-        ? RightTabType.AiRecommendations
-        : RightTabType.AiQuestions;
+      rightTab === RightTabType.AI_QUESTIONS
+        ? RightTabType.AI_RECOMMENDATIONS
+        : RightTabType.AI_QUESTIONS;
 
     setRightTab(nextTab);
   };

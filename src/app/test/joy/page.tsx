@@ -1,27 +1,41 @@
 import { Suspense } from 'react';
 
+import { SearchParamsType } from '@common/types/routing.types';
+
 import { LeftTabType } from '@features/ai-meeting-assistant/constants/tabs';
+import { TabType } from '@features/sns-event-assistant/constants/tabs';
 
 import LeftPanel from '@features/ai-meeting-assistant/components/panels/LeftPanel/LeftPanel.server';
 import RightPanel from '@features/ai-meeting-assistant/components/panels/RightPanel/RightPanel.client';
 import LeftTab from '@features/ai-meeting-assistant/components/tabs/LeftTab/LeftTab.client';
 import RightTab from '@features/ai-meeting-assistant/components/tabs/RightTab/RightTab.client';
+import Panel from '@features/sns-event-assistant/components/Panel/Panel.server';
+import Tab from '@features/sns-event-assistant/components/Tab/Tab.client';
 
-const TestPage = async ({
-  searchParams,
-}: {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-}) => {
+const TestPage = async ({ searchParams }: { searchParams: Promise<SearchParamsType> }) => {
+  // TAB_AI 회의 진행 매니저_좌측
   const { leftTab } = await searchParams;
-
   const formattedLeftTab =
     typeof leftTab === 'string' && Object.values(LeftTabType).includes(leftTab as LeftTabType)
       ? (leftTab as LeftTabType)
-      : LeftTabType.AiNotes; // 기본값
+      : LeftTabType.AI_NOTES; // 기본값
+
+  // TAB_SNS 이벤트 어시스턴트
+  // const { tab } = await searchParams;
+  // const formattedTab =
+  //   typeof tab === 'string' && Object.values(TabType).includes(tab as TabType)
+  //     ? (tab as TabType)
+  //     : TabType.PARTICIPANT_LIST; // 기본값
+  // // count 가져오기 (예시: 서버에서 fetch)
+  // // const participantCount = await getParticipantCount();
+  // // const winnerCount = await getWinnerCount();
+  // const participantCount = 10;
+  // const winnerCount = 10;
 
   return (
     <div className="flex gap-4">
       {/* TODO: 로딩 UI를 어느 단위로 처리할지 결정 필요 */}
+      {/* TAB_AI 회의 진행 매니저_좌측 */}
       <div>
         <Suspense fallback={<div>탭 로딩 중...</div>}>
           <LeftTab current={formattedLeftTab} />
@@ -34,6 +48,21 @@ const TestPage = async ({
         <RightTab />
         <RightPanel />
       </div>
+      {/* TAB_SNS 이벤트 어시스턴트 */}
+      {/* <div>
+        <Suspense fallback={<div>탭 로딩 중...</div>}>
+          <Tab
+            current={formattedTab}
+            counts={{
+              [TabType.PARTICIPANT_LIST]: participantCount,
+              [TabType.WINNER_LIST]: winnerCount,
+            }}
+          />
+        </Suspense>
+        <Suspense fallback={<div>패널 로딩 중...</div>}>
+          <Panel tab={formattedTab} />
+        </Suspense>
+      </div> */}
     </div>
   );
 };

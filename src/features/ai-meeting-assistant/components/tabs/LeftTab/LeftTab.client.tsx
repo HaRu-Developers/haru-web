@@ -15,7 +15,7 @@ import { useTabActions, useTabInfo } from '@features/ai-meeting-assistant/hooks/
 
 import { LeftTabProps } from './LeftTab.types';
 
-const TABS = Object.values(LeftTabType);
+const tabs = Object.values(LeftTabType);
 
 const LeftTab = ({ current }: LeftTabProps) => {
   const searchParams = useSearchParams();
@@ -46,7 +46,7 @@ const LeftTab = ({ current }: LeftTabProps) => {
     <div className="border-b-stroke-200 flex h-14 w-[720px] shrink-0 justify-between border-b border-solid bg-white px-5 py-[13px]">
       {/* 탭 영역 */}
       <div className="inline-flex gap-[9px]">
-        {TABS.map((tab) => {
+        {tabs.map((tab) => {
           const params = new URLSearchParams(searchParams.toString());
           params.set('leftTab', tab); // 현재 탭 값 설정
 
@@ -60,7 +60,7 @@ const LeftTab = ({ current }: LeftTabProps) => {
 
       {/* 버튼 영역 */}
       <div className="inline-flex items-center">
-        {current === LeftTabType.AiNotes &&
+        {current === LeftTabType.AI_NOTES &&
           (isEditing ? (
             // TODO: 수정 완료 버튼으로 변경 필요
             <button onClick={handleEditDoneClick}>수정 완료</button>
@@ -79,7 +79,7 @@ const LeftTab = ({ current }: LeftTabProps) => {
               <button onClick={handleDownloadClick}>다운로드</button>
             </>
           ))}
-        {current === LeftTabType.VoiceRecordings && (
+        {current === LeftTabType.VOICE_RECORDINGS && (
           <IconButton
             onClick={() => handleCopyClick(current)}
             ariaLabel={`${LeftTabLabels[current]} 복사`}

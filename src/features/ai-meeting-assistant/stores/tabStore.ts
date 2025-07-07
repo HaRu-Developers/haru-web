@@ -17,7 +17,7 @@ const tabStore = create<tabStoreState>()(
   devtools(
     immer((set) => ({
       isEditing: false,
-      rightTab: RightTabType.AiQuestions,
+      rightTab: RightTabType.AI_QUESTIONS,
       actions: {
         setEditing: (val) => set({ isEditing: val }),
         setRightTab: (tab) => set({ rightTab: tab }),

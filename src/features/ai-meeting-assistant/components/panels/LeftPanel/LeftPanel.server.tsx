@@ -6,9 +6,9 @@ import VoiceRecordingsPanel from './components/VoiceRecordingsPanel/VoiceRecordi
 
 const LeftPanel = ({ tab }: LeftPanelProps) => {
   switch (tab) {
-    case LeftTabType.AiNotes:
+    case LeftTabType.AI_NOTES:
       return <AINotesPanel />;
-    case LeftTabType.VoiceRecordings:
+    case LeftTabType.VOICE_RECORDINGS:
       return <VoiceRecordingsPanel />;
   }
 };

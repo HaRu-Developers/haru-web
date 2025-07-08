@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 
-import SelectBoxProfile from './SelectBoxProfile';
+import SelectBoxProfile from './SelectBoxProfile.server';
 
 const meta: Meta<typeof SelectBoxProfile> = {
   title: 'Components/select-box/SelectBoxProfile',

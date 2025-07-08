@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import Image from 'next/image';
 
-import DefaultProfileImage from '@common/components/DefaultProfileImage/DefaultProfileImage';
+import DefaultProfileImage from '@common/components/DefaultProfileImage/DefaultProfileImage.server';
 
 import { ProfileImageProps } from './ProfileImage.types';
 

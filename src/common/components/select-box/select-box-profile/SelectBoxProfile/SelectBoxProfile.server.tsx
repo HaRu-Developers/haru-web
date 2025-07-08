@@ -5,7 +5,7 @@ import ProfileCircle from '@svgs/component-set/profileCircle.svg';
 import AddMemberButton from '../AddMemberButton/AddMemberButton.client';
 import FooterButtons from '../FooterButtons/FooterButtons.client';
 import ProfileImage from '../ProfileImage/ProfileImage.client';
-import WorkSpaceItem from '../WorkSpaceItem/WorkSpaceItem';
+import WorkSpaceItem from '../WorkSpaceItem/WorkSpaceItem.server';
 
 // 임시 데이터
 const profile = {

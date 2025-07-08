@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 
-import DefaultProfileImage from './DefaultProfileImage';
+import DefaultProfileImage from './DefaultProfileImage.server';
 
 const meta: Meta<typeof DefaultProfileImage> = {
   title: 'Components/DefaultProfileImage',

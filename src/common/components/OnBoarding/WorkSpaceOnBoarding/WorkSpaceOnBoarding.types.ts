@@ -1,3 +1,5 @@
+import { OnboardingIconsState } from '@icons/OnboardingIcons/OnboardingIcons.types';
+
 export enum Position {
   TOP_LEFT = 'top-left',
   TOP_RIGHT = 'top-right',
@@ -8,6 +10,6 @@ export enum Position {
 export interface Feature {
   title: string;
   description: string;
-  icon: React.FC<React.SVGProps<SVGSVGElement>>;
+  icon: OnboardingIconsState;
   position: Position;
 }

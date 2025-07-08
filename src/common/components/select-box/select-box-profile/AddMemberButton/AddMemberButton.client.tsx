@@ -1,6 +1,7 @@
 'use client';
 
-import ProfileAdd from '@svgs/component-set/profileAdd.svg';
+import ProfileDropdownIcons from '@icons/ProfileDropdownIcons/ProfileDropdownIcons';
+import { ProfileDropdownIconsState } from '@icons/ProfileDropdownIcons/ProfileDropdownIcons.types';
 
 const AddMemberButton = () => {
   const handleAddMember = () => {
@@ -12,7 +13,7 @@ const AddMemberButton = () => {
       onClick={handleAddMember}
       className="border-stroke-200 flex h-7 cursor-pointer items-center justify-center gap-[3px] rounded-[7px] border border-solid bg-white px-2 py-1.5"
     >
-      <ProfileAdd height="16" width="16" />
+      <ProfileDropdownIcons state={ProfileDropdownIconsState.ADD_PROFILE} />
       <span className="text-cap1-md text-gray-400">팀원 추가</span>
     </button>
   );

@@ -1,7 +1,9 @@
 'use client';
 
-import GnbLogout from '@svgs/component-set/GnbLogoutIcon.svg';
-import Plus from '@svgs/component-set/PlusIcon.svg';
+import PlusIcons from '@icons/PlusIcons/PlusIcons';
+import { PlusIconsState } from '@icons/PlusIcons/PlusIcons.types';
+import ProfileDropdownIcons from '@icons/ProfileDropdownIcons/ProfileDropdownIcons';
+import { ProfileDropdownIconsState } from '@icons/ProfileDropdownIcons/ProfileDropdownIcons.types';
 
 const FooterButtons = () => {
   const handleAddWorkspace = () => {
@@ -18,14 +20,14 @@ const FooterButtons = () => {
         onClick={handleAddWorkspace}
         className="flex h-7 cursor-pointer items-center justify-center gap-[3px] rounded-[7px] bg-gray-700 px-2 py-1.5"
       >
-        <Plus height="16" width="16" />
+        <PlusIcons state={PlusIconsState.SIZE_16_GRAY_300} />
         <span className="text-[13px] leading-[130%] font-medium tracking-[-0.26px] text-gray-300 not-italic">
           워크스페이스 추가
         </span>
       </button>
       <button onClick={handleLogout} className="flex cursor-pointer items-center gap-[3px]">
-        <GnbLogout height="16" width="16" />
-        <span className="text-xs leading-[130%] font-medium tracking-[-0.24px] text-gray-400 not-italic">
+        <ProfileDropdownIcons state={ProfileDropdownIconsState.LOGOUT} />
+        <span className="text-xs leading-[130%] font-medium tracking-[-0.24px] text-gray-400 not-italic hover:underline hover:decoration-gray-400 hover:decoration-solid hover:decoration-[1px] hover:underline-offset-[1px] hover:[text-decoration-skip-ink:none] hover:[text-underline-position:from-font]">
           로그아웃
         </span>
       </button>

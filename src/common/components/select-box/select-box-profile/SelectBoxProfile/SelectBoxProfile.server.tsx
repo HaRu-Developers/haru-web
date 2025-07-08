@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
-import ProfileCircle from '@svgs/component-set/profileCircle.svg';
+import ProfileDropdownIcons from '@icons/ProfileDropdownIcons/ProfileDropdownIcons';
+import { ProfileDropdownIconsState } from '@icons/ProfileDropdownIcons/ProfileDropdownIcons.types';
 
 import AddMemberButton from '../AddMemberButton/AddMemberButton.client';
 import FooterButtons from '../FooterButtons/FooterButtons.client';
@@ -43,7 +44,7 @@ const SelectBoxProfile = () => {
               href="/profile"
               className="border-stroke-200 flex h-7 items-center justify-center gap-[3px] rounded-[7px] border border-solid bg-white px-2 py-1.5"
             >
-              <ProfileCircle height="16" width="16" />
+              <ProfileDropdownIcons state={ProfileDropdownIconsState.PROFILE} />
               <span className="text-cap1-md text-gray-400">프로필 설정</span>
             </Link>
             <AddMemberButton />

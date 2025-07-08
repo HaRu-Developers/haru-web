@@ -1,0 +1,6 @@
+export enum AudioBarIconsState {
+  START_RECORDING = 'START_RECORDING',
+  STOP_RECORDING = 'STOP_RECORDING',
+  PAUSE = 'PAUSE',
+  PLAY = 'PLAY',
+}

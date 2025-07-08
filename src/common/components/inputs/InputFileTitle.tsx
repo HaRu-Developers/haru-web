@@ -4,23 +4,27 @@ import { useEffect, useState } from 'react';
 
 import clsx from 'clsx';
 
-import { InputFileTitleProps } from './InputFileTitle.types';
+import { InputFileTitleMode, InputFileTitleProps } from './InputFileTitle.types';
 
 /**
  * 인풋 파일 타이틀 컴포넌트
  */
 
-const InputFileTitle = ({ mode = 'default', value, onSave, onCancel }: InputFileTitleProps) => {
+const InputFileTitle = ({
+  mode = InputFileTitleMode.DEFAULT,
+  value,
+  onSave,
+  onCancel,
+}: InputFileTitleProps) => {
   const [inputValue, setInputValue] = useState<string>(value);
   useEffect(() => {
     setInputValue(value);
   }, [value]);
 
   const containerClass = clsx(
-    'flex w-[676px] h-[40px] items-center px-2 py-[2px] rounded font-semibold text-title-1 text-black',
+    'flex w-[676px] h-[36px] items-center px-[8px] py-[2px] rounded-[4px] text-t1-sb text-black',
     {
-      'bg-gray-600': mode === 'hover',
-      'border border-stroke-100': mode === 'editable',
+      'border border-stroke-100': mode === InputFileTitleMode.EDITABLE,
     },
   );
 
@@ -37,7 +41,7 @@ const InputFileTitle = ({ mode = 'default', value, onSave, onCancel }: InputFile
     onSave?.(inputValue);
   };
 
-  if (mode === 'editable') {
+  if (mode === InputFileTitleMode.EDITABLE) {
     return (
       <input
         type="text"
@@ -51,7 +55,7 @@ const InputFileTitle = ({ mode = 'default', value, onSave, onCancel }: InputFile
     );
   }
 
-  return <span className={containerClass}>{value}</span>;
+  return <span className={clsx(containerClass, 'hover:bg-gray-600')}>{value}</span>;
 };
 
 export default InputFileTitle;

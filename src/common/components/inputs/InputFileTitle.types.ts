@@ -1,5 +1,10 @@
+export enum InputFileTitleMode {
+  DEFAULT = 'DEFAULT',
+  EDITABLE = 'EDITABLE',
+}
+
 export interface InputFileTitleProps {
-  mode?: 'default' | 'hover' | 'editable';
+  mode?: InputFileTitleMode;
   value: string;
   onSave?: (newValue: string) => void;
   onCancel?: () => void;

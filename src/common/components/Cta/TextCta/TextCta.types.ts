@@ -1,7 +1,14 @@
+import { PlusIconsState } from '@icons/PlusIcons/PlusIcons.types';
+
 export enum TextCtaType {
-  AI_MEETING = 'AI_MEETING',
-  SNS_EVENT = 'SNS_EVENT',
-  TEAM_TRACKER = 'TEAM_TRACKER',
+  AI_MEETING_MANAGER = 'AI_MEETING_MANAGER',
+  SNS_EVENT_ASSISTENT = 'SNS_EVENT_ASSISTENT',
+  TEAM_MOOD_TRACKER = 'TEAM_MOOD_TRACKER',
+}
+
+export interface TextCtaConfig {
+  iconState: PlusIconsState;
+  color: string;
 }
 
 export interface TextCtaProps {

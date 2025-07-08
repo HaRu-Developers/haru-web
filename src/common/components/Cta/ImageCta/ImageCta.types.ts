@@ -1,17 +1,17 @@
-import { SVGProps } from 'react';
+import { CtaIconsState } from '@icons/Cta/CtaIcons.types';
+import { PlusIconsState } from '@icons/PlusIcons/PlusIcons.types';
 
 export enum ImageCtaType {
-  AI_MEETING = 'AI_MEETING',
-  SNS_EVENT = 'SNS_EVENT',
-  TEAM_TRACKER = 'TEAM_TRACKER',
+  AI_MEETING_MANAGER = 'AI_MEETING_MANAGER',
+  SNS_EVENT_ASSISTENT = 'SNS_EVENT_ASSISTENT',
+  TEAM_MOOD_TRACKER = 'TEAM_MOOD_TRACKER',
 }
 
 export interface ImageCtaConfig {
-  color: string;
   title: string;
-  icon: React.FC<SVGProps<SVGSVGElement>>;
-  iconWidth: string;
-  iconHeight: string;
+  color: string;
+  ctaIconState: CtaIconsState;
+  plusIconState: PlusIconsState;
   marginBottom: string;
 }
 

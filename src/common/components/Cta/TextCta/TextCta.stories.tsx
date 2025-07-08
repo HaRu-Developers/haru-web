@@ -15,21 +15,21 @@ type Story = StoryObj<typeof TextCta>;
 
 export const AiMeeting: Story = {
   args: {
-    type: TextCtaType.AI_MEETING,
+    type: TextCtaType.AI_MEETING_MANAGER,
     onClick: () => alert('AI 회의 클릭'),
   },
 };
 
 export const SnsEvent: Story = {
   args: {
-    type: TextCtaType.SNS_EVENT,
+    type: TextCtaType.SNS_EVENT_ASSISTENT,
     onClick: () => alert('SNS 이벤트 클릭'),
   },
 };
 
 export const TeamTracker: Story = {
   args: {
-    type: TextCtaType.TEAM_TRACKER,
+    type: TextCtaType.TEAM_MOOD_TRACKER,
     onClick: () => alert('팀 트래커 클릭'),
   },
 };

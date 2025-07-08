@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 
-import CopyIcon from '@svgs/component-set/CopyIcon.svg';
+import FeatureTabIcons from '@icons/FeatureTabIcons/FeatureTabIcons';
+import { FeatureTabIconsState } from '@icons/FeatureTabIcons/FeatureTabIcons.types';
 
 import IconButton from './IconButton.client';
 
@@ -34,6 +35,6 @@ export const Default: Story = {
   args: {
     ariaLabel: '복사 버튼',
     className: '',
-    children: <CopyIcon width="30" height="30" />,
+    children: <FeatureTabIcons state={FeatureTabIconsState.COPY} />,
   },
 };

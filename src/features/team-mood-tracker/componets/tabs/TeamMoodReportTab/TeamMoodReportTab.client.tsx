@@ -10,8 +10,8 @@
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 
-import Copy from '@svgs/component-set/CopyIcon.svg';
-import LinkIcon from '@svgs/component-set/LinkIcon.svg';
+import FeatureTabIcons from '@icons/FeatureTabIcons/FeatureTabIcons';
+import { FeatureTabIconsState } from '@icons/FeatureTabIcons/FeatureTabIcons.types';
 
 import CategoryOption from '@common/components/CategoryOption/CategoryOption.client';
 import IconButton from '@common/components/button/IconButton/IconButton.client';
@@ -81,7 +81,7 @@ const TeamMoodReportTab = ({ current, counts }: TeamMoodReportTabProps) => {
             onClick={handleCopyClick}
             ariaLabel={`${TeamMoodReportTabLabels[current]} 복사`}
           >
-            <Copy width="30px" height="30px" />
+            <FeatureTabIcons state={FeatureTabIconsState.COPY} />
           </IconButton>
           <button onClick={handleDownloadClick}>다운로드</button>
         </div>
@@ -89,7 +89,7 @@ const TeamMoodReportTab = ({ current, counts }: TeamMoodReportTabProps) => {
 
       {current === TeamMoodReportTabType.QUESTION_LIST && (
         <IconButton onClick={handleFileClick} ariaLabel="설문 문항 보기">
-          <LinkIcon width="30px" height="30px" />
+          <FeatureTabIcons state={FeatureTabIconsState.LINK} />
         </IconButton>
       )}
     </div>

@@ -13,7 +13,8 @@
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 
-import Copy from '@svgs/component-set/CopyIcon.svg';
+import FeatureTabIcons from '@icons/FeatureTabIcons/FeatureTabIcons';
+import { FeatureTabIconsState } from '@icons/FeatureTabIcons/FeatureTabIcons.types';
 
 import CategoryOption from '@common/components/CategoryOption/CategoryOption.client';
 import IconButton from '@common/components/button/IconButton/IconButton.client';
@@ -21,46 +22,6 @@ import IconButton from '@common/components/button/IconButton/IconButton.client';
 import { TabLabels, TabType } from '@features/sns-event-assistant/constants/tabs';
 
 import { TabProps } from './Tab.types';
-
-// ✅ 참여자 리스트 (count 포함)
-// 복사
-// 다운로드 - 파일 형식 모달
-
-// ✅ 당첨자 리스트 (count 포함)
-// 복사
-// 다운로드 - 파일 형식 모달
-
-// ✅ SNS 링크
-
-// ✅ 참여자 리스트 (count 포함)
-// 복사
-// 다운로드 - 파일 형식 모달
-
-// ✅ 당첨자 리스트 (count 포함)
-// 복사
-// 다운로드 - 파일 형식 모달
-
-// ✅ SNS 링크
-
-// ✅ 참여자 리스트 (count 포함)
-// 복사
-// 다운로드 - 파일 형식 모달
-
-// ✅ 당첨자 리스트 (count 포함)
-// 복사
-// 다운로드 - 파일 형식 모달
-
-// ✅ SNS 링크
-
-// ✅ 참여자 리스트 (count 포함)
-// 복사
-// 다운로드 - 파일 형식 모달
-
-// ✅ 당첨자 리스트 (count 포함)
-// 복사
-// 다운로드 - 파일 형식 모달
-
-// ✅ SNS 링크
 
 // ✅ 참여자 리스트 (count 포함)
 // 복사
@@ -112,7 +73,7 @@ const Tab = ({ current, counts }: TabProps) => {
             onClick={() => handleCopyClick(current)}
             ariaLabel={`${TabLabels[current]} 복사`}
           >
-            <Copy width="30px" height="30px" />
+            <FeatureTabIcons state={FeatureTabIconsState.COPY} />
           </IconButton>
           {/* TODO: 다운로드 버튼으로 변경 필요 */}
           <button onClick={() => handleDownloadClick(current)}>다운로드</button>

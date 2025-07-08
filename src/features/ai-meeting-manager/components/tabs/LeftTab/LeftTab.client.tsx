@@ -3,8 +3,8 @@
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 
-import Copy from '@svgs/component-set/CopyIcon.svg';
-import Edit from '@svgs/component-set/EditIcon.svg';
+import FeatureTabIcons from '@icons/FeatureTabIcons/FeatureTabIcons';
+import { FeatureTabIconsState } from '@icons/FeatureTabIcons/FeatureTabIcons.types';
 
 import CategoryOption from '@common/components/CategoryOption/CategoryOption.client';
 import IconButton from '@common/components/button/IconButton/IconButton.client';
@@ -67,13 +67,13 @@ const LeftTab = ({ current }: LeftTabProps) => {
           ) : (
             <>
               <IconButton onClick={handleEditClick} ariaLabel="회의록 수정">
-                <Edit width="30px" height="30px" />
+                <FeatureTabIcons state={FeatureTabIconsState.EDIT} />
               </IconButton>
               <IconButton
                 onClick={() => handleCopyClick(current)}
                 ariaLabel={`${LeftTabLabels[current]} 복사`}
               >
-                <Copy width="30px" height="30px" />
+                <FeatureTabIcons state={FeatureTabIconsState.COPY} />
               </IconButton>
               {/* TODO: 다운로드 버튼으로 변경 필요 */}
               <button onClick={handleDownloadClick}>다운로드</button>
@@ -84,7 +84,7 @@ const LeftTab = ({ current }: LeftTabProps) => {
             onClick={() => handleCopyClick(current)}
             ariaLabel={`${LeftTabLabels[current]} 복사`}
           >
-            <Copy width="30px" height="30px" />
+            <FeatureTabIcons state={FeatureTabIconsState.COPY} />
           </IconButton>
         )}
       </div>

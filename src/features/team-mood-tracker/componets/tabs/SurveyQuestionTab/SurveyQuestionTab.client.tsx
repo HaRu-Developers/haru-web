@@ -5,7 +5,8 @@
 
 'use client';
 
-import Link from '@svgs/component-set/LinkIcon.svg';
+import FeatureTabIcons from '@icons/FeatureTabIcons/FeatureTabIcons';
+import { FeatureTabIconsState } from '@icons/FeatureTabIcons/FeatureTabIcons.types';
 
 import CategoryOption from '@common/components/CategoryOption/CategoryOption.client';
 import IconButton from '@common/components/button/IconButton/IconButton.client';
@@ -42,7 +43,7 @@ const SurveyQuestionTab = ({ survey }: SurveyQuestionTabProps) => {
       <CategoryOption label={SurveyQuestionTabLabels[currentTab]} active />
       {isSubmitted ? (
         <IconButton onClick={handleFileClick} ariaLabel="설문 문항 보기">
-          <Link width="30px" height="30px" />
+          <FeatureTabIcons state={FeatureTabIconsState.LINK} />
         </IconButton>
       ) : (
         <button onClick={handleSubmit}>작성 완료</button>

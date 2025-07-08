@@ -1,6 +1,6 @@
 'use client';
 
-import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
+import ArrowButton from '@common/components/buttons/32px/ArrowButton';
 
 import type { DatePickerHeaderProps } from './DatePickerHeader.types';
 
@@ -22,7 +22,7 @@ const DatePickerHeader = ({ current, onPrev, onNext }: DatePickerHeaderProps) =>
       aria-label="이전 달"
       className="border-stroke-200 flex h-9 w-9 items-center justify-center rounded-[6px] border bg-white hover:bg-gray-600"
     >
-      <ChevronLeftIcon className="h-5 w-5 text-black" />
+      <ArrowButton direction="LEFT" />
     </button>
 
     {/* 디자인 시스템 업데이트 이후 변경 예정 */}
@@ -35,7 +35,7 @@ const DatePickerHeader = ({ current, onPrev, onNext }: DatePickerHeaderProps) =>
       aria-label="다음 달"
       className="border-stroke-200 flex h-9 w-9 items-center justify-center rounded-[6px] border bg-white hover:bg-gray-600"
     >
-      <ChevronRightIcon className="h-5 w-5 text-black" />
+      <ArrowButton direction="RIGHT" />
     </button>
   </div>
 );

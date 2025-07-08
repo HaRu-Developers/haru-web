@@ -12,8 +12,7 @@
   --color-gray-400: #999999;
   --color-gray-500: #d9d9d9;
   --color-gray-600: #f4f4f6;
-  --color-gray-700: #f8f8fa;
-  --color-gray-800: #fafafb;
+  --color-gray-700: #fafafb;
 
   /* 브랜드 컬러 */
   --color-primary: #e65787;
@@ -36,15 +35,15 @@
   --color-background-dimmed: rgba(0, 0, 0, 0.6);
 
   /* 그라디언트 */
-  --gradient-primary: linear-gradient(90deg, rgba(230, 87, 135, 0.7), #e65787);
-  --gradient-white: linear-gradient(-90deg, rgba(255, 255, 255, 0), #ffffff);
+  --primary-gradient: linear-gradient(90deg, rgba(230, 87, 135, 0.7), #e65787);
+  --white-gradient: linear-gradient(-90deg, rgba(255, 255, 255, 0), #ffffff);
 }
 
 /* 그라디언트 배경 */
-@utility bg-gradient-primary {
-  background-image: var(--gradient-primary);
+@utility bg-primary-gradient {
+  background-image: var(--primary-gradient);
 }
 
-@utility bg-gradient-white {
-  background-image: var(--gradient-white);
+@utility bg-white-gradient {
+  background-image: var(--white-gradient);
 }

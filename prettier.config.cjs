@@ -37,8 +37,12 @@ module.exports = {
     // 외부 라이브러리
     '<THIRD_PARTY_MODULES>',
 
+    // 전역 스타일
+    '^@styles/(.*)$',
     // 정적 자산
-    '^@assets/(.*)$', // 이미지, 폰트 등
+    '^@icons/(.*)$',
+    '^@assets/(.*)$',
+    '^@svgs/(.*)$',
 
     // 공통 모듈
     '^@common/types/(.*)$',
@@ -62,6 +66,9 @@ module.exports = {
     '^@features/.*/components/(.*)$',
     '^@features/(.*)$', // 나머지 도메인 루트
 
+    // 기타 src 하위 경로
+    '^@/(.*)$',
+
     // 마지막에 상대 경로
     '^[./]',
   ],
@@ -72,5 +79,23 @@ module.exports = {
   importOrderSortSpecifiers: true,
 
   // 플러그인 등록(Tailwind 정렬, import 정렬)
+  // XML/SVG 파일 전용 플러그인 용입니다.
+  // 적용 시 기타 모든 파일에 prettier error를 발생시키기 때문에 svg 파일 포맷팅 시에 깔았다가 다시 삭제헤주세요.
+
+  // pnpm install --save-dev prettier @prettier/plugin-xml
+  // npx prettier --write "src/assets/**/*.svg"
+  // pnpm remove @prettier/plugin-xml  
+
+  // plugins: ['@trivago/prettier-plugin-sort-imports', 'prettier-plugin-tailwindcss', '@prettier/plugin-xml'],
   plugins: ['@trivago/prettier-plugin-sort-imports', 'prettier-plugin-tailwindcss'],
+  // XML/SVG 파일 전용 설정
+  // overrides: [
+  //   {
+  //     files: '*.svg',
+  //     options: {
+  //       xmlSelfClosingSpace: true,
+  //       xmlWhitespaceSensitivity: 'ignore'
+  //     }
+  //   }
+  // ]
 };

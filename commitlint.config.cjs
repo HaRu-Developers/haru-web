@@ -3,7 +3,7 @@ module.exports = {
     name: 'conventional-changelog-conventionalcommits',
     parserOpts: {
       headerPattern:
-        /^(✨|🔨|♻️|🐛|🚑️|💄|🎨|🔧|✏️|📝|💬|📦️|🔥|🍻|✅|⚡️|💚|🌐|🚀|🔒️|⬆️|⬇️|🚧|💡|🤔|👷|🩹)\s([A-Z][a-z]*)(?:\((.*)\))?!?: (.*)$/,
+        /^(✨|🔨|♻️|🐛|🚑️|💄|🎨|🔧|✏️|📝|💬|📦️|🔥|🩹|✅|🔀|💚|🌐|🚀|🔒️|⬆️|⬇️|🚧|💡|🤔|👷|🍻)\s([A-Z][a-z]*)(?:\((.*)\))?!?: (.*)$/,
       headerCorrespondence: ['emoji', 'type', 'scope', 'subject'],
       referenceActions: null,
       issuePrefixes: ['#'],
@@ -33,6 +33,7 @@ module.exports = {
         'Remove',
         'Chore',
         'Test',
+        'Merge',
         'Build',
         'Ci',
         'Perf',

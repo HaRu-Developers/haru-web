@@ -1,4 +1,5 @@
-import CopyIcon from '@svgs/component-set/CopyIcon.svg';
+import FeatureTabIcons from '@icons/FeatureTabIcons/FeatureTabIcons';
+import { FeatureTabIconsState } from '@icons/FeatureTabIcons/FeatureTabIcons.types';
 
 import { SnsLinkProps } from './SnsLink.types';
 
@@ -17,7 +18,7 @@ const SnsLink = ({ title, url }: SnsLinkProps) => {
       <div className="flex items-center justify-between gap-2">
         <span className="text-b3-rg text-black">{url}</span>
         <button onClick={handleCopy} title="링크 복사" className="mt-4">
-          <CopyIcon width="20px" height="20px" />
+          <FeatureTabIcons state={FeatureTabIconsState.COPY} />
         </button>
       </div>
     </div>

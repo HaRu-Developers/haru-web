@@ -17,3 +17,8 @@ export const RightTabLabels: Record<RightTabType, string> = {
   [RightTabType.AI_QUESTIONS]: 'AI 질문 기록',
   [RightTabType.AI_RECOMMENDATIONS]: 'AI 추천 질문',
 };
+
+// ✅ enum 통일
+// AI_MEETING_MANAGER
+// SNS_EVENT_ASSISTANT
+// TEAM_MOOD_TRACKER

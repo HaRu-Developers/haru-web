@@ -2,17 +2,17 @@ import { Suspense } from 'react';
 
 import { SearchParamsType } from '@common/types/routing.types';
 
-import { LeftTabType } from '@features/ai-meeting-assistant/constants/tabs';
+import { LeftTabType } from '@features/ai-meeting-manager/constants/tabs';
 import { TabType } from '@features/sns-event-assistant/constants/tabs';
 import {
   SurveyQuestionTabType,
   TeamMoodReportTabType,
 } from '@features/team-mood-tracker/constants/tabs';
 
-import LeftPanel from '@features/ai-meeting-assistant/components/panels/LeftPanel/LeftPanel.server';
-import RightPanel from '@features/ai-meeting-assistant/components/panels/RightPanel/RightPanel.client';
-import LeftTab from '@features/ai-meeting-assistant/components/tabs/LeftTab/LeftTab.client';
-import RightTab from '@features/ai-meeting-assistant/components/tabs/RightTab/RightTab.client';
+import LeftPanel from '@features/ai-meeting-manager/components/panels/LeftPanel/LeftPanel.server';
+import RightPanel from '@features/ai-meeting-manager/components/panels/RightPanel/RightPanel.client';
+import LeftTab from '@features/ai-meeting-manager/components/tabs/LeftTab/LeftTab.client';
+import RightTab from '@features/ai-meeting-manager/components/tabs/RightTab/RightTab.client';
 import Panel from '@features/sns-event-assistant/components/Panel/Panel.server';
 import Tab from '@features/sns-event-assistant/components/Tab/Tab.client';
 

@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 
-import { RightTabType } from '@features/ai-meeting-assistant/constants/tabs';
+import { RightTabType } from '@features/ai-meeting-manager/constants/tabs';
 
 import RightTab from './RightTab.client';
 
 const meta: Meta<typeof RightTab> = {
-  title: 'Components/ai-meeting-assistant/tabs/RightTab',
+  title: 'Components/ai-meeting-manager/tabs/RightTab',
   component: RightTab,
   tags: ['autodocs'],
   argTypes: {

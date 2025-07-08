@@ -2,9 +2,9 @@
 
 import CategoryOption from '@common/components/CategoryOption/CategoryOption.client';
 
-import { RightTabLabels, RightTabType } from '@features/ai-meeting-assistant/constants/tabs';
+import { RightTabLabels, RightTabType } from '@features/ai-meeting-manager/constants/tabs';
 
-import { useTabInfo } from '@features/ai-meeting-assistant/hooks/stores/useTabStore';
+import { useTabInfo } from '@features/ai-meeting-manager/hooks/stores/useTabStore';
 
 const RightTab = () => {
   const { rightTab } = useTabInfo();

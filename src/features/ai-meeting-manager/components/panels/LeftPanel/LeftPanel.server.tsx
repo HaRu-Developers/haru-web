@@ -1,4 +1,4 @@
-import { LeftTabType } from '@features/ai-meeting-assistant/constants/tabs';
+import { LeftTabType } from '@features/ai-meeting-manager/constants/tabs';
 
 import { LeftPanelProps } from './LeftPanel.types';
 import AINotesPanel from './components/AINotesPanel/AINotesPanel.client';

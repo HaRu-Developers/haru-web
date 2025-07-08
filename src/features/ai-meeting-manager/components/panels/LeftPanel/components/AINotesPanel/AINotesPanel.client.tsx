@@ -1,6 +1,6 @@
 'use client';
 
-import { useTabInfo } from '@features/ai-meeting-assistant/hooks/stores/useTabStore';
+import { useTabInfo } from '@features/ai-meeting-manager/hooks/stores/useTabStore';
 
 const AINotesPanel = () => {
   const { isEditing } = useTabInfo();

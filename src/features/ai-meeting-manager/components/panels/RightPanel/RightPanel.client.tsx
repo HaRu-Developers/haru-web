@@ -1,8 +1,8 @@
 'use client';
 
-import { RightTabLabels, RightTabType } from '@features/ai-meeting-assistant/constants/tabs';
+import { RightTabLabels, RightTabType } from '@features/ai-meeting-manager/constants/tabs';
 
-import { useTabActions, useTabInfo } from '@features/ai-meeting-assistant/hooks/stores/useTabStore';
+import { useTabActions, useTabInfo } from '@features/ai-meeting-manager/hooks/stores/useTabStore';
 
 const RightPanel = () => {
   const { rightTab } = useTabInfo();

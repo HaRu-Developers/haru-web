@@ -9,9 +9,9 @@ import Edit from '@svgs/component-set/EditIcon.svg';
 import CategoryOption from '@common/components/CategoryOption/CategoryOption.client';
 import IconButton from '@common/components/button/IconButton/IconButton.client';
 
-import { LeftTabLabels, LeftTabType } from '@features/ai-meeting-assistant/constants/tabs';
+import { LeftTabLabels, LeftTabType } from '@features/ai-meeting-manager/constants/tabs';
 
-import { useTabActions, useTabInfo } from '@features/ai-meeting-assistant/hooks/stores/useTabStore';
+import { useTabActions, useTabInfo } from '@features/ai-meeting-manager/hooks/stores/useTabStore';
 
 import { LeftTabProps } from './LeftTab.types';
 

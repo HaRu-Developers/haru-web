@@ -3,6 +3,7 @@
 @import './token/scrollbar.css';
 @import './token/colors.css';
 @import './token/fonts.css';
+@import './token//shadow.css';
 
 @layer base {
   * {

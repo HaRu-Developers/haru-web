@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/nextjs';
 
-import ProgressBar from './ProgressBar';
+import ProgressBar from './ProgressBar.server';
 
 const meta: Meta<typeof ProgressBar> = {
   title: 'Components/ProgressBar',

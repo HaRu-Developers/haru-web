@@ -2,8 +2,8 @@
 
 import { useState } from 'react';
 
-import LoadingBar from '@common/components/LoadingBar/LoadingBar';
-import ProgressBar from '@common/components/ProgressBar/ProgressBar';
+import LoadingBar from '@common/components/LoadingBar/LoadingBar.server';
+import ProgressBar from '@common/components/ProgressBar/ProgressBar.server';
 
 const TestPage = () => {
   const [progress, setProgress] = useState(0);

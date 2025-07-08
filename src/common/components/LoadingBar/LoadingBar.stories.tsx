@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/nextjs';
 
-import LoadingBar from './LoadingBar';
+import LoadingBar from './LoadingBar.server';
 
 const meta: Meta<typeof LoadingBar> = {
   title: 'Components/LoadingBar',

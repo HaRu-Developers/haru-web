@@ -1,7 +1,6 @@
-'use client';
+import Calendar from 'react-calendar';
 
 import '@/styles/calendarCustom.css';
-import Calendar from 'react-calendar';
 
 import DateNum from '../DateNum/DateNum';
 import type { CalendarTileProps, DatePickerBodyProps } from './DatePickerBody.types';
@@ -21,7 +20,7 @@ const DatePickerBody = ({
   onActiveStartDateChange,
 }: DatePickerBodyProps) => (
   <Calendar
-    className="minimal-calendar py-2"
+    className="minimal-calendar pt-2 pb-1"
     calendarType="gregory"
     tileDisabled={({ date }) => {
       const today = new Date();

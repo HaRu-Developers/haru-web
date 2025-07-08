@@ -1,13 +1,10 @@
-{
-  /* 디자인 시스템 업데이트 이후 변경 예정 */
-}
 export const baseStyle =
-  'flex items-center justify-center w-9 h-9 text-body-2 rounded-[8px] transition';
+  'text-b2-rg mb-1 flex h-9 w-9 items-center justify-center rounded-lg font-[Pretendard] transition';
 
 export const dateNumVariants = {
-  empty: 'text-gray-300 cursor-default',
+  empty: 'cursor-default text-gray-300',
   selected: 'bg-primary text-white',
-  today: 'text-black border border-storke-200 hover:border-none hover:bg-primary',
-  past: 'text-gray-400 cursor-not-allowed',
-  available: 'text-black hover:bg-primary hover:text-white cursor-pointer',
+  today: 'border-storke-200 hover:bg-primary border text-black hover:border-none',
+  past: 'cursor-not-allowed text-gray-400',
+  available: 'hover:bg-primary cursor-pointer text-black hover:text-white',
 };

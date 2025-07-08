@@ -10,11 +10,14 @@
   justify-content: center;
   display: grid !important;
   grid-template-columns: repeat(7, 1fr);
+  font-family: 'Pretendard';
   color: var(--color-gray-400);
   font-size: 0.9375rem;
-  font-weight: 500;
+  font-weight: 400;
   text-align: center;
-  margin-bottom: 1.125rem;
+  line-height: 160%;
+  letter-spacing: -0.3px;
+  margin-bottom: 0.5rem;
 }
 
 .minimal-calendar .react-calendar__month-view__weekdays__weekday abbr {

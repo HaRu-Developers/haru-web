@@ -77,10 +77,7 @@ const DatePicker = ({ selectedDates = [], onChange, onConfirm, onCancel }: DateP
   };
 
   return (
-    <div
-      className="inline-block w-71 overflow-hidden rounded-2xl bg-white px-4 pt-4"
-      style={{ boxShadow: '2px 6px 24px 0px rgba(0, 0, 0, 0.10)' }}
-    >
+    <div className="shadow-dropdown-popup inline-block w-71 overflow-hidden rounded-2xl bg-white px-4 pt-4">
       <DatePickerHeader current={activeStartDate} onPrev={prev} onNext={next} />
       <DatePickerBody
         activeStartDate={activeStartDate}

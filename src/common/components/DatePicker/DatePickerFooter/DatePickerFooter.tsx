@@ -1,5 +1,6 @@
-import Cancel32pxButton from '../../buttons/32px/Cancel32pxButton';
-import CompleteSelectButton from '../../buttons/32px/CompleteSelectButton';
+import Cancel32pxButton from '@common/components/buttons/32px/Cancel32pxButton';
+import CompleteSelectButton from '@common/components/buttons/32px/CompleteSelectButton';
+
 import { DatePickerFooterProps } from './DatePickerFooter.types';
 
 const DatePickerFooter = ({ onConfirm, onCancel }: DatePickerFooterProps) => (

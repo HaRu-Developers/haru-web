@@ -1,0 +1,5 @@
+export enum CrossIconsState {
+  SIZE_24_GRAY_200 = 'SIZE_24_GRAY_200',
+  SIZE_16_GRAY_200 = 'SIZE_16_GRAY_200',
+  SIZE_16_GRAY_400 = 'SIZE_16_GRAY_400',
+}

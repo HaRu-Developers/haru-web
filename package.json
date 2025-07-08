@@ -8,11 +8,10 @@
     "start": "next start",
     "test:ci": "vitest run --coverage",
     "lint": "next lint",
-    "lint:staged": "eslint --fix --ignore-pattern '.prettierignore' --ignore-pattern 'lefthook.yml' --ignore-pattern 'package.json'",
-    "eslint": "eslint .",
-    "format": "prettier --write .",
-    "format:check": "prettier --check .",
-    "format:staged": "prettier --write --ignore-unknown",
+    "eslint:check": "eslint '**/*.{js,ts,jsx,tsx}'",
+    "eslint": "eslint --fix '**/*.{js,ts,jsx,tsx}'",
+    "format:check": "prettier --check '**/*.{js,ts,jsx,tsx,json,yaml,md,css}'",
+    "format": "prettier --write '**/*.{js,ts,jsx,tsx,json,yaml,md,css}'",
     "type-check": "tsc --noEmit",
     "prepare": "lefthook install",
     "storybook": "storybook dev -p 6006",
@@ -20,6 +19,7 @@
     "chromatic": "npx chromatic --project-token=$CHROMATIC_PROJECT_TOKEN"
   },
   "dependencies": {
+    "clsx": "^2.1.1",
     "next": "15.3.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
@@ -62,6 +62,7 @@
     "storybook": "^9.0.14",
     "tailwindcss": "^4",
     "typescript": "^5",
-    "vitest": "^3.2.4"
+    "vitest": "^3.2.4",
+    "webpack": "^5.99.9"
   }
 }

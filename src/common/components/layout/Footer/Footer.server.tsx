@@ -1,6 +1,6 @@
 import LogoMixed from '@common/svgs/logo/LogoMixed.svg';
 
-import FooterLinks from './FooterLinks';
+import FooterLinks from './FooterLinks.client';
 
 const Footer = () => {
   return (

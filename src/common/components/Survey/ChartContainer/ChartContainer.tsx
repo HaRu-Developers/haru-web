@@ -4,8 +4,7 @@ const ChartContainer = ({ title, children }: ChartContainerProps) => {
   return (
     <div className="border-stroke-200 shadow-survey-form flex min-w-[668px] shrink-0 flex-col items-start rounded-sm border border-solid px-5 pt-[17px] pb-6">
       <div className="border-b-stroke-200 mb-5 w-full border-b pb-1.5">
-        <div className="text-title-4 font-bold">{title}</div>
-        {/* T5_Sb로 대체 예정 */}
+        <div className="text-t5-sb font-bold">{title}</div>
       </div>
       {children}
     </div>

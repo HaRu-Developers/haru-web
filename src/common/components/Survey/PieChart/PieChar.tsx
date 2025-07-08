@@ -45,8 +45,7 @@ const PieChart = ({ data, title }: PieChartProps) => {
               className="h-3.5 w-3.5 rounded-full"
               style={{ backgroundColor: data.colors[index] }}
             />
-            <span className="text-caption-1 text-black">{label}</span>
-            {/* Cap1_Rg 대체 예정 */}
+            <span className="text-cap1-rg text-black">{label}</span>
           </div>
         ))}
       </div>

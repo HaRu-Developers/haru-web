@@ -8,8 +8,7 @@ const SubjectiveAnswers = ({ title, answers }: SubjectiveAnswersProps) => {
       <div className="flex w-full flex-col gap-1">
         {answers.map((answer, index) => (
           <div key={index} className="rounded-[5px] bg-gray-600 px-3 py-[5px]">
-            <p className="text-button-2 text-black">{answer}</p>
-            {/* B3_Rg로 대체 예정 */}
+            <p className="text-b3-rg text-black">{answer}</p>
           </div>
         ))}
       </div>

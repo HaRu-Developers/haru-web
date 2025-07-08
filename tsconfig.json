@@ -22,6 +22,7 @@
     "paths": {
       "@styles/*": ["styles/*"],
       "@assets/*": ["assets/*"],
+      "@svgs/*": ["common/svgs/*"],
       "@common/types/*": ["common/types/*"],
       "@common/constants/*": ["common/constants/*"],
       "@common/utils/*": ["common/utils/*"],

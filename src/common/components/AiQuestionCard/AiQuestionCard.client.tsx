@@ -1,3 +1,5 @@
+'use client';
+
 import AiQuestionIcons from '@icons/AiQuestionIcons/AiQuestionIcons';
 import { AiQuestionIconsState } from '@icons/AiQuestionIcons/AiQuestionIcons.types';
 

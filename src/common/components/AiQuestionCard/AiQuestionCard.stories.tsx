@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 
-import AiQuestionCard from './AiQuestionCard';
+import AiQuestionCard from './AiQuestionCard.client';
 
 const meta: Meta<typeof AiQuestionCard> = {
   title: 'Component/AiQuestionCard',

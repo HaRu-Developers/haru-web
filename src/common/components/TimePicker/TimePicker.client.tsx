@@ -30,10 +30,11 @@ export const TimePicker = ({ onTimeSelect }: TimePickerProps) => {
               type="button"
               onClick={() => handleClick(time)}
               className={clsx(
-                'text-b2-rg flex w-55 items-center justify-center rounded-lg py-[5px] transition-all duration-150',
+                'text-b2-rg flex w-55 items-center justify-center rounded-lg border py-[5px] transition-colors duration-150',
                 {
-                  'border-primary bg-primary/3 border text-black': selectedTime === time,
-                  'hover:bg-primary/3 bg-gray-700 text-black': selectedTime !== time,
+                  'border-primary bg-primary-selected border text-black': selectedTime === time,
+                  'hover:bg-primary-selected border-transparent bg-gray-700 text-black':
+                    selectedTime !== time,
                 },
               )}
               role="option"

@@ -47,3 +47,7 @@
 @utility bg-white-gradient {
   background-image: var(--white-gradient);
 }
+
+@utility bg-primary-selected {
+  background-color: rgba(230, 87, 135, 0.03);
+}

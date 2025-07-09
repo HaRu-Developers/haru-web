@@ -2,17 +2,56 @@ import React from 'react';
 
 import clsx from 'clsx';
 
-import { CalendarProps } from './Calender.types';
+import FeaturedFileIcons from '@icons/FeaturedFileIcons/FeaturedFileIcons';
+import { FeaturedFileIconsState } from '@icons/FeaturedFileIcons/FeaturedFileIcons.types';
 
-const Calender = ({ date, files }: CalendarProps) => {
-  const isWeekend = date.getDay() === 0 || date.getDay() === 6;
+import { CalendarProps, CalendarSliceProps, DocumentType, type File } from './Calender.types';
+
+/*
+ * 캘린더 컴포넌트
+ */
+
+const File = ({ file }: { file: File }) => {
+  {
+    /* box-shadow 추가 예정 */
+  }
   return (
     <div
       className={clsx(
-        'border-stroke-200 h-[152px] w-[147px] shrink-0 gap-[4px] border text-gray-100',
+        'border-stroke-200 mx-[6px] flex h-[30px] w-[136px] shrink-0 cursor-pointer items-center gap-[2px] rounded-[6px] border bg-white p-[6px] hover:bg-gray-600',
+      )}
+    >
+      {file.type === DocumentType.AI_MEETING_MANAGER && (
+        <FeaturedFileIcons state={FeaturedFileIconsState.SIZE_16_AI_MANAGER_FILE} />
+      )}
+      {file.type === DocumentType.SNS_EVENT_ASSISTANT && (
+        <FeaturedFileIcons state={FeaturedFileIconsState.SIZE_16_SNS_ASSISTANT_FILE} />
+      )}
+      {file.type === DocumentType.TEAM_MOOD_TRACKER && (
+        <FeaturedFileIcons state={FeaturedFileIconsState.SIZE_16_TEAM_MOOD_FILE} />
+      )}
+      <span
+        className={clsx('text-bt3-sb w-[105px] overflow-hidden text-ellipsis whitespace-nowrap')}
+      >
+        {file.title}
+      </span>
+    </div>
+  );
+};
+
+const CalenderSlice = ({ date, files, index, isVisible }: CalendarSliceProps) => {
+  const isWeekend = date.getDay() === 0 || date.getDay() === 6;
+  const isSecondRowOrBelow = index >= 7;
+  return (
+    <div
+      className={clsx(
+        'border-stroke-200 min-h-[152px] w-[147px] shrink-0 gap-[4px] border pb-[4px]',
         {
           'bg-gray-700': isWeekend,
           'bg-white': !isWeekend,
+          'border-t-0': isSecondRowOrBelow,
+          'text-[#999999]': !isVisible,
+          'text-gray-100': isVisible,
         },
       )}
     >
@@ -22,27 +61,32 @@ const Calender = ({ date, files }: CalendarProps) => {
         {date.getDate() === 1 ? `${date.getMonth() + 1}월 ` : ''}
         {date.getDate()}일
       </div>
-      {/* icon, box-shadow 추가 예정 */}
-      {files?.map(
-        (file, index) =>
-          index < 3 && (
-            <div
-              key={index}
-              className={clsx(
-                'border-stroke-200 mx-[6px] flex h-[30px] w-[136px] shrink-0 items-center gap-[2px] rounded-[6px] border bg-white p-[6px] hover:bg-gray-600',
-              )}
-            >
-              <div className={clsx('bg-file-icon h-[16px] w-[16px] shrink-0')}></div>
-              <span
-                className={clsx(
-                  'text-bt3-sb w-[105px] cursor-pointer overflow-hidden text-ellipsis whitespace-nowrap',
-                )}
-              >
-                {file.name}
-              </span>
-            </div>
-          ),
-      )}
+
+      {files?.map((file, index) => (
+        <File key={index} file={file} />
+      ))}
+    </div>
+  );
+};
+
+const Calender = ({ startDate, endDate, documents, operatingMonth }: CalendarProps) => {
+  const days = Math.floor((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
+  const dateList = Array.from({ length: days + 1 }, (_, i) => {
+    const date = new Date(startDate);
+    date.setDate(date.getDate() + i);
+    return date;
+  });
+  return (
+    <div className={clsx('grid min-w-[1022px] grid-cols-7')}>
+      {dateList.map((date, idx) => (
+        <CalenderSlice
+          key={idx}
+          date={date}
+          files={documents[idx] || []}
+          index={idx}
+          isVisible={date.getMonth() === operatingMonth - 1}
+        />
+      ))}
     </div>
   );
 };

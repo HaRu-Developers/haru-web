@@ -1,14 +1,24 @@
-export enum FileType {
-  AI_MANAGER = 'AI_MANAGER',
-  SNS_ASSIST = 'SNS_ASSIST',
-  TEAM_MOOD = 'TEAM_MOOD',
+export enum DocumentType {
+  AI_MEETING_MANAGER = 'AI_MEETING_MANAGER',
+  SNS_EVENT_ASSISTANT = 'SNS_EVENT_ASSISTANT',
+  TEAM_MOOD_TRACKER = 'TEAM_MOOD_TRACKER',
 }
 
 export interface File {
-  name: string;
-  type: FileType;
+  title: string;
+  type: DocumentType;
 }
-export interface CalendarProps {
+
+export interface CalendarSliceProps {
   date: Date;
   files?: File[];
+  index: number;
+  isVisible: boolean;
+}
+
+export interface CalendarProps {
+  startDate: Date;
+  endDate: Date;
+  operatingMonth: number;
+  documents: File[][];
 }

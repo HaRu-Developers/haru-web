@@ -1,4 +1,5 @@
-import ArrowButton from '@common/components/buttons/32px/ArrowButton';
+import ArrowButton from '@buttons/32px/ArrowButton/ArrowButton';
+import { ArrowButtonDirection } from '@buttons/32px/ArrowButton/ArrowButton.types';
 
 import type { DatePickerHeaderProps } from './DatePickerHeader.types';
 
@@ -12,7 +13,7 @@ import type { DatePickerHeaderProps } from './DatePickerHeader.types';
 const DatePickerHeader = ({ current, onPrev, onNext }: DatePickerHeaderProps) => (
   <div className="flex items-center justify-between rounded-t-2xl bg-white">
     <button onClick={onPrev} aria-label="이전 달">
-      <ArrowButton direction="LEFT" />
+      <ArrowButton direction={ArrowButtonDirection.LEFT} />
     </button>
 
     <div className="text-bt1-sb text-black">
@@ -20,7 +21,7 @@ const DatePickerHeader = ({ current, onPrev, onNext }: DatePickerHeaderProps) =>
     </div>
 
     <button onClick={onNext} aria-label="다음 달">
-      <ArrowButton direction="RIGHT" />
+      <ArrowButton direction={ArrowButtonDirection.RIGHT} />
     </button>
   </div>
 );

@@ -32,6 +32,7 @@
       "@common/mutations/*": ["common/mutations/*"],
       "@common/apis/*": ["common/apis/*"],
       "@common/components/*": ["common/components/*"],
+      "@buttons/*": ["common/components/buttons/*"],
       "@common/*": ["common/*"],
       "@features/*": ["features/*"],
       "@/*": ["*"]

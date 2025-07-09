@@ -50,7 +50,7 @@ const CalenderSlice = ({ date, files, index, isVisible }: CalendarSliceProps) =>
           'bg-gray-700': isWeekend,
           'bg-white': !isWeekend,
           'border-t-0': isSecondRowOrBelow,
-          'text-[#999999]': !isVisible,
+          'text-gray-400': !isVisible,
           'text-gray-100': isVisible,
         },
       )}

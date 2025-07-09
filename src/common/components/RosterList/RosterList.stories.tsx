@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 
-import RosterList from './RosterList';
+import RosterList from './RosterList.server';
 
 const meta: Meta<typeof RosterList> = {
   title: '컴포넌트/RosterList',

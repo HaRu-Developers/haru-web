@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 
-import RosterDataField from './RosterListDataField';
+import RosterDataField from './RosterListDataField.server';
 
 // --- Storybook 메타 정보 ---
 const meta: Meta<typeof RosterDataField> = {

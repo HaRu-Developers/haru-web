@@ -1,6 +1,6 @@
 import { RosterListProps } from './RosterList.types';
-import RosterDataField from './RosterListDataField/RosterListDataField';
-import RosterListHeader from './RosterListHeader/RosterListHeader';
+import RosterDataField from './RosterListDataField/RosterListDataField.server';
+import RosterListHeader from './RosterListHeader/RosterListHeader.server';
 
 const RosterList = ({ items, hasLeftBorder = false, startIndex = 0 }: RosterListProps) => {
   return (

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 
-import RosterListHeader from './RosterListHeader';
+import RosterListHeader from './RosterListHeader.server';
 
 // --- Storybook 메타 정보 ---
 const meta: Meta<typeof RosterListHeader> = {

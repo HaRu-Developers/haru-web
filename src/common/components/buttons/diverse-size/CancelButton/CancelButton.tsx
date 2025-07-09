@@ -21,7 +21,7 @@ const CancelButton = ({ onClick, buttonType, ...props }: CancelButtonProps) => {
   return (
     <button
       className={clsx({
-        'border-stroke-200 inline-flexitems-center justify-center border bg-white hover:bg-gray-600': true,
+        'border-stroke-200 inline-flex items-center justify-center border bg-white hover:bg-gray-600': true,
         'text-bt2-sb h-[32px] w-[48px] rounded-[6px] px-[11px] py-[8px] text-black':
           buttonType == CancelButtonType.SIZE_32,
         'text-bt1-sb h-[38px] w-[128px] rounded-[7px] px-[16px] py-[12px] text-gray-100':

@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/nextjs';
 
-import OnBoarding from '@common/components/inputs/OnBoarding';
+import OnBoarding from '@common/components/inputs/OnBoarding.client';
 import {
   OnboardingMode,
   OnboardingState,

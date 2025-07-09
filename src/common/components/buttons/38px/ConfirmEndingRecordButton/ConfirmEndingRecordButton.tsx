@@ -5,7 +5,11 @@ import { ConfirmRecordEndingProps } from './ConfirmRecordEnding.types';
 /**
  * '네. AI 회의록 작성으로 넘어갈래요. / 아니요. 이어서 녹음할래요.' 버튼
  */
-const ConfirmEndingRecordButton = ({ isEndingRecord, onClick }: ConfirmRecordEndingProps) => {
+const ConfirmEndingRecordButton = ({
+  isEndingRecord,
+  onClick,
+  ...props
+}: ConfirmRecordEndingProps) => {
   return (
     <button
       className={clsx(
@@ -13,6 +17,7 @@ const ConfirmEndingRecordButton = ({ isEndingRecord, onClick }: ConfirmRecordEnd
         isEndingRecord ? 'text-primary' : 'text-gray-100',
       )}
       onClick={onClick}
+      {...props}
     >
       {isEndingRecord ? '네. AI 회의록 작성으로 넘어갈래요.' : '아니요. 이어서 녹음할래요.'}
     </button>

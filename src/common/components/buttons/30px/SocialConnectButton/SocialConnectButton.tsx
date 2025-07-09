@@ -5,7 +5,7 @@ import { ButtonsCommonProps } from '../../types/buttons.common.types';
 /**
  * 'SNS 계정 연동' 버튼
  */
-const SocialConnectButton = ({ onClick, disabled }: ButtonsCommonProps) => {
+const SocialConnectButton = ({ onClick, disabled, ...props }: ButtonsCommonProps) => {
   return (
     <button
       className={clsx(
@@ -13,6 +13,8 @@ const SocialConnectButton = ({ onClick, disabled }: ButtonsCommonProps) => {
         disabled ? 'bg-gray-600' : 'bg-white',
       )}
       onClick={onClick}
+      disabled={disabled}
+      {...props}
     >
       SNS 계정 연동
     </button>

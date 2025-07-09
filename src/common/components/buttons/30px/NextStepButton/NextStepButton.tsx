@@ -5,7 +5,7 @@ import { ButtonsCommonProps } from '../../types/buttons.common.types';
 /**
  * '다음 단계로' 버튼
  */
-const NextStepButton = ({ disabled, onClick }: ButtonsCommonProps) => {
+const NextStepButton = ({ onClick, disabled, ...props }: ButtonsCommonProps) => {
   return (
     <button
       className={clsx(
@@ -13,6 +13,8 @@ const NextStepButton = ({ disabled, onClick }: ButtonsCommonProps) => {
         disabled && 'bg-primary-inactive',
       )}
       onClick={onClick}
+      disabled={disabled}
+      {...props}
     >
       다음 단계로
     </button>

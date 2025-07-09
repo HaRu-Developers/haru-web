@@ -6,9 +6,9 @@ import { CancelButtonProps, CancelButtonType } from './CancelButton.types';
  * '취소하기' 버튼.
  * 32px/38px 두 사이즈 중에서 선택해서 사용해주세요.
  */
-const CancelButton = ({ onClick, type }: CancelButtonProps) => {
+const CancelButton = ({ onClick, buttonType, ...props }: CancelButtonProps) => {
   let buttonText = '';
-  switch (type) {
+  switch (buttonType) {
     case CancelButtonType.SIZE_32:
       buttonText = '취소';
       break;
@@ -23,11 +23,12 @@ const CancelButton = ({ onClick, type }: CancelButtonProps) => {
       className={clsx({
         'border-stroke-200 inline-flexitems-center justify-center border bg-white hover:bg-gray-600': true,
         'text-bt2-sb h-[32px] w-[48px] rounded-[6px] px-[11px] py-[8px] text-black':
-          type == CancelButtonType.SIZE_32,
+          buttonType == CancelButtonType.SIZE_32,
         'text-bt1-sb h-[38px] w-[128px] rounded-[7px] px-[16px] py-[12px] text-gray-100':
-          type == CancelButtonType.SIZE_38,
+          buttonType == CancelButtonType.SIZE_38,
       })}
       onClick={onClick}
+      {...props}
     >
       {buttonText}
     </button>

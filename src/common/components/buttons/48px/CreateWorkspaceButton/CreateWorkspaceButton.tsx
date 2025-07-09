@@ -5,7 +5,7 @@ import { ButtonsCommonProps } from '../../types/buttons.common.types';
 /**
  * '워크스페이스 생성하기' 버튼
  */
-const CreateWorkspaceButton = ({ disabled, onClick }: ButtonsCommonProps) => {
+const CreateWorkspaceButton = ({ disabled, onClick, ...props }: ButtonsCommonProps) => {
   return (
     <button
       className={clsx(
@@ -13,6 +13,7 @@ const CreateWorkspaceButton = ({ disabled, onClick }: ButtonsCommonProps) => {
         !disabled ? 'bg-gray-100' : 'bg-gray-500',
       )}
       onClick={onClick}
+      {...props}
     >
       워크스페이스 생성하기
     </button>

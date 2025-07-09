@@ -5,7 +5,7 @@ import { MoveToNextButtonProps, MoveToNextButtonWidth } from './MoveToNextButton
 /**
  * '다음 단계로 이동하기' 버튼
  */
-const MoveToNextButton = ({ disabled, onClick, width }: MoveToNextButtonProps) => {
+const MoveToNextButton = ({ disabled, onClick, width, ...props }: MoveToNextButtonProps) => {
   return (
     <button
       className={clsx(
@@ -14,6 +14,7 @@ const MoveToNextButton = ({ disabled, onClick, width }: MoveToNextButtonProps) =
         width === MoveToNextButtonWidth.WIDTH_414 ? 'w-[414px]' : 'w-[260px]',
       )}
       onClick={onClick}
+      {...props}
     >
       다음 단계로 이동하기
     </button>

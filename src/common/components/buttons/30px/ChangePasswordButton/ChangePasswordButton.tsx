@@ -5,7 +5,7 @@ import { ButtonsCommonProps } from '../../types/buttons.common.types';
 /**
  * '비밀번호 변경' 버튼
  */
-const ChangePasswordButton = ({ onClick, disabled }: ButtonsCommonProps) => {
+const ChangePasswordButton = ({ onClick, disabled, ...props }: ButtonsCommonProps) => {
   return (
     <button
       className={clsx(
@@ -13,6 +13,8 @@ const ChangePasswordButton = ({ onClick, disabled }: ButtonsCommonProps) => {
         disabled ? 'bg-gray-600' : 'bg-white',
       )}
       onClick={onClick}
+      disabled={disabled}
+      {...props}
     >
       비밀번호 변경
     </button>

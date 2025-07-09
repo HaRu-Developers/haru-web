@@ -1,4 +1,6 @@
-import AddWorkspaceButton from '@buttons/30px/AddWorkspaceButton.tsx/AddWorkspaceButton';
+import AddWorkspaceButton from '@common/components/buttons/30px/AddWorkspaceButton/AddWorkspaceButton';
+import { SkipForNowButtonType } from '@common/components/buttons/diverse-size/SkipForNowButton/SkipForNowButton.types';
+
 import ChangePasswordButton from '@buttons/30px/ChangePasswordButton/ChangePasswordButton';
 import DownloadButton from '@buttons/30px/DownloadButton/DownloadButton';
 import EditCompleteButton from '@buttons/30px/EditCompleteButton/EditCompleteButton';
@@ -26,7 +28,6 @@ import RegisterButton from '@buttons/48px/RegisterButton/RegisterButton';
 import CancelButton from '@buttons/diverse-size/CancelButton/CancelButton';
 import { CancelButtonType } from '@buttons/diverse-size/CancelButton/CancelButton.types';
 import SkipForNowButton from '@buttons/diverse-size/SkipForNowButton/SkipForNowButton';
-import { SkipForNowButtonType } from '@buttons/diverse-size/SkipForNowButton/SkipForNowButtonProps';
 
 const ButtonTestPage = () => {
   return (
@@ -136,12 +137,12 @@ const ButtonTestPage = () => {
         <p className="text-cap3-md">Diverse-sized 버튼</p>
         <div className="flex flex-row space-x-2"></div>
         <div className="flex flex-row space-x-2">
-          <CancelButton type={CancelButtonType.SIZE_32} />
-          <CancelButton type={CancelButtonType.SIZE_38} />
+          <CancelButton buttonType={CancelButtonType.SIZE_32} />
+          <CancelButton buttonType={CancelButtonType.SIZE_38} />
         </div>
         <div className="flex flex-row space-x-2">
-          <SkipForNowButton type={SkipForNowButtonType.SIZE_38} />
-          <SkipForNowButton type={SkipForNowButtonType.SIZE_48} />
+          <SkipForNowButton buttonType={SkipForNowButtonType.SIZE_38} />
+          <SkipForNowButton buttonType={SkipForNowButtonType.SIZE_48} />
         </div>
       </div>
     </div>

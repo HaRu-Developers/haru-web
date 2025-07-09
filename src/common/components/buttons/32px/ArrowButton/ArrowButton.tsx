@@ -8,13 +8,14 @@ import { ArrowButtonDirection, ArrowButtonProps } from './ArrowButton.types';
 /**
  * '화살표' 버튼
  */
-const ArrowButton = ({ direction, onClick }: ArrowButtonProps) => {
+const ArrowButton = ({ direction, onClick, ...props }: ArrowButtonProps) => {
   return (
     <button
       className={clsx(
         'border-stroke-100 inline-flex h-[32px] w-[32px] items-center justify-center rounded-[6px] border bg-white px-[6px] py-[8px] hover:bg-gray-600',
       )}
       onClick={onClick}
+      {...props}
     >
       {direction == ArrowButtonDirection.LEFT ? (
         <ArrowIcons state={ArrowIconsState.LEFT} />

@@ -5,7 +5,7 @@ import { ButtonsCommonProps } from '../../types/buttons.common.types';
 /**
  * '회원가입하기' 버튼
  */
-const RegisterButton = ({ disabled, onClick }: ButtonsCommonProps) => {
+const RegisterButton = ({ disabled, onClick, ...props }: ButtonsCommonProps) => {
   return (
     <button
       className={clsx(
@@ -13,6 +13,7 @@ const RegisterButton = ({ disabled, onClick }: ButtonsCommonProps) => {
         !disabled ? 'bg-gray-100' : 'bg-gray-500',
       )}
       onClick={onClick}
+      {...props}
     >
       회원가입하기
     </button>

@@ -5,5 +5,5 @@ export enum CancelButtonType {
   SIZE_38 = 'SIZE_38',
 }
 export interface CancelButtonProps extends ButtonsCommonProps {
-  type: CancelButtonType;
+  buttonType: CancelButtonType;
 }

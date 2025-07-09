@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 
 import AiManagerImage from '@assets/images/onboarding/AiMananger.png';
-import SnsEventAssistentImage from '@assets/images/onboarding/SnsEventAssistent.png';
+import SnsEventAssistantImage from '@assets/images/onboarding/SnsEventAssistant.png';
 import TeamVibeMaker from '@assets/images/onboarding/TeamVibeMaker.png';
 
 const slides = [
@@ -16,7 +16,7 @@ const slides = [
       '실시간 음성 인식으로 대화의 흐름을 파악하고,\n맞춤 질문 추천과 회의록 작성까지 해드릴게요!',
   },
   {
-    image: SnsEventAssistentImage,
+    image: SnsEventAssistantImage,
     title: 'SNS 이벤트 어시스턴트가\n이벤트 운영을 간편하게 해드려요.',
     description: '참여자 수집부터 당첨자 추첨까지,\n링크 입력 한 번으로 모두 끝나요!',
   },

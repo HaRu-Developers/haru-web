@@ -1,5 +1,5 @@
 export const baseStyle =
-  'text-b2-rg mb-1 flex h-9 w-9 items-center justify-center rounded-lg font-[Pretendard] transition';
+  'text-b3-md mb-1 flex h-9 w-9 items-center justify-center rounded-lg font-[Pretendard] transition';
 
 export const dateNumVariants = {
   empty: 'cursor-default text-gray-300',

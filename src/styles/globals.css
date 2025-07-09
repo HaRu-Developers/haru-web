@@ -21,4 +21,8 @@
     word-break: keep-all;
     text-wrap: pretty;
   }
+
+  button {
+    cursor: pointer;
+  }
 }

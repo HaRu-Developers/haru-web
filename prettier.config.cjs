@@ -53,6 +53,7 @@ module.exports = {
     '^@common/mutations/(.*)$',
     '^@common/apis/(.*)$',
     '^@common/components/(.*)$',
+    '^@buttons/(.*)$', // 버튼 컴포넌트
     '^@common/(.*)$', // 나머지 공통 루트
 
     // 도메인 모듈 (features)

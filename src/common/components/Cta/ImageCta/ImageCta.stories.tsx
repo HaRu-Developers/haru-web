@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 
-import ImageCta from './ImageCta';
+import ImageCta from './ImageCta.client';
 import { ImageCtaType } from './ImageCta.types';
 
 const meta: Meta<typeof ImageCta> = {

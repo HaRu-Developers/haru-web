@@ -1,3 +1,5 @@
+'use client';
+
 import PlusIcons from '@icons/PlusIcons/PlusIcons';
 import { PlusIconsState } from '@icons/PlusIcons/PlusIcons.types';
 

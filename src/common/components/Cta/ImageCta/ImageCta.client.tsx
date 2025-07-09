@@ -1,3 +1,5 @@
+'use client';
+
 import CtaIcons from '@icons/Cta/CtaIcons';
 import { CtaIconsState } from '@icons/Cta/CtaIcons.types';
 import PlusIcons from '@icons/PlusIcons/PlusIcons';

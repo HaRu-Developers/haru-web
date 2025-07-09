@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 
-import TextCta from './TextCta';
+import TextCta from './TextCta.client';
 import { TextCtaType } from './TextCta.types';
 
 const meta: Meta<typeof TextCta> = {

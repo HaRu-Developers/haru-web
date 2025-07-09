@@ -1,3 +1,5 @@
+'use client';
+
 // SendLinkToTeamByEmailButton
 import clsx from 'clsx';
 

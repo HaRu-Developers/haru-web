@@ -1,4 +1,5 @@
-import AiQuestionIcon from '@svgs/component-set/AiQuestionHoverIcon.svg';
+import AiQuestionIcons from '@icons/AiQuestionIcons/AiQuestionIcons';
+import { AiQuestionIconsState } from '@icons/AiQuestionIcons/AiQuestionIcons.types';
 
 import { AiQuestionCardProps } from './AiQuestionCard.types';
 
@@ -7,7 +8,7 @@ const AiQuestionCard = ({ aiRecommendQuestion, userAnswer }: AiQuestionCardProps
     <div className="border-stroke-200 w-110 rounded-xl border bg-white px-5 pt-5 pb-[18px] hover:bg-gray-600">
       <div className="mb-3 inline-flex items-start gap-3">
         <div className="flex-shrink-0">
-          <AiQuestionIcon width="24px" height="24px" />
+          <AiQuestionIcons state={AiQuestionIconsState.SIZE_24_HOVER} />
         </div>
 
         <div className="text-t6-sb text-black">{aiRecommendQuestion}</div>

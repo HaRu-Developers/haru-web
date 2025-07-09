@@ -15,7 +15,7 @@ const RosterDataField = ({
       <div className={`flex items-start pb-3 ${ptClass}`}>
         <div className={`flex w-full items-center gap-9 ${hasLeftBorder ? 'pl-4' : ''}`}>
           <div className="text-b3-rg text-gray-300">{rowNumber}</div>
-          <div className="text-b3-md text-black">{userId}</div>
+          <div className="text-b3-md max-w-[290px] truncate text-black">{userId}</div>
         </div>
       </div>
     </div>

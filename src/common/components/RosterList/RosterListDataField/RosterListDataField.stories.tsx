@@ -46,3 +46,21 @@ export const WithLeftBorder: Story = {
     hasLeftBorder: true,
   },
 };
+
+export const LongUserId: Story = {
+  args: {
+    index: 2,
+    rowNumber: 12,
+    userId: 'SUPER_LONG_USER_IDENTIFIER_EXCEEDING_290PX_WIDTH_FOR_ELLIPSIS',
+    hasLeftBorder: false,
+  },
+};
+
+export const WithLeftBorderLongUserId: Story = {
+  args: {
+    index: 2,
+    rowNumber: 12,
+    userId: 'SUPER_LONG_USER_IDENTIFIER_EXCEEDING_290PX_WIDTH_FOR_ELLIPSIS',
+    hasLeftBorder: true,
+  },
+};

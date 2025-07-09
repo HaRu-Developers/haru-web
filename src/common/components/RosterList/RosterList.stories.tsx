@@ -56,3 +56,18 @@ export const WithStartIndex: Story = {
     startIndex: 30,
   },
 };
+
+export const WithLongUserId: Story = {
+  name: '긴 userId 포함',
+  args: {
+    items: [
+      { userId: 'SSOXX_A' },
+      { userId: 'SSOXX_B' },
+      { userId: 'THIS_IS_A_SUPER_LONG_USER_IDENTIFIER_TO_TEST_TEXT_TRUNCATION_OVER_290PX_WIDTH' },
+      { userId: 'SSOXX_D' },
+      { userId: 'SSOXX_E' },
+    ],
+    hasLeftBorder: false,
+    startIndex: 0,
+  },
+};

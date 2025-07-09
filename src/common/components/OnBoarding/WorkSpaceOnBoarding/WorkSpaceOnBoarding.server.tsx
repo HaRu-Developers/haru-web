@@ -1,12 +1,10 @@
-'use client';
-
 import Image from 'next/image';
 
 import { OnboardingIconsState } from '@icons/OnboardingIcons/OnboardingIcons.types';
 
 import WorkSpaceOnBoardingImage from '@assets/images/onboarding/WorkSpaceOnBoardingImage.png';
 
-import FeatureCard from './FeatureCard/FeatureCard';
+import FeatureCard from './FeatureCard/FeatureCard.server';
 import { Feature, Position } from './WorkSpaceOnBoarding.types';
 
 const features: Feature[] = [

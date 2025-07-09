@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 
-import LoginOnBoarding from './LoginOnBoarding';
+import LoginOnBoarding from './LoginOnBoarding.client';
 
 const meta: Meta<typeof LoginOnBoarding> = {
   title: 'Onboarding/LoginOnBoarding',

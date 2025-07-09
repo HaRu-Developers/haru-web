@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 
-import WorkSpaceOnBoarding from './WorkSpaceOnBoarding';
+import WorkSpaceOnBoarding from './WorkSpaceOnBoarding.server';
 
 const meta: Meta<typeof WorkSpaceOnBoarding> = {
   title: 'Onboarding/WorkSpaceOnBoarding',

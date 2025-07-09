@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/nextjs';
 
 import { OnboardingIconsState } from '@icons/OnboardingIcons/OnboardingIcons.types';
 
-import FeatureCard from './FeatureCard';
+import FeatureCard from './FeatureCard.server';
 
 const meta: Meta<typeof FeatureCard> = {
   title: 'Onboarding/WorkSpaceOnBoarding/FeatureCard',

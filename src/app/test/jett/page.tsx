@@ -1,6 +1,6 @@
 // OnBoardingTestPage.jsx
-import LoginOnBoarding from '@common/components/OnBoarding/LoginOnBoaring/LoginOnBoarding';
-import WorkSpaceOnBoarding from '@common/components/OnBoarding/WorkSpaceOnBoarding/WorkSpaceOnBoarding';
+import LoginOnBoarding from '@common/components/OnBoarding/LoginOnBoaring/LoginOnBoarding.client';
+import WorkSpaceOnBoarding from '@common/components/OnBoarding/WorkSpaceOnBoarding/WorkSpaceOnBoarding.server';
 
 const OnBoardingTestPage = () => {
   return (

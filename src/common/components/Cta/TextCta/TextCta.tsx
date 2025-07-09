@@ -8,7 +8,7 @@ const textCtaConfig: Record<TextCtaType, TextCtaConfig> = {
     iconState: PlusIconsState.SIZE_20_PRIMARY,
     color: 'text-primary',
   },
-  [TextCtaType.SNS_EVENT_ASSISTENT]: {
+  [TextCtaType.SNS_EVENT_ASSISTANT]: {
     iconState: PlusIconsState.SIZE_20_SECONDARY_GREEN,
     color: 'text-secondary-green',
   },

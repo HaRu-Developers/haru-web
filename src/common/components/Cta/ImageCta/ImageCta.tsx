@@ -13,10 +13,10 @@ const imageCtaConfig: Record<ImageCtaType, ImageCtaConfig> = {
     plusIconState: PlusIconsState.SIZE_16_PRIMARY,
     marginBottom: 'mb-[20.5px]',
   },
-  [ImageCtaType.SNS_EVENT_ASSISTENT]: {
+  [ImageCtaType.SNS_EVENT_ASSISTANT]: {
     title: 'SNS 이벤트 어시스턴트',
     color: 'text-secondary-green',
-    ctaIconState: CtaIconsState.SNS_EVENT_ASSISTENT,
+    ctaIconState: CtaIconsState.SNS_EVENT_ASSISTANT,
     plusIconState: PlusIconsState.SIZE_16_SECONDARY_GREEN,
     marginBottom: 'mb-[20.5px]',
   },

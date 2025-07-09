@@ -24,7 +24,7 @@ export const AiMeeting: Story = {
 
 export const SnsEvent: Story = {
   args: {
-    type: ImageCtaType.SNS_EVENT_ASSISTENT,
+    type: ImageCtaType.SNS_EVENT_ASSISTANT,
     onClick: handleClick('SNS 이벤트 어시스턴트'),
   },
 };

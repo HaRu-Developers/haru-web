@@ -22,7 +22,7 @@ export const AiMeeting: Story = {
 
 export const SnsEvent: Story = {
   args: {
-    type: TextCtaType.SNS_EVENT_ASSISTENT,
+    type: TextCtaType.SNS_EVENT_ASSISTANT,
     onClick: () => alert('SNS 이벤트 클릭'),
   },
 };

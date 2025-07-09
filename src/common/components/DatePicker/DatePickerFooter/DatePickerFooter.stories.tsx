@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/nextjs';
 
-import DatePickerFooter from './DatePickerFooter';
+import DatePickerFooter from './DatePickerFooter.client';
 import { DatePickerFooterProps } from './DatePickerFooter.types';
 
 const meta: Meta<DatePickerFooterProps> = {

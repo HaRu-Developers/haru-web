@@ -1,3 +1,5 @@
+'use client';
+
 import type { DateNumProps } from './DateNum.types';
 import { baseStyle, dateNumVariants } from './date-num-styles';
 

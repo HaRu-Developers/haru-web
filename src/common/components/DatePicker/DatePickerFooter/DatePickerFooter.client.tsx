@@ -1,3 +1,5 @@
+'use client';
+
 import CompleteSelectButton from '@buttons/32px/CompleteSelectButton/CompleteSelectButton';
 import CancelButton from '@buttons/diverse-size/CancelButton/CancelButton';
 import { CancelButtonType } from '@buttons/diverse-size/CancelButton/CancelButton.types';

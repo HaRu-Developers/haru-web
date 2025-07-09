@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 
-import DateNum from './DateNum';
+import DateNum from './DateNum.client';
 import type { DateNumProps } from './DateNum.types';
 
 const meta: Meta<DateNumProps> = {

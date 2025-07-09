@@ -1,3 +1,5 @@
+'use client';
+
 import ArrowButton from '@buttons/32px/ArrowButton/ArrowButton';
 import { ArrowButtonDirection } from '@buttons/32px/ArrowButton/ArrowButton.types';
 

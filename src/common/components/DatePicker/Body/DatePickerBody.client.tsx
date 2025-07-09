@@ -1,8 +1,10 @@
+'use client';
+
 import Calendar from 'react-calendar';
 
 import '@/styles/calendarCustom.css';
 
-import DateNum from '../DateNum/DateNum';
+import DateNum from '../DateNum/DateNum.client';
 import type { CalendarTileProps, DatePickerBodyProps } from './DatePickerBody.types';
 
 /**

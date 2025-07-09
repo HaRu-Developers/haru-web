@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import type { Meta, StoryObj } from '@storybook/nextjs';
 
-import DatePicker from './DatePicker';
+import DatePicker from './DatePicker.client';
 import type { DatePickerProps } from './DatePicker.types';
 
 const today = new Date();

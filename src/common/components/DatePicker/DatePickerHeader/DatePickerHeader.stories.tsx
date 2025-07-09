@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import type { Meta } from '@storybook/nextjs';
 
-import DatePickerHeader from './DatePickerHeader';
+import DatePickerHeader from './DatePickerHeader.client';
 import type { DatePickerHeaderProps } from './DatePickerHeader.types';
 
 const meta: Meta<DatePickerHeaderProps> = {

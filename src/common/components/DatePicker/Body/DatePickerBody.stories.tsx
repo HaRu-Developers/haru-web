@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import type { Meta, StoryObj } from '@storybook/nextjs';
 
-import DatePickerBody from './DatePickerBody';
+import DatePickerBody from './DatePickerBody.client';
 import type { DatePickerBodyProps } from './DatePickerBody.types';
 
 const meta: Meta<DatePickerBodyProps> = {

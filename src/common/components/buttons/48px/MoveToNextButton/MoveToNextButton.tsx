@@ -1,3 +1,5 @@
+'use client';
+
 import clsx from 'clsx';
 
 import { MoveToNextButtonProps, MoveToNextButtonWidth } from './MoveToNextButton.types';

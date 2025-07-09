@@ -1,3 +1,5 @@
+'use client';
+
 import ThirdPartyLogoIcons from '@icons/logos/GoogleLogoIcon/ThirdPartyLogoIcons';
 import { ThirdPartyLogoIconsState } from '@icons/logos/GoogleLogoIcon/ThirdPartyLogoIcons.types';
 

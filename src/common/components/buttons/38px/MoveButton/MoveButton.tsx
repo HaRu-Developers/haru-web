@@ -1,3 +1,5 @@
+'use client';
+
 import clsx from 'clsx';
 
 import { ButtonsCommonProps } from '../../types/buttons.common.types';

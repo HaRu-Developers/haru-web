@@ -1,3 +1,5 @@
+'use client';
+
 import clsx from 'clsx';
 
 import ArrowIcons from '@icons/ArrowIcons/ArrowIcons';

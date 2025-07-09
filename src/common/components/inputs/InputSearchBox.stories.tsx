@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/nextjs';
 
-import InputSearchBox from '@/common/components/inputs/InputSearchBox';
+import InputSearchBox from '@/common/components/inputs/InputSearchBox.client';
 
 const meta: Meta<typeof InputSearchBox> = {
   title: 'Components/InputSearchBox',

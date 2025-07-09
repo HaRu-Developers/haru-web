@@ -12,14 +12,4 @@ export default meta;
 
 type Story = StoryObj<typeof InputSearchBox>;
 
-export const Default: Story = {
-  args: {
-    mode: 'default',
-  },
-};
-
-export const Hover: Story = {
-  args: {
-    mode: 'hover',
-  },
-};
+export const Default: Story = {};

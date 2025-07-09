@@ -1,6 +1,6 @@
 export enum SurveyQuestionTabType {
-  QUESTION_GENERATE = 'questionGenerator',
-  QUESTION_LIST = 'questionList',
+  QUESTION_GENERATE = 'QUESTION_GENERATE',
+  QUESTION_LIST = 'QUESTION_LIST',
 }
 
 export const SurveyQuestionTabLabels: Record<SurveyQuestionTabType, string> = {
@@ -9,9 +9,9 @@ export const SurveyQuestionTabLabels: Record<SurveyQuestionTabType, string> = {
 };
 
 export enum TeamMoodReportTabType {
-  TEAM_MOOD_REPORT = 'teamReport',
-  RESPONSE_SUMMARY = 'responseSummary',
-  QUESTION_LIST = 'questionList',
+  TEAM_MOOD_REPORT = 'TEAM_MOOD_REPORT',
+  RESPONSE_SUMMARY = 'RESPONSE_SUMMARY',
+  QUESTION_LIST = 'QUESTION_LIST',
 }
 
 export const TeamMoodReportTabLabels: Record<TeamMoodReportTabType, string> = {

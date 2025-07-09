@@ -1,7 +1,7 @@
 export enum TabType {
-  PARTICIPANT_LIST = 'participant-list',
-  WINNER_LIST = 'winner-list',
-  SNS_LINK = 'sns-link',
+  PARTICIPANT_LIST = 'PARTICIPANT_LIST-list',
+  WINNER_LIST = 'WINNER_LIST',
+  SNS_LINK = 'SNS_LINK',
 }
 
 export const TabLabels: Record<TabType, string> = {

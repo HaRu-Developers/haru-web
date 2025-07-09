@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/nextjs';
 
-import PieChart from './PieChar';
+import PieChart from './PieChar.client';
 
 const meta: Meta<typeof PieChart> = {
   title: 'Charts/PieChart',

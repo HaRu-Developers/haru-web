@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/nextjs';
 
-import BarChart from './BarChar';
+import BarChart from './BarChar.client';
 
 const meta: Meta<typeof BarChart> = {
   title: 'Charts/BarChart',

@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/nextjs';
 
-import SubjectiveAnswers from './SubjectiveAnswser';
+import SubjectiveAnswers from './SubjectiveAnswser.server';
 
 const meta: Meta<typeof SubjectiveAnswers> = {
   title: 'Survey/SubjectiveAnswers',

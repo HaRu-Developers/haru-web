@@ -1,11 +1,11 @@
-export enum FileType {
-  AI_MANAGER = 'AI_MANAGER',
-  TEAM_MOOD = 'TEAM_MOOD',
-  SNS_ASSIST = 'SNS_ASSIST',
+export enum DocumentType {
+  AI_MEETING_MANAGER = 'AI_MEETING_MANAGER',
+  SNS_EVENT_ASSISTANT = 'SNS_EVENT_ASSISTANT',
+  TEAM_MOOD_TRACKER = 'TEAM_MOOD_TRACKER',
 }
 export interface BoxedFileProps {
-  createdAt: Date;
-  lastOpenedAt?: Date;
-  fileImageUrl: string;
-  fileType: FileType;
+  title: string;
+  lastOpened?: Date;
+  thumbnailUrl?: string;
+  documentType: DocumentType;
 }

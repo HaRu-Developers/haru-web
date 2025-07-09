@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/nextjs';
 
-import { TimePicker } from './TimePicker';
+import { TimePicker } from './TimePicker.client';
 import { TimePickerProps } from './TimePicker.types';
 
 const meta: Meta<TimePickerProps> = {

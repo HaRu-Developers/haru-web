@@ -6,6 +6,12 @@ import { SkipForNowButtonProps, SkipForNowButtonType } from './SkipForNowButton.
  * '지금 건너뛰기' 버튼
  */
 const SkipForNowButton = ({ onClick, buttonType, ...props }: SkipForNowButtonProps) => {
+  let buttonText = '';
+  if (buttonType === SkipForNowButtonType.SIZE_38) {
+    buttonText = '지금 건너뛰기';
+  } else if (buttonType === SkipForNowButtonType.SIZE_48) {
+    buttonText = '지금은 건너뛰기';
+  }
   return (
     <button
       className={clsx({
@@ -18,7 +24,7 @@ const SkipForNowButton = ({ onClick, buttonType, ...props }: SkipForNowButtonPro
       onClick={onClick}
       {...props}
     >
-      지금 건너뛰기
+      {buttonText}
     </button>
   );
 };

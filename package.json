@@ -25,7 +25,6 @@
     "react": "^19.0.0",
     "react-calendar": "^6.0.0",
     "react-dom": "^19.0.0",
-    "tailwind-merge": "^3.3.1",
     "typescript-eslint": "^8.35.0"
   },
   "devDependencies": {
@@ -46,6 +45,7 @@
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",
     "@types/node": "^20",
     "@types/react": "^19",
+    "@types/react-calendar": "4.1.0",
     "@types/react-dom": "^19",
     "@vitest/browser": "^3.2.4",
     "@vitest/coverage-v8": "^3.2.4",

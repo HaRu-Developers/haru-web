@@ -1,47 +1,32 @@
 @import 'tailwindcss';
 
-/* Headline */
-@utility text-headline-1 {
-  font-size: 32px;
-  line-height: 42px;
-  letter-spacing: -0.025em;
-}
-@utility text-headline-2 {
+/* 제목 */
+@utility text-t1-sb {
   font-size: 28px;
-  line-height: 38px;
-  letter-spacing: -0.025em;
-}
-@utility text-headline-3 {
-  font-size: 24px;
-  line-height: 34px;
-  letter-spacing: -0.025em;
-}
-@utility text-headline-4 {
-  font-size: 20px;
-  line-height: 28px;
-  letter-spacing: -0.025em;
+  line-height: 130%;
+  font-weight: 600;
+  letter-spacing: -0.02em;
 }
 
-/* Title */
-@utility text-title-1 {
-  font-size: 24px;
-  line-height: 34px;
-  letter-spacing: -0.025em;
+@utility text-t2-bd {
+  font-size: 26px;
+  line-height: 130%;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
-@utility text-title-2 {
+
+@utility text-t3-bd {
   font-size: 20px;
-  line-height: 28px;
-  letter-spacing: -0.025em;
+  line-height: 130%;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
-@utility text-title-3 {
+
+@utility text-t4-bd {
   font-size: 18px;
-  line-height: 26px;
-  letter-spacing: -0.025em;
-}
-@utility text-title-4 {
-  font-size: 16px;
-  line-height: 24px;
-  letter-spacing: -0.025em;
+  line-height: 130%;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 @utility text-title-5 {
   font-size: 16px;
@@ -54,53 +39,102 @@
   letter-spacing: -0.025em;
 }
 
-/* Body */
-@utility text-body-1 {
-  font-size: 15px;
-  line-height: 22px;
-  letter-spacing: -0.025em;
-}
-@utility text-body-2 {
-  font-size: 14px;
-  line-height: 20px;
-  letter-spacing: -0.025em;
-}
-@utility text-body-3 {
-  font-size: 13px;
-  line-height: 18px;
-  letter-spacing: -0.025em;
-}
-@utility text-body-4 {
-  font-size: 12px;
-  line-height: 18px;
-  letter-spacing: -0.025em;
-}
-
-/* Caption */
-@utility text-caption-1 {
-  font-size: 13px;
-  line-height: 18px;
-  letter-spacing: -0.025em;
-}
-@utility text-caption-2 {
-  font-size: 12px;
-  line-height: 18px;
-  letter-spacing: -0.025em;
-}
-
-/* Button */
-@utility text-button-1 {
+@utility text-t5-bd {
   font-size: 16px;
-  line-height: 24px;
-  letter-spacing: -0.025em;
+  line-height: 130%;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
-@utility text-button-2 {
+
+@utility text-t6-sb {
   font-size: 14px;
-  line-height: 20px;
-  letter-spacing: -0.025em;
+  line-height: 130%;
+  font-weight: 600;
+  letter-spacing: -0.02em;
 }
-@utility text-button-3 {
+
+/* 문단, 목룍, 표 등 */
+@utility text-b1-rg {
+  font-size: 16px;
+  line-height: 160%;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+@utility text-b2-rg {
+  font-size: 15px;
+  line-height: 160%;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+@utility text-b3-md {
+  font-size: 14px;
+  line-height: 160%;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+@utility text-b3-rg {
+  font-size: 14px;
+  line-height: 160%;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+@utility text-cap1-md {
   font-size: 13px;
-  line-height: 18px;
-  letter-spacing: -0.025em;
+  line-height: 130%;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+@utility text-cap1-rg {
+  font-size: 13px;
+  line-height: 130%;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+@utility text-cap2-md {
+  font-size: 12px;
+  line-height: 130%;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+@utility text-cap2-rg {
+  font-size: 12px;
+  line-height: 130%;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+@utility text-cap3-rg {
+  font-size: 11px;
+  line-height: 130%;
+  font-weight: 400;
+  letter-spacing: -0;
+}
+
+/* 버튼 */
+@utility text-bt1-sb {
+  font-size: 15px;
+  line-height: 100%;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+@utility text-bt2-sb {
+  font-size: 14px;
+  line-height: 100%;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+@utility text-bt3-sb {
+  font-size: 13px;
+  line-height: 100%;
+  font-weight: 600;
+  letter-spacing: -0.02em;
 }

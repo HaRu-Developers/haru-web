@@ -1,4 +1,5 @@
 import AddWorkspaceButton from '@common/components/buttons/30px/AddWorkspaceButton/AddWorkspaceButton';
+import AddQuestionButton from '@common/components/buttons/56px/AddQuestionButton/AddQuestionButton';
 import { SkipForNowButtonType } from '@common/components/buttons/diverse-size/SkipForNowButton/SkipForNowButton.types';
 
 import ChangePasswordButton from '@buttons/30px/ChangePasswordButton/ChangePasswordButton';
@@ -122,15 +123,13 @@ const ButtonTestPage = () => {
           <GoogleLoginButton />
           <ConnectInstagramAccountButton />
         </div>
-        <div className="flex flex-row space-x-2"></div>
-        <div className="flex flex-row space-x-2"></div>
-        <div className="flex flex-row space-x-2"></div>
-        <div className="flex flex-row space-x-2"></div>
-        <div className="flex flex-row space-x-2"></div>
       </div>
       {/* 56px 버튼 */}
       <div className="mt-5 flex flex-col space-y-4 rounded-4xl border p-5">
         <p className="text-cap3-md">56px 버튼</p>
+        <div className="flex flex-row space-x-2">
+          <AddQuestionButton />
+        </div>
       </div>
       {/* 같은 버튼이 여러개로 있는 경우 */}
       <div className="mt-5 flex flex-col space-y-4 rounded-4xl border p-5">
@@ -145,6 +144,10 @@ const ButtonTestPage = () => {
           <SkipForNowButton buttonType={SkipForNowButtonType.SIZE_48} />
         </div>
       </div>
+      <div className="flex flex-row space-x-2"></div>
+      <div className="flex flex-row space-x-2"></div>
+      <div className="flex flex-row space-x-2"></div>
+      <div className="flex flex-row space-x-2"></div>
     </div>
   );
 };

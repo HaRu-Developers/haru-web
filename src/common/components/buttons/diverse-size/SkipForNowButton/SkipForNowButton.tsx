@@ -5,7 +5,7 @@ import { SkipForNowButtonProps, SkipForNowButtonType } from './SkipForNowButton.
 /**
  * '지금 건너뛰기' 버튼
  */
-const SkipForNowButton = ({ onClick, buttonType: buttonType, ...props }: SkipForNowButtonProps) => {
+const SkipForNowButton = ({ onClick, buttonType, ...props }: SkipForNowButtonProps) => {
   return (
     <button
       className={clsx({

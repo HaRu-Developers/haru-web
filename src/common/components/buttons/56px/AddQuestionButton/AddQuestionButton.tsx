@@ -1,15 +1,14 @@
 import clsx from 'clsx';
 
-import PlusIcon from '@common/svgs/component-set/PlusIcon.svg';
+import PlusIcons from '@icons/PlusIcons/PlusIcons';
+import { PlusIconsState } from '@icons/PlusIcons/PlusIcons.types';
 
-interface AddQuestionButtonProps {
-  onClick?: () => void;
-}
+import { ButtonsCommonProps } from '../../types/buttons.common.types';
 
 /**
  * '다음 단계로' 버튼
  */
-const AddQuestionButton = ({ onClick, ...props }: AddQuestionButtonProps) => {
+const AddQuestionButton = ({ onClick, ...props }: ButtonsCommonProps) => {
   return (
     <button
       className={clsx(
@@ -18,7 +17,7 @@ const AddQuestionButton = ({ onClick, ...props }: AddQuestionButtonProps) => {
       onClick={onClick}
       {...props}
     >
-      <PlusIcon width="20" height="20" />
+      <PlusIcons state={PlusIconsState.SIZE_20_GRAY_400} />
       <p>문항 추가하기</p>
     </button>
   );

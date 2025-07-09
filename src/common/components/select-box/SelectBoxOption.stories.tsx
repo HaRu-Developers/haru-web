@@ -13,16 +13,37 @@ const meta: Meta<typeof SelectBoxOption> = {
 export default meta;
 type Story = StoryObj<typeof SelectBoxOption>;
 
-const options = [
-  { value: '객관식 질문', label: '객관식 질문' },
-  { value: '주관식 질문', label: '주관식 질문' },
-  { value: '체크 박스', label: '체크 박스' },
+const options1 = [
+  { state: '객관식 질문', label: '객관식 질문' },
+  { state: '주관식 질문', label: '주관식 질문' },
+  { state: '체크 박스', label: '체크 박스' },
 ];
-
+const options2 = [
+  { state: '공개', label: '공개' },
+  { state: '비공개', label: '비공개' },
+];
 export const Default: Story = {
-  render: () => {
-    const [selected, setSelected] = useState('객관식 질문');
+  args: {
+    options: options1,
+    onClick: (state: string) => console.log(state),
+    placeholder: '선택하세요',
+  },
+};
 
-    return <SelectBoxOption options={options} value={selected} onChange={setSelected} />;
+export const Question: Story = {
+  args: {
+    options: options1,
+    initState: options1[0].state,
+    onClick: (state: string) => console.log(state),
+    placeholder: '선택하세요',
+  },
+};
+
+export const Visible: Story = {
+  args: {
+    options: options2,
+    initState: options2[0].state,
+    onClick: (state: string) => console.log(state),
+    placeholder: '선택하세요',
   },
 };

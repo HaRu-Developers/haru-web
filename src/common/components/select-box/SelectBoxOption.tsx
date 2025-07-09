@@ -2,54 +2,62 @@ import { useState } from 'react';
 
 import clsx from 'clsx';
 
-import ChevronDownOutline from '@common/svgs/ChevronDownOutline.svg';
+import IndividualIcons from '@icons/IndividualIcons/IndividualIcons';
+import { IndividualIconsState } from '@icons/IndividualIcons/IndividualIcons.types';
+
+import { SelectBoxProps } from './SelectBoxOption.types';
 
 /*
  * 셀렉트 박스 옵션 선택
  */
-interface Option {
-  value: string;
-  label: string;
-}
 
-interface SelectBoxProps {
-  options: Option[];
-  value: string;
-  onChange: (value: string) => void;
-  placeholder?: string;
-}
-
-const SelectBox = ({ options, value, onChange, placeholder = '선택하세요' }: SelectBoxProps) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const selectedOption = options.find((opt) => opt.value === value);
-
-  const handleSelect = (val: string) => {
-    onChange(val);
+const SelectBox = ({ options, initState, onClick, placeholder = '선택하세요' }: SelectBoxProps) => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [state, setstate] = useState<string>(initState);
+  const selectedOption = options.find((option) => option.state === state);
+  const handleSelect = (state: string) => {
+    setstate(state);
+    onClick(state);
     setIsOpen(false);
   };
 
+  const handleOpen = () => {
+    setIsOpen((prev) => !prev);
+  };
   return (
-    <div className="text-caption-1 flex w-fit flex-col items-start gap-[4px] font-medium">
+    <div className="text-cap1-md flex w-fit flex-col items-start gap-[4px]">
       <button
-        className="border-stroke-200 flex h-[34px] rounded-[6px] border-[2px] bg-white px-4 py-[6px] pr-[6px] pl-[12px] text-gray-100"
-        onClick={() => setIsOpen((prev) => !prev)}
+        className={clsx(
+          'border-stroke-200 flex h-[34px] cursor-pointer rounded-[6px] bg-white px-4 py-[6px] pr-[6px] pl-[12px] text-gray-100',
+          {
+            'border-[2px]': isOpen,
+            border: !isOpen,
+          },
+        )}
+        onClick={handleOpen}
       >
         {selectedOption?.label || placeholder}
-        <ChevronDownOutline />
+        <IndividualIcons
+          state={IndividualIconsState.UNDER_ARROW}
+          className={clsx('pointer-events-none')}
+        />
       </button>
+
       {isOpen && (
-        <ul className="text-button-3 border-stroke-200 flex flex-col items-start gap-[10px] self-stretch rounded-[8px] border bg-white px-[4px] py-[6px] text-gray-300">
+        <ul className="text-b3-md border-stroke-200 flex flex-col items-start gap-[10px] self-stretch rounded-[8px] border bg-white px-[4px] py-[6px] text-gray-300">
           {/* box-shadow 추가 */}
-          {options.map((opt) => (
+          {options.map((option, idx) => (
             <li
-              key={opt.value}
-              onClick={() => handleSelect(opt.value)}
+              key={idx}
+              onClick={() => handleSelect(option.state)}
               className={clsx(
                 'flex h-[32px] cursor-pointer items-center justify-center gap-[6px] self-stretch rounded-[6px] px-[14px] py-[6px] hover:bg-gray-600',
-                value === opt.value && 'bg-gray-600 text-gray-100',
+                {
+                  'bg-gray-600 text-gray-100': state === option.state,
+                },
               )}
             >
-              {opt.label}
+              {option.label}
             </li>
           ))}
         </ul>

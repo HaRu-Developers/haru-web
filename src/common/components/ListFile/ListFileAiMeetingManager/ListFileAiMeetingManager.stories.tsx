@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 
-import ListFileAiMeetingManager from './ListFileAiMeetingManager';
+import ListFileAiMeetingManager from './ListFileAiMeetingManager.client';
 
 const meta: Meta<typeof ListFileAiMeetingManager> = {
   title: 'ListFile/AiMeetingManager',

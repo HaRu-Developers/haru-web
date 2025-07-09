@@ -1,6 +1,6 @@
 import { FeaturedFileIconsState } from '@icons/FeaturedFileIcons/FeaturedFileIcons.types';
 
-import BaseListFile from '../BaseListFile/BaseListFile';
+import BaseListFile from '../BaseListFile/BaseListFile.client';
 import { ListFileAiMeetingManagerProps } from './ListFileAiMeetingManager.types';
 
 const ListFileAiMeetingManager = ({

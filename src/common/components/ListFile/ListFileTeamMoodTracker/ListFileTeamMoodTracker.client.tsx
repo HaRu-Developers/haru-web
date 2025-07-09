@@ -2,8 +2,8 @@
 
 import { FeaturedFileIconsState } from '@icons/FeaturedFileIcons/FeaturedFileIcons.types';
 
-import BaseListFile from '../BaseListFile/BaseListFile';
-import HumanIconWithText from '../HumanIconWithText/HumanIconWithText';
+import BaseListFile from '../BaseListFile/BaseListFile.client';
+import HumanIconWithText from '../HumanIconWithText/HumanIconWithText.server';
 import { ListFileTeamMoodTrackerProps } from './ListFileTeamMoodTracker.types';
 
 const ListFileTeamMoodTracker = ({

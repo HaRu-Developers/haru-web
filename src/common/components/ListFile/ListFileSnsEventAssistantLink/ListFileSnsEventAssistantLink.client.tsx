@@ -4,7 +4,7 @@ import FeatureTabIcons from '@icons/FeatureTabIcons/FeatureTabIcons';
 import { FeatureTabIconsState } from '@icons/FeatureTabIcons/FeatureTabIcons.types';
 import { FeaturedFileIconsState } from '@icons/FeaturedFileIcons/FeaturedFileIcons.types';
 
-import BaseListFile from '../BaseListFile/BaseListFile';
+import BaseListFile from '../BaseListFile/BaseListFile.client';
 import { ListFileSnsEventAssistantLinkProps } from './ListFileSnsEventAssistantLink.types';
 
 const ListFileSnsEventAssistantLink = ({

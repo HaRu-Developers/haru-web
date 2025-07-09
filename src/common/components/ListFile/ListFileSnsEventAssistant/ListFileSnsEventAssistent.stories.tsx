@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 
-import ListFileSnsEventAssistent from './ListFileSnsEventAssistant';
+import ListFileSnsEventAssistent from './ListFileSnsEventAssistant.client';
 
 const meta: Meta<typeof ListFileSnsEventAssistent> = {
   title: 'ListFile/SnsEventAssistent',

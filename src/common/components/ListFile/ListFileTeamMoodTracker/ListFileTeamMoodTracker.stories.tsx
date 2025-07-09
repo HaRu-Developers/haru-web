@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 
-import ListFileTeamMoodTracker from './ListFileTeamMoodTracker';
+import ListFileTeamMoodTracker from './ListFileTeamMoodTracker.client';
 
 const meta: Meta<typeof ListFileTeamMoodTracker> = {
   title: 'ListFile/TeamMoodTracker',

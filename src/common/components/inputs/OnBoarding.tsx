@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 
 import clsx from 'clsx';
 
+import EyeIcons from '@icons/EyeIcons/EyeIcons';
+import { EyeIconsState } from '@icons/EyeIcons/EyeIcons.types';
+
 import {
   OnBoardingProps,
   OnboardingMode,
@@ -47,24 +50,26 @@ const OnBoarding = ({
               border: mode === OnboardingMode.DEFAULT,
               'border-audio-bar/70 border-[2px]': mode === OnboardingMode.EDITABLE,
               'border-system-red': state === OnboardingState.ERROR,
-              'border-secondary-green': state === OnboardingState.SUCCESS,
+              'border-secondary-green': state === OnboardingState.APPROVAL,
             },
           )}
         />
-        <button
-          className={clsx('absolute top-[16px] right-[20px] h-[20px] w-[20px]', {
-            // 아이콘 으로 추가 예정
-            'bg-black': type === OnboardingType.HIDE && isShowing === false,
-            'bg-gray-300': type === OnboardingType.HIDE && isShowing === true,
-          })}
-          onClick={handleShow}
-          disabled={type === OnboardingType.SHOW}
-        ></button>
+        {type === OnboardingType.HIDE && (
+          <div
+            className={clsx('absolute top-[16px] right-[20px] h-[20px] w-[20px] cursor-pointer')}
+            onClick={handleShow}
+          >
+            <EyeIcons
+              state={isShowing === false ? EyeIconsState.CLOSED : EyeIconsState.OPENED}
+              className={clsx('pointer-events-none')}
+            />
+          </div>
+        )}
       </div>
       <span
         className={clsx('text-cap1-rg', {
           'text-system-red': state === OnboardingState.ERROR,
-          'text-secondary-green': state === OnboardingState.SUCCESS,
+          'text-secondary-green': state === OnboardingState.APPROVAL,
         })}
       >
         {message}

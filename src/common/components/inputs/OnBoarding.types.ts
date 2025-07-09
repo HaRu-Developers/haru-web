@@ -6,7 +6,7 @@ export enum OnboardingType {
 export enum OnboardingState {
   DEFAULT = 'DEFAULT',
   ERROR = 'ERROR',
-  SUCCESS = 'SUCCESS',
+  APPROVAL = 'APPROVAL',
 }
 
 export enum OnboardingMode {

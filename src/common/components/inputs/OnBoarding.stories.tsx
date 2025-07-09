@@ -56,7 +56,7 @@ export const Error: Story = {
   },
 };
 
-export const Success: Story = {
+export const APPROVAL: Story = {
   args: {
     mode: OnboardingMode.DEFAULT,
     title: '이메일 주소',
@@ -65,7 +65,7 @@ export const Success: Story = {
     onChange: (value) => console.log(value),
     type: OnboardingType.SHOW,
     message: '사용 가능한 이메일 형식입니다.',
-    state: OnboardingState.SUCCESS,
+    state: OnboardingState.APPROVAL,
   },
 };
 

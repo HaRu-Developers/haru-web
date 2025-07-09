@@ -1,3 +1,5 @@
+'use client';
+
 import clsx from 'clsx';
 
 import AudioBarIcons from '@icons/AudioBarIcons/AudioBarIcons';

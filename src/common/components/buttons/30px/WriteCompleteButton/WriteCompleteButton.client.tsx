@@ -1,3 +1,5 @@
+'use client';
+
 import { ButtonsCommonProps } from '../../types/buttons.common.types';
 
 /**

@@ -1,6 +1,6 @@
 'use client';
 
-import ArrowButton from '@buttons/32px/ArrowButton/ArrowButton';
+import ArrowButton from '@buttons/32px/ArrowButton/ArrowButton.client';
 import { ArrowButtonDirection } from '@buttons/32px/ArrowButton/ArrowButton.types';
 
 import type { DatePickerHeaderProps } from './DatePickerHeader.types';

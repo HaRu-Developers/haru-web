@@ -1,3 +1,5 @@
+'use client';
+
 import clsx from 'clsx';
 
 import DownloadIcons from '@icons/DownloadIcons/DownloadIcons';

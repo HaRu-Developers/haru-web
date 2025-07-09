@@ -1,7 +1,7 @@
 'use client';
 
-import CompleteSelectButton from '@buttons/32px/CompleteSelectButton/CompleteSelectButton';
-import CancelButton from '@buttons/diverse-size/CancelButton/CancelButton';
+import CompleteSelectButton from '@buttons/32px/CompleteSelectButton/CompleteSelectButton.client';
+import CancelButton from '@buttons/diverse-size/CancelButton/CancelButton.client';
 import { CancelButtonType } from '@buttons/diverse-size/CancelButton/CancelButton.types';
 
 import { DatePickerFooterProps } from './DatePickerFooter.types';

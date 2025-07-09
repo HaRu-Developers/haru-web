@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 
-import SurveyInSite from './SurveyInSite';
+import SurveyInSite from './SurveyInSite.server';
 
 const meta: Meta<typeof SurveyInSite> = {
   title: 'Components/BoxText/SurveyInSite',

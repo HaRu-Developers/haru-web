@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 
-import SnsLink from './SnsLink';
+import SnsLink from './SnsLink.client';
 
 const meta: Meta<typeof SnsLink> = {
   title: 'Components/BoxText/SnsLink',

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 
-import SurveryInfo from './SurveyInfo';
+import SurveryInfo from './SurveyInfo.server';
 
 const meta: Meta<typeof SurveryInfo> = {
   title: 'Components/BoxText/SurveryInfo',

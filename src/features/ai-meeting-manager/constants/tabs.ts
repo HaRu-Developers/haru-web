@@ -1,11 +1,11 @@
 export enum LeftTabType {
-  AI_NOTES = 'AI_NOTES',
-  VOICE_RECORDINGS = 'VOICE_RECORDINGS',
+  MEETING_SUMMARY = 'MEETING_SUMMARY',
+  MEETING_VOICE_LOG = 'MEETING_VOICE_LOG',
 }
 
 export const LeftTabLabels: Record<LeftTabType, string> = {
-  [LeftTabType.AI_NOTES]: 'AI 회의록',
-  [LeftTabType.VOICE_RECORDINGS]: '음성 기록',
+  [LeftTabType.MEETING_SUMMARY]: 'AI 회의록',
+  [LeftTabType.MEETING_VOICE_LOG]: '음성 기록',
 };
 
 export enum RightTabType {

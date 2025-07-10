@@ -60,7 +60,7 @@ const LeftTab = ({ current }: LeftTabProps) => {
 
       {/* 버튼 영역 */}
       <div className="inline-flex items-center">
-        {current === LeftTabType.AI_NOTES &&
+        {current === LeftTabType.MEETING_SUMMARY &&
           (isEditing ? (
             // TODO: 수정 완료 버튼으로 변경 필요
             <button onClick={handleEditDoneClick}>수정 완료</button>
@@ -79,7 +79,7 @@ const LeftTab = ({ current }: LeftTabProps) => {
               <button onClick={handleDownloadClick}>다운로드</button>
             </>
           ))}
-        {current === LeftTabType.VOICE_RECORDINGS && (
+        {current === LeftTabType.MEETING_VOICE_LOG && (
           <IconButton
             onClick={() => handleCopyClick(current)}
             ariaLabel={`${LeftTabLabels[current]} 복사`}

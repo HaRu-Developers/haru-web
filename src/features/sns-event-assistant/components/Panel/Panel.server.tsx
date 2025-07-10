@@ -2,7 +2,7 @@ import { TabType } from '@features/sns-event-assistant/constants/tabs';
 
 import { PanelProps } from './Panel.types';
 import ParticipantList from './components/ParticipantList/ParticipantList.server';
-import SNSLink from './components/SNSLink/SNSLink.server';
+import SnsLink from './components/SnsLink/SnsLink.server';
 import WinnerList from './components/WinnerList/WinnerList.server';
 
 const Panel = ({ tab }: PanelProps) => {
@@ -12,7 +12,7 @@ const Panel = ({ tab }: PanelProps) => {
     case TabType.WINNER_LIST:
       return <WinnerList />;
     case TabType.SNS_LINK:
-      return <SNSLink />;
+      return <SnsLink />;
   }
 };
 

@@ -27,7 +27,7 @@ const TestPage = async ({ searchParams }: { searchParams: Promise<SearchParamsTy
   // const formattedLeftTab =
   //   typeof leftTab === 'string' && Object.values(LeftTabType).includes(leftTab as LeftTabType)
   //     ? (leftTab as LeftTabType)
-  //     : LeftTabType.AI_NOTES; // 기본값
+  //     : LeftTabType.MEETING_SUMMARY; // 기본값
 
   // // TAB_SNS 이벤트 어시스턴트
   // const { snsTab } = await searchParams;
@@ -94,7 +94,7 @@ const TestPage = async ({ searchParams }: { searchParams: Promise<SearchParamsTy
           <TeamMoodReportTab
             current={formattedTab}
             counts={{
-              [TeamMoodReportTabType.RESPONSE_SUMMARY]: ResponseSummary,
+              [TeamMoodReportTabType.ANSWER_SUMMARY]: ResponseSummary,
             }}
           />
         </Suspense>

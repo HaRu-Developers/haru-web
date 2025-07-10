@@ -9,9 +9,9 @@ const TeamMoodReportPanel = ({ tab }: TeamMoodReportPanelProps) => {
   switch (tab) {
     case TeamMoodReportTabType.TEAM_MOOD_REPORT:
       return <TeamMoodReport />;
-    case TeamMoodReportTabType.RESPONSE_SUMMARY:
+    case TeamMoodReportTabType.ANSWER_SUMMARY:
       return <ResponseSummary />;
-    case TeamMoodReportTabType.QUESTION_LIST:
+    case TeamMoodReportTabType.SURVEY_LIST:
       return <QuestionList />;
   }
 };

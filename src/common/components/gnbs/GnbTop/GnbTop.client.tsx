@@ -1,0 +1,55 @@
+'use client';
+
+import Link from 'next/link';
+import { usePathname, useSearchParams } from 'next/navigation';
+
+import { GnbTopSection, sectionConfigs } from '@common/constants/GnbTop';
+import { SnsGnbTabLabels, SnsGnbTabType } from '@common/constants/GnbTop';
+
+import CategoryOption from '@common/components/CategoryOption/CategoryOption.client';
+
+import { GnbTopProps } from './GnbTop.types';
+
+const GnbTop = ({ section, title, current }: GnbTopProps) => {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const config =
+    section === GnbTopSection.CUSTOM
+      ? sectionConfigs[section](title ?? '')
+      : sectionConfigs[section];
+
+  const isTabSection = section === GnbTopSection.SNS_EVENT_ASSISTANT;
+  const isCustomSection = section === GnbTopSection.CUSTOM;
+
+  return (
+    <div className="flex w-[1200px] flex-col items-start">
+      {/* 상단 제목 */}
+      <div className="border-b-stroke-200 flex h-[60px] items-center justify-between self-stretch border-b border-solid bg-white px-6 py-[13px]">
+        <p className="text-t5-sb text-black">{config.title}</p>
+        <div>검색하기 영역</div>
+      </div>
+      {!isCustomSection && (
+        // 하단 탭 or 단순 옵션
+        <div className="border-b-stroke-200 flex h-14 items-center gap-2.5 self-stretch border-b border-solid bg-white px-6 py-[13px]">
+          {isTabSection
+            ? (Object.keys(SnsGnbTabLabels) as SnsGnbTabType[]).map((tab) => {
+                const params = new URLSearchParams(searchParams.toString());
+                params.set('snsGnbTab', tab);
+
+                return (
+                  <Link key={tab} href={`${pathname}?${params.toString()}`}>
+                    <CategoryOption label={SnsGnbTabLabels[tab]} active={current === tab} />
+                  </Link>
+                );
+              })
+            : config.options.map((option) => (
+                <CategoryOption key={option.key} label={option.label} active />
+              ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default GnbTop;

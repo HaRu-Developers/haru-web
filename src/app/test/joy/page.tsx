@@ -1,49 +1,34 @@
-'use client';
+import { Suspense } from 'react';
 
-import { useState } from 'react';
+import { SearchParamsType } from '@common/types/routing.types';
 
-import { defaultApi } from '@lib/fetcher';
+import { SnsGnbTabType } from '@common/constants/GnbTop';
+import { GnbTopSection } from '@common/constants/GnbTop';
 
-const TestPage = () => {
-  const [error, setError] = useState<Error | null>(null);
+import GnbTop from '@common/components/gnbs/GnbTop/GnbTop.client';
 
-  if (error) {
-    // 이 throw는 렌더링 중 발생 → error.tsx가 잡음
-    throw error;
-  }
-
-  const triggerApiError = async () => {
-    try {
-      await defaultApi('/api/blabla', {
-        method: 'GET',
-      });
-    } catch (e) {
-      if (e instanceof Error) {
-        setError(e); // 렌더링 흐름에 반영
-      }
-    }
-  };
-
-  const triggerRenderError = async () => {
-    setError(new Error('렌더링 중 에러 발생')); // 렌더링 흐름에 반영
-  };
+const TestPage = async ({ searchParams }: { searchParams: Promise<SearchParamsType> }) => {
+  const { snsGnbTab } = await searchParams;
+  const formattedSnsGnbTab =
+    typeof snsGnbTab === 'string' &&
+    Object.values(SnsGnbTabType).includes(snsGnbTab as SnsGnbTabType)
+      ? (snsGnbTab as SnsGnbTabType)
+      : SnsGnbTabType.ALL_EVENTS; // 기본값
 
   return (
-    <div className="space-y-4 p-8">
-      <button
-        className="text-bt3-md bg-system-red rounded px-4 py-2 text-white"
-        onClick={triggerApiError}
-      >
-        API 에러 전송 테스트
-      </button>
-
-      <button
-        className="text-bt3-md rounded bg-blue-500 px-4 py-2 text-white"
-        onClick={triggerRenderError}
-      >
-        렌더링 에러 전송 테스트
-      </button>
-    </div>
+    <>
+      <Suspense fallback={<div>탭 로딩 중...</div>}>
+        {/* <GnbTop section={GnbTopSection.MAIN} /> */}
+        {/* <GnbTop section={GnbTopSection.AI_MEETING_MANAGER} /> */}
+        {/* <GnbTop section={GnbTopSection.TEAM_MOOD_TRACKER} /> */}
+        {/* <GnbTop section={GnbTopSection.CALENDAR} /> */}
+        <GnbTop section={GnbTopSection.SNS_EVENT_ASSISTANT} current={formattedSnsGnbTab} />
+        {/* <GnbTop section={GnbTopSection.CUSTOM} title="UMC 8기 운영진 회의" current={formattedSnsGnbTab} /> */}
+      </Suspense>
+      <Suspense fallback={<div>패널 로딩 중...</div>}>
+        {/* TODO: 여기에 패널 컴포넌트 넣기 (formattedSnsGnbTab을 props으로 전달해 사용) */}
+      </Suspense>
+    </>
   );
 };
 

@@ -11,20 +11,23 @@ const BoxedFile = ({
   thumbnailUrl,
   documentType,
 }: BoxedFileProps) => {
+  const documentIconMap = {
+    [DocumentType.AI_MEETING_MANAGER]: FeaturedFileIconsState.SIZE_24_AI_MANAGER_FILE,
+    [DocumentType.SNS_EVENT_ASSISTANT]: FeaturedFileIconsState.SIZE_24_SNS_ASSISTANT_FILE,
+    [DocumentType.TEAM_MOOD_TRACKER]: FeaturedFileIconsState.SIZE_24_TEAM_MOOD_FILE,
+  };
+  const iconState = documentIconMap[documentType];
   const today = new Date();
   const isSameDate =
     today.getFullYear() === lastOpened.getFullYear() &&
     today.getMonth() === lastOpened.getMonth() &&
     today.getDate() === lastOpened.getDate();
   const time = `${isSameDate ? `마지막으로 연 시간 ${lastOpened.toLocaleTimeString()}` : lastOpened.toLocaleDateString()}`;
-  const iconClass = clsx('absolute top-[13px] left-[14px] h-[24px] w-[24px]');
+  const iconClass = clsx('absolute top-[13px] left-[14px] h-6 w-6');
+
   return (
-    <div
-      className={clsx(
-        'h-[191px] w-[244px] flex-shrink-0 rounded-[16px] bg-gray-700 px-[20px] py-[17px]',
-      )}
-    >
-      <div className={clsx('flex-shink-0 mb-[10px] flex w-full flex-col items-start gap-[2px]')}>
+    <div className={clsx('h-[191px] w-[244px] shrink-0 rounded-2xl bg-gray-700 px-5 py-[17px]')}>
+      <div className={clsx('mb-2.5 flex w-full shrink-0 flex-col items-start gap-0.5')}>
         {/* 폰트 시스템에 없어서 적용 안됨 양식만 맞줘 놓음 상태 */}
         <span className={clsx('text-t5-sb')}>{title}</span>
         <span className={clsx('text-cap2-rg text-gray-300')}>{time}</span>
@@ -35,33 +38,16 @@ const BoxedFile = ({
           'shadow-boxed-file relative h-[108px] w-full shrink-0 rounded-[10px] bg-white',
         )}
       >
-        {documentType === DocumentType.AI_MEETING_MANAGER && (
-          <FeaturedFileIcons
-            state={FeaturedFileIconsState.SIZE_24_AI_MANAGER_FILE}
-            className={clsx(iconClass)}
-          />
-        )}
-        {documentType === DocumentType.SNS_EVENT_ASSISTANT && (
-          <FeaturedFileIcons
-            state={FeaturedFileIconsState.SIZE_24_SNS_ASSISTANT_FILE}
-            className={clsx(iconClass)}
-          />
-        )}
-        {documentType === DocumentType.TEAM_MOOD_TRACKER && (
-          <FeaturedFileIcons
-            state={FeaturedFileIconsState.SIZE_24_TEAM_MOOD_FILE}
-            className={clsx(iconClass)}
-          />
-        )}
+        {iconState && <FeaturedFileIcons state={iconState} className={clsx(iconClass)} />}
 
         {thumbnailUrl ? (
           <img
             src={thumbnailUrl}
             alt=""
-            className={clsx('h-full w-full rounded-[10px] object-cover object-top pt-[40px]')}
+            className={clsx('h-full w-full rounded-[10px] object-cover object-top pt-10')}
           />
         ) : (
-          <div className={clsx('flex flex-col gap-[4px] px-[14px] pt-[47px] pb-[13px]')}>
+          <div className={clsx('flex flex-col gap-1 px-3.5 pt-[47px] pb-[13px]')}>
             <div className="h-[9px] rounded-[3px] bg-gray-600" />
             <div className="h-[9px] rounded-[3px] bg-gray-600" />
             <div className="h-[9px] rounded-[3px] bg-gray-600" />

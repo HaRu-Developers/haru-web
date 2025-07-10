@@ -19,6 +19,7 @@
   --color-secondary-green: #27998d;
   --color-secondary-blue: #6664e3;
   --color-primary-inactive: #f5bccf;
+  --color-primary-selected: #e6578708;
 
   /* 기능별 */
   --color-file-icon: #89a4bb;
@@ -46,8 +47,4 @@
 
 @utility bg-white-gradient {
   background-image: var(--white-gradient);
-}
-
-@utility bg-primary-selected {
-  background-color: rgba(230, 87, 135, 0.03);
 }

@@ -28,7 +28,7 @@ const features: Feature[] = [
   },
   {
     title: 'Calendar',
-    description: '우리 팀 일정을 한눈에\n 확인하고, 중요한 일정도\n 손쉽게 관리해 보세요.',
+    description: '우리 팀 일정을 한눈에\n 확인하고, 손 쉽게\n 관리해 보세요.',
     icon: OnboardingIconsState.CALENDAR,
     position: Position.BOTTOM_RIGHT,
   },

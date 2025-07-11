@@ -24,7 +24,7 @@ const GnbTop = ({ section, title, current }: GnbTopProps) => {
       {/* 상단 제목 */}
       <div className="border-b-stroke-200 flex h-[60px] items-center justify-between self-stretch border-b border-solid bg-white px-6 py-[13px]">
         <p className="text-t5-sb text-black">{config.title}</p>
-        <div>검색하기 영역</div>
+        {!isCustomSection && <div>검색하기 영역</div>}
       </div>
       {!isCustomSection && (
         // 하단 탭 or 단순 옵션

@@ -1,5 +1,5 @@
-import LogoIcons from '@icons/LogoIcons/LogoIcons';
-import { LogoIconsState } from '@icons/LogoIcons/LogoIcons.types';
+import LogoIcons from '@icons/logos/HaruLogoIcons/HaruLogoIcons';
+import { HaruLogoIconsState } from '@icons/logos/HaruLogoIcons/HaruLogoIcons.types';
 
 import FooterLinks from './FooterLinks.client';
 
@@ -7,7 +7,7 @@ const Footer = () => {
   return (
     <div className="h-[299px] w-full items-start gap-[120px] bg-gray-100 px-[114px] py-16">
       <div className="text-b3-rg flex flex-col items-start gap-6 text-white">
-        <LogoIcons state={LogoIconsState.MIXED} className="h-[43px] w-[100px]" />
+        <LogoIcons state={HaruLogoIconsState.MIXED} className="h-[43px] w-[100px]" />
 
         <div className="flex flex-col items-start gap-1.5">
           <div className="flex items-center gap-2.5 self-stretch">

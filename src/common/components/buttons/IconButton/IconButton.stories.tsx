@@ -6,7 +6,7 @@ import { FeatureTabIconsState } from '@icons/FeatureTabIcons/FeatureTabIcons.typ
 import IconButton from './IconButton.client';
 
 const meta: Meta<typeof IconButton> = {
-  title: 'Components/button/IconButton',
+  title: 'Components/buttons/IconButton',
   component: IconButton,
   tags: ['autodocs'],
   argTypes: {

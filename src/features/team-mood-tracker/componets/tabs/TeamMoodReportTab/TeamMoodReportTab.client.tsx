@@ -14,7 +14,7 @@ import FeatureTabIcons from '@icons/FeatureTabIcons/FeatureTabIcons';
 import { FeatureTabIconsState } from '@icons/FeatureTabIcons/FeatureTabIcons.types';
 
 import CategoryOption from '@common/components/CategoryOption/CategoryOption.client';
-import IconButton from '@common/components/button/IconButton/IconButton.client';
+import IconButton from '@common/components/buttons/IconButton/IconButton.client';
 
 import {
   TeamMoodReportTabLabels,
@@ -37,42 +37,12 @@ import { TeamMoodReportTabProps } from './TeamMoodReportTab.types';
 // ✅ 설문 문항
 // 파일버튼 - 설문 링크 모달
 
-// ✅ 팀 분위기 리포트
-// 복사
-// 다운로드 - 파일 형식 모달
-// ✅ 응답 count
-// ✅ 설문 문항
-// 파일버튼 - 설문 링크 모달
-
-// ✅ 팀 분위기 리포트
-// 복사
-// 다운로드 - 파일 형식 모달
-// ✅ 응답 count
-// ✅ 설문 문항
-// 파일버튼 - 설문 링크 모달
-
-// ✅ 팀 분위기 리포트
-// 복사
-// 다운로드 - 파일 형식 모달
-// ✅ 응답 count
-// ✅ 설문 문항
-// 파일버튼 - 설문 링크 모달
-
-// ✅ 팀 분위기 리포트
-// 복사
-// 다운로드 - 파일 형식 모달
-// ✅ 응답 count
-// ✅ 설문 문항
-// 파일버튼 - 설문 링크 모달
-
-// ✅ 팀 분위기 리포트
-// 복사
-// 다운로드 - 파일 형식 모달
-// ✅ 응답 count
-// ✅ 설문 문항
-// 파일버튼 - 설문 링크 모달
-
 const tabs = Object.values(TeamMoodReportTabType);
+
+const isStorybook =
+  typeof window !== 'undefined' &&
+  '__STORYBOOK_ADDONS' in window &&
+  (window as Record<string, unknown>).__STORYBOOK_ADDONS !== undefined;
 
 const TeamMoodReportTab = ({ current, counts }: TeamMoodReportTabProps) => {
   const searchParams = useSearchParams();
@@ -91,15 +61,20 @@ const TeamMoodReportTab = ({ current, counts }: TeamMoodReportTabProps) => {
   };
 
   return (
-    <div className="border-b-stroke-200 flex h-14 w-[1200px] shrink-0 items-center justify-between border-b border-solid bg-white px-[266px] py-[13px]">
+    <div className="border-b-stroke-200 w-1200pxr px-266pxr py-13pxr flex h-14 shrink-0 items-center justify-between border-b border-solid bg-white">
       {/* 탭 영역 */}
-      <div className="inline-flex gap-[9px]">
+      <div className="gap-9pxr inline-flex">
         {tabs.map((tab) => {
-          const params = new URLSearchParams(searchParams.toString());
-          params.set('moodTab', tab); // 현재 탭 값 설정
+          const url = isStorybook
+            ? `?moodTab=${tab}`
+            : (() => {
+                const params = new URLSearchParams(searchParams.toString());
+                params.set('moodTab', tab);
+                return `${pathname}?${params.toString()}`;
+              })();
 
           return (
-            <Link key={tab} href={`${pathname}?${params.toString()}`}>
+            <Link key={tab} href={url}>
               <CategoryOption
                 label={TeamMoodReportTabLabels[tab as TeamMoodReportTabType]}
                 active={current === tab}

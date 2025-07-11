@@ -11,6 +11,9 @@ importers:
       '@sentry/nextjs':
         specifier: ^9.33.0
         version: 9.33.0(@opentelemetry/context-async-hooks@1.30.1(@opentelemetry/api@1.9.0))(@opentelemetry/core@1.30.1(@opentelemetry/api@1.9.0))(@opentelemetry/instrumentation@0.57.2(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@1.30.1(@opentelemetry/api@1.9.0))(next@15.3.4(@babel/core@7.27.7)(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)(webpack@5.99.9(esbuild@0.25.5))
+      '@storybook/addon-queryparams':
+        specifier: ^7.0.1
+        version: 7.0.1(@storybook/manager-api@8.6.14(storybook@9.0.14(@testing-library/dom@10.4.0)(prettier@3.6.2)))(@storybook/preview-api@8.6.14(storybook@9.0.14(@testing-library/dom@10.4.0)(prettier@3.6.2)))
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
@@ -1873,6 +1876,12 @@ packages:
     peerDependencies:
       storybook: ^9.0.14
 
+  '@storybook/addon-queryparams@7.0.1':
+    resolution: {integrity: sha512-hlOrjCbUdkg/f/7HaIBMvEp2oyNkBYaxifDdGNyUhdBzfuWUeWDTUwYDxUubbhuqNcSMbw5Cje34dE+hJaGR9A==}
+    peerDependencies:
+      '@storybook/manager-api': ^7.0.0 || ^8.0.0 || ^8.0.0-rc.0
+      '@storybook/preview-api': ^7.0.0 || ^8.0.0 || ^8.0.0-rc.0
+
   '@storybook/addon-vitest@9.0.14':
     resolution: {integrity: sha512-pWovuulbQiLCf/hT1FiBnEvH3x+yfi6iYtJt7SMY+WF8LllKQskJXOPNW5mZ+OF6YnJiaI9SHncFVur4B2y+LA==}
     peerDependencies:
@@ -1923,6 +1932,11 @@ packages:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0-beta
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0-beta
 
+  '@storybook/manager-api@8.6.14':
+    resolution: {integrity: sha512-ez0Zihuy17udLbfHZQXkGqwtep0mSGgHcNzGN7iZrMP1m+VmNo+7aGCJJdvXi7+iU3yq8weXSQFWg5DqWgLS7g==}
+    peerDependencies:
+      storybook: ^8.2.0 || ^8.3.0-0 || ^8.4.0-0 || ^8.5.0-0 || ^8.6.0-0
+
   '@storybook/nextjs-vite@9.0.14':
     resolution: {integrity: sha512-CrfPxVLi5hwtbziCrVcoCm5FllaEYTefDatOV3AWZKfsEtcQmUXwhM4qY09xKGf8+DGAUOCgqgsI6u9gPJkHww==}
     engines: {node: '>=20.0.0'}
@@ -1964,6 +1978,11 @@ packages:
     peerDependenciesMeta:
       typescript:
         optional: true
+
+  '@storybook/preview-api@8.6.14':
+    resolution: {integrity: sha512-2GhcCd4dNMrnD7eooEfvbfL4I83qAqEyO0CO7JQAmIO6Rxb9BsOLLI/GD5HkvQB73ArTJ+PT50rfaO820IExOQ==}
+    peerDependencies:
+      storybook: ^8.2.0 || ^8.3.0-0 || ^8.4.0-0 || ^8.5.0-0 || ^8.6.0-0
 
   '@storybook/react-docgen-typescript-plugin@1.0.6--canary.9.0c3f3b7.0':
     resolution: {integrity: sha512-KUqXC3oa9JuQ0kZJLBhVdS4lOneKTOopnNBK4tUAgoxWQ3u/IjzdueZjFr7gyBrXMoU6duutk3RQR9u8ZpYJ4Q==}
@@ -7635,6 +7654,11 @@ snapshots:
     dependencies:
       storybook: 9.0.14(@testing-library/dom@10.4.0)(prettier@3.6.2)
 
+  '@storybook/addon-queryparams@7.0.1(@storybook/manager-api@8.6.14(storybook@9.0.14(@testing-library/dom@10.4.0)(prettier@3.6.2)))(@storybook/preview-api@8.6.14(storybook@9.0.14(@testing-library/dom@10.4.0)(prettier@3.6.2)))':
+    dependencies:
+      '@storybook/manager-api': 8.6.14(storybook@9.0.14(@testing-library/dom@10.4.0)(prettier@3.6.2))
+      '@storybook/preview-api': 8.6.14(storybook@9.0.14(@testing-library/dom@10.4.0)(prettier@3.6.2))
+
   '@storybook/addon-vitest@9.0.14(@vitest/browser@3.2.4)(@vitest/runner@3.2.4)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(storybook@9.0.14(@testing-library/dom@10.4.0)(prettier@3.6.2))(vitest@3.2.4)':
     dependencies:
       '@storybook/global': 5.0.0
@@ -7700,6 +7724,10 @@ snapshots:
     dependencies:
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
+
+  '@storybook/manager-api@8.6.14(storybook@9.0.14(@testing-library/dom@10.4.0)(prettier@3.6.2))':
+    dependencies:
+      storybook: 9.0.14(@testing-library/dom@10.4.0)(prettier@3.6.2)
 
   '@storybook/nextjs-vite@9.0.14(@babel/core@7.27.7)(next@15.3.4(@babel/core@7.27.7)(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(rollup@4.35.0)(storybook@9.0.14(@testing-library/dom@10.4.0)(prettier@3.6.2))(typescript@5.8.3)(vite@7.0.0(@types/node@20.19.1)(jiti@2.4.2)(lightningcss@1.30.1)(terser@5.43.1))':
     dependencies:
@@ -7804,6 +7832,10 @@ snapshots:
       - supports-color
       - uglify-js
       - webpack-cli
+
+  '@storybook/preview-api@8.6.14(storybook@9.0.14(@testing-library/dom@10.4.0)(prettier@3.6.2))':
+    dependencies:
+      storybook: 9.0.14(@testing-library/dom@10.4.0)(prettier@3.6.2)
 
   '@storybook/react-docgen-typescript-plugin@1.0.6--canary.9.0c3f3b7.0(typescript@5.8.3)(webpack@5.99.9(esbuild@0.25.5))':
     dependencies:

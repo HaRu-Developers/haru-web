@@ -10,7 +10,7 @@ const RightTab = () => {
   const { rightTab } = useTabInfo();
 
   return (
-    <div className="border-b-stroke-200 flex h-14 w-[480px] shrink-0 flex-col items-start justify-center gap-2.5 border-b border-solid bg-white px-5 py-[13px]">
+    <div className="border-b-stroke-200 w-480pxr py-13pxr flex h-14 shrink-0 flex-col items-start justify-center gap-2.5 border-b border-solid bg-white px-5">
       <CategoryOption label={RightTabLabels[rightTab as RightTabType]} active />
     </div>
   );

@@ -7,7 +7,7 @@ import FeatureTabIcons from '@icons/FeatureTabIcons/FeatureTabIcons';
 import { FeatureTabIconsState } from '@icons/FeatureTabIcons/FeatureTabIcons.types';
 
 import CategoryOption from '@common/components/CategoryOption/CategoryOption.client';
-import IconButton from '@common/components/button/IconButton/IconButton.client';
+import IconButton from '@common/components/buttons/IconButton/IconButton.client';
 
 import { LeftTabLabels, LeftTabType } from '@features/ai-meeting-manager/constants/tabs';
 
@@ -43,9 +43,9 @@ const LeftTab = ({ current }: LeftTabProps) => {
   };
 
   return (
-    <div className="border-b-stroke-200 flex h-14 w-[720px] shrink-0 justify-between border-b border-solid bg-white px-5 py-[13px]">
+    <div className="border-b-stroke-200 w-720pxr py-13pxr flex h-14 shrink-0 justify-between border-b border-solid bg-white px-5">
       {/* 탭 영역 */}
-      <div className="inline-flex gap-[9px]">
+      <div className="gap-9pxr inline-flex">
         {tabs.map((tab) => {
           const params = new URLSearchParams(searchParams.toString());
           params.set('leftTab', tab); // 현재 탭 값 설정

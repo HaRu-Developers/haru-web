@@ -8,6 +8,11 @@ const meta: Meta<typeof TeamMoodReportTab> = {
   title: 'Components/team-mood-tracker/tabs/TeamMoodReportTab',
   component: TeamMoodReportTab,
   tags: ['autodocs'],
+  parameters: {
+    query: {
+      moodTab: TeamMoodReportTabType.TEAM_MOOD_REPORT,
+    },
+  },
   argTypes: {
     current: {
       control: 'radio',

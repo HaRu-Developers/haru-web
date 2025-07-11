@@ -20,7 +20,7 @@ const SelectBoxTag = ({ onClick, isSelected = false, onToggle, label }: SelectBo
   return (
     <button
       className={clsx(
-        'text-cap1-md flex h-[30px] items-center justify-center gap-[10px] rounded-[7px] px-[9px] py-[6px]',
+        'text-cap1-md h-30pxr rounded-7pxr px-9pxr flex items-center justify-center gap-2.5 py-1.5',
         {
           'border-primary bg-primary-selected border text-black': selected === true,
           'bg-gray-600 text-gray-200': selected === false,

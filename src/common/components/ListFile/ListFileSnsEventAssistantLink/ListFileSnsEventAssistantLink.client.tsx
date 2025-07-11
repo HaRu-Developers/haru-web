@@ -15,7 +15,7 @@ const ListFileSnsEventAssistantLink = ({
 }: ListFileSnsEventAssistantLinkProps) => {
   const rightContent = (
     <div className="text-b3-rg mr-10 flex cursor-pointer items-center">
-      <FeatureTabIcons state={FeatureTabIconsState.COPY} className="mr-[1px]" />
+      <FeatureTabIcons state={FeatureTabIconsState.COPY} className="mr-1pxr" />
       <a
         href={snsLink}
         target="_blank"

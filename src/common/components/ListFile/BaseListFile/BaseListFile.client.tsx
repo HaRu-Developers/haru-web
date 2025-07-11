@@ -40,7 +40,7 @@ const BaseListFile = ({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className={clsx(
-        'flex w-[1030px] items-center justify-between py-4 transition-colors',
+        'w-1030pxr flex items-center justify-between py-4 transition-colors',
         {
           'bg-gray-600': isChecked,
           'hover:bg-gray-600': !isChecked,
@@ -66,7 +66,7 @@ const BaseListFile = ({
           )}
         </div>
 
-        <div className="flex flex-col gap-y-[5px]">
+        <div className="gap-y-5pxr flex flex-col">
           <h3 className="text-t5-sb cursor-pointer text-black">{title}</h3>
           <p className="text-cap2-rg text-gray-300">{subtitle}</p>
         </div>

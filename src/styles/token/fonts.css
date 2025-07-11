@@ -1,43 +1,42 @@
 @import 'tailwindcss';
 
-/* 제목 */
 @utility text-t1-sb {
-  font-size: 28px;
+  font-size: var(--text-28pxr);
   line-height: 130%;
   font-weight: 600;
   letter-spacing: -0.02em;
 }
 
 @utility text-t2-bd {
-  font-size: 26px;
+  font-size: var(--text-26pxr);
   line-height: 130%;
   font-weight: 700;
   letter-spacing: -0.02em;
 }
 
 @utility text-t3-bd {
-  font-size: 20px;
+  font-size: var(--text-20pxr);
   line-height: 130%;
   font-weight: 700;
   letter-spacing: -0.02em;
 }
 
 @utility text-t4-bd {
-  font-size: 18px;
+  font-size: var(--text-18pxr);
   line-height: 130%;
   font-weight: 700;
   letter-spacing: -0.02em;
 }
 
 @utility text-t5-bd {
-  font-size: 16px;
+  font-size: var(--text-16pxr);
   line-height: 130%;
   font-weight: 700;
   letter-spacing: -0.02em;
 }
 
 @utility text-t6-sb {
-  font-size: 14px;
+  font-size: var(--text-14pxr);
   line-height: 130%;
   font-weight: 600;
   letter-spacing: -0.02em;
@@ -45,63 +44,63 @@
 
 /* 문단, 목룍, 표 등 */
 @utility text-b1-rg {
-  font-size: 16px;
+  font-size: var(--text-16pxr);
   line-height: 160%;
   font-weight: 400;
   letter-spacing: -0.02em;
 }
 
 @utility text-b2-rg {
-  font-size: 15px;
+  font-size: var(--text-15pxr);
   line-height: 160%;
   font-weight: 400;
   letter-spacing: -0.02em;
 }
 
 @utility text-b3-md {
-  font-size: 14px;
+  font-size: var(--text-14pxr);
   line-height: 160%;
   font-weight: 500;
   letter-spacing: -0.02em;
 }
 
 @utility text-b3-rg {
-  font-size: 14px;
+  font-size: var(--text-14pxr);
   line-height: 160%;
   font-weight: 400;
   letter-spacing: -0.02em;
 }
 
 @utility text-cap1-md {
-  font-size: 13px;
+  font-size: var(--text-13pxr);
   line-height: 130%;
   font-weight: 500;
   letter-spacing: -0.02em;
 }
 
 @utility text-cap1-rg {
-  font-size: 13px;
+  font-size: var(--text-13pxr);
   line-height: 130%;
   font-weight: 400;
   letter-spacing: -0.02em;
 }
 
 @utility text-cap2-md {
-  font-size: 12px;
+  font-size: var(--text-12pxr);
   line-height: 130%;
   font-weight: 500;
   letter-spacing: -0.02em;
 }
 
 @utility text-cap2-rg {
-  font-size: 12px;
+  font-size: var(--text-12pxr);
   line-height: 130%;
   font-weight: 400;
   letter-spacing: -0.02em;
 }
 
 @utility text-cap3-rg {
-  font-size: 11px;
+  font-size: var(--text-11pxr);
   line-height: 130%;
   font-weight: 400;
   letter-spacing: -0;
@@ -109,21 +108,21 @@
 
 /* 버튼 */
 @utility text-bt1-sb {
-  font-size: 15px;
+  font-size: var(--text-15pxr);
   line-height: 100%;
   font-weight: 600;
   letter-spacing: -0.02em;
 }
 
 @utility text-bt2-sb {
-  font-size: 14px;
+  font-size: var(--text-14pxr);
   line-height: 100%;
   font-weight: 600;
   letter-spacing: -0.02em;
 }
 
 @utility text-bt3-sb {
-  font-size: 13px;
+  font-size: var(--text-13pxr);
   line-height: 100%;
   font-weight: 600;
   letter-spacing: -0.02em;

@@ -11,7 +11,7 @@ const RightTab = () => {
 
   return (
     <div className="border-b-stroke-200 w-480pxr py-13pxr flex h-14 shrink-0 flex-col items-start justify-center gap-2.5 border-b border-solid bg-white px-5">
-      <CategoryOption label={RightTabLabels[rightTab as RightTabType]} active />
+      <CategoryOption label={RightTabLabels[(rightTab as RightTabType) ?? '']} active />
     </div>
   );
 };

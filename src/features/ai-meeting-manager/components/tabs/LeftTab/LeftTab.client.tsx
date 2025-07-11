@@ -19,7 +19,7 @@ const tabs = Object.values(LeftTabType);
 
 const LeftTab = ({ current }: LeftTabProps) => {
   const searchParams = useSearchParams();
-  const pathname = usePathname();
+  const pathname = usePathname() ?? '';
 
   const { isEditing } = useTabInfo();
   const { setEditing } = useTabActions();
@@ -47,7 +47,7 @@ const LeftTab = ({ current }: LeftTabProps) => {
       {/* 탭 영역 */}
       <div className="gap-9pxr inline-flex">
         {tabs.map((tab) => {
-          const params = new URLSearchParams(searchParams.toString());
+          const params = new URLSearchParams(searchParams.toString() ?? '');
           params.set('leftTab', tab); // 현재 탭 값 설정
 
           return (

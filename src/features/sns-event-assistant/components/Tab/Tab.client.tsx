@@ -33,31 +33,11 @@ import { TabProps } from './Tab.types';
 
 // ✅ SNS 링크
 
-// ✅ 참여자 리스트 (count 포함)
-// 복사
-// 다운로드 - 파일 형식 모달
-
-// ✅ 당첨자 리스트 (count 포함)
-// 복사
-// 다운로드 - 파일 형식 모달
-
-// ✅ SNS 링크
-
-// ✅ 참여자 리스트 (count 포함)
-// 복사
-// 다운로드 - 파일 형식 모달
-
-// ✅ 당첨자 리스트 (count 포함)
-// 복사
-// 다운로드 - 파일 형식 모달
-
-// ✅ SNS 링크
-
 const tabs = Object.values(TabType);
 
 const Tab = ({ current, counts }: TabProps) => {
   const searchParams = useSearchParams();
-  const pathname = usePathname();
+  const pathname = usePathname() ?? '';
 
   const handleDownloadClick = (tab: TabType) => {
     console.log(`${tab} 탭에서 다운로드 클릭`);
@@ -71,7 +51,7 @@ const Tab = ({ current, counts }: TabProps) => {
       {/* 탭 영역 */}
       <div className="gap-9pxr inline-flex">
         {tabs.map((tab) => {
-          const params = new URLSearchParams(searchParams.toString());
+          const params = new URLSearchParams(searchParams.toString() ?? '');
           params.set('snsTab', tab); // 현재 탭 값 설정
 
           return (

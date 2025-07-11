@@ -30,22 +30,7 @@ export const Default: Story = {
     current: TeamMoodReportTabType.TEAM_MOOD_REPORT,
     counts: {
       [TeamMoodReportTabType.ANSWER_SUMMARY]: 10,
+      [TeamMoodReportTabType.SURVEY_LIST]: 10,
     },
-  },
-};
-
-export const ResponseTab: Story = {
-  args: {
-    current: TeamMoodReportTabType.ANSWER_SUMMARY,
-    counts: {
-      [TeamMoodReportTabType.ANSWER_SUMMARY]: 10,
-    },
-  },
-};
-
-export const QuestionTab: Story = {
-  args: {
-    current: TeamMoodReportTabType.SURVEY_LIST,
-    counts: {},
   },
 };

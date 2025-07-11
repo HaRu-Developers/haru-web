@@ -3,7 +3,6 @@
 import IndividualIcons from '@icons/IndividualIcons/IndividualIcons';
 import { IndividualIconsState } from '@icons/IndividualIcons/IndividualIcons.types';
 
-import SocialConnectButton from '@common/components/buttons/30px/SocialConnectButton/SocialConnectButton.client';
 import AccountConnectButton from '@common/components/buttons/38px/AccountConnectButton/AccountConnectButton.client';
 import DeleteButton from '@common/components/buttons/38px/DeleteButton/DeleteButton.client';
 import MoveButton from '@common/components/buttons/38px/MoveButton/MoveButton.client';

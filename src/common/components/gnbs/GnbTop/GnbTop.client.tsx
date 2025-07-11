@@ -3,8 +3,7 @@
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 
-import { GnbTopSection, sectionConfigs } from '@common/constants/GnbTop';
-import { SnsGnbTabLabels, SnsGnbTabType } from '@common/constants/GnbTop';
+import { GnbSection, SnsGnbTabLabels, SnsGnbTabType, sectionConfigs } from '@common/constants/gnbs';
 
 import CategoryOption from '@common/components/CategoryOption/CategoryOption.client';
 
@@ -15,12 +14,10 @@ const GnbTop = ({ section, title, current }: GnbTopProps) => {
   const searchParams = useSearchParams();
 
   const config =
-    section === GnbTopSection.CUSTOM
-      ? sectionConfigs[section](title ?? '')
-      : sectionConfigs[section];
+    section === GnbSection.CUSTOM ? sectionConfigs[section](title ?? '') : sectionConfigs[section];
 
-  const isTabSection = section === GnbTopSection.SNS_EVENT_ASSISTANT;
-  const isCustomSection = section === GnbTopSection.CUSTOM;
+  const isTabSection = section === GnbSection.SNS_EVENT_ASSISTANT;
+  const isCustomSection = section === GnbSection.CUSTOM;
 
   return (
     <div className="flex w-[1200px] flex-col items-start">

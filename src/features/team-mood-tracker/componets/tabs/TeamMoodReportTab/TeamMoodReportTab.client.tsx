@@ -30,19 +30,7 @@ import { TeamMoodReportTabProps } from './TeamMoodReportTab.types';
 // ✅ 설문 문항
 // 파일버튼 - 설문 링크 모달
 
-// ✅ 팀 분위기 리포트
-// 복사
-// 다운로드 - 파일 형식 모달
-// ✅ 응답 count
-// ✅ 설문 문항
-// 파일버튼 - 설문 링크 모달
-
 const tabs = Object.values(TeamMoodReportTabType);
-
-const isStorybook =
-  typeof window !== 'undefined' &&
-  '__STORYBOOK_ADDONS' in window &&
-  (window as Record<string, unknown>).__STORYBOOK_ADDONS !== undefined;
 
 const TeamMoodReportTab = ({ current, counts }: TeamMoodReportTabProps) => {
   const searchParams = useSearchParams();
@@ -65,16 +53,11 @@ const TeamMoodReportTab = ({ current, counts }: TeamMoodReportTabProps) => {
       {/* 탭 영역 */}
       <div className="gap-9pxr inline-flex">
         {tabs.map((tab) => {
-          const url = isStorybook
-            ? `?moodTab=${tab}`
-            : (() => {
-                const params = new URLSearchParams(searchParams.toString());
-                params.set('moodTab', tab);
-                return `${pathname}?${params.toString()}`;
-              })();
+          const params = new URLSearchParams(searchParams.toString());
+          params.set('moodTab', tab); // 현재 탭 값 설정
 
           return (
-            <Link key={tab} href={url}>
+            <Link key={tab} href={`${pathname}?${params.toString()}`}>
               <CategoryOption
                 label={TeamMoodReportTabLabels[tab as TeamMoodReportTabType]}
                 active={current === tab}

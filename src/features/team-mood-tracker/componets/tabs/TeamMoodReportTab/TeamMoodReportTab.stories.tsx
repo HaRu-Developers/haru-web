@@ -31,11 +31,20 @@ export default meta;
 type Story = StoryObj<typeof TeamMoodReportTab>;
 
 export const Default: Story = {
-  args: {
-    current: TeamMoodReportTabType.TEAM_MOOD_REPORT,
-    counts: {
-      [TeamMoodReportTabType.ANSWER_SUMMARY]: 10,
-    },
+  render: () => {
+    const searchParams = new URLSearchParams(document.location.search);
+    const moodTab =
+      (searchParams.get('moodTab') as TeamMoodReportTabType) ??
+      TeamMoodReportTabType.TEAM_MOOD_REPORT;
+
+    return (
+      <TeamMoodReportTab
+        current={moodTab}
+        counts={{
+          [TeamMoodReportTabType.ANSWER_SUMMARY]: 10,
+        }}
+      />
+    );
   },
 };
 

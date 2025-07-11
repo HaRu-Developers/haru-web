@@ -1,5 +1,9 @@
 @import 'tailwindcss';
 
+@theme {
+  --font-pretendard: 'Pretendard';
+}
+
 @utility text-t1-sb {
   font-size: var(--text-28pxr);
   line-height: 130%;

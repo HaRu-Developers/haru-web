@@ -34,34 +34,31 @@ const OnBoarding = ({
     onChange(e.target.value);
   };
   return (
-    <div className={clsx('text-b3-rg inline-flex flex-col items-start gap-[6px]')}>
+    <div className="text-b3-rg inline-flex flex-col items-start gap-1.5">
       <span>{title}</span>
-      <div className={clsx('relative')}>
+      <div className="relative">
         <input
           type={isShowing ? 'text' : 'password'}
           value={inputValue}
           onChange={handleChange}
           placeholder={placeholder}
           className={clsx(
-            'flex h-[48px] w-[414px] items-center gap-[10px] rounded-[9px] px-[14px] py-[18px] outline-none',
+            'w-414pxr rounded-9pxr flex h-12 items-center gap-2.5 px-2.5 py-4.5 outline-none',
             {
               'border-stroke-100':
                 mode === OnboardingMode.DEFAULT && state === OnboardingState.DEFAULT,
               border: mode === OnboardingMode.DEFAULT,
-              'border-audio-bar/70 border-[2px]': mode === OnboardingMode.EDITABLE,
+              'border-stroke-selected border-2': mode === OnboardingMode.EDITABLE,
               'border-system-red': state === OnboardingState.ERROR,
               'border-secondary-green': state === OnboardingState.APPROVAL,
             },
           )}
         />
         {type === OnboardingType.HIDE && (
-          <div
-            className={clsx('absolute top-[16px] right-[20px] h-[20px] w-[20px] cursor-pointer')}
-            onClick={handleShow}
-          >
+          <div className="absolute top-4 right-5 h-5 w-5 cursor-pointer" onClick={handleShow}>
             <EyeIcons
               state={isShowing === false ? EyeIconsState.CLOSED : EyeIconsState.OPENED}
-              className={clsx('pointer-events-none')}
+              className="pointer-events-none"
             />
           </div>
         )}

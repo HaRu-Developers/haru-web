@@ -9,16 +9,19 @@ const meta: Meta<typeof DefaultProfileImage> = {
   argTypes: {
     name: {
       control: 'text',
-      description: '사용자 이름',
+      defaultValue: '홍길동',
+    },
+    userId: {
+      control: BigInt,
+      defaultValue: 1n,
     },
     color: {
       control: 'color',
-      description: '배경색 (선택)',
+      description: '배경색 직접 지정시 사용',
     },
     size: {
-      control: { type: 'radio' },
+      control: 'radio',
       options: ['small', 'large'],
-      description: '크기',
     },
   },
 };
@@ -29,8 +32,37 @@ type Story = StoryObj<typeof DefaultProfileImage>;
 
 export const Default: Story = {
   args: {
-    name: '수호',
-    color: '#E683A6',
-    size: 'large',
+    name: '홍길동',
+    userId: 1n,
   },
+};
+
+export const Small: Story = {
+  args: {
+    name: '김작은',
+    userId: 2n,
+    size: 'small',
+  },
+};
+
+export const WithCustomColor: Story = {
+  args: {
+    name: '김커스텀',
+    userId: 1n,
+    color: '#FFD700',
+  },
+};
+
+export const DifferentUsers: Story = {
+  render: () => (
+    <div className="flex gap-2">
+      <DefaultProfileImage name="유저A" userId={1n} />
+      <DefaultProfileImage name="유저B" userId={2n} />
+      <DefaultProfileImage name="유저C" userId={3n} />
+      <DefaultProfileImage name="유저A" userId={4n} />
+      <DefaultProfileImage name="유저B" userId={5n} />
+      <DefaultProfileImage name="유저C" userId={6n} />
+      <DefaultProfileImage name="유저C" userId={7n} />
+    </div>
+  ),
 };

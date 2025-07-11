@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES2017",
+    "target": "ES2020",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -22,6 +22,7 @@
     "paths": {
       "@styles/*": ["styles/*"],
       "@assets/*": ["assets/*"],
+      "@lib/*": ["lib/*"],
       "@icons/*": ["common/components/icons/*"],
       "@svgs/*": ["assets/svgs/*"],
       "@common/types/*": ["common/types/*"],
@@ -32,6 +33,7 @@
       "@common/mutations/*": ["common/mutations/*"],
       "@common/apis/*": ["common/apis/*"],
       "@common/components/*": ["common/components/*"],
+      "@buttons/*": ["common/components/buttons/*"],
       "@common/*": ["common/*"],
       "@features/*": ["features/*"],
       "@/*": ["*"]

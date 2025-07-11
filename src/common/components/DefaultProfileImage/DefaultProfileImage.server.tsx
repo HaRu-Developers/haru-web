@@ -15,12 +15,12 @@ const DefaultProfileImage = ({ name, userId, color, size = 'large' }: DefaultPro
 
   const sizeClass =
     size === 'small'
-      ? 'text-cap2-rg h-7 w-7 px-[3px] py-1.5 text-white'
-      : 'text-b2-rg h-10 w-10 px-[3px] py-1.5 text-white';
+      ? 'text-cap2-rg h-7 w-7 px-3pxr py-1.5 text-white'
+      : 'text-b2-rg h-10 w-10 px-3pxr py-1.5 text-white';
 
   return (
     <div
-      className={`flex shrink-0 items-center justify-center gap-2.5 rounded-[100px] px-[3px] py-1.5 ${sizeClass}`}
+      className={`rounded-100pxr px-3pxr flex shrink-0 items-center justify-center gap-2.5 py-1.5 ${sizeClass}`}
       style={{ background: backgroundColor }}
     >
       <p>{initial}</p>

@@ -21,7 +21,7 @@ const ProfileImage = ({ src, userId, name }: ProfileImageProps) => {
       alt="프로필 이미지"
       width={40}
       height={40}
-      className="rounded-[100px]"
+      className="rounded-100pxr"
       onError={() => setHasError(true)}
     />
   );

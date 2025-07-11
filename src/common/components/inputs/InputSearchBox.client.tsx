@@ -14,23 +14,17 @@ const InputSearchBox = ({ onChange, placeholder = '검색하기', value }: Input
     onChange?.(event.target.value);
   };
   return (
-    <div
-      className={clsx(
-        'border-stroke-200 hover:border-stroke-100 shink-0 relative flex h-[34px] w-[264px] items-center gap-[10px] rounded-[10px] border bg-gray-600',
-      )}
-    >
+    <div className="border-stroke-200 hover:border-stroke-100 rounded-10pxr h-34pxr w-264pxr relative flex shrink-0 items-center gap-2.5 border bg-gray-600">
       <input
         type="text"
         placeholder={placeholder}
         value={value}
         onChange={handleChange}
-        className={clsx(
-          'text-b3-rg h-[34px] w-[264px] px-[36px] py-[7px] outline-none placeholder:text-gray-400',
-        )}
+        className="text-b3-rg h-34pxr w-264pxr py-7pxr px-9 outline-none placeholder:text-gray-400"
       />
       <IndividualIcons
         state={IndividualIconsState.SEARCH}
-        className="pointer-events-none absolute top-[8px] left-[14px]"
+        className="left-14pxr top-8pxr pointer-events-none absolute"
       />
     </div>
   );

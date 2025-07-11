@@ -21,7 +21,7 @@ export const TimePicker = ({ onTimeSelect }: TimePickerProps) => {
     <div className="h-81">
       <div className="shadow-dropdown-popup flex h-full justify-center rounded-2xl bg-white py-4 pr-1 pl-4">
         <div
-          className="scrollbar-component flex h-full flex-col gap-[5px] overflow-y-auto pr-3"
+          className="scrollbar-component gap-5pxr flex h-full flex-col overflow-y-auto pr-3"
           style={{ scrollbarGutter: 'stable', overflowX: 'hidden' }}
         >
           {timeSlots.map((time) => (
@@ -30,7 +30,7 @@ export const TimePicker = ({ onTimeSelect }: TimePickerProps) => {
               type="button"
               onClick={() => handleClick(time)}
               className={clsx(
-                'text-b2-rg flex w-55 items-center justify-center rounded-lg border py-[5px] transition-colors duration-150',
+                'text-b2-rg py-5pxr flex w-55 items-center justify-center rounded-lg border transition-colors duration-150',
                 {
                   'border-primary bg-primary-selected border text-black': selectedTime === time,
                   'hover:bg-primary-selected border-transparent bg-gray-700 text-black':

@@ -40,7 +40,7 @@ const BarChart = ({ data, title }: BarChartProps) => {
 
   return (
     <ChartContainer title={title}>
-      <div className="flex w-full items-start" style={{ height: `${calculatedHeight}px` }}>
+      <div className="flex w-full items-start" style={{ height: `${calculatedHeight / 16}rem` }}>
         <canvas ref={chartRef} />
       </div>
     </ChartContainer>

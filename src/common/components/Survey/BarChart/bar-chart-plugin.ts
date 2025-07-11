@@ -21,14 +21,14 @@ const createBarDataLabelsPlugin = (data: BarData): Plugin => {
         ctx.textBaseline = 'middle';
         ctx.textAlign = 'left';
 
-        ctx.font = '600 14px Pretendard';
+        ctx.font = '600 14px Pretendard'; // Chart.js의 CanvasRenderingContext2D에서 사용하는 ctx.font는 px 만 인식 pxr 및 rem 인식 X
         ctx.fillStyle = '#111';
         const valueText = value.toString();
         ctx.fillText(valueText, x + 10, y);
 
         const valueWidth = ctx.measureText(valueText).width;
 
-        ctx.font = '400 12px Pretendard';
+        ctx.font = '400 12px Pretendard'; // Chart.js의 CanvasRenderingContext2D에서 사용하는 ctx.font는 px 만 인식 pxr 및 rem 인식 X
         ctx.fillStyle = '#767676';
         const percentageText = ` ${percentage}%`;
         ctx.fillText(percentageText, x + 10 + valueWidth, y);

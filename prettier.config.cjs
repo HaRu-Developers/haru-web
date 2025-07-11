@@ -39,10 +39,17 @@ module.exports = {
 
     // 전역 스타일
     '^@styles/(.*)$',
+
     // 정적 자산
     '^@icons/(.*)$',
     '^@assets/(.*)$',
+    
+    // svg 컴포넌트
     '^@svgs/(.*)$',
+
+    // 라이브러리 관련
+    '^@lib/(.*)$',
+
 
     // 공통 모듈
     '^@common/types/(.*)$',
@@ -53,6 +60,7 @@ module.exports = {
     '^@common/mutations/(.*)$',
     '^@common/apis/(.*)$',
     '^@common/components/(.*)$',
+    '^@buttons/(.*)$', // 버튼 컴포넌트
     '^@common/(.*)$', // 나머지 공통 루트
 
     // 도메인 모듈 (features)

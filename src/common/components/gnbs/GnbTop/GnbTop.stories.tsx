@@ -8,22 +8,6 @@ const meta: Meta<typeof GnbTop> = {
   title: 'Components/gnbs/GnbTop',
   component: GnbTop,
   tags: ['autodocs'],
-  argTypes: {
-    section: {
-      description: 'GNB 상단의 섹션 유형',
-      control: 'select',
-      options: Object.values(GnbSection),
-    },
-    title: {
-      description: 'CUSTOM 섹션일 경우에만 사용되는 제목',
-      control: 'text',
-    },
-    current: {
-      control: 'radio',
-      options: Object.values(SnsGnbTabType),
-      description: '현재 선택된 snsGnb 탭',
-    },
-  },
 };
 
 export default meta;

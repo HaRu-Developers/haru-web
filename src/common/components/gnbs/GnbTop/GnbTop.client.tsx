@@ -10,7 +10,7 @@ import CategoryOption from '@common/components/CategoryOption/CategoryOption.cli
 import { GnbTopProps } from './GnbTop.types';
 
 const GnbTop = ({ section, title, current }: GnbTopProps) => {
-  const pathname = usePathname();
+  const pathname = usePathname() ?? '';
   const searchParams = useSearchParams();
 
   const config =
@@ -31,7 +31,8 @@ const GnbTop = ({ section, title, current }: GnbTopProps) => {
         <div className="border-b-stroke-200 flex h-14 items-center gap-2.5 self-stretch border-b border-solid bg-white px-6 py-[13px]">
           {isTabSection
             ? (Object.keys(SnsGnbTabLabels) as SnsGnbTabType[]).map((tab) => {
-                const params = new URLSearchParams(searchParams.toString());
+                const rawParams = searchParams?.toString() ?? '';
+                const params = new URLSearchParams(rawParams);
                 params.set('snsGnbTab', tab);
 
                 return (

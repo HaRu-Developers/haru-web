@@ -22,6 +22,9 @@
     "paths": {
       "@styles/*": ["styles/*"],
       "@assets/*": ["assets/*"],
+      "@lib/*": ["lib/*"],
+      "@icons/*": ["common/components/icons/*"],
+      "@svgs/*": ["assets/svgs/*"],
       "@common/types/*": ["common/types/*"],
       "@common/constants/*": ["common/constants/*"],
       "@common/utils/*": ["common/utils/*"],
@@ -30,11 +33,12 @@
       "@common/mutations/*": ["common/mutations/*"],
       "@common/apis/*": ["common/apis/*"],
       "@common/components/*": ["common/components/*"],
+      "@buttons/*": ["common/components/buttons/*"],
       "@common/*": ["common/*"],
       "@features/*": ["features/*"],
       "@/*": ["*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["svgr.d.ts", "next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
 }

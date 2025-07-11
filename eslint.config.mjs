@@ -46,24 +46,10 @@ const eslintConfig = [
       'coverage/**',
       'public/**',
 
-      // 설정 파일들
-      '*.config.js',
-      '*.config.ts',
-      '.eslintrc.*',
+      // custom type
+      '**/svgr.d.ts',
 
-      // 임시 파일
-      '*.tmp',
-      '*.temp',
-
-      // 로그 파일
-      '*.log',
-      'logs/**',
-
-      // 환경 설정 파일
-      '.env*',
-
-      // svg 파일들
-      '**/*.svg',
+      "next.config.ts",
     ],
   },
   // Next.js의 core-web-vitals와 typescript 설정을 확장

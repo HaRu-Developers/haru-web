@@ -25,10 +25,10 @@ const SelectBox = ({ options, initState, onClick, placeholder = '선택하세요
     setIsOpen((prev) => !prev);
   };
   return (
-    <div className="text-cap1-md flex w-fit flex-col items-start gap-[4px]">
+    <div className="text-cap1-md flex w-fit flex-col items-start gap-1">
       <button
         className={clsx(
-          'border-stroke-200 flex h-[34px] cursor-pointer rounded-[6px] bg-white px-4 py-[6px] pr-[6px] pl-[12px] text-gray-100',
+          'border-stroke-200 h-34pxr rounded-6pxr flex cursor-pointer bg-white px-4 py-1.5 pr-1.5 pl-3 text-gray-100',
           {
             'border-[2px]': isOpen,
             border: !isOpen,
@@ -44,14 +44,14 @@ const SelectBox = ({ options, initState, onClick, placeholder = '선택하세요
       </button>
 
       {isOpen && (
-        <ul className="text-b3-md border-stroke-200 flex flex-col items-start gap-[10px] self-stretch rounded-[8px] border bg-white px-[4px] py-[6px] text-gray-300">
+        <ul className="text-b3-md border-stroke-200 rounded-8pxr flex flex-col items-start gap-2.5 self-stretch border bg-white px-1 py-1.5 text-gray-300">
           {/* box-shadow 추가 */}
           {options.map((option, idx) => (
             <li
               key={idx}
               onClick={() => handleSelect(option.state)}
               className={clsx(
-                'flex h-[32px] cursor-pointer items-center justify-center gap-[6px] self-stretch rounded-[6px] px-[14px] py-[6px] hover:bg-gray-600',
+                'h-32pxr rounded-6pxr flex cursor-pointer items-center justify-center gap-1.5 self-stretch px-3.5 py-1.5 hover:bg-gray-600',
                 {
                   'bg-gray-600 text-gray-100': state === option.state,
                 },

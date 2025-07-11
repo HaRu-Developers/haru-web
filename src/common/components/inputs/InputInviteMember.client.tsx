@@ -3,8 +3,9 @@ import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 
 import CrossIcons from '@icons/CrossIcons/CrossIcons';
-import '@icons/CrossIcons/CrossIcons.types';
 import { CrossIconsState } from '@icons/CrossIcons/CrossIcons.types';
+import IndividualIcons from '@icons/IndividualIcons/IndividualIcons';
+import { IndividualIconsState } from '@icons/IndividualIcons/IndividualIcons.types';
 
 import { EmailButtonProps, InputInviteMemberProps } from './InputInviteMember.types';
 
@@ -153,7 +154,7 @@ const InputInviteMember = ({
             onClick={handleAddEmail}
           >
             {/* 아이콘 추가 예정 */}
-            <div className={clsx('h-5 w-5 bg-gray-300')} />
+            <IndividualIcons state={IndividualIconsState.EMAIL} />
             <span className={clsx('text-b3-md text-gray-100')}>{value}</span>
           </div>
         </div>

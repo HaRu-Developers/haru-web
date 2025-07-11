@@ -1,3 +1,8 @@
+export interface EmailButtonProps {
+  email: string;
+  onRemove: () => void;
+}
+
 export interface InputInviteMemberProps {
   title: string;
   inputValue?: string;

@@ -6,29 +6,21 @@ import CrossIcons from '@icons/CrossIcons/CrossIcons';
 import '@icons/CrossIcons/CrossIcons.types';
 import { CrossIconsState } from '@icons/CrossIcons/CrossIcons.types';
 
-import { InputInviteMemberProps } from './InputInviteMember.types';
+import { EmailButtonProps, InputInviteMemberProps } from './InputInviteMember.types';
 
 /*
   인풋 멤버 초대 컴포넌트
  */
 
-interface EmailButtonProps {
-  email: string;
-  onRemove: () => void;
-}
 const EmailButton = ({ email, onRemove }: EmailButtonProps) => {
   const handleRemove = () => {
     onRemove();
   };
   return (
-    <div
-      className={clsx(
-        'text-b3-rg flex h-[30px] items-center gap-[3px] rounded-[7px] bg-gray-600 px-[9px] py-[6px] text-gray-200',
-      )}
-    >
+    <div className="text-b3-rg h-30pxr gap-3pxr rounded-7pxr px-9pxr flex items-center bg-gray-600 py-1.5 text-gray-200">
       <span>{email}</span>
       <div onClick={handleRemove}>
-        <CrossIcons state={CrossIconsState.SIZE_16_GRAY_400} className={clsx('cursor-pointer')} />
+        <CrossIcons state={CrossIconsState.SIZE_16_GRAY_400} className="cursor-pointer" />
       </div>
     </div>
   );
@@ -111,18 +103,18 @@ const InputInviteMember = ({
   };
 
   return (
-    <div className={clsx('text-b3-rg flex w-[534px] flex-col items-start gap-[8px]')}>
-      <span className={clsx('text-cap1-rg text-gray-200')}>{title}</span>
+    <div className="text-b3-rg w-534pxr flex flex-col items-start gap-2">
+      <span className="text-cap1-rg text-gray-200">{title}</span>
       <div
         className={clsx(
-          'h-min-[48px] flex w-full shrink-0 items-center justify-between gap-[10px] rounded-[9px] px-[14px] py-[9px]',
+          'h-min-48pxr rounded-9pxr py-9pxr flex w-full shrink-0 items-center justify-between gap-2.5 px-3.5',
           {
             'border-stroke-100 border': !isFocused,
-            'border-stroke-selected border-[2px]': isFocused,
+            'border-stroke-selected border-2': isFocused,
           },
         )}
       >
-        <div className={clsx('flex w-full flex-wrap gap-[8px]')}>
+        <div className={clsx('flex w-full flex-wrap gap-2')}>
           {emails.map((email, idx) => (
             <EmailButton key={idx} email={email} onRemove={() => handleRemoveEmail(idx)} />
           ))}
@@ -134,13 +126,13 @@ const InputInviteMember = ({
             onFocus={handleFocus}
             onBlur={handleBlur}
             onKeyDown={handleInputKeyDown}
-            className={clsx('h-[30px] flex-1 outline-none')}
+            className={clsx('h-30pxr flex-1 outline-none')}
           ></input>
         </div>
         {/* 버튼 컴포넌트 제작 시 통합 예정 */}
         <button
           className={clsx(
-            'bg-primary text-bt2-sb flex h-[32px] cursor-pointer items-center justify-center gap-[6px] rounded-[6px] px-[11px] py-[8px] whitespace-nowrap text-white',
+            'bg-primary text-bt2-sb h-32pxr rounded-6pxr px-11pxr flex cursor-pointer items-center justify-center gap-1.5 py-2 whitespace-nowrap text-white',
           )}
           onClick={handleInviteClick}
         >
@@ -151,17 +143,17 @@ const InputInviteMember = ({
       {value.trim() && (
         <div
           className={clsx(
-            'border-stroke-200 flex flex-col items-start gap-[10px] self-stretch rounded-[8px] border px-[4px] py-[6px]',
+            'border-stroke-200 rounded-8pxr flex flex-col items-start gap-2.5 self-stretch border px-1 py-1.5',
           )}
         >
           <div
             className={clsx(
-              'flex h-[32px] cursor-pointer items-center gap-[6px] self-stretch rounded-[6px] bg-gray-600 px-[10px] py-[6px]',
+              'rounded-6pxr h-32pxr flex cursor-pointer items-center gap-1.5 self-stretch bg-gray-600 px-2.5 py-1.5',
             )}
             onClick={handleAddEmail}
           >
             {/* 아이콘 추가 예정 */}
-            <div className={clsx('h-[20px] w-[20px] bg-gray-300')} />
+            <div className={clsx('h-5 w-5 bg-gray-300')} />
             <span className={clsx('text-b3-md text-gray-100')}>{value}</span>
           </div>
         </div>

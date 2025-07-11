@@ -15,24 +15,17 @@ const File = ({ file }: { file: File }) => {
   {
     /* box-shadow 추가 예정 */
   }
+  const documentIconMap = {
+    [DocumentType.AI_MEETING_MANAGER]: FeaturedFileIconsState.SIZE_16_AI_MANAGER_FILE,
+    [DocumentType.SNS_EVENT_ASSISTANT]: FeaturedFileIconsState.SIZE_16_SNS_ASSISTANT_FILE,
+    [DocumentType.TEAM_MOOD_TRACKER]: FeaturedFileIconsState.SIZE_16_TEAM_MOOD_FILE,
+  };
+  const iconState = documentIconMap[file.type];
+
   return (
-    <div
-      className={clsx(
-        'border-stroke-200 mx-[6px] flex h-[30px] w-[136px] shrink-0 cursor-pointer items-center gap-[2px] rounded-[6px] border bg-white p-[6px] hover:bg-gray-600',
-      )}
-    >
-      {file.type === DocumentType.AI_MEETING_MANAGER && (
-        <FeaturedFileIcons state={FeaturedFileIconsState.SIZE_16_AI_MANAGER_FILE} />
-      )}
-      {file.type === DocumentType.SNS_EVENT_ASSISTANT && (
-        <FeaturedFileIcons state={FeaturedFileIconsState.SIZE_16_SNS_ASSISTANT_FILE} />
-      )}
-      {file.type === DocumentType.TEAM_MOOD_TRACKER && (
-        <FeaturedFileIcons state={FeaturedFileIconsState.SIZE_16_TEAM_MOOD_FILE} />
-      )}
-      <span
-        className={clsx('text-bt3-sb w-[105px] overflow-hidden text-ellipsis whitespace-nowrap')}
-      >
+    <div className="border-stroke-200 h-30pxr w-136pxr rounded-6pxr mx-1.5 flex shrink-0 cursor-pointer items-center gap-0.5 border bg-white p-1.5 hover:bg-gray-600">
+      {iconState && <FeaturedFileIcons state={iconState} />}
+      <span className="text-bt3-sb w-105pxr overflow-hidden text-ellipsis whitespace-nowrap">
         {file.title}
       </span>
     </div>
@@ -44,20 +37,15 @@ const CalenderSlice = ({ date, files, index, isVisible }: CalendarSliceProps) =>
   const isSecondRowOrBelow = index >= 7;
   return (
     <div
-      className={clsx(
-        'border-stroke-200 min-h-[152px] w-[147px] shrink-0 gap-[4px] border pb-[4px]',
-        {
-          'bg-gray-700': isWeekend,
-          'bg-white': !isWeekend,
-          'border-t-0': isSecondRowOrBelow,
-          'text-gray-400': !isVisible,
-          'text-gray-100': isVisible,
-        },
-      )}
+      className={clsx('border-stroke-200 min-h-152pxr w-147pxr shrink-0 gap-1 border pb-1', {
+        'bg-gray-700': isWeekend,
+        'bg-white': !isWeekend,
+        'border-t-0': isSecondRowOrBelow,
+        'text-gray-400': !isVisible,
+        'text-gray-100': isVisible,
+      })}
     >
-      <div
-        className={clsx('text-b3-md flex items-center justify-end pt-[14px] pr-[16px] pb-[4px]')}
-      >
+      <div className="text-b3-md flex items-center justify-end pt-2.5 pr-4 pb-1">
         {date.getDate() === 1 ? `${date.getMonth() + 1}월 ` : ''}
         {date.getDate()}일
       </div>
@@ -77,7 +65,7 @@ const Calender = ({ startDate, endDate, documents, operatingMonth }: CalendarPro
     return date;
   });
   return (
-    <div className={clsx('grid min-w-[1022px] grid-cols-7')}>
+    <div className="min-w-1022pxr grid grid-cols-7">
       {dateList.map((date, idx) => (
         <CalenderSlice
           key={idx}

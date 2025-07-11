@@ -14,11 +14,14 @@ jobs:
       - name: Install mustache (to update the date)
         run: apk add ruby && gem install mustache
 
+      - name: Set RELEASE_VERSION env var
+        run: echo "RELEASE_VERSION=haru@$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+
       - name: Give build.sh execute permission
-        run: chmod +x ./haru-web/build.sh
+        run: chmod +x ./build.sh
 
       - name: Run build script
-        run: ./haru-web/build.sh
+        run: ./build.sh
 
       - name: Pushes to another repository
         id: push_directory

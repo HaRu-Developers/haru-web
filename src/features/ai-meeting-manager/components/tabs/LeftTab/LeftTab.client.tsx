@@ -47,7 +47,8 @@ const LeftTab = ({ current }: LeftTabProps) => {
       {/* 탭 영역 */}
       <div className="gap-9pxr inline-flex">
         {tabs.map((tab) => {
-          const params = new URLSearchParams(searchParams.toString() ?? '');
+          const rawParams = searchParams?.toString() ?? '';
+          const params = new URLSearchParams(rawParams);
           params.set('leftTab', tab); // 현재 탭 값 설정
 
           return (

@@ -20,6 +20,12 @@ export const Default: Story = {
   },
 };
 
+export const Hover: Story = {
+  args: {
+    mode: InputFileTitleMode.HOVER,
+  },
+};
+
 export const Editable: Story = {
   args: {
     mode: InputFileTitleMode.EDITABLE,

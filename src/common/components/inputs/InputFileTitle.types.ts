@@ -1,5 +1,6 @@
 export enum InputFileTitleMode {
   DEFAULT = 'DEFAULT',
+  HOVER = 'HOVER',
   EDITABLE = 'EDITABLE',
 }
 

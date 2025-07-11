@@ -22,7 +22,7 @@ const InputFileTitle = ({
   }, [value]);
 
   const containerClass = clsx(
-    'flex w-[676px] h-[36px] items-center px-[8px] py-[2px] rounded-[4px] text-t1-sb text-black',
+    'flex w-676pxr h-36pxr items-center px-2 py-0.5 rounded-4pxr text-t1-sb text-black',
     {
       'border border-stroke-100': mode === InputFileTitleMode.EDITABLE,
     },

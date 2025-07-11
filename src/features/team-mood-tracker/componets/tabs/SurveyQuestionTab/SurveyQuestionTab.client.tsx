@@ -23,16 +23,6 @@ import { SurveyQuestionTabProps } from './SurveyQuestionTab.types';
 // - 현재 탭(surveyQuestionTab)을 '설문 문항 생성' → '설문 문항'으로 변경
 // - 작성 완료 버튼 → IconButton으로 바꾸기
 
-// ✅ 설문 문항 생성
-// 작성 완료
-// - 현재 탭(surveyQuestionTab)을 '설문 문항 생성' → '설문 문항'으로 변경
-// - 작성 완료 버튼 → IconButton으로 바꾸기
-
-// ✅ 설문 문항 생성
-// 작성 완료
-// - 현재 탭(surveyQuestionTab)을 '설문 문항 생성' → '설문 문항'으로 변경
-// - 작성 완료 버튼 → IconButton으로 바꾸기
-
 const SurveyQuestionTab = ({ survey }: SurveyQuestionTabProps) => {
   const { isSubmitted } = survey;
   const currentTab = isSubmitted
@@ -49,7 +39,7 @@ const SurveyQuestionTab = ({ survey }: SurveyQuestionTabProps) => {
   };
 
   return (
-    <div className="border-b-stroke-200 w-1200pxr px-266pxr py-13pxr flex h-14 shrink-0 items-center justify-between border-b border-solid bg-white">
+    <div className="border-b-stroke-200 px-266pxr py-13pxr flex h-14 w-300 shrink-0 items-center justify-between border-b border-solid bg-white">
       <CategoryOption label={SurveyQuestionTabLabels[currentTab]} active />
       {isSubmitted ? (
         <IconButton onClick={handleFileClick} ariaLabel="설문 문항 보기">

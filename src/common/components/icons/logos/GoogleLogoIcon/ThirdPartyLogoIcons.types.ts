@@ -1,0 +1,4 @@
+export enum ThirdPartyLogoIconsState {
+  GOOGLE_DEFAULT = 'GOOGLE_DEFAULT',
+  INSTAGRAM_DEFAULT = 'INSTAGRAM_DEFAULT',
+}

@@ -8,11 +8,6 @@ const meta: Meta<typeof TeamMoodReportTab> = {
   title: 'Components/team-mood-tracker/tabs/TeamMoodReportTab',
   component: TeamMoodReportTab,
   tags: ['autodocs'],
-  parameters: {
-    query: {
-      moodTab: TeamMoodReportTabType.TEAM_MOOD_REPORT,
-    },
-  },
   argTypes: {
     current: {
       control: 'radio',
@@ -31,20 +26,11 @@ export default meta;
 type Story = StoryObj<typeof TeamMoodReportTab>;
 
 export const Default: Story = {
-  render: () => {
-    const searchParams = new URLSearchParams(document.location.search);
-    const moodTab =
-      (searchParams.get('moodTab') as TeamMoodReportTabType) ??
-      TeamMoodReportTabType.TEAM_MOOD_REPORT;
-
-    return (
-      <TeamMoodReportTab
-        current={moodTab}
-        counts={{
-          [TeamMoodReportTabType.ANSWER_SUMMARY]: 10,
-        }}
-      />
-    );
+  args: {
+    current: TeamMoodReportTabType.TEAM_MOOD_REPORT,
+    counts: {
+      [TeamMoodReportTabType.ANSWER_SUMMARY]: 10,
+    },
   },
 };
 

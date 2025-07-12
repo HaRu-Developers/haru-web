@@ -7,6 +7,7 @@ import EndRecordingModal from '@common/components/modals/EndRecordingModal/EndRe
 import LoadingModal from '@common/components/modals/LoadingModal/LoadingModal.client';
 import { LoadingModalType } from '@common/components/modals/LoadingModal/LoadingModal.types';
 import ProgressModal from '@common/components/modals/ProgressModal/ProgressModal.client';
+import SurveyLinkCreatedModal from '@common/components/modals/SurveyLinkCreatedModal/SurveyLinkCreatedModal.client';
 
 const TestModalsPage = () => {
   const handleDevMode = () => console.log('Something Clicked');
@@ -77,6 +78,23 @@ const TestModalsPage = () => {
           onProceed={handleDevMode}
         />
       </div>
+      <span className="col-span-3 mb-2 text-center">모달: 설문지 생성 완료!</span>
+      <div className="grid grid-cols-3 grid-rows-2 gap-4">
+        <SurveyLinkCreatedModal
+          onClose={handleDevMode}
+          onEmailSendClick={handleDevMode}
+          // surveyLink="https://www.notion.so/From-Plan-to-Design-Feedback-21a5da7802c580609d34d3db20c776ac?d=21a5da7802c5808fb57b001c7edd3ab9#21a5da7802c5800e9307e56709234f9c"
+          surveyLink="short link"
+        />
+      </div>
+      <span className="col-span-3 mb-2 text-center">모달: </span>
+      <div className="grid grid-cols-3 grid-rows-2 gap-4"></div>
+      <span className="col-span-3 mb-2 text-center">모달: </span>
+      <div className="grid grid-cols-3 grid-rows-2 gap-4"></div>
+      <span className="col-span-3 mb-2 text-center">모달: </span>
+      <div className="grid grid-cols-3 grid-rows-2 gap-4"></div>
+      <span className="col-span-3 mb-2 text-center">모달: </span>
+      <div className="grid grid-cols-3 grid-rows-2 gap-4"></div>
       <span className="col-span-3 mb-2 text-center">모달: </span>
       <div className="grid grid-cols-3 grid-rows-2 gap-4"></div>
       <span className="col-span-3 mb-2 text-center">모달: </span>

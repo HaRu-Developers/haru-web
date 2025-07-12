@@ -47,7 +47,7 @@ const DisplaySurveyLinkWithCopyButton = ({ surveyLink }: DisplaySurveyLinkWithCo
         type="text"
         value={surveyLink}
         readOnly
-        className="text-b3-rg w-262pxr overflow-hidden text-center text-ellipsis whitespace-nowrap text-gray-200"
+        className="text-b3-rg w-262pxr overflow-hidden text-left text-ellipsis whitespace-nowrap text-gray-200"
       />
       <button onClick={handleCopy}>
         <FeatureTabIcons state={FeatureTabIconsState.COPY} />

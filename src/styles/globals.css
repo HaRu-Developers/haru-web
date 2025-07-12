@@ -5,6 +5,7 @@
 @import './token/shadows.css';
 @import './token/custom-style.css';
 @import './token/define-pxr.css';
+@import './animation.css';
 
 @layer base {
   * {

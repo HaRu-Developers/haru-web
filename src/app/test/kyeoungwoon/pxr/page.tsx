@@ -7,10 +7,10 @@ const PxrTestPage = () => {
       <div className="w-480pxr h-16pxr bg-blue-500">이건 넓이 480px 높이 16px 이에요!</div>
       <div className="w-480pxr h-32pxr text-16pxr bg-blue-500">w-480pxr h-32pxr text-16pxr</div>
       <div className="w-480pxr h-32pxr text-32pxr bg-blue-500">w-480pxr h-32pxr text-32pxr</div>
-      <div className="w-480pxr h-32pxr text-32pxr rounded-16pxr bg-blue-500">
+      <div className="w-480pxr h-32pxr text-28pxr rounded-16pxr bg-blue-500">
         이건 넓이 480px 높이 32px 이에요!
       </div>
-      <div className="w-480pxr h-32pxr text-32pxr rounded-[16px] bg-blue-500">
+      <div className="w-480pxr h-32pxr text-t1-sb rounded-[16px] bg-blue-500">
         이건 넓이 480px 높이 32px 이에요!
       </div>
     </div>

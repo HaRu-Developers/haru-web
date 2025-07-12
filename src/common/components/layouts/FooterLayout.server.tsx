@@ -1,6 +1,6 @@
-import Footer from '@common/components/layout/Footer/Footer.server';
+import Footer from '@common/components/layouts/Footer/Footer.server';
 
-const MainLayout = ({
+const FooterLayout = ({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -13,4 +13,4 @@ const MainLayout = ({
   );
 };
 
-export default MainLayout;
+export default FooterLayout;

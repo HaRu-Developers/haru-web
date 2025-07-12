@@ -10,8 +10,13 @@ import NextStepButton from '@common/components/buttons/30px/NextStepButton/NextS
 import { CreateMeetingMinutesModalProps } from './CreateMeetingMinutesModal.types';
 import FileDropzone from './FileDropZone/FileDropZone';
 
-// TODO: drag & drop 구현하고싶다
-
+/**
+ * 새로운 회의록을 생성할 때 사용하는 모달입니다.
+ * File을 모달 내에서 처리하고 있습니다. 다음 단계로 넘어가는
+ * @param param0 - onClose: 모달을 닫는 함수
+ * @param param0 - onNextStep: 다음 단계로 넘어가는 함수
+ * @returns
+ */
 const CreateMeetingMinutesModal = ({ onClose, onNextStep }: CreateMeetingMinutesModalProps) => {
   const [meetingTitle, setMeetingTitle] = useState<string>('');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);

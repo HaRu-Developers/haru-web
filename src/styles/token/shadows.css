@@ -1,6 +1,19 @@
 @import 'tailwindcss';
 
 @layer utilities {
+  .shadow-survey-form {
+    box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.09);
+  }
+  /* 통합 필요 */
+  .shadow-dropdown-popup {
+    box-shadow: 2px 6px 24px 0px rgba(0, 0, 0, 0.1);
+  }
+  .shadow-medium {
+    box-shadow: 2px 6px 24px 0px rgba(0, 0, 0, 0.1);
+  }
+}
+
+@layer utilities {
   .shadow-dropdown-popup {
     box-shadow: 2px 6px 24px 0px rgba(0, 0, 0, 0.1);
   }

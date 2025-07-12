@@ -20,15 +20,15 @@ const GnbTop = ({ section, title, current }: GnbTopProps) => {
   const isCustomSection = section === GnbSection.CUSTOM;
 
   return (
-    <div className="flex w-[1200px] flex-col items-start">
+    <div className="flex w-300 flex-col items-start">
       {/* 상단 제목 */}
-      <div className="border-b-stroke-200 flex h-[60px] items-center justify-between self-stretch border-b border-solid bg-white px-6 py-[13px]">
+      <div className="border-b-stroke-200 h-60pxr py-13pxr flex items-center justify-between self-stretch border-b border-solid bg-white px-6">
         <p className="text-t5-sb text-black">{config.title}</p>
         {!isCustomSection && <div>검색하기 영역</div>}
       </div>
       {!isCustomSection && (
         // 하단 탭 or 단순 옵션
-        <div className="border-b-stroke-200 flex h-14 items-center gap-2.5 self-stretch border-b border-solid bg-white px-6 py-[13px]">
+        <div className="border-b-stroke-200 py-13pxr flex h-14 items-center gap-2.5 self-stretch border-b border-solid bg-white px-6">
           {isTabSection
             ? (Object.keys(SnsGnbTabLabels) as SnsGnbTabType[]).map((tab) => {
                 const rawParams = searchParams?.toString() ?? '';

@@ -11,7 +11,7 @@ const RecentWorkspace = ({ workspaceId, title, isOwner }: RecentWorkspaceProps) 
   return (
     <Link
       href={Routes.WORKSPACE(workspaceId)}
-      className="flex h-[34px] cursor-pointer items-center gap-2 self-stretch rounded-[9px] px-3 py-1.5"
+      className="h-34pxr rounded-9pxr flex cursor-pointer items-center gap-2 self-stretch px-3 py-1.5"
     >
       <LeftGnbIcons state={LeftGnbIconsState.RECENT_FILE} />
       <span className="text-b3-rg text-gray-200">{title}</span>

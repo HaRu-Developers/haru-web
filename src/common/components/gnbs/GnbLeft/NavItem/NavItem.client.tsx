@@ -20,7 +20,7 @@ const NavItem = ({ item }: NavItemProps) => {
     <Link
       href={route}
       className={clsx(
-        'flex h-[38px] cursor-pointer items-center gap-2 self-stretch rounded-[10px] p-3 transition-colors duration-150',
+        'h-38pxr rounded-10pxr flex cursor-pointer items-center gap-2 self-stretch p-3 transition-colors duration-150',
         {
           'text-t6-sb bg-gray-600 text-black': isCurrent,
           'hover:bg-gray-600': !isCurrent,

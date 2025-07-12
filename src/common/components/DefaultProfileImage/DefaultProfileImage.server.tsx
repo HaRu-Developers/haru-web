@@ -1,3 +1,5 @@
+import clsx from 'clsx';
+
 import { profileColors } from '@common/constants/profile';
 
 import hashCode from '@common/utils/hashCode';
@@ -13,14 +15,14 @@ const DefaultProfileImage = ({ name, userId, color, size = 'large' }: DefaultPro
   const colorIndex = hashCode(userId) % profileColors.length;
   const backgroundColor = color ?? profileColors[colorIndex];
 
-  const sizeClass =
-    size === 'small'
-      ? 'text-cap2-rg h-7 w-7 px-[3px] py-1.5 text-white'
-      : 'text-b2-rg h-10 w-10 px-[3px] py-1.5 text-white';
+  const sizeClass = size === 'small' ? 'text-cap2-rg h-7 w-7 ' : 'text-b2-rg h-10 w-10';
 
   return (
     <div
-      className={`flex shrink-0 items-center justify-center gap-2.5 rounded-[100px] px-[3px] py-1.5 ${sizeClass}`}
+      className={clsx(
+        `rounded-100pxr px-3pxr flex shrink-0 items-center justify-center gap-2.5 py-1.5 text-white`,
+        sizeClass,
+      )}
       style={{ background: backgroundColor }}
     >
       <p>{initial}</p>

@@ -30,34 +30,29 @@ const GnbLeft = () => {
   ];
 
   return (
-    <div className="border-r-stroke-200 h-full w-60 shrink-0 border-r border-solid">
-      <div className="flex flex-col p-[16px]">
-        <HaruLogoIcons
-          state={HaruLogoIconsState.MIXED}
-          className="mb-[6px] ml-[5px] h-[28px] w-[88px]"
-        />
-        <div className="flex flex-col gap-[16px]">
-          <Profile userId={profile.userId} name={profile.name} email={profile.email} />
-          <div className="flex flex-col items-start gap-2 self-stretch rounded-[10px]">
-            {GnbLeftNavItems.map((item) => (
-              <NavItem key={item} item={item} />
-            ))}
-          </div>
-          <div className="bg-stroke-200 h-[1px] w-full shrink-0"></div>
-        </div>
-        <h4 className="mt-[12px] mb-[6px] ml-[12px] cursor-default text-[13px] leading-[130%] font-medium tracking-[-0.26px] text-gray-400 not-italic">
-          recent
-        </h4>
-        <div className="flex w-[210px] flex-col items-start gap-1">
-          {workspaces.map((workspace) => (
-            <RecentWorkspace
-              key={workspace.workspaceId}
-              workspaceId={workspace.workspaceId}
-              title={workspace.title}
-              isOwner={workspace.isOwner}
-            />
+    <div className="border-stroke-200 p-16pxr flex w-60 shrink-0 flex-col border-r border-solid">
+      <HaruLogoIcons state={HaruLogoIconsState.MIXED} className="mb-6pxr ml-5pxr h-28pxr w-88pxr" />
+      <div className="gap-16pxr flex flex-col">
+        <Profile userId={profile.userId} name={profile.name} email={profile.email} />
+        <div className="rounded-10pxr flex flex-col items-start gap-2 self-stretch">
+          {GnbLeftNavItems.map((item) => (
+            <NavItem key={item} item={item} />
           ))}
         </div>
+        <div className="bg-stroke-200 h-1pxr w-full shrink-0"></div>
+      </div>
+      <h4 className="text-cap1-md mt-12pxr mb-6pxr ml-12pxr cursor-default text-gray-400">
+        recent
+      </h4>
+      <div className="w-210pxr flex flex-col items-start gap-1">
+        {workspaces.map((workspace) => (
+          <RecentWorkspace
+            key={workspace.workspaceId}
+            workspaceId={workspace.workspaceId}
+            title={workspace.title}
+            isOwner={workspace.isOwner}
+          />
+        ))}
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 'use client';
 
+import CongratulateSignUpModal from '@common/components/modals/CongratulateSignUpModal/CongratulateSignUpModal.client';
 import DeleteModal from '@common/components/modals/DeleteModal/DeleteModal.client';
 import { DeleteModalType } from '@common/components/modals/DeleteModal/DeleteModal.types';
 import DownloadModal from '@common/components/modals/DownloadModal/DownloadModal.client';
@@ -79,7 +80,7 @@ const TestModalsPage = () => {
         />
       </div>
       <span className="col-span-3 mb-2 text-center">모달: 설문지 생성 완료!</span>
-      <div className="grid grid-cols-3 grid-rows-2 gap-4">
+      <div className="">
         <SurveyLinkCreatedModal
           onClose={handleDevMode}
           onEmailSendClick={handleDevMode}
@@ -87,8 +88,10 @@ const TestModalsPage = () => {
           surveyLink="short link"
         />
       </div>
-      <span className="col-span-3 mb-2 text-center">모달: </span>
-      <div className="grid grid-cols-3 grid-rows-2 gap-4"></div>
+      <span className="col-span-3 mb-2 text-center">모달: 가입 환영</span>
+      <div className="">
+        <CongratulateSignUpModal onClose={handleDevMode} onWorkspaceCreate={handleDevMode} />
+      </div>
       <span className="col-span-3 mb-2 text-center">모달: </span>
       <div className="grid grid-cols-3 grid-rows-2 gap-4"></div>
       <span className="col-span-3 mb-2 text-center">모달: </span>

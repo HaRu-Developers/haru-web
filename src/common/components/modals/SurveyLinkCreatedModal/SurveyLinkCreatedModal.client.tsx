@@ -5,7 +5,7 @@ import { CrossIconsState } from '@icons/CrossIcons/CrossIcons.types';
 
 import SendLinkToTeamByEmailButton from '@common/components/buttons/38px/SendLinkToTeamByEmailButton/SendLinkToTeamByEmailButton.client';
 
-import DisplaySurveyLinkWithCopyButton from './DisplaySurveyLinkWithCopyButton/DisplaySurveyLinkWithCopyButton';
+import DisplaySurveyLinkWithCopyButton from './DisplaySurveyLinkWithCopyButton/DisplaySurveyLinkWithCopyButton.server';
 import { SurveyLinkCreatedModalProps } from './SurveyLinkCreatedModal.types';
 
 const SurveyLinkCreatedModal = ({

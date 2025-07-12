@@ -2,9 +2,9 @@
 
 import { useTabInfo } from '@features/ai-meeting-manager/hooks/stores/useTabStore';
 
-const AiNotesPanel = () => {
+const MeetingSummary = () => {
   const { isEditing } = useTabInfo();
 
   return <div>AI 회의록 내용 {isEditing && '수정 중'}</div>;
 };
-export default AiNotesPanel;
+export default MeetingSummary;

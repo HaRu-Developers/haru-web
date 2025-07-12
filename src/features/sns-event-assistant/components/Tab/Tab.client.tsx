@@ -1,13 +1,3 @@
-// ✅ 참여자 리스트 (count 포함)
-// 복사
-// 다운로드 - 파일 형식 모달
-
-// ✅ 당첨자 리스트 (count 포함)
-// 복사
-// 다운로드 - 파일 형식 모달
-
-// ✅ SNS 링크
-
 'use client';
 
 import Link from 'next/link';
@@ -17,31 +7,12 @@ import FeatureTabIcons from '@icons/FeatureTabIcons/FeatureTabIcons';
 import { FeatureTabIconsState } from '@icons/FeatureTabIcons/FeatureTabIcons.types';
 
 import CategoryOption from '@common/components/CategoryOption/CategoryOption.client';
+import DownloadButton from '@common/components/buttons/30px/DownloadButton/DownloadButton.client';
 import IconButton from '@common/components/buttons/IconButton/IconButton.client';
 
 import { TabLabels, TabType } from '@features/sns-event-assistant/constants/tabs';
 
 import { TabProps } from './Tab.types';
-
-// ✅ 참여자 리스트 (count 포함)
-// 복사
-// 다운로드 - 파일 형식 모달
-
-// ✅ 당첨자 리스트 (count 포함)
-// 복사
-// 다운로드 - 파일 형식 모달
-
-// ✅ SNS 링크
-
-// ✅ 참여자 리스트 (count 포함)
-// 복사
-// 다운로드 - 파일 형식 모달
-
-// ✅ 당첨자 리스트 (count 포함)
-// 복사
-// 다운로드 - 파일 형식 모달
-
-// ✅ SNS 링크
 
 const tabs = Object.values(TabType);
 
@@ -57,7 +28,7 @@ const Tab = ({ current, counts }: TabProps) => {
     console.log(`${tab} 탭에서 복사 클릭`);
   };
   return (
-    <div className="border-b-stroke-200 px-266pxr py-13pxr flex h-14 w-300 shrink-0 items-center justify-between border-b border-solid bg-white">
+    <div className="border-stroke-200 px-266pxr py-13pxr flex h-14 w-300 shrink-0 items-center justify-between border-b border-solid bg-white">
       {/* 탭 영역 */}
       <div className="gap-9pxr inline-flex">
         {tabs.map((tab) => {
@@ -79,15 +50,16 @@ const Tab = ({ current, counts }: TabProps) => {
 
       {/* 버튼 영역 */}
       {current !== TabType.SNS_LINK && (
-        <div className="inline-flex items-center">
-          <IconButton
-            onClick={() => handleCopyClick(current)}
-            ariaLabel={`${TabLabels[current]} 복사`}
-          >
-            <FeatureTabIcons state={FeatureTabIconsState.COPY} />
-          </IconButton>
-          {/* TODO: 다운로드 버튼으로 변경 필요 */}
-          <button onClick={() => handleDownloadClick(current)}>다운로드</button>
+        <div className="gap-12pxr inline-flex items-center">
+          <div className="inline-flex">
+            <IconButton
+              onClick={() => handleCopyClick(current)}
+              ariaLabel={`${TabLabels[current]} 복사`}
+            >
+              <FeatureTabIcons state={FeatureTabIconsState.COPY} />
+            </IconButton>
+          </div>
+          <DownloadButton onClick={() => handleDownloadClick(current)} />
         </div>
       )}
     </div>

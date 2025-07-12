@@ -22,12 +22,12 @@ import SurveyQuestionTab from '@features/team-mood-tracker/componets/tabs/Survey
 import TeamMoodReportTab from '@features/team-mood-tracker/componets/tabs/TeamMoodReportTab/TeamMoodReportTab.client';
 
 const TestPage = async ({ searchParams }: { searchParams: Promise<SearchParamsType> }) => {
-  // // TAB_AI 회의 진행 매니저_좌측
-  // const { leftTab } = await searchParams;
-  // const formattedLeftTab =
-  //   typeof leftTab === 'string' && Object.values(LeftTabType).includes(leftTab as LeftTabType)
-  //     ? (leftTab as LeftTabType)
-  //     : LeftTabType.MEETING_SUMMARY; // 기본값
+  // TAB_AI 회의 진행 매니저_좌측
+  const { leftTab } = await searchParams;
+  const formattedLeftTab =
+    typeof leftTab === 'string' && Object.values(LeftTabType).includes(leftTab as LeftTabType)
+      ? (leftTab as LeftTabType)
+      : LeftTabType.MEETING_SUMMARY; // 기본값
 
   // // TAB_SNS 이벤트 어시스턴트
   // const { snsTab } = await searchParams;
@@ -41,9 +41,9 @@ const TestPage = async ({ searchParams }: { searchParams: Promise<SearchParamsTy
 
   // TAB_팀 분위기 트래커
   // 실제로는 서버에서 설문 정보 가져오기
-  const survey = {
-    isSubmitted: true,
-  };
+  // const survey = {
+  //   isSubmitted: true,
+  // };
 
   // const { moodTab } = await searchParams;
   // const formattedTab =
@@ -55,11 +55,11 @@ const TestPage = async ({ searchParams }: { searchParams: Promise<SearchParamsTy
   // const ResponseSummary = 10;
 
   return (
-    // <div className="flex gap-4">
-    <div>
+    <div className="flex gap-4">
+      {/* <div> */}
       {/* TODO: 로딩 UI를 어느 단위로 처리할지 결정 필요 */}
       {/* TAB_AI 회의 진행 매니저_좌측 */}
-      {/* <div>
+      <div>
         <Suspense fallback={<div>탭 로딩 중...</div>}>
           <LeftTab current={formattedLeftTab} />
         </Suspense>
@@ -70,7 +70,7 @@ const TestPage = async ({ searchParams }: { searchParams: Promise<SearchParamsTy
       <div>
         <RightTab />
         <RightPanel />
-      </div> */}
+      </div>
       {/* TAB_SNS 이벤트 어시스턴트 */}
       {/* <div>
         <Suspense fallback={<div>탭 로딩 중...</div>}>
@@ -87,8 +87,8 @@ const TestPage = async ({ searchParams }: { searchParams: Promise<SearchParamsTy
         </Suspense>
       </div> */}
       {/* TAB_팀 분위기 트래커 */}
-      <SurveyQuestionTab survey={survey} />
-      <SurveyQuestionPanel survey={survey} />
+      {/* <SurveyQuestionTab survey={survey} />
+      <SurveyQuestionPanel survey={survey} /> */}
       {/* <div>
         <Suspense fallback={<div>탭 로딩 중...</div>}>
           <TeamMoodReportTab

@@ -7,6 +7,8 @@ import FeatureTabIcons from '@icons/FeatureTabIcons/FeatureTabIcons';
 import { FeatureTabIconsState } from '@icons/FeatureTabIcons/FeatureTabIcons.types';
 
 import CategoryOption from '@common/components/CategoryOption/CategoryOption.client';
+import DownloadButton from '@common/components/buttons/30px/DownloadButton/DownloadButton.client';
+import EditCompleteButton from '@common/components/buttons/30px/EditCompleteButton/EditCompleteButton.client';
 import IconButton from '@common/components/buttons/IconButton/IconButton.client';
 
 import { LeftTabLabels, LeftTabType } from '@features/ai-meeting-manager/constants/tabs';
@@ -43,9 +45,9 @@ const LeftTab = ({ current }: LeftTabProps) => {
   };
 
   return (
-    <div className="border-b-stroke-200 w-720pxr py-13pxr flex h-14 shrink-0 justify-between border-b border-solid bg-white px-5">
+    <div className="border-stroke-200 w-720pxr py-13pxr flex h-14 shrink-0 items-center justify-between border-b border-solid bg-white px-5">
       {/* 탭 영역 */}
-      <div className="gap-9pxr inline-flex">
+      <div className="gap-9pxr inline-flex items-center">
         {tabs.map((tab) => {
           const rawParams = searchParams?.toString() ?? '';
           const params = new URLSearchParams(rawParams);
@@ -60,24 +62,24 @@ const LeftTab = ({ current }: LeftTabProps) => {
       </div>
 
       {/* 버튼 영역 */}
-      <div className="inline-flex items-center">
+      <div className="gap-12pxr inline-flex items-center">
         {current === LeftTabType.MEETING_SUMMARY &&
           (isEditing ? (
-            // TODO: 수정 완료 버튼으로 변경 필요
-            <button onClick={handleEditDoneClick}>수정 완료</button>
+            <EditCompleteButton onClick={handleEditDoneClick} />
           ) : (
             <>
-              <IconButton onClick={handleEditClick} ariaLabel="회의록 수정">
-                <FeatureTabIcons state={FeatureTabIconsState.EDIT} />
-              </IconButton>
-              <IconButton
-                onClick={() => handleCopyClick(current)}
-                ariaLabel={`${LeftTabLabels[current]} 복사`}
-              >
-                <FeatureTabIcons state={FeatureTabIconsState.COPY} />
-              </IconButton>
-              {/* TODO: 다운로드 버튼으로 변경 필요 */}
-              <button onClick={handleDownloadClick}>다운로드</button>
+              <div className="inline-flex">
+                <IconButton onClick={handleEditClick} ariaLabel="회의록 수정">
+                  <FeatureTabIcons state={FeatureTabIconsState.EDIT} />
+                </IconButton>
+                <IconButton
+                  onClick={() => handleCopyClick(current)}
+                  ariaLabel={`${LeftTabLabels[current]} 복사`}
+                >
+                  <FeatureTabIcons state={FeatureTabIconsState.COPY} />
+                </IconButton>
+              </div>
+              <DownloadButton onClick={handleDownloadClick} />
             </>
           ))}
         {current === LeftTabType.MEETING_VOICE_LOG && (

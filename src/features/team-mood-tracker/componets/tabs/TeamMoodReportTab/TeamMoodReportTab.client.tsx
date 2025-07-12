@@ -1,10 +1,3 @@
-// ✅ 팀 분위기 리포트
-// 복사
-// 다운로드 - 파일 형식 모달
-// ✅ 응답 count
-// ✅ 설문 문항
-// 파일버튼 - 설문 링크 모달
-
 'use client';
 
 import Link from 'next/link';
@@ -14,6 +7,7 @@ import FeatureTabIcons from '@icons/FeatureTabIcons/FeatureTabIcons';
 import { FeatureTabIconsState } from '@icons/FeatureTabIcons/FeatureTabIcons.types';
 
 import CategoryOption from '@common/components/CategoryOption/CategoryOption.client';
+import DownloadButton from '@common/components/buttons/30px/DownloadButton/DownloadButton.client';
 import IconButton from '@common/components/buttons/IconButton/IconButton.client';
 
 import {
@@ -22,20 +16,6 @@ import {
 } from '@features/team-mood-tracker/constants/tabs';
 
 import { TeamMoodReportTabProps } from './TeamMoodReportTab.types';
-
-// ✅ 팀 분위기 리포트
-// 복사
-// 다운로드 - 파일 형식 모달
-// ✅ 응답 count
-// ✅ 설문 문항
-// 파일버튼 - 설문 링크 모달
-
-// ✅ 팀 분위기 리포트
-// 복사
-// 다운로드 - 파일 형식 모달
-// ✅ 응답 count
-// ✅ 설문 문항
-// 파일버튼 - 설문 링크 모달
 
 const tabs = Object.values(TeamMoodReportTabType);
 
@@ -56,7 +36,7 @@ const TeamMoodReportTab = ({ current, counts }: TeamMoodReportTabProps) => {
   };
 
   return (
-    <div className="border-b-stroke-200 px-266pxr py-13pxr flex h-14 w-300 shrink-0 items-center justify-between border-b border-solid bg-white">
+    <div className="border-stroke-200 px-266pxr py-13pxr flex h-14 w-300 shrink-0 items-center justify-between border-b border-solid bg-white">
       {/* 탭 영역 */}
       <div className="gap-9pxr inline-flex">
         {tabs.map((tab) => {
@@ -77,14 +57,14 @@ const TeamMoodReportTab = ({ current, counts }: TeamMoodReportTabProps) => {
       </div>
       {/* 버튼 영역 */}
       {current === TeamMoodReportTabType.TEAM_MOOD_REPORT && (
-        <div className="inline-flex items-center">
+        <div className="items-cente gap-12pxr inline-flex">
           <IconButton
             onClick={handleCopyClick}
             ariaLabel={`${TeamMoodReportTabLabels[current]} 복사`}
           >
             <FeatureTabIcons state={FeatureTabIconsState.COPY} />
           </IconButton>
-          <button onClick={handleDownloadClick}>다운로드</button>
+          <DownloadButton onClick={handleDownloadClick} />
         </div>
       )}
 

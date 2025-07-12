@@ -1,3 +1,4 @@
+import ToggleButton from '@common/components/buttons/22px/ToggleButton/ToggleButton.client';
 import AddWorkspaceButton from '@common/components/buttons/30px/AddWorkspaceButton/AddWorkspaceButton.client';
 import ChangePasswordButton from '@common/components/buttons/30px/ChangePasswordButton/ChangePasswordButton.client';
 import DownloadButton from '@common/components/buttons/30px/DownloadButton/DownloadButton.client';
@@ -143,6 +144,7 @@ const ButtonTestPage = () => {
           <SkipForNowButton buttonType={SkipForNowButtonType.SIZE_38} />
           <SkipForNowButton buttonType={SkipForNowButtonType.SIZE_48} />
         </div>
+        <ToggleButton />
       </div>
       <div className="flex flex-row space-x-2"></div>
       <div className="flex flex-row space-x-2"></div>

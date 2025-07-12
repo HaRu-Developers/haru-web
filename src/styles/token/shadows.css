@@ -11,9 +11,7 @@
   .shadow-medium {
     box-shadow: 2px 6px 24px 0px rgba(0, 0, 0, 0.1);
   }
-}
 
-@layer utilities {
   .shadow-dropdown-popup {
     box-shadow: 2px 6px 24px 0px rgba(0, 0, 0, 0.1);
   }

@@ -45,9 +45,7 @@ const LoginOnBoarding = () => {
     <section className="h-screen w-[50vw] bg-gray-700 px-11">
       <div className="flex h-full flex-col items-center justify-center text-center">
         <Image src={currentSlide.image} alt="슬라이드 이미지" className="object-contain" priority />
-        <div className="text-t2-bd mb-[14px] whitespace-pre-line text-black">
-          {currentSlide.title}
-        </div>
+        <div className="text-t2-bd mb-3.5 whitespace-pre-line text-black">{currentSlide.title}</div>
         <div className="text-b1-rg whitespace-pre-line text-gray-200">
           {currentSlide.description}
         </div>
@@ -59,7 +57,7 @@ const LoginOnBoarding = () => {
               onClick={() => goToSlide(idx)}
               aria-label={`슬라이드 ${idx + 1}`}
               title={`슬라이드 ${idx + 1}`}
-              className={`h-[11px] w-[11px] rounded-full transition-all duration-300 ${
+              className={`h-11pxr w-11pxr rounded-full transition-all duration-300 ${
                 idx === currentIndex ? 'bg-primary' : 'bg-primary/20'
               }`}
             />

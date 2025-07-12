@@ -6,6 +6,8 @@
 @import './token/shadow.css';
 @import './token/define-pxr.css';
 
+@import './animation.css';
+
 @layer base {
   * {
     box-sizing: border-box;

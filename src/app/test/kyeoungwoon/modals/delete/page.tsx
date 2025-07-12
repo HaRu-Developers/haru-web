@@ -1,6 +1,6 @@
 'use client';
 
-import DeleteModal from '@common/components/modals/DeleteModal/DeleteModal';
+import DeleteModal from '@common/components/modals/DeleteModal/DeleteModal.client';
 import { DeleteModalType } from '@common/components/modals/DeleteModal/DeleteModal.types';
 
 const ModalTestPage = () => {

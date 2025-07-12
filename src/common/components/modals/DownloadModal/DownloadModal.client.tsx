@@ -27,4 +27,5 @@ const DownloadModal = ({ onClose, onPdfDownload, onWordDownload }: DownloadModal
     </div>
   );
 };
+
 export default DownloadModal;

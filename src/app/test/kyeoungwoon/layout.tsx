@@ -10,9 +10,9 @@ const KyeoungWoonLayout = ({
   return (
     <>
       <h1>Kyeoungwoon Test Field</h1>
-      <nav>
+      {/* <nav>
         <Link href="#">Open modal</Link>
-      </nav>
+      </nav> */}
       <div>{modal}</div>
       <div>{children}</div>
     </>

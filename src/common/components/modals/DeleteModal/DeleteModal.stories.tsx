@@ -11,7 +11,7 @@ const meta: Meta<typeof DeleteModal> = {
     layout: 'centered',
   },
   argTypes: {
-    deleteModalType: {
+    modalType: {
       control: { type: 'select' },
       options: Object.values(DeleteModalType),
     },
@@ -26,7 +26,7 @@ type Story = StoryObj<typeof DeleteModal>;
 
 export const DeleteReport: Story = {
   args: {
-    deleteModalType: DeleteModalType.DELETE_REPORT,
+    modalType: DeleteModalType.DELETE_REPORT,
     onClose: () => {},
     onAbort: () => {},
     onProceed: () => {},
@@ -35,7 +35,7 @@ export const DeleteReport: Story = {
 
 export const DeleteMeetingMinutes: Story = {
   args: {
-    deleteModalType: DeleteModalType.DELETE_MEETING_MINUTES,
+    modalType: DeleteModalType.DELETE_MEETING_MINUTES,
     onClose: () => {},
     onAbort: () => {},
     onProceed: () => {},
@@ -44,7 +44,7 @@ export const DeleteMeetingMinutes: Story = {
 
 export const DeleteEvent: Story = {
   args: {
-    deleteModalType: DeleteModalType.DELETE_EVENT,
+    modalType: DeleteModalType.DELETE_EVENT,
     onClose: () => {},
     onAbort: () => {},
     onProceed: () => {},
@@ -53,7 +53,7 @@ export const DeleteEvent: Story = {
 
 export const LeaveMeetingRecord: Story = {
   args: {
-    deleteModalType: DeleteModalType.LEAVE_MEETING_RECORD,
+    modalType: DeleteModalType.LEAVE_MEETING_RECORD,
     onClose: () => {},
     onAbort: () => {},
     onProceed: () => {},
@@ -62,7 +62,7 @@ export const LeaveMeetingRecord: Story = {
 
 export const ConnectInstagramAccount: Story = {
   args: {
-    deleteModalType: DeleteModalType.CONNECT_INSTAGRAM_ACCOUNT,
+    modalType: DeleteModalType.CONNECT_INSTAGRAM_ACCOUNT,
     onClose: () => {},
     onAbort: () => {},
     onProceed: () => {},

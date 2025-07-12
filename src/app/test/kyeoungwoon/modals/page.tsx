@@ -3,6 +3,7 @@
 import DeleteModal from '@common/components/modals/DeleteModal/DeleteModal.client';
 import { DeleteModalType } from '@common/components/modals/DeleteModal/DeleteModal.types';
 import DownloadModal from '@common/components/modals/DownloadModal/DownloadModal.client';
+import EndRecordingModal from '@common/components/modals/EndRecordingModal/EndRecordingModal.client';
 import LoadingModal from '@common/components/modals/LoadingModal/LoadingModal.client';
 import { LoadingModalType } from '@common/components/modals/LoadingModal/LoadingModal.types';
 import ProgressModal from '@common/components/modals/ProgressModal/ProgressModal.client';
@@ -68,6 +69,18 @@ const TestModalsPage = () => {
         <ProgressModal progress={50} onClose={handleDevMode} />
         <ProgressModal progress={100} onClose={handleDevMode} />
       </div>
+      <span className="col-span-3 mb-2 text-center">모달: 녹음 종료</span>
+      <div className="">
+        <EndRecordingModal
+          onClose={handleDevMode}
+          onAbort={handleDevMode}
+          onProceed={handleDevMode}
+        />
+      </div>
+      <span className="col-span-3 mb-2 text-center">모달: </span>
+      <div className="grid grid-cols-3 grid-rows-2 gap-4"></div>
+      <span className="col-span-3 mb-2 text-center">모달: </span>
+      <div className="grid grid-cols-3 grid-rows-2 gap-4"></div>
     </div>
   );
 };

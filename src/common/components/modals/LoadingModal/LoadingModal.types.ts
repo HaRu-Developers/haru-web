@@ -1,5 +1,3 @@
-'use client';
-
 export enum LoadingModalType {
   CREATE_SURVEY = 'survey',
   MEETING_MINUTES = 'meeting_minutes',

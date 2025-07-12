@@ -1,5 +1,3 @@
-'use client';
-
 export enum DeleteModalType {
   DELETE_REPORT = 'report',
   DELETE_MEETING_MINUTES = 'meeting_minutes',

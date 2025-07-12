@@ -1,5 +1,3 @@
-'use client';
-
 export interface DownloadModalProps {
   onClose: () => void;
   onPdfDownload: () => void;

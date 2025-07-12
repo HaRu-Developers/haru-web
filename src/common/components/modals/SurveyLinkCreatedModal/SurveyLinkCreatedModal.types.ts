@@ -1,5 +1,3 @@
-'use client';
-
 export interface SurveyLinkCreatedModalProps {
   onClose: () => void;
   onEmailSendClick: () => void;

@@ -1,6 +1,7 @@
 'use client';
 
 import CongratulateSignUpModal from '@common/components/modals/CongratulateSignUpModal/CongratulateSignUpModal.client';
+import CreateMeetingMinutesModal from '@common/components/modals/CreateMeetingMinutesModal/CreateMeetingMinutesModal.client';
 import DeleteModal from '@common/components/modals/DeleteModal/DeleteModal.client';
 import { DeleteModalType } from '@common/components/modals/DeleteModal/DeleteModal.types';
 import DownloadModal from '@common/components/modals/DownloadModal/DownloadModal.client';
@@ -92,8 +93,10 @@ const TestModalsPage = () => {
       <div className="">
         <CongratulateSignUpModal onClose={handleDevMode} onWorkspaceCreate={handleDevMode} />
       </div>
-      <span className="col-span-3 mb-2 text-center">모달: </span>
-      <div className="grid grid-cols-3 grid-rows-2 gap-4"></div>
+      <span className="col-span-3 mb-2 text-center">모달: 새 파일 생성</span>
+      <div className="">
+        <CreateMeetingMinutesModal onClose={handleDevMode} onNextStep={handleDevMode} />
+      </div>
       <span className="col-span-3 mb-2 text-center">모달: </span>
       <div className="grid grid-cols-3 grid-rows-2 gap-4"></div>
       <span className="col-span-3 mb-2 text-center">모달: </span>

@@ -5,6 +5,7 @@ import { DeleteModalType } from '@common/components/modals/DeleteModal/DeleteMod
 import DownloadModal from '@common/components/modals/DownloadModal/DownloadModal.client';
 import LoadingModal from '@common/components/modals/LoadingModal/LoadingModal.client';
 import { LoadingModalType } from '@common/components/modals/LoadingModal/LoadingModal.types';
+import ProgressModal from '@common/components/modals/ProgressModal/ProgressModal.client';
 
 const TestModalsPage = () => {
   const handleDevMode = () => console.log('Something Clicked');
@@ -15,7 +16,7 @@ const TestModalsPage = () => {
         <LoadingModal onClose={handleDevMode} />
       </div> */}
 
-      <span className="col-span-3 mb-2 text-center">Download Modal</span>
+      <span className="col-span-3 mb-2 text-center">모달: 삭제</span>
       <div>
         <DownloadModal
           onClose={handleDevMode}
@@ -24,7 +25,7 @@ const TestModalsPage = () => {
         />
       </div>
 
-      <span className="col-span-3 mb-2 text-center">Delete Modal</span>
+      <span className="col-span-3 mb-2 text-center">모달: 다운로드</span>
       <div className="grid grid-cols-3 grid-rows-2 gap-4">
         <DeleteModal
           modalType={DeleteModalType.DELETE_REPORT}
@@ -58,12 +59,14 @@ const TestModalsPage = () => {
         />
         <div /> {/* 빈 셀로 2행 3열 맞추기 */}
       </div>
-      <span className="col-span-3 mb-2 text-center">Delete Modal</span>
-      <div className="grid grid-cols-2 grid-rows-2 gap-4">
+      <span className="col-span-3 mb-2 text-center">모달: 로딩</span>
+      <div className="grid grid-cols-3 grid-rows-2 gap-4">
         <LoadingModal onClose={handleDevMode} modalType={LoadingModalType.CREATE_SURVEY} />
         <LoadingModal onClose={handleDevMode} modalType={LoadingModalType.MEETING_MINUTES} />
         <LoadingModal onClose={handleDevMode} modalType={LoadingModalType.SNS_EVENT} />
-        <LoadingModal onClose={handleDevMode} modalType={LoadingModalType.FILE_DOWNLOAD} />
+        <ProgressModal progress={1} onClose={handleDevMode} />
+        <ProgressModal progress={50} onClose={handleDevMode} />
+        <ProgressModal progress={100} onClose={handleDevMode} />
       </div>
     </div>
   );

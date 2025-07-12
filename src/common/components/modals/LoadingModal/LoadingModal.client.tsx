@@ -3,9 +3,13 @@
 import CrossIcons from '@icons/CrossIcons/CrossIcons';
 import { CrossIconsState } from '@icons/CrossIcons/CrossIcons.types';
 
+import LoadingBar from '@common/components/LoadingBar/LoadingBar.server';
+import ProgressBar from '@common/components/ProgressBar/ProgressBar.server';
+
 import { LoadingModalProps, LoadingModalType } from './LoadingModal.types';
 
 const LoadingModal = ({ onClose, modalType }: LoadingModalProps) => {
+  const bar = <LoadingBar />;
   const modalTexts = {
     [LoadingModalType.CREATE_SURVEY]: {
       main: '설문지 생성 중...',
@@ -19,10 +23,6 @@ const LoadingModal = ({ onClose, modalType }: LoadingModalProps) => {
       main: '참여자 및 당첨자 리스트 생성 중...',
       sub: 'HaRu가 이벤트 참여자 및 당첨자 리스트를 생성 중이에요.',
     },
-    [LoadingModalType.FILE_DOWNLOAD]: {
-      main: '다운로드 진행 중...',
-      sub: '파일을 다운로드하고 있어요. 조금만 기다려주세요!',
-    },
   };
 
   return (
@@ -34,6 +34,7 @@ const LoadingModal = ({ onClose, modalType }: LoadingModalProps) => {
         <p className="text-t3-bd text-black">{modalTexts[modalType].main}</p>
         <p className="text-b3-rg text-gray-300">{modalTexts[modalType].sub}</p>
       </div>
+      <div className="mt-41pxr">{bar}</div>
     </div>
   );
 };

@@ -48,6 +48,8 @@ const eslintConfig = [
 
       // custom type
       '**/svgr.d.ts',
+
+      "next.config.ts",
     ],
   },
   // Next.js의 core-web-vitals와 typescript 설정을 확장

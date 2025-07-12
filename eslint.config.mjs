@@ -45,6 +45,11 @@ const eslintConfig = [
       // 테스트 및 문서 폴더
       'coverage/**',
       'public/**',
+
+      // custom type
+      '**/svgr.d.ts',
+
+      "next.config.ts",
     ],
   },
   // Next.js의 core-web-vitals와 typescript 설정을 확장

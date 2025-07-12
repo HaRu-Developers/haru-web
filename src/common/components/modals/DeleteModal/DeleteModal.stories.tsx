@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/nextjs';
 
-import DeleteModal from './DeleteModal';
+import DeleteModal from './DeleteModal.client';
 import { DeleteModalType } from './DeleteModal.types';
 
 const meta: Meta<typeof DeleteModal> = {

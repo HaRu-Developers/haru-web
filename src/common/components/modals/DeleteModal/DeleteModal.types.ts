@@ -8,8 +8,7 @@ export enum DeleteModalType {
   CONNECT_INSTAGRAM_ACCOUNT = 'connect_instagram_account',
 }
 export interface DeleteModalProps {
-  deleteModalType: DeleteModalType;
-
+  modalType: DeleteModalType;
   onClose: () => void;
   onAbort: () => void;
   onProceed: () => void;

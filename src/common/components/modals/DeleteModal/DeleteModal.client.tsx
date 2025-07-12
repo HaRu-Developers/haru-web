@@ -13,7 +13,7 @@ import { SkipForNowButtonType } from '@common/components/buttons/diverse-size/Sk
 
 import { DeleteModalProps, DeleteModalType } from './DeleteModal.types';
 
-const DeleteModal = ({ deleteModalType, onClose, onAbort, onProceed }: DeleteModalProps) => {
+const DeleteModal = ({ modalType, onClose, onAbort, onProceed }: DeleteModalProps) => {
   const modalTexts = {
     [DeleteModalType.DELETE_REPORT]: {
       main: '정말 이 리포트를 삭제하시겠습니까?',
@@ -40,7 +40,7 @@ const DeleteModal = ({ deleteModalType, onClose, onAbort, onProceed }: DeleteMod
   let abortButton = <CancelButton onClick={onAbort} buttonType={CancelButtonType.SIZE_38} />;
   let proceedButton = <DeleteButton onClick={onProceed} />;
 
-  switch (deleteModalType) {
+  switch (modalType) {
     case DeleteModalType.DELETE_REPORT:
       abortButton = <CancelButton onClick={onAbort} buttonType={CancelButtonType.SIZE_38} />;
       proceedButton = <DeleteButton onClick={onProceed} />;
@@ -64,8 +64,8 @@ const DeleteModal = ({ deleteModalType, onClose, onAbort, onProceed }: DeleteMod
     <div className="w-398pxr h-250pxr rounded-12pxr shadow-modal flex flex-col items-center justify-center">
       <IndividualIcons state={IndividualIconsState.WARNING} />
       <div className="space-y-6pxr mt-13pxr w-317pxr flex flex-col items-center justify-center text-center">
-        <p className="text-t3-bd text-black">{modalTexts[deleteModalType].main}</p>
-        <p className="text-b3-rg text-gray-300">{modalTexts[deleteModalType].sub}</p>
+        <p className="text-t3-bd text-black">{modalTexts[modalType].main}</p>
+        <p className="text-b3-rg text-gray-300">{modalTexts[modalType].sub}</p>
       </div>
       <div className="space-x-10pxr mt-28pxr flex flex-row">
         {abortButton}

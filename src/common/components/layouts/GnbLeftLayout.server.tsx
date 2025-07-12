@@ -1,6 +1,6 @@
 import GnbLeft from '@common/components/gnbs/GnbLeft/GnbLeft.server';
 
-const GnbLeftLayout = ({ children }: { children: React.ReactNode }) => {
+const GnbLeftLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
   return (
     <div className="flex min-h-screen w-[1440px]">
       <GnbLeft />

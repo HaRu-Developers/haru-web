@@ -16,18 +16,15 @@ const FooterButtons = () => {
 
   return (
     <div className="flex w-full items-center justify-between">
-      <button
-        onClick={handleAddWorkspace}
-        className="gap-3pxr rounded-7pxr flex h-7 cursor-pointer items-center justify-center bg-gray-700 px-2 py-1.5"
-      >
-        <PlusIcons state={PlusIconsState.SIZE_16_GRAY_300} />
-        <span className="text-13pxr leading-[130%] font-medium tracking-[-0.26px] text-gray-300 not-italic">
-          워크스페이스 추가
-        </span>
+      <button onClick={handleAddWorkspace} className="rounded-7pxr h-7 bg-gray-700 px-2 py-1.5">
+        <div className="gap-3pxr flex items-center">
+          <PlusIcons state={PlusIconsState.SIZE_16_GRAY_300} />
+          <span className="text-cap1-md text-gray-300">워크스페이스 추가</span>
+        </div>
       </button>
-      <button onClick={handleLogout} className="flex cursor-pointer items-center gap-[3px]">
+      <button onClick={handleLogout} className="gap-3pxr flex items-center">
         <ProfileDropdownIcons state={ProfileDropdownIconsState.LOGOUT} />
-        <span className="text-12pxr leading-[130%] font-medium tracking-[-0.24px] text-gray-400 not-italic hover:underline hover:decoration-gray-400 hover:decoration-solid hover:decoration-[1px] hover:underline-offset-[1px] hover:[text-decoration-skip-ink:none] hover:[text-underline-position:from-font]">
+        <span className="text-cap2-md text-gray-400 hover:underline hover:decoration-gray-400 hover:decoration-solid hover:decoration-[1px] hover:underline-offset-[1px] hover:[text-decoration-skip-ink:none] hover:[text-underline-position:from-font]">
           로그아웃
         </span>
       </button>

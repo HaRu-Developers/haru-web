@@ -19,6 +19,10 @@ const CheckboxIcons = ({ state, className }: IconsCommonProps<CheckboxIconsState
       return <SquareCheckboxEnabledIcon className={clsx('h-[20px] w-[20px]', className)} />;
     case CheckboxIconsState.SQUARE_CHECKBOX_DISABLED:
       return <SquareCheckboxDisabledIcon className={clsx('h-[20px] w-[20px]', className)} />;
+    case CheckboxIconsState.SIZE_24_SQUARE_CHECKBOX_ENABLED:
+      return <SquareCheckboxEnabledIcon className={clsx('h-[24px] w-[24px]', className)} />;
+    case CheckboxIconsState.SIZE_24_SQUARE_CHECKBOX_DISABLED:
+      return <SquareCheckboxDisabledIcon className={clsx('h-[24px] w-[24px]', className)} />;
     default:
       return null;
   }

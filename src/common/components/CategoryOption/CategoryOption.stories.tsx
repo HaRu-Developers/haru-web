@@ -9,27 +9,28 @@ const meta: Meta<typeof CategoryOption> = {
   argTypes: {
     label: {
       control: 'text',
-      defaultValue: '전체',
-      description: '표시될 글',
+      description: '표시될 레이블',
     },
     count: {
       control: 'number',
-      defaultValue: 10,
-      description: '숫자가 필요하다면 넣기',
+      description: '표시될 숫자 (선택)',
     },
     active: {
       control: 'boolean',
-      defaultValue: false,
-      description: '활성화 상태',
+      description: '활성화 여부 (선택)',
+    },
+    onClick: {
+      description: '클릭 이벤트 핸들러 (선택)',
+      action: 'clicked',
     },
     className: {
       control: 'text',
-      description: '추가 스타일링 원할 때 사용',
+      description: 'Tailwind 스타일 클래스 (선택)',
     },
     ariaLabel: {
       control: 'text',
+      description: '접근성을 위한 설명 (선택)',
     },
-    onClick: { action: 'clicked' },
   },
 };
 
@@ -39,22 +40,10 @@ type Story = StoryObj<typeof CategoryOption>;
 
 export const Default: Story = {
   args: {
-    label: 'AI 회의록',
+    label: '참여자 리스트',
+    count: 20,
     active: false,
-  },
-};
-
-export const Active: Story = {
-  args: {
-    label: 'AI 회의록',
-    active: true,
-  },
-};
-
-export const withCount: Story = {
-  args: {
-    label: '참여자 수',
-    count: 10,
-    active: true,
+    ariaLabel: '참여자 리스트 카테고리',
+    className: '',
   },
 };

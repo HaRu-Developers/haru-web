@@ -16,7 +16,7 @@ const CategoryOption = ({
     <button
       onClick={onClick}
       className={clsx(
-        'text-bt3-sb flex h-[30px] items-center justify-center gap-2.5 rounded-[7px] px-[9px] py-1.5',
+        'text-bt3-sb h-30pxr rounded-7pxr px-9pxr flex items-center justify-center gap-2.5 py-1.5',
         active
           ? 'text-bt3-sb cursor-default bg-gray-600 text-black'
           : 'text-cap1-md cursor-pointer bg-white text-gray-200 hover:bg-gray-600',

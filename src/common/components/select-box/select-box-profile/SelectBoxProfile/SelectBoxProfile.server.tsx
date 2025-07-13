@@ -51,7 +51,7 @@ const workspaces = [
 
 const SelectBoxProfile = () => {
   return (
-    <div className="border-stroke-200 shadow-medium w-302pxr flex flex-col items-start gap-2.5 rounded-2xl border border-solid bg-white p-4">
+    <div className="border-stroke-200 shadow-dropdown-popup w-302pxr flex flex-col items-start gap-2.5 rounded-2xl border border-solid bg-white p-4">
       <div className="flex flex-col items-start gap-2.5 self-stretch">
         <div className="flex flex-col gap-4">
           <div className="flex items-center gap-3.5">

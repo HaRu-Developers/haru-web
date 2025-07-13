@@ -14,6 +14,8 @@ const CrossIcons = ({ state, className }: IconsCommonProps<CrossIconsState>) => 
       return <CrossIcon className={clsx('h-[16px] w-[16px] text-gray-200', className)} />;
     case CrossIconsState.SIZE_16_GRAY_400:
       return <CrossIcon className={clsx('h-[16px] w-[16px] text-gray-400', className)} />;
+    case CrossIconsState.SIZE_20_GRAY_200:
+      return <CrossIcon className={clsx('h-[20px] w-[20px] text-gray-200', className)} />;
     default:
       return null;
   }

@@ -34,7 +34,7 @@ const ToggleButton = ({
       type="button"
       onClick={handleToggle}
       className={clsx(
-        'h-22pxr w-44pxr flex items-center rounded-full transition-colors duration-200',
+        'h-22pxr w-44pxr flex cursor-pointer items-center rounded-full transition-colors duration-200',
         isOn ? 'bg-primary' : 'bg-gray-600',
       )}
       aria-pressed={isOn}

@@ -1,5 +1,6 @@
-import NextStepButton from '@/common/components/buttons/30px/NextStepButton';
 import { Meta, StoryObj } from '@storybook/nextjs';
+
+import NextStepButton from '@/common/components/buttons/30px/NextStepButton';
 
 const meta: Meta<typeof NextStepButton> = {
   title: 'Components/NextStepButton',

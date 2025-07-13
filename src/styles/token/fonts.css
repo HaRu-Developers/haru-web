@@ -46,6 +46,13 @@
   letter-spacing: -0.02em;
 }
 
+@utility text-t5-sb {
+  font-size: 16px;
+  line-height: 130%;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
 @utility text-t6-sb {
   font-size: var(--text-14pxr);
   line-height: 130%;

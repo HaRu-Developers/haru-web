@@ -1,9 +1,18 @@
 @import 'tailwindcss';
 
+@import './token/scrollbar.css';
 @import './token/colors.css';
 @import './token/fonts.css';
+@import './token/shadows.css';
+@import './animation.css';
+
 @import './token/custom-style.css';
+
+@import './token/shadows.css';
+
 @import './token/define-pxr.css';
+
+@import './animation.css';
 
 @layer base {
   * {
@@ -20,5 +29,9 @@
   p {
     word-break: keep-all;
     text-wrap: pretty;
+  }
+
+  button {
+    cursor: pointer;
   }
 }

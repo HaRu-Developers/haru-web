@@ -1,0 +1,55 @@
+/* 전체 캘린더 리셋 및 폰트 적용 */
+.minimal-calendar {
+  width: 100%;
+  border: none !important;
+  background: none !important;
+}
+
+/* 요일 헤더 영역 */
+.minimal-calendar .react-calendar__month-view__weekdays {
+  justify-content: center;
+  display: grid !important;
+  grid-template-columns: repeat(7, 1fr);
+  font-family: 'Pretendard';
+  color: var(--color-gray-400);
+  font-size: 0.9375rem;
+  font-weight: 400;
+  text-align: center;
+  line-height: 160%;
+  letter-spacing: -0.01875rem;
+  margin-bottom: 0.5rem;
+}
+
+.minimal-calendar .react-calendar__month-view__weekdays__weekday abbr {
+  width: 2.25rem;
+  height: 2.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none !important;
+  cursor: default;
+}
+
+/* 날짜 영역 그리드 */
+.minimal-calendar .react-calendar__month-view__days {
+  display: grid !important;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+/* 날짜 타일 기본 구조 (내용은 DateNum이 담당) */
+.minimal-calendar .react-calendar__tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none !important;
+  border: none !important;
+  position: relative;
+  outline: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* 이전/다음 달 날짜 흐리게 표시 */
+.minimal-calendar .react-calendar__tile.react-calendar__month-view__days__day--neighboringMonth {
+  color: var(--color-gray-300) !important;
+}

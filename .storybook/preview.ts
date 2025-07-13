@@ -1,4 +1,5 @@
 import type { Preview } from '@storybook/nextjs';
+
 import '@styles/globals.css';
 
 import '@/styles/globals.css';

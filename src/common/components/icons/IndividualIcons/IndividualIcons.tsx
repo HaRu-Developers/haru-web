@@ -4,6 +4,7 @@ import { IconsCommonProps } from '@icons/types/icons.common.types';
 
 import CalendarIcon from '@svgs/individual/CalenderIcon.svg';
 import CongratulationIcon from '@svgs/individual/CongratulationIcon.svg';
+import EmailIcon from '@svgs/individual/EmailIcon.svg';
 import GroupIcon from '@svgs/individual/GroupIcon.svg';
 import SearchIcon from '@svgs/individual/SearchIcon.svg';
 import UnderArrowIcon from '@svgs/individual/UnderArrowIcon.svg';
@@ -28,6 +29,8 @@ const IndividualIcons = ({ state, className }: IconsCommonProps<IndividualIconsS
       return <UploadIcon className={clsx('h-[24px] w-[24px]', className)} />;
     case IndividualIconsState.GROUP:
       return <GroupIcon className={clsx('h-[20px] w-[20px]', className)} />;
+    case IndividualIconsState.EMAIL:
+      return <EmailIcon className={clsx('h-[20px] w-[20px]', className)} />;
     default:
       return null;
   }

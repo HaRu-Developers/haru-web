@@ -4,6 +4,7 @@
   /* 기본 색상 */
   --color-black: #111111;
   --color-white: #ffffff;
+  --color-stroke-selected: #007aff80;
 
   /* 회색 계열 */
   --color-gray-100: #303030;

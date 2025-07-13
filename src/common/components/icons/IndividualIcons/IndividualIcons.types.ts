@@ -6,4 +6,5 @@ export enum IndividualIconsState {
   CALENDAR = 'CALENDAR',
   UPLOAD = 'UPLOAD',
   GROUP = 'GROUP',
+  EMAIL = 'EMAIL',
 }

@@ -4,6 +4,7 @@
   /* 기본 색상 */
   --color-black: #111111;
   --color-white: #ffffff;
+  --color-stroke-selected: #007aff80;
 
   /* 회색 계열 */
   --color-gray-100: #303030;
@@ -18,6 +19,7 @@
   --color-primary: #e65787;
   --color-secondary-green: #27998d;
   --color-secondary-blue: #6664e3;
+  --color-primary-selected: #e6578708;
   --color-primary-inactive: #f5bccf;
   --color-primary-selected: #e6578708;
   --color-stroke-selected: #007affb2;
@@ -42,10 +44,12 @@
 }
 
 /* 그라디언트 배경 */
-@utility bg-primary-gradient {
-  background-image: var(--primary-gradient);
-}
+@layer utilities {
+  .bg-primary-gradient {
+    background-image: var(--primary-gradient);
+  }
 
-@utility bg-white-gradient {
-  background-image: var(--white-gradient);
+  .bg-white-gradient {
+    background-image: var(--white-gradient);
+  }
 }

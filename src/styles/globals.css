@@ -2,13 +2,9 @@
 
 @import './token/scrollbar.css';
 @import './token/colors.css';
-@import './animation.css';
-@import './token/shadows.css';
-
+@import './token/fonts.css';
 @import './token/custom-style.css';
-
 @import './token/shadows.css';
-
 @import './token/define-pxr.css';
 
 @import './animation.css';

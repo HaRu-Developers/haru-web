@@ -15,6 +15,8 @@ const AiQuestionIcons = ({ state, className }: IconsCommonProps<AiQuestionIconsS
       return <AiQuestionIcon className={clsx('h-[20px] w-[20px]', className)} />;
     case AiQuestionIconsState.SIZE_20_HOVER:
       return <HoverAiQuestionIcon className={clsx('h-[20px] w-[20px]', className)} />;
+    case AiQuestionIconsState.SIZE_24_HOVER:
+      return <HoverAiQuestionIcon className={clsx('h-[24px] w-[24px]', className)} />;
     case AiQuestionIconsState.SIZE_24:
       return <AiQuestionIcon className={clsx('h-[24px] w-[24px]', className)} />;
     default:

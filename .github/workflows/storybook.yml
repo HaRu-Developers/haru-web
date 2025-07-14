@@ -132,11 +132,11 @@ jobs:
           pr_number: ${{ github.event.pull_request.number }} # PR 번호
           message: |
             ### 🎨 Storybook Deployed
-            ```
+
             📦 PR #${{ github.event.pull_request.number }} by ${{ github.event.pull_request.user.login }} 
             👤 ${{ github.event.head_commit.author.name }} @${{ github.event.head_commit.author.username }}  
             📅 UTC ${{ github.event.head_commit.timestamp }}
-            ```
+
 
             #### 🔗 Links
             **[📖 Storybook 보러가기](${{ steps.publish_chromatic.outputs.storybookUrl }})**

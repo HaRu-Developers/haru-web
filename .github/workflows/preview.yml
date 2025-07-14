@@ -183,11 +183,11 @@ jobs:
         with:
           message: |
             ### ✨ Vercel Preview Deployed
-            ```
+
             📦 PR #${{ github.event.pull_request.number }} by @${{ github.event.pull_request.user.login }} 
             🌿 [${{ github.head_ref }}] → [${{ github.base_ref }}]
             📅 UTC ${{ github.event.pull_request.updated_at }}
-            ```
+
 
             #### 🔗 Links
             **[✨ Preview 사이트 보러가기](${{ steps.deploy.outputs.preview_url }})**

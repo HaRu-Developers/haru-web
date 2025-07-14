@@ -51,22 +51,20 @@ const workspaces = [
 
 const SelectBoxProfile = () => {
   return (
-    <div className="border-stroke-200 shadow-medium w-302pxr flex flex-col items-start gap-2.5 rounded-2xl border border-solid bg-white p-4">
+    <div className="border-stroke-200 shadow-dropdown-popup w-302pxr flex flex-col items-start gap-2.5 rounded-2xl border border-solid bg-white p-4">
       <div className="flex flex-col items-start gap-2.5 self-stretch">
         <div className="flex flex-col gap-4">
           <div className="flex items-center gap-3.5">
             <ProfileImage userId={profile.userId} src={profile.imagePath} name={profile.name} />
             <div>
-              <p className="text-15pxr self-stretch leading-[130%] font-semibold tracking-[-0.3px] text-black not-italic">
-                {profile.name}
-              </p>
-              <p className="text-cap1-rg text-gray-400">{profile.email}</p>
+              <p className="text-cap1-rg text-black">{profile.name}</p>
+              <p className="text-cap2-rg text-gray-400">{profile.email}</p>
             </div>
           </div>
           <div className="gap-6pxr flex">
             <Link
               href="/profile"
-              className="border-stroke-200 flex h-7 items-center justify-center gap-[3px] rounded-[7px] border border-solid bg-white px-2 py-1.5"
+              className="border-stroke-200 gap-3pxr rounded-7pxr flex h-7 items-center justify-center border border-solid bg-white px-2 py-1.5"
             >
               <ProfileDropdownIcons state={ProfileDropdownIconsState.PROFILE} />
               <span className="text-cap1-md text-gray-400">프로필 설정</span>
@@ -85,7 +83,7 @@ const SelectBoxProfile = () => {
         </div>
       </div>
 
-      <div className="bg-stroke-200 h-px w-full"></div>
+      <div className="bg-stroke-200 h-pxr w-full"></div>
 
       <FooterButtons />
     </div>

@@ -178,6 +178,13 @@ jobs:
             echo "⚠️ Preview URL not available - check deployment"
           fi
 
+      - name: Convert UTC to KST
+        id: convert_utc_to_kst
+        run: |
+          TS="${{ github.event.pull_request.updated_at }}"
+          KST=$(date -d "$TS +9 hours" +"%Y-%m-%d %H:%M:%S")
+          echo "kst_time=$KST" >> $GITHUB_OUTPUT
+
       - name: Comment Preview URL
         uses: thollander/actions-comment-pull-request@v2
         with:
@@ -186,7 +193,7 @@ jobs:
 
             📦 PR #${{ github.event.pull_request.number }} by @${{ github.event.pull_request.user.login }} 
             🌿 [${{ github.head_ref }}] → [${{ github.base_ref }}]
-            📅 UTC ${{ github.event.pull_request.updated_at }}
+            📅 KST ${{ steps.convert_utc_to_kst.outputs.kst_time }}
 
 
             #### 🔗 Links

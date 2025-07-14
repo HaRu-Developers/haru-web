@@ -123,6 +123,13 @@ jobs:
             echo "⚠️ Storybook URL not available - check deployment"
           fi
 
+      - name: Convert UTC to KST
+        id: convert_utc_to_kst
+        run: |
+          TS="${{ github.event.head_commit.timestamp }}"
+          KST=$(date -d "$TS +9 hours" +"%Y-%m-%d %H:%M:%S")
+          echo "kst_time=$KST" >> $GITHUB_OUTPUT
+
       - name: Comment on PR
         if: ${{ github.event_name == 'pull_request' }} # PR일 때만 실행
         uses: thollander/actions-comment-pull-request@v2
@@ -135,8 +142,7 @@ jobs:
 
             📦 PR #${{ github.event.pull_request.number }} by ${{ github.event.pull_request.user.login }} 
             👤 ${{ github.event.head_commit.author.name }} @${{ github.event.head_commit.author.username }}  
-            📅 UTC ${{ github.event.head_commit.timestamp }}
-
+            📅 KST ${{ steps.convert_utc_to_kst.outputs.kst_time }}
 
             #### 🔗 Links
             **[📖 Storybook 보러가기](${{ steps.publish_chromatic.outputs.storybookUrl }})**

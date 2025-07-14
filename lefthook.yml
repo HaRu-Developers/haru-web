@@ -27,7 +27,7 @@ pre-commit:
         pnpm type-check
         echo "✅ Type checking completed successfully!"
 
-prepare-commit-msg:
+prepare-commit-msg: # 원래는 아예 필요가 없음, 하지만 추후 gitmoji 자동 생성을 위해 남겨둡니다.
   commands:
     add-prefix:
       run: |

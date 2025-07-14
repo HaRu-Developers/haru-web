@@ -3,31 +3,83 @@ pre-commit:
   commands:
     eslint:
       glob: '**/*.{js,ts,jsx,tsx}'
-      run: pnpm exec eslint {staged_files} --fix
+      run: |
+        echo "🔍 ========================================="
+        echo "🔧 Running ESLint on staged files..."
+        echo "🔍 ========================================="
+        pnpm exec eslint {staged_files} --fix
+        echo "✅ ESLint completed successfully!"
       stage_fixed: true
     prettier:
       glob: '**/*.{js,ts,jsx,tsx,json,yaml,md,css}'
-      run: pnpm exec prettier --write {staged_files}
+      run: |
+        echo "💅 ========================================="
+        echo "🎨 Running Prettier on staged files..."
+        echo "💅 ========================================="
+        pnpm exec prettier --write {staged_files}
+        echo "✅ Code formatting completed!"
       stage_fixed: true
     type-check:
-      run: pnpm type-check
+      run: |
+        echo "🔍 ========================================="
+        echo "📝 Running TypeScript type checking..."
+        echo "🔍 ========================================="
+        pnpm type-check
+        echo "✅ Type checking completed successfully!"
 
 prepare-commit-msg:
   commands:
     add-prefix:
-      run: node scripts/prepare-commit-msg.cjs {{1}}
+      run: |
+        echo "📝 ========================================="
+        echo "🏷️ Preparing commit message..."
+        echo "📝 ========================================="
+        node scripts/prepare-commit-msg.cjs {{1}}
+        echo "✅ Commit message prepared!"
 
 commit-msg:
   commands:
     lint-message:
-      run: node scripts/run-commitlint.cjs {{1}}
+      run: |
+        echo "📋 ========================================="
+        echo "🔍 Validating commit message format..."
+        echo "📋 ========================================="
+        node scripts/run-commitlint.cjs {{1}}
+        echo "✅ Commit message validation passed!"
 
 pre-rebase:
   commands:
     check-clean:
-      run: node scripts/pre-rebase-check.cjs
+      run: |
+        echo "🔄 ========================================="
+        echo "🧹 Checking repository cleanliness..."
+        echo "🔄 ========================================="
+        node scripts/pre-rebase-check.cjs
+        echo "✅ Repository clean check completed!"
 
 pre-push:
   commands:
     build:
-      run: pnpm build
+      run: |
+        echo "🚀 ========================================="
+        echo "🚀 Starting build for push verification..."
+        echo "🚀 ========================================="
+        echo "📊 Step 1/2: Running type check..."
+        if pnpm type-check; then
+          echo "✅ Type check passed successfully!"
+          echo "📊 Step 2/2: Building project..."
+          echo "🔨 ========================================="
+          echo "🏗️ Running production build..."
+          echo "🔨 ========================================="
+          pnpm build
+          echo "🎉 ========================================="
+          echo "✅ Build completed successfully!"
+          echo "🚀 Ready to push!"
+          echo "🎉 ========================================="
+        else
+          echo "❌ ========================================="
+          echo "❌ Type check failed!"
+          echo "🚫 Build skipped - fix type errors first"
+          echo "❌ ========================================="
+          exit 1
+        fi

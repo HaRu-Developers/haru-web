@@ -182,15 +182,15 @@ jobs:
         uses: thollander/actions-comment-pull-request@v2
         with:
           message: |
-            ### 🌐 Vercel Preview Deployed
+            ### ✨ Vercel Preview Deployed
             ```
-            📦 PR #${{ github.event.pull_request.number }} by ${{ github.event.pull_request.user.login }} 
-            🌿 ${{ github.head_ref }} → ${{ github.base_ref }}
-            📅 ${{ github.event.pull_request.updated_at }}
+            📦 PR #${{ github.event.pull_request.number }} by @${{ github.event.pull_request.user.login }} 
+            🌿 [${{ github.head_ref }}] → [${{ github.base_ref }}]
+            📅 UTC ${{ github.event.pull_request.updated_at }}
             ```
 
             #### 🔗 Links
-            **[🌐 Preview 사이트 보러가기](${{ steps.deploy.outputs.preview_url }})**
+            **[✨ Preview 사이트 보러가기](${{ steps.deploy.outputs.preview_url }})**
 
             > 💡 변경사항을 실제 환경에서 확인해보세요!
 

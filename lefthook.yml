@@ -32,7 +32,7 @@ prepare-commit-msg:
     add-prefix:
       run: |
         echo "📝 ========================================="
-        echo "🏷️ Preparing commit message..."
+        echo "🏷️  Preparing commit message..."
         echo "📝 ========================================="
         node scripts/prepare-commit-msg.cjs {{1}}
         echo "✅ Commit message prepared!"

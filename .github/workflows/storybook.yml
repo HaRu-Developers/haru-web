@@ -2,55 +2,187 @@ name: 'Chromatic Deployment'
 
 on:
   pull_request:
-    branches: [main, develop]
+    branches: [main, develop] # main, develop 브랜치로의 PR에 대해 실행
     paths:
-      - '**.stories.tsx'
+      - '**.stories.tsx' # .stories.tsx 파일 변경 시에만 실행
   push:
-    branches: [main, develop]
+    branches: [main, develop] # main, develop 브랜치에 push될 때 실행
     paths:
-      - '**.stories.tsx'
+      - '**.stories.tsx' # .stories.tsx 파일 변경 시에만 실행
 
 permissions:
-  contents: read
-  pull-requests: write
+  contents: read # 코드 읽기 권한
+  pull-requests: write # PR에 코멘트 작성 권한
 
 jobs:
   chromatic-deployment:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest # 최신 Ubuntu 환경에서 실행
 
     steps:
+      - name: 🚀 Starting deployment
+        run: |
+          echo "🎨 ========================================="
+          echo "🚀 Chromatic Storybook Deployment Started"
+          echo "🎨 ========================================="
+          echo "📋 Event: ${{ github.event_name }}"
+          echo "🌿 Branch: ${GITHUB_REF#refs/heads/}"
+          echo "📝 Commit: ${{ github.sha }}"
+          echo "⏰ Timestamp: $(date)"
+
       - name: Checkout source
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0
+          fetch-depth: 0 # 전체 git 기록을 가져옴
+
+      - name: ✅ Checkout completed
+        run: |
+          echo "📁 ========================================="
+          echo "✅ Source code checkout completed"
+          echo "📁 ========================================="
+          echo "📋 Current directory: $(pwd)"
+          echo "📂 Repository structure:"
+          ls -la | head -10
+          echo "📊 Git status:"
+          git log --oneline -3
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 8
+          version: 8 # pnpm 버전 8 설치
+
+      - name: 📦 pnpm setup completed
+        run: |
+          echo "📦 ========================================="
+          echo "✅ pnpm setup completed"
+          echo "📦 ========================================="
+          echo "🔧 pnpm version: $(pnpm --version)"
+          echo "💾 pnpm store location: $(pnpm store path)"
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: 'pnpm'
+          node-version: 20 # Node.js 20 버전 사용
+          cache: 'pnpm' # pnpm 캐시 사용
+
+      - name: 🟢 Node.js setup completed
+        run: |
+          echo "🟢 ========================================="
+          echo "✅ Node.js setup completed"
+          echo "🟢 ========================================="
+          echo "📱 Node.js version: $(node --version)"
+          echo "📦 npm version: $(npm --version)"
+          echo "💨 Cache status: Using pnpm cache"
 
       - name: Install dependencies
-        run: pnpm install --no-frozen-lockfile
+        run: |
+          echo "⬇️ ========================================="
+          echo "📦 Installing project dependencies..."
+          echo "⬇️ ========================================="
+          echo "💾 Before installation - disk space:"
+          df -h | grep -E "(Filesystem|/dev/)"
+          pnpm install --no-frozen-lockfile
+          echo "✅ Dependencies installation completed!"
+
+      - name: 🔍 Dependency verification
+        run: |
+          echo "🔍 ========================================="
+          echo "✅ Verifying dependencies and Storybook"
+          echo "🔍 ========================================="
+          echo "📚 Checking Storybook configuration..."
+          if [ -f ".storybook/main.ts" ] || [ -f ".storybook/main.js" ]; then
+            echo "✅ Storybook config found"
+            ls -la .storybook/
+          else
+            echo "❌ Storybook config not found"
+          fi
+          echo "📖 Story files found:"
+          find . -name "*.stories.tsx" -type f | head -5
+          echo "📊 node_modules size:"
+          du -sh node_modules 2>/dev/null || echo "node_modules not found"
 
       - name: Publish to Chromatic
         id: publish_chromatic
         uses: chromaui/action@v1
         with:
-          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-          buildScriptName: build-storybook
-          onlyChanged: true
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }} # Chromatic 프로젝트 토큰
+          buildScriptName: build-storybook # 빌드 스크립트 이름
+          onlyChanged: true # 변경된 스토리만 빌드
+
+      - name: 🎨 Chromatic deployment status
+        run: |
+          echo "🎨 ========================================="
+          echo "✅ Chromatic deployment completed!"
+          echo "🎨 ========================================="
+          echo "📊 Deployment results:"
+          echo "  🔗 Storybook URL: ${{ steps.publish_chromatic.outputs.storybookUrl }}"
+          echo "  🏗️ Build URL: ${{ steps.publish_chromatic.outputs.buildUrl }}"
+          echo "  📋 Build Code: ${{ steps.publish_chromatic.outputs.code }}"
+          if [[ "${{ steps.publish_chromatic.outputs.storybookUrl }}" != "" ]]; then
+            echo "🎉 Storybook successfully deployed to Chromatic!"
+          else
+            echo "⚠️ Storybook URL not available - check deployment"
+          fi
 
       - name: Comment on PR
-        if: ${{ github.event_name == 'pull_request' }}
+        if: ${{ github.event_name == 'pull_request' }} # PR일 때만 실행
         uses: thollander/actions-comment-pull-request@v2
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # GitHub 인증 토큰
         with:
-          pull-request-number: ${{ github.event.pull_request.number }}
-          message: '🚀 **storybook**: ${{ steps.publish_chromatic.outputs.storybookUrl }}'
+          pr_number: ${{ github.event.pull_request.number }} # PR 번호
+          message: |
+            ### 🎨 Storybook Deployed
+            ```
+            📦 PR #${{ github.event.pull_request.number }} by ${{ github.event.pull_request.user.login }} 
+            👤 ${{ github.event.head_commit.author.name }} @${{ github.event.head_commit.author.username }}  
+            📅 ${{ github.event.head_commit.timestamp }}
+            ```
+
+            #### 🔗 Links
+            **[📖 Storybook 보러가기](${{ steps.publish_chromatic.outputs.storybookUrl }})**
+
+            ---
+
+            *Powered by Chromatic* ✨
+          comment_tag: 'storybook_deploy_${{ github.event.pull_request.number }}'
+          mode: 'upsert'
+
+      - name: 💬 PR comment status
+        if: ${{ github.event_name == 'pull_request' }}
+        run: |
+          echo "💬 ========================================="
+          echo "✅ PR comment posted successfully"
+          echo "💬 ========================================="
+          echo "📝 Comment posted to PR #${{ github.event.pull_request.number }}"
+          echo "👤 PR author: ${{ github.event.pull_request.user.login }}"
+          echo "🔗 Storybook URL shared in comment"
+
+      - name: 🚀 Push deployment summary
+        if: ${{ github.event_name == 'push' }}
+        run: |
+          echo "🚀 ========================================="
+          echo "✅ Push deployment completed"
+          echo "🚀 ========================================="
+          echo "🌿 Branch: ${GITHUB_REF#refs/heads/}"
+          echo "📝 Commit: ${{ github.sha }}"
+          echo "🎨 Storybook available at: ${{ steps.publish_chromatic.outputs.storybookUrl }}"
+
+      - name: 🎯 Final deployment summary
+        if: always()
+        run: |
+          echo "🎯 ========================================="
+          echo "🏁 Chromatic Deployment Workflow Complete"
+          echo "🎯 ========================================="
+          echo "📊 Final Status Summary:"
+          echo "  🎭 Event Type: ${{ github.event_name }}"
+          echo "  🌿 Branch: ${GITHUB_REF#refs/heads/}"
+          echo "  📝 Commit: ${{ github.sha }}"
+          echo "  ⚡ Job Status: ${{ job.status }}"
+          echo "  🎨 Chromatic Status: ${{ steps.publish_chromatic.outcome }}"
+          echo "  ⏰ Completed at: $(date)"
+          if [[ "${{ steps.publish_chromatic.outcome }}" == "success" ]]; then
+            echo "🎉 ALL SYSTEMS GO! Deployment successful! 🚀"
+          else
+            echo "⚠️ Deployment completed with issues - check logs above"
+          fi
+          echo "🎯 ========================================="

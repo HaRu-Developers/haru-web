@@ -33,6 +33,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4 # 저장소 코드를 체크아웃
 
+      - name: 환경 변수 값 확인
+        run: |
+          echo "VERCEL_ORG_ID: $VERCEL_ORG_ID"
+          echo "VERCEL_PROJECT_ID: $VERCEL_PROJECT_ID"
+          echo "PUSH_DESTINATION_GITHUB_USERNAME: $PUSH_DESTINATION_GITHUB_USERNAME"
+          echo "PUSH_DESTINATION_REPOSITORY_NAME: $PUSH_DESTINATION_REPOSITORY_NAME"
+          echo "PUSH_DESTINATION_TARGET_BRANCH: $PUSH_DESTINATION_TARGET_BRANCH"
+          echo "EMAIL: $EMAIL"
+          echo "SSH_DEPLOY_KEY: ${SSH_DEPLOY_KEY:+[SET]}"
+          echo "AUTO_ACTIONS: ${AUTO_ACTIONS:+[SET]}"
+
       - name: GitHub Actions 실행 환경 정보 출력 # Actions 환경 정보 출력
         run: |
           echo "🚀 Starting deployment process..."

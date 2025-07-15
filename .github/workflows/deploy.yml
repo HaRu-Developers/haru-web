@@ -3,6 +3,7 @@ name: deploy
 on:
   push:
     branches: [main, develop] # main, develop 브랜치에 push될 때 실행
+  workflow_dispatch:
 
 jobs:
   build:

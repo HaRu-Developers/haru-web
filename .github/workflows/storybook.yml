@@ -9,6 +9,7 @@ on:
     branches: [main, develop] # main, develop 브랜치에 push될 때 실행
     paths:
       - '**.stories.tsx' # .stories.tsx 파일 변경 시에만 실행
+  workflow_dispatch: # 수동 실행 가능
 
 permissions:
   contents: read # 코드 읽기 권한
@@ -132,7 +133,7 @@ jobs:
 
       - name: Comment on PR
         if: ${{ github.event_name == 'pull_request' }} # PR일 때만 실행
-        uses: thollander/actions-comment-pull-request@v2
+        uses: thollander/actions-comment-pull-request@v3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # GitHub 인증 토큰
         with:

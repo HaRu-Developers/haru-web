@@ -2,26 +2,71 @@ name: deploy
 
 on:
   push:
-    branches: [main, develop]
+    branches: [main, develop] # main, develop 브랜치에 push될 때 실행
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: pandoc/latex
+    container: pandoc/latex # pandoc/latex 컨테이너 환경에서 실행
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2 # 저장소 코드를 체크아웃
 
-      - name: Install mustache (to update the date)
-        run: apk add ruby && gem install mustache
+      - name: Show environment info # Actions 환경 정보 출력
+        run: |
+          echo "🚀 Starting deployment process..."
+          echo "📋 Current working directory: $(pwd)"
+          echo "📁 Directory contents:"
+          ls -la
+          echo "🌿 Current branch: ${GITHUB_REF#refs/heads/}"
+          echo "📝 Commit SHA: $GITHUB_SHA"
 
-      - name: Set RELEASE_VERSION env var
-        run: echo "RELEASE_VERSION=haru@$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+      - name: Install mustache (to update the date) # Mustache 템플릿 엔진 설치
+        run: |
+          echo "📦 Installing mustache template engine..."
+          apk add ruby && gem install mustache
+          echo "✅ Mustache installed successfully"
+
+      - name: Set RELEASE_VERSION env var # Set release version based on commit SHA
+        run: |
+          RELEASE_VERSION="haru@$(git rev-parse --short HEAD)"
+          echo "RELEASE_VERSION=$RELEASE_VERSION" >> $GITHUB_ENV
+          echo "🏷️ Release version set: $RELEASE_VERSION"
+
+      - name: Test get variable exported by push-to-another-repository
+        run: echo $DESTINATION_CLONED_DIRECTORY # 액션에서 export한 변수 출력
 
       - name: Give build.sh execute permission
-        run: chmod +x ./build.sh
+        run: |
+          echo "🔐 Setting execute permission for build.sh..."
+          chmod +x ./build.sh
+          ls -la ./build.sh
+          echo "✅ Permission set successfully"
 
       - name: Run build script
-        run: ./build.sh
+        run: |
+          echo "🔨 Starting build process..."
+          echo "📄 Build script contents:"
+          head -10 ./build.sh
+          echo "🚀 Executing build script..."
+          ./build.sh
+          echo "✅ Build completed successfully"
+          echo "📁 Output directory contents:"
+          ls -la output/ || echo "❌ Output directory not found"
+
+      - name: Set commit message # fallback to commit message
+        id: commit_msg
+        run: |
+          # 커밋 메시지 우선순위로 결정
+          if [[ -n "${{ github.event.head_commit.message }}" ]]; then
+            COMMIT_MSG="${{ github.event.head_commit.message }}"
+          elif [[ "${{ github.event.commits[0].message }}" != "" ]]; then
+            COMMIT_MSG="${{ github.event.commits[0].message }}"
+          else
+            COMMIT_MSG="Deploy from commit ${{ github.sha }}"
+          fi
+
+          echo "commit_message=$COMMIT_MSG" >> $GITHUB_OUTPUT
+          echo "📝 Using commit message: $COMMIT_MSG"
 
       - name: Pushes to another repository
         id: push_directory
@@ -33,8 +78,13 @@ jobs:
           destination-github-username: S-Gihun
           destination-repository-name: haru-web
           user-email: ${{ secrets.EMAIL }}
-          commit-message: ${{ github.event.commits[0].message }}
+          commit-message: ${{ steps.commit_msg.outputs.commit_message }}
           target-branch: main
 
-      - name: Test get variable exported by push-to-another-repository
-        run: echo $DESTINATION_CLONED_DIRECTORY
+      - name: Deployment summary
+        run: |
+          echo "🎉 Deployment completed successfully!"
+          echo "📊 Summary:"
+          echo "  - Release version: $RELEASE_VERSION"
+          echo "  - Target repository: S-Gihun/haru-web"
+          echo "  - Destination directory: $DESTINATION_CLONED_DIRECTORY"

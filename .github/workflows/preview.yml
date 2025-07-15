@@ -1,4 +1,4 @@
-name: Preview
+name: Vercel Preview deployment
 
 on:
   pull_request:
@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  vercel-preview:
+  vercel-preview-deployment:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -18,175 +18,46 @@ jobs:
       VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
     steps:
-      - name: 🚀 Starting preview deployment
-        run: |
-          echo "🌐 ========================================="
-          echo "🚀 Vercel Preview Deployment Started"
-          echo "🌐 ========================================="
-          echo "📋 Event: ${{ github.event_name }}"
-          echo "🔄 PR Number: #${{ github.event.pull_request.number }}"
-          echo "👤 PR Author: ${{ github.event.pull_request.user.login }}"
-          echo "🌿 Source Branch: ${{ github.head_ref }}"
-          echo "🎯 Target Branch: ${{ github.base_ref }}"
-          echo "📝 Commit: ${{ github.sha }}"
-          echo "⏰ Timestamp: $(date)"
+      - name: Checkout To Repository
+        uses: actions/checkout@v4
 
-      - uses: actions/checkout@v4
-
-      - name: ✅ Checkout completed
-        run: |
-          echo "📁 ========================================="
-          echo "✅ Source code checkout completed"
-          echo "📁 ========================================="
-          echo "📋 Current directory: $(pwd)"
-          echo "📂 Repository structure:"
-          ls -la | head -10
-          echo "📊 Git info:"
-          git log --oneline -3
-
-      - name: Setup pnpm
+      - name: pnpm 설정
         uses: pnpm/action-setup@v4
         with:
           version: 8
 
-      - name: 📦 pnpm setup completed
-        run: |
-          echo "📦 ========================================="
-          echo "✅ pnpm setup completed"
-          echo "📦 ========================================="
-          echo "🔧 pnpm version: $(pnpm --version)"
-          echo "💾 pnpm store location: $(pnpm store path)"
-
-      - name: Setup Node.js
+      - name: Node.js 설정
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'pnpm'
 
-      - name: 🟢 Node.js setup completed
-        run: |
-          echo "🟢 ========================================="
-          echo "✅ Node.js setup completed"
-          echo "🟢 ========================================="
-          echo "📱 Node.js version: $(node --version)"
-          echo "📦 npm version: $(npm --version)"
-          echo "💨 Cache status: Using pnpm cache"
+      - name: pnpm 의존성 설치
+        run: pnpm install
 
-      - name: Install dependencies
-        run: |
-          echo "⬇️ ========================================="
-          echo "📦 Installing project dependencies..."
-          echo "⬇️ ========================================="
-          echo "💾 Before installation - disk space:"
-          df -h | grep -E "(Filesystem|/dev/)"
-          pnpm install
-          echo "✅ Dependencies installation completed!"
+      - name: Vercel CLI 설치
+        run: pnpm install --global vercel@latest
 
-      - name: 🔍 Dependencies verification
-        run: |
-          echo "🔍 ========================================="
-          echo "✅ Verifying project dependencies"
-          echo "🔍 ========================================="
-          echo "📊 node_modules size:"
-          du -sh node_modules 2>/dev/null || echo "node_modules not found"
-          echo "📄 Package.json scripts:"
-          cat package.json | grep -A 10 '"scripts"' || echo "No scripts found"
-          echo "💾 After installation - disk space:"
-          df -h | grep -E "(Filesystem|/dev/)"
+      - name: Vercel preview 환경 pull
+        run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
 
-      - name: Install Vercel CLI
-        run: |
-          echo "⚡ ========================================="
-          echo "📥 Installing Vercel CLI..."
-          echo "⚡ ========================================="
-          npm install --global vercel@latest
-          echo "✅ Vercel CLI installation completed!"
+      - name: Vercel 프로젝트 빌드
+        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
 
-      - name: 🔧 Vercel CLI verification
-        run: |
-          echo "🔧 ========================================="
-          echo "✅ Vercel CLI ready"
-          echo "🔧 ========================================="
-          echo "⚡ Vercel CLI version: $(vercel --version)"
-          echo "🏢 Organization ID: ${{ secrets.VERCEL_ORG_ID }}"
-          echo "📦 Project ID: ${{ secrets.VERCEL_PROJECT_ID }}"
-
-      - name: Pull Vercel Environment
-        run: |
-          echo "🌐 ========================================="
-          echo "⬇️ Pulling Vercel environment config..."
-          echo "🌐 ========================================="
-          vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
-          echo "✅ Vercel environment pulled successfully!"
-
-      - name: 📋 Environment verification
-        run: |
-          echo "📋 ========================================="
-          echo "✅ Vercel environment ready"
-          echo "📋 ========================================="
-          echo "📁 Vercel config files:"
-          ls -la .vercel/ 2>/dev/null || echo "No .vercel directory found"
-          echo "🔧 Build configuration ready"
-
-      - name: Build Project
-        run: |
-          echo "🔨 ========================================="
-          echo "🏗️ Building project for Vercel..."
-          echo "🔨 ========================================="
-          echo "⏰ Build started at: $(date)"
-          vercel build --token=${{ secrets.VERCEL_TOKEN }}
-          echo "✅ Project build completed successfully!"
-          echo "⏰ Build finished at: $(date)"
-
-      - name: 📊 Build verification
-        run: |
-          echo "📊 ========================================="
-          echo "✅ Build output verification"
-          echo "📊 ========================================="
-          echo "📁 Build output directory:"
-          ls -la .vercel/output/ 2>/dev/null || echo "No build output directory found"
-          echo "📦 Build artifacts size:"
-          du -sh .vercel/ 2>/dev/null || echo "No .vercel directory found"
-          echo "💾 Disk space after build:"
-          df -h | grep -E "(Filesystem|/dev/)"
-
-      - name: Deploy to Preview
+      - name: Vercel Preview 배포
         id: deploy
         run: |
-          echo "🚀 ========================================="
-          echo "🌐 Deploying to Vercel preview..."
-          echo "🚀 ========================================="
-          echo "⏰ Deployment started at: $(date)"
           DEPLOY_URL=$(vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }})
           echo "preview_url=$DEPLOY_URL" >> $GITHUB_OUTPUT
-          echo "✅ Deployment completed successfully!"
-          echo "🔗 Preview URL: $DEPLOY_URL"
-          echo "⏰ Deployment finished at: $(date)"
 
-      - name: 🎉 Deployment status
-        run: |
-          echo "🎉 ========================================="
-          echo "✅ Vercel deployment successful!"
-          echo "🎉 ========================================="
-          echo "📊 Deployment results:"
-          echo "  🔗 Preview URL: ${{ steps.deploy.outputs.preview_url }}"
-          echo "  📦 PR Number: #${{ github.event.pull_request.number }}"
-          echo "  👤 Deployed by: ${{ github.event.pull_request.user.login }}"
-          echo "  🌿 Branch: ${{ github.head_ref }}"
-          if [[ "${{ steps.deploy.outputs.preview_url }}" != "" ]]; then
-            echo "🎊 Preview successfully deployed to Vercel!"
-          else
-            echo "⚠️ Preview URL not available - check deployment"
-          fi
-
-      - name: Convert UTC to KST
+      - name: UTC to KST 변환
         id: convert_utc_to_kst
         run: |
           TS="${{ github.event.pull_request.updated_at }}"
           KST=$(date -d "$TS +9 hours" +"%Y-%m-%d %H:%M:%S")
           echo "kst_time=$KST" >> $GITHUB_OUTPUT
 
-      - name: Comment Preview URL
+      - name: Comment에 Preview URL 기록
         uses: thollander/actions-comment-pull-request@v2
         with:
           message: |
@@ -196,48 +67,28 @@ jobs:
             🌿 [${{ github.head_ref }}] → [${{ github.base_ref }}]
             📅 KST ${{ steps.convert_utc_to_kst.outputs.kst_time }}
 
-
             #### 🔗 Links
             **[✨ Preview 사이트 보러가기](${{ steps.deploy.outputs.preview_url }})**
 
             > 💡 변경사항을 실제 환경에서 확인해보세요!
-
             ---
-
             *Powered by Vercel* ⚡
 
           comment_tag: 'vercel_deploy_${{ github.event.pull_request.number }}'
           mode: 'upsert'
 
-      - name: 💬 PR comment status
-        run: |
-          echo "💬 ========================================="
-          echo "✅ PR comment posted successfully"
-          echo "💬 ========================================="
-          echo "📝 Comment posted to PR #${{ github.event.pull_request.number }}"
-          echo "👤 PR author notified: ${{ github.event.pull_request.user.login }}"
-          echo "🔗 Preview URL shared in comment"
-
-      - name: 🎯 Final preview summary
+      - name: 배포 결과 요약
         if: always()
         run: |
           echo "🎯 ========================================="
           echo "🏁 Vercel Preview Deployment Complete"
           echo "🎯 ========================================="
-          echo "📊 Final Status Summary:"
-          echo "  🎭 Event Type: ${{ github.event_name }}"
-          echo "  📦 PR Number: #${{ github.event.pull_request.number }}"
-          echo "  👤 Author: ${{ github.event.pull_request.user.login }}"
-          echo "  🌿 Source: ${{ github.head_ref }}"
-          echo "  🎯 Target: ${{ github.base_ref }}"
-          echo "  📝 Commit: ${{ github.sha }}"
-          echo "  ⚡ Job Status: ${{ job.status }}"
-          echo "  🌐 Deploy Status: ${{ steps.deploy.outcome }}"
-          echo "  ⏰ Completed at: $(date)"
-          if [[ "${{ steps.deploy.outcome }}" == "success" ]]; then
-            echo "🎉 PREVIEW DEPLOYED! Ready for review! 🚀"
-            echo "🔗 Access at: ${{ steps.deploy.outputs.preview_url }}"
-          else
-            echo "⚠️ Deployment completed with issues - check logs above"
-          fi
+          echo "📦 PR Number: #${{ github.event.pull_request.number }}"
+          echo "🌿 Source: ${{ github.head_ref }}"
+          echo "🎯 Target: ${{ github.base_ref }}"
+          echo "📝 Commit: ${{ github.sha }}"
+          echo "⚡ Job Status: ${{ job.status }}"
+          echo "🌐 Deploy Status: ${{ steps.deploy.outcome }}"
+          echo "🔗 Preview URL: ${{ steps.deploy.outputs.preview_url }}"
+          echo "⏰ Completed at: $(date)"
           echo "🎯 ========================================="

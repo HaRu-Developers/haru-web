@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     # container: pandoc/latex # pandoc/latex 컨테이너 환경에서 실행
     steps:
-      - uses: actions/checkout@v2 # 저장소 코드를 체크아웃
+      - uses: actions/checkout@v4 # 저장소 코드를 체크아웃
 
       - name: Show environment info # Actions 환경 정보 출력
         run: |

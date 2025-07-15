@@ -57,17 +57,20 @@ jobs:
       - name: Set commit message # fallback to commit message
         id: commit_msg
         run: |
-          # 커밋 메시지 우선순위로 결정
-          if [[ -n "${{ github.event.head_commit.message }}" ]]; then
-            COMMIT_MSG="${{ github.event.head_commit.message }}"
-          elif [[ "${{ github.event.commits[0].message }}" != "" ]]; then
-            COMMIT_MSG="${{ github.event.commits[0].message }}"
+          echo "📝 ========================================="
+          echo "🔧 Generating deployment message..."
+          echo "📝 ========================================="
+
+          if [[ "${{ github.event.head_commit.message }}" =~ \(#([0-9]+)\) ]]; then
+            PR_NUM="${BASH_REMATCH[1]}"
+            COMMIT_MSG="Deploy PR #$PR_NUM from ${{ github.ref_name }}"
           else
-            COMMIT_MSG="Deploy from commit ${{ github.sha }}"
+            COMMIT_MSG="Deploy from ${{ github.ref_name }} - ${{ github.sha }}"
           fi
 
           echo "commit_message=$COMMIT_MSG" >> $GITHUB_OUTPUT
-          echo "📝 Using commit message: $COMMIT_MSG"
+          echo "📋 Using commit message: $COMMIT_MSG"
+          echo "✅ ========================================="
 
       - name: Pushes to another repository
         id: push_directory

@@ -4,17 +4,26 @@ on:
   push:
     branches: [main, develop] # main, develop 브랜치에 push될 때 실행
   workflow_dispatch:
+    inputs:
+      GITHUB_TOKEN:
+        description: 'GitHub Token for authentication'
+      PUSH_DESTINATION_GITHUB_USERNAME:
+        description: 'GitHub username for the destination repository'
+      PUSH_DESTINATION_REPOSITORY_NAME:
+        description: 'Name of the destination repository'
+      PUSH_DESTINATION_TARGET_BRANCH:
+        description: 'Target branch in the destination repository'
 
 jobs:
   vercel-production-deployment:
     env:
       VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
       VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-      PUSH_DESTINATION_GITHUB_USERNAME: ${{ secrets.PUSH_DESTINATION_GITHUB_USERNAME }}
-      PUSH_DESTINATION_REPOSITORY_NAME: ${{ secrets.PUSH_DESTINATION_REPOSITORY_NAME }}
-      PUSH_DESTINATION_TARGET_BRANCH: ${{ secrets.PUSH_DESTINATION_TARGET_BRANCH }}
+      PUSH_DESTINATION_GITHUB_USERNAME: ${{ github.event.inputs.PUSH_DESTINATION_GITHUB_USERNAME || secrets.PUSH_DESTINATION_GITHUB_USERNAME }}
+      PUSH_DESTINATION_REPOSITORY_NAME: ${{ github.event.inputs.PUSH_DESTINATION_REPOSITORY_NAME || secrets.PUSH_DESTINATION_REPOSITORY_NAME }}
+      PUSH_DESTINATION_TARGET_BRANCH: ${{ github.event.inputs.PUSH_DESTINATION_TARGET_BRANCH || secrets.PUSH_DESTINATION_TARGET_BRANCH }}
       EMAIL: ${{ secrets.EMAIL }}
-      AUTO_ACTIONS: ${{ secrets.AUTO_ACTIONS }}
+      AUTO_ACTIONS: ${{ github.event.inputs.GITHUB_TOKEN || secrets.AUTO_ACTIONS }}
 
     runs-on: ubuntu-latest
     # container: pandoc/latex # pandoc/latex 컨테이너 환경에서 실행
@@ -99,5 +108,4 @@ jobs:
           echo "🎉 Deployment completed successfully!"
           echo "📊 Summary:"
           echo "  - Release version: $RELEASE_VERSION"
-          echo "  - Target repository: S-Gihun/haru-web"
-          echo "  - Destination directory: $DESTINATION_CLONED_DIRECTORY"
+          echo "  - Target repository: ${{ env.PUSH_DESTINATION_GITHUB_USERNAME }}/${{ env.PUSH_DESTINATION_REPOSITORY_NAME }}"

@@ -5,8 +5,10 @@ on:
     branches: [main, develop] # main, develop 브랜치에 push될 때 실행
   workflow_dispatch:
     inputs:
-      GITHUB_TOKEN:
+      GITHUB_ACCESS_TOKEN:
         description: 'GitHub Token for authentication'
+      GITHUB_SSH_DEPLOY_KEY:
+        description: 'SSH Deploy Key for Git operations'
       PUSH_DESTINATION_GITHUB_USERNAME:
         description: 'GitHub username for the destination repository'
       PUSH_DESTINATION_REPOSITORY_NAME:
@@ -23,7 +25,8 @@ jobs:
       PUSH_DESTINATION_REPOSITORY_NAME: ${{ github.event.inputs.PUSH_DESTINATION_REPOSITORY_NAME || secrets.PUSH_DESTINATION_REPOSITORY_NAME }}
       PUSH_DESTINATION_TARGET_BRANCH: ${{ github.event.inputs.PUSH_DESTINATION_TARGET_BRANCH || secrets.PUSH_DESTINATION_TARGET_BRANCH }}
       EMAIL: ${{ secrets.EMAIL }}
-      AUTO_ACTIONS: ${{ github.event.inputs.GITHUB_TOKEN || secrets.AUTO_ACTIONS }}
+      SSH_DEPLOY_KEY: ${{ github.event.inputs.GITHUB_SSH_DEPLOY_KEY || secrets.SSH_DEPLOY_KEY }}
+      AUTO_ACTIONS: ${{ github.event.inputs.GITHUB_ACCESS_TOKEN || secrets.AUTO_ACTIONS }}
 
     runs-on: ubuntu-latest
     # container: pandoc/latex # pandoc/latex 컨테이너 환경에서 실행
@@ -93,6 +96,7 @@ jobs:
         id: push_directory
         uses: cpina/github-action-push-to-another-repository@main
         env:
+          SSH_DEPLOY_KEY: ${{ env.SSH_DEPLOY_KEY }}
           API_TOKEN_GITHUB: ${{ env.AUTO_ACTIONS }}
         with:
           source-directory: .

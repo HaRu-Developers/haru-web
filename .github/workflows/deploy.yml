@@ -7,6 +7,15 @@ on:
 
 jobs:
   vercel-production-deployment:
+    env:
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      PUSH_DESTINATION_GITHUB_USERNAME: ${{ secrets.PUSH_DESTINATION_GITHUB_USERNAME }}
+      PUSH_DESTINATION_REPOSITORY_NAME: ${{ secrets.PUSH_DESTINATION_REPOSITORY_NAME }}
+      PUSH_DESTINATION_TARGET_BRANCH: ${{ secrets.PUSH_DESTINATION_TARGET_BRANCH }}
+      EMAIL: ${{ secrets.EMAIL }}
+      AUTO_ACTIONS: ${{ secrets.AUTO_ACTIONS }}
+
     runs-on: ubuntu-latest
     # container: pandoc/latex # pandoc/latex 컨테이너 환경에서 실행
     steps:
@@ -75,14 +84,14 @@ jobs:
         id: push_directory
         uses: cpina/github-action-push-to-another-repository@main
         env:
-          API_TOKEN_GITHUB: ${{ secrets.AUTO_ACTIONS }}
+          API_TOKEN_GITHUB: ${{ env.AUTO_ACTIONS }}
         with:
-          source-directory: '.'
-          destination-github-username: S-Gihun
-          destination-repository-name: haru-web
-          user-email: ${{ secrets.EMAIL }}
+          source-directory: .
+          destination-github-username: ${{ env.PUSH_DESTINATION_GITHUB_USERNAME }}
+          destination-repository-name: ${{ env.PUSH_DESTINATION_REPOSITORY_NAME }}
+          user-email: ${{ env.EMAIL }}
           commit-message: ${{ steps.commit_msg.outputs.commit_message }}
-          target-branch: main
+          target-branch: ${{ env.PUSH_DESTINATION_TARGET_BRANCH }}
           create-target-branch-if-needed: true
 
       - name: 배포 결과 요약

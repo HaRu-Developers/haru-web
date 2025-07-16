@@ -16,7 +16,7 @@ const DEFAULT_CONDITIONS: EventConditions = {
   },
   friendTag: {
     isActive: false,
-    requiredFriendTag: 0,
+    requiredFriendTag: NaN,
   },
 };
 
@@ -70,6 +70,16 @@ export const useCreateEventConditions = (initialConditions?: Partial<EventCondit
     }));
   }, []);
 
+  const toggleFriendTag = useCallback(() => {
+    setConditions((prev) => ({
+      ...prev,
+      friendTag: {
+        ...prev.friendTag,
+        isActive: !prev.friendTag.isActive,
+      },
+    }));
+  }, []);
+
   const setPeriod = useCallback(
     (endDate: Date) => {
       updateCondition('period', {
@@ -105,15 +115,15 @@ export const useCreateEventConditions = (initialConditions?: Partial<EventCondit
     });
   }, []);
 
-  const setFriendTagRequirement = useCallback(
-    (requiredFriendTag: number) => {
-      updateCondition('friendTag', {
+  const setFriendTagRequirement = useCallback((requiredFriendTag: number) => {
+    setConditions((prev) => ({
+      ...prev,
+      friendTag: {
+        ...prev.friendTag,
         requiredFriendTag,
-        isActive: requiredFriendTag > 0,
-      });
-    },
-    [updateCondition],
-  );
+      },
+    }));
+  }, []);
 
   const reset = useCallback(() => {
     setConditions(DEFAULT_CONDITIONS);
@@ -125,6 +135,7 @@ export const useCreateEventConditions = (initialConditions?: Partial<EventCondit
     toggleFollow,
     togglePeriod,
     toggleKeyword,
+    toggleFriendTag,
     setPeriod,
     addKeyword,
     removeKeyword,

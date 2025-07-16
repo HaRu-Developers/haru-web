@@ -2,15 +2,11 @@
 
 import { useEffect, useState } from 'react';
 
-import clsx from 'clsx';
-
 import CrossIcons from '@icons/CrossIcons/CrossIcons';
 import { CrossIconsState } from '@icons/CrossIcons/CrossIcons.types';
 
 import { useCreateEventConditions } from '@common/hooks/useCreateEventConditions';
 
-import DatePicker from '@common/components/DatePicker/DatePicker.client';
-import { TimePicker } from '@common/components/TimePicker/TimePicker.client';
 import ToggleButton from '@common/components/buttons/22px/ToggleButton/ToggleButton.client';
 import NextStepButton from '@common/components/buttons/30px/NextStepButton/NextStepButton.client';
 import InputFieldModal from '@common/components/inputs/modals/InputFieldModal/InputFieldModal.client';
@@ -28,8 +24,7 @@ const CreateNewEventModal = ({ onClose, onNextStep }: CreateNewEventModalProps) 
   const [eventTitle, setEventTitle] = useState<string>('');
   const [snsEventLink, setSnsEventLink] = useState<string>('');
   const [temporaryDate, setTemporaryDate] = useState<Date | null>(null);
-  const [datePickerVisible, setDatePickerVisible] = useState<boolean>(false);
-  const [timePickerVisible, setTimePickerVisible] = useState<boolean>(false);
+  const [keyword, setKeyword] = useState<string>('');
 
   useEffect(() => {
     if (temporaryDate) {
@@ -42,12 +37,19 @@ const CreateNewEventModal = ({ onClose, onNextStep }: CreateNewEventModalProps) 
     toggleLike,
     toggleFollow,
     togglePeriod,
-    // toggleKeyword,
+    toggleKeyword,
+    toggleFriendTag,
     setPeriod,
-    // addKeyword,
-    // removeKeyword,
-    // setFriendTagRequirement,
+    addKeyword,
+    removeKeyword,
+    setFriendTagRequirement,
+    reset,
   } = useCreateEventConditions();
+
+  const handleRequiredFriendTagChange = (value: string) => {
+    const numberValue = Number(value);
+    setFriendTagRequirement(value && !isNaN(numberValue) ? numberValue : NaN);
+  };
 
   return (
     <div className="p-24pxr rounded-16pxr w-582pxr shadow-modal flex flex-col items-center justify-center">
@@ -122,7 +124,55 @@ const CreateNewEventModal = ({ onClose, onNextStep }: CreateNewEventModalProps) 
           )}
         </div>
         {/* 특정 키워드 포함 여부 */}
+        <div className="mt-12pxr relative flex w-full flex-col items-start justify-center">
+          <ToggleButton
+            className="absolute top-0 right-0"
+            state={conditions.keyword.isActive}
+            onToggle={toggleKeyword}
+            initialState={conditions.keyword.isActive}
+          />
+          <CommonText type={CommonTextType.T6_SB} text="특정 키워드 포함 여부" />
+          <CommonText
+            type={CommonTextType.CAP1_RG}
+            text="특정 단어나 해시태그가 포함된 댓글만 선별해 드려요."
+            className="mt-3pxr"
+          />
+          {conditions.keyword.isActive && (
+            <InputFieldModal
+              placeholder="키워드를 입력해 주세요."
+              value={keyword}
+              onChange={setKeyword}
+              className="mt-8pxr"
+            />
+          )}
+        </div>
         {/* 친구 태그 여부 */}
+        <div className="mt-12pxr relative flex w-full flex-col items-start justify-center">
+          <ToggleButton
+            className="absolute top-0 right-0"
+            state={conditions.friendTag.isActive}
+            onToggle={toggleFriendTag}
+            initialState={conditions.friendTag.isActive}
+          />
+          <CommonText type={CommonTextType.T6_SB} text="친구 태그 여부" />
+          <CommonText
+            type={CommonTextType.CAP1_RG}
+            text="입력한 수 이상의 친구를 태그했는지 확인해 드려요."
+            className="mt-3pxr"
+          />
+          {conditions.friendTag.isActive && (
+            <InputFieldModal
+              placeholder="수를 입력해 주세요."
+              value={
+                isNaN(conditions.friendTag.requiredFriendTag)
+                  ? ''
+                  : conditions.friendTag.requiredFriendTag.toString()
+              }
+              onChange={handleRequiredFriendTagChange}
+              className="mt-8pxr"
+            />
+          )}
+        </div>
       </div>
 
       <div className="mt-16pxr flex w-full items-center justify-end">

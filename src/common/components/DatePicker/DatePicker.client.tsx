@@ -24,37 +24,53 @@ const DatePicker = ({ selectedDates = [], onChange, onConfirm, onCancel }: DateP
     ),
   );
 
-  // 외부 selectedDates prop 동기화
+  // 외부에서 props로 selectedDates를 전달했을 때, 업데이트 하기 위한 로직입니다.
   useEffect(() => {
     // 단일 선택 모드이므로, 외부에서 여러 날짜가 들어와도 첫 번째 날짜만 반영
-    // 깊은 비교를 통해 실제로 값이 변경되었을 때만 상태 업데이트
-    const newSelected = selectedDates.slice(0, 1);
-    if (
-      selected.length !== newSelected.length ||
+    const propGivenSelectedDate = selectedDates.slice(0, 1);
+
+    // 조건문들
+    const isUserSelectOrPropGivenSelectExists =
+      (selected && selected.length > 0) ||
+      (propGivenSelectedDate && propGivenSelectedDate.length > 0);
+    const isNewSelectedModified =
+      selected.length !== propGivenSelectedDate.length ||
       selected.some(
         (date, index) =>
-          !newSelected[index] ||
-          date.getFullYear() !== newSelected[index].getFullYear() ||
-          date.getMonth() !== newSelected[index].getMonth() ||
-          date.getDate() !== newSelected[index].getDate(),
-      )
-    ) {
-      setSelected(newSelected);
+          !propGivenSelectedDate[index] ||
+          date.getTime() !== propGivenSelectedDate[index].getTime(),
+      );
+
+    console.log(
+      'useEffect - 종속성 배열 변경 감지',
+      '\nProp 전달 됬어요? :',
+      isUserSelectOrPropGivenSelectExists,
+      '\n사용자가 변경 했어요? :',
+      isNewSelectedModified,
+      '\n그래서 렌더링 되요? :',
+      isUserSelectOrPropGivenSelectExists && isNewSelectedModified,
+      '\nselected:',
+      selected,
+      '\npropGivenSelectedDate:',
+      propGivenSelectedDate,
+      '\nselectedDates:',
+      selectedDates,
+    );
+    // 외부에서 props로 selectedDates를 전달했을 때, 업데이트 하기 위한 로직입니다.
+    if (isUserSelectOrPropGivenSelectExists && isNewSelectedModified) {
+      setSelected(propGivenSelectedDate);
     }
-  }, [selected, selectedDates]);
+  }, []); // 기존에 있던 selected는 제거 - 필요없음.
 
   const toggleDate = (date: Date) => {
-    const exists = selected.some(
-      (d) =>
-        d.getFullYear() === date.getFullYear() &&
-        d.getMonth() === date.getMonth() &&
-        d.getDate() === date.getDate(),
-    );
+    const exists = selected.some((d) => d.getTime() === date.getTime());
 
     // 중복 선택 방지 로직:
     // 클릭된 날짜가 이미 선택된 날짜이면 선택 해제 (빈 배열)
     // 클릭된 날짜가 선택되지 않았으면 해당 날짜 하나만 선택 (해당 날짜를 가진 배열)
     const updated = exists ? [] : [date];
+
+    console.log('toggleDate', date, 'exists:', exists, 'updated:', updated);
 
     setSelected(updated);
     onChange?.(updated);

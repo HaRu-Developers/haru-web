@@ -1,3 +1,5 @@
+import { clsx } from 'clsx';
+
 import { RosterDataFieldProps } from './RosterDataField.types';
 
 const RosterDataField = ({
@@ -10,10 +12,12 @@ const RosterDataField = ({
 
   return (
     <div
-      className={`border-stroke-200 w-83.5 border-b ${hasLeftBorder ? 'border-stroke-200 border-l' : ''}`}
+      className={clsx('border-stroke-200 w-83.5 border-b', {
+        'border-stroke-200 border-l': hasLeftBorder,
+      })}
     >
-      <div className={`flex items-start pb-3 ${ptClass}`}>
-        <div className={`flex w-full items-center gap-9 ${hasLeftBorder ? 'pl-4' : ''}`}>
+      <div className={clsx('flex items-start pb-3', ptClass)}>
+        <div className={clsx('flex w-full items-center gap-9', { 'pl-4': hasLeftBorder })}>
           <div className="text-b3-rg text-gray-300">{rowNumber}</div>
           <div className="text-b3-md max-w-290pxr truncate text-black">{userId}</div>
         </div>

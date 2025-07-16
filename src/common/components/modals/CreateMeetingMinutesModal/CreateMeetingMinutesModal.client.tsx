@@ -6,6 +6,7 @@ import CrossIcons from '@icons/CrossIcons/CrossIcons';
 import { CrossIconsState } from '@icons/CrossIcons/CrossIcons.types';
 
 import NextStepButton from '@common/components/buttons/30px/NextStepButton/NextStepButton.client';
+import InputFieldModal from '@common/components/inputs/modals/InputFieldModal/InputFieldModal.client';
 
 import { CreateMeetingMinutesModalProps } from './CreateMeetingMinutesModal.types';
 import FileDropzone from './FileDropZone/FileDropZone';
@@ -35,16 +36,12 @@ const CreateMeetingMinutesModal = ({ onClose, onNextStep }: CreateMeetingMinutes
           <CrossIcons state={CrossIconsState.SIZE_20_GRAY_200} />
         </button>
       </div>
-      <div className="w-534pxr space-y-8pxr">
-        <p className="text-cap1-rg text-gray-200">회의명</p>
-        <input
-          type="text"
-          className="h-48pxr rounded-4pxr py-6pxr px-12pxr w-full border border-gray-400"
-          placeholder="회의의 제목을 입력해 주세요."
-          value={meetingTitle}
-          onChange={(e) => setMeetingTitle(e.target.value)}
-        />
-      </div>
+      <InputFieldModal
+        title="회의명"
+        placeholder="회의의 제목을 입력해 주세요."
+        value={meetingTitle}
+        onChange={setMeetingTitle}
+      />
       <div className="w-534pxr space-y-8pxr items-center justify-center">
         <p className="text-cap1-rg text-gray-200">회의 안건지 업로드</p>
         <FileDropzone onFileChange={handleFileChange} initialFile={selectedFile} />

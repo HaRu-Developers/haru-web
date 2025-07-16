@@ -9,6 +9,7 @@ import { useCreateEventConditions } from '@common/hooks/useCreateEventConditions
 
 import ToggleButton from '@common/components/buttons/22px/ToggleButton/ToggleButton.client';
 import NextStepButton from '@common/components/buttons/30px/NextStepButton/NextStepButton.client';
+import InputChips from '@common/components/inputs/InputChips/InputChips.client';
 import InputFieldModal from '@common/components/inputs/modals/InputFieldModal/InputFieldModal.client';
 import SelectBoxTag from '@common/components/select-box/SelectBoxTag/SelectBoxTag.client';
 
@@ -41,6 +42,7 @@ const CreateNewEventModal = ({ onClose, onNextStep }: CreateNewEventModalProps) 
     toggleFriendTag,
     setPeriod,
     addKeyword,
+    changeKeyword,
     removeKeyword,
     setFriendTagRequirement,
     reset,
@@ -138,10 +140,15 @@ const CreateNewEventModal = ({ onClose, onNextStep }: CreateNewEventModalProps) 
             className="mt-3pxr"
           />
           {conditions.keyword.isActive && (
-            <InputFieldModal
+            // <InputFieldModal
+            //   placeholder="키워드를 입력해 주세요."
+            //   value={keyword}
+            //   onChange={setKeyword}
+            //   className="mt-8pxr"
+            // />
+            <InputChips
               placeholder="키워드를 입력해 주세요."
-              value={keyword}
-              onChange={setKeyword}
+              onChipsChange={changeKeyword}
               className="mt-8pxr"
             />
           )}

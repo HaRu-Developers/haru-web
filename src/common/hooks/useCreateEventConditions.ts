@@ -115,6 +115,17 @@ export const useCreateEventConditions = (initialConditions?: Partial<EventCondit
     });
   }, []);
 
+  const changeKeyword = useCallback((keywords: string[]) => {
+    setConditions((prev) => ({
+      ...prev,
+      keyword: {
+        ...prev.keyword,
+        keyword: keywords,
+        // isActive: keywords.length > 0,
+      },
+    }));
+  }, []);
+
   const setFriendTagRequirement = useCallback((requiredFriendTag: number) => {
     setConditions((prev) => ({
       ...prev,
@@ -139,6 +150,7 @@ export const useCreateEventConditions = (initialConditions?: Partial<EventCondit
     setPeriod,
     addKeyword,
     removeKeyword,
+    changeKeyword,
     setFriendTagRequirement,
     reset,
   };

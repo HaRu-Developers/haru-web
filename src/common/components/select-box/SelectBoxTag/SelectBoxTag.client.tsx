@@ -2,6 +2,8 @@
 
 import clsx from 'clsx';
 
+import { SelectBoxTagProps } from './SelectBoxTag.types';
+
 const SelectBoxTag = ({ onClick, isSelected = false, onToggle, label }: SelectBoxTagProps) => {
   const handleClick = () => {
     if (onToggle) {

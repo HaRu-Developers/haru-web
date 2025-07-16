@@ -3,10 +3,10 @@
 import { useState } from 'react';
 
 // 테스트할 모든 컴포넌트들을 import 합니다.
-import ListFileAiMeetingManager from '@common/components/ListFile/ListFileAiMeetingManager/ListFileAiMeetingManager.client';
-import ListFileSnsEventAssistant from '@common/components/ListFile/ListFileSnsEventAssistant/ListFileSnsEventAssistant.client';
-import ListFileSnsEventAssistantLink from '@common/components/ListFile/ListFileSnsEventAssistantLink/ListFileSnsEventAssistantLink.client';
-import ListFileTeamMoodTracker from '@common/components/ListFile/ListFileTeamMoodTracker/ListFileTeamMoodTracker.client';
+import ListFileAiMeetingManager from '@common/components/list-file/ListFileAiMeetingManager/ListFileAiMeetingManager.client';
+import ListFileSnsEventAssistant from '@common/components/list-file/ListFileSnsEventAssistant/ListFileSnsEventAssistant.client';
+import ListFileSnsEventAssistantLink from '@common/components/list-file/ListFileSnsEventAssistantLink/ListFileSnsEventAssistantLink.client';
+import ListFileTeamMoodTracker from '@common/components/list-file/ListFileTeamMoodTracker/ListFileTeamMoodTracker.client';
 
 // 더미 데이터 (기존과 동일)
 const dummyMeetings = [

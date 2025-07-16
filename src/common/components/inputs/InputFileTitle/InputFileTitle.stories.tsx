@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/nextjs';
 
-import InputFileTitle from '@common/components/inputs/InputFileTitle.client';
+import InputFileTitle from '@common/components/inputs/InputFileTitle/InputFileTitle.client';
 
 import { InputFileTitleMode } from './InputFileTitle.types';
 

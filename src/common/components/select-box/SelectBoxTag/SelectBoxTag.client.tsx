@@ -1,3 +1,5 @@
+'use client';
+
 import clsx from 'clsx';
 
 const SelectBoxTag = ({ onClick, isSelected = false, onToggle, label }: SelectBoxTagProps) => {

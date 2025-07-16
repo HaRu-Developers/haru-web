@@ -1,11 +1,11 @@
 import { Meta, StoryObj } from '@storybook/nextjs';
 
-import OnBoarding from '@common/components/inputs/OnBoarding.client';
+import OnBoarding from '@common/components/inputs/InputOnboarding/InputOnboarding.client';
 import {
   OnboardingMode,
   OnboardingState,
   OnboardingType,
-} from '@common/components/inputs/OnBoarding.types';
+} from '@common/components/inputs/InputOnboarding/InputOnboarding.types';
 
 const meta: Meta<typeof OnBoarding> = {
   title: 'Components/OnBoarding',

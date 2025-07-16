@@ -4,22 +4,43 @@ on:
   push:
     branches: [main, develop] # main, develop 브랜치에 push될 때 실행
   workflow_dispatch:
+    inputs:
+      GITHUB_ACCESS_TOKEN:
+        description: 'GitHub Token for authentication'
+      GITHUB_SSH_DEPLOY_KEY:
+        description: 'SSH Deploy Key for Git operations'
+      PUSH_DESTINATION_GITHUB_USERNAME:
+        description: 'GitHub username for the destination repository'
+      PUSH_DESTINATION_REPOSITORY_NAME:
+        description: 'Name of the destination repository'
+      PUSH_DESTINATION_TARGET_BRANCH:
+        description: 'Target branch in the destination repository'
 
 jobs:
   vercel-production-deployment:
     env:
       VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
       VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-      PUSH_DESTINATION_GITHUB_USERNAME: ${{ secrets.PUSH_DESTINATION_GITHUB_USERNAME }}
-      PUSH_DESTINATION_REPOSITORY_NAME: ${{ secrets.PUSH_DESTINATION_REPOSITORY_NAME }}
-      PUSH_DESTINATION_TARGET_BRANCH: ${{ secrets.PUSH_DESTINATION_TARGET_BRANCH }}
+      PUSH_DESTINATION_GITHUB_USERNAME: ${{ github.event.inputs.PUSH_DESTINATION_GITHUB_USERNAME || secrets.PUSH_DESTINATION_GITHUB_USERNAME }}
+      PUSH_DESTINATION_REPOSITORY_NAME: ${{ github.event.inputs.PUSH_DESTINATION_REPOSITORY_NAME || secrets.PUSH_DESTINATION_REPOSITORY_NAME }}
+      PUSH_DESTINATION_TARGET_BRANCH: ${{ github.event.inputs.PUSH_DESTINATION_TARGET_BRANCH || secrets.PUSH_DESTINATION_TARGET_BRANCH }}
       EMAIL: ${{ secrets.EMAIL }}
-      AUTO_ACTIONS: ${{ secrets.AUTO_ACTIONS }}
+      SSH_DEPLOY_KEY: ${{ github.event.inputs.GITHUB_SSH_DEPLOY_KEY || secrets.SSH_DEPLOY_KEY }}
+      AUTO_ACTIONS: ${{ github.event.inputs.GITHUB_ACCESS_TOKEN || secrets.AUTO_ACTIONS }}
 
     runs-on: ubuntu-latest
     # container: pandoc/latex # pandoc/latex 컨테이너 환경에서 실행
     steps:
       - uses: actions/checkout@v4 # 저장소 코드를 체크아웃
+
+      - name: 환경 변수 값 확인
+        run: |
+          echo "PUSH_DESTINATION_GITHUB_USERNAME: $PUSH_DESTINATION_GITHUB_USERNAME"
+          echo "PUSH_DESTINATION_REPOSITORY_NAME: $PUSH_DESTINATION_REPOSITORY_NAME"
+          echo "PUSH_DESTINATION_TARGET_BRANCH: $PUSH_DESTINATION_TARGET_BRANCH"
+          echo "EMAIL: $EMAIL"
+          echo "SSH_DEPLOY_KEY: ${SSH_DEPLOY_KEY:+[SET]}"
+          echo "AUTO_ACTIONS: ${AUTO_ACTIONS:+[SET]}"
 
       - name: GitHub Actions 실행 환경 정보 출력 # Actions 환경 정보 출력
         run: |
@@ -44,23 +65,23 @@ jobs:
           echo "RELEASE_VERSION=$RELEASE_VERSION" >> $GITHUB_ENV
           echo "🏷️ Release version set: $RELEASE_VERSION"
 
-      # - name: Give build.sh execute permission
-      #   run: |
-      #     echo "🔐 Setting execute permission for build.sh..."
-      #     chmod +x ./scripts/build.sh
-      #     ls -la ./scripts/build.sh
-      #     echo "✅ Permission set successfully"
+      - name: Give build.sh execute permission
+        run: |
+          echo "🔐 Setting execute permission for build.sh..."
+          chmod +x ./scripts/build.sh
+          ls -la ./scripts/build.sh
+          echo "✅ Permission set successfully"
 
-      # - name: Run build script
-      #   run: |
-      #     echo "🔨 Starting build process..."
-      #     echo "📄 Build script contents:"
-      #     head -10 ./scripts/build.sh
-      #     echo "🚀 Executing build script..."
-      #     ./scripts/build.sh
-      #     echo "✅ Build completed successfully"
-      #     echo "📁 Output directory contents:"
-      #     ls -la output/ || echo "❌ Output directory not found"
+      - name: Run build script
+        run: |
+          echo "🔨 Starting build process..."
+          echo "📄 Build script contents:"
+          head -10 ./scripts/build.sh
+          echo "🚀 Executing build script..."
+          ./scripts/build.sh
+          echo "✅ Build completed successfully"
+          echo "📁 Output directory contents:"
+          ls -la output/ || echo "❌ Output directory not found"
 
       - name: 커밋 메세지 설정 # fallback to commit message
         id: commit_msg
@@ -84,9 +105,10 @@ jobs:
         id: push_directory
         uses: cpina/github-action-push-to-another-repository@main
         env:
+          SSH_DEPLOY_KEY: ${{ env.SSH_DEPLOY_KEY }}
           API_TOKEN_GITHUB: ${{ env.AUTO_ACTIONS }}
         with:
-          source-directory: .
+          source-directory: output
           destination-github-username: ${{ env.PUSH_DESTINATION_GITHUB_USERNAME }}
           destination-repository-name: ${{ env.PUSH_DESTINATION_REPOSITORY_NAME }}
           user-email: ${{ env.EMAIL }}
@@ -99,5 +121,4 @@ jobs:
           echo "🎉 Deployment completed successfully!"
           echo "📊 Summary:"
           echo "  - Release version: $RELEASE_VERSION"
-          echo "  - Target repository: S-Gihun/haru-web"
-          echo "  - Destination directory: $DESTINATION_CLONED_DIRECTORY"
+          echo "  - Target repository: ${{ env.PUSH_DESTINATION_GITHUB_USERNAME }}/${{ env.PUSH_DESTINATION_REPOSITORY_NAME }}"

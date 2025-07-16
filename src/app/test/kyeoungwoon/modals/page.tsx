@@ -1,5 +1,6 @@
 'use client';
 
+import InputFieldModal from '@common/components/inputs/modals/InputFieldModal/InputFieldModal.client';
 import CongratulateSignUpModal from '@common/components/modals/CongratulateSignUpModal/CongratulateSignUpModal.client';
 import CreateMeetingMinutesModal from '@common/components/modals/CreateMeetingMinutesModal/CreateMeetingMinutesModal.client';
 import DeleteModal from '@common/components/modals/DeleteModal/DeleteModal.client';
@@ -14,7 +15,7 @@ import SurveyLinkCreatedModal from '@common/components/modals/SurveyLinkCreatedM
 const TestModalsPage = () => {
   const handleDevMode = () => console.log('Something Clicked');
   return (
-    <div className="space-y-30pxr my-50pxr flex flex-col items-center justify-center">
+    <div className="gap-y-30pxr my-50pxr flex flex-col items-center justify-center">
       {/* <div>
         <span>Loading Modal</span>
         <LoadingModal onClose={handleDevMode} />
@@ -97,8 +98,15 @@ const TestModalsPage = () => {
       <div className="">
         <CreateMeetingMinutesModal onClose={handleDevMode} onNextStep={handleDevMode} />
       </div>
-      <span className="col-span-3 mb-2 text-center">모달: </span>
-      <div className="grid grid-cols-3 grid-rows-2 gap-4"></div>
+      <span className="col-span-3 mb-2 text-center">모달: 새로운 이벤트</span>
+      <div className="grid grid-cols-3 grid-rows-2 gap-4">
+        <InputFieldModal
+          title="회의명"
+          placeholder="회의명을 입력하세요"
+          value=""
+          onChange={handleDevMode}
+        />
+      </div>
       <span className="col-span-3 mb-2 text-center">모달: </span>
       <div className="grid grid-cols-3 grid-rows-2 gap-4"></div>
       <span className="col-span-3 mb-2 text-center">모달: </span>

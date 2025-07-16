@@ -7,7 +7,7 @@ const DownloadButton = () => {
   return (
     <button
       className={clsx(
-        'text-button-3 inline-flex h-[30px] w-[96px] items-center justify-center space-x-[4px] rounded-[100px] bg-gray-100 py-[6px] pr-[14px] pl-[12px] text-white',
+        'text-button-3 inline-flex h-[30px] w-[96px] items-center justify-center gap-x-[4px] rounded-[100px] bg-gray-100 py-[6px] pr-[14px] pl-[12px] text-white',
       )}
     >
       <svg width={18} height={18} /> {/* TODO: Add actual SVG icon here */}

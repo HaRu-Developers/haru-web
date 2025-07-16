@@ -77,7 +77,7 @@ const FileDropzone = ({ onFileChange, initialFile = null }: FileDropzoneProps) =
       onDragLeave={handleDrag}
       onDrop={handleDrop}
       className={clsx(
-        'w-534pxr h-166pxr rounded-12pxr space-y-8pxr flex flex-col items-center justify-center bg-[#F8F8FA]',
+        'w-534pxr h-166pxr rounded-12pxr gap-y-8pxr flex flex-col items-center justify-center bg-[#F8F8FA]',
         dragActive && 'border-2 border-blue-500 bg-blue-50',
       )}
     >
@@ -89,13 +89,13 @@ const FileDropzone = ({ onFileChange, initialFile = null }: FileDropzoneProps) =
         onChange={handleChange}
         accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
       />
-      <div className="h-86pxr w-86pxr border-stroke-100 rounded-48pxr space-y-4pxr flex flex-col items-center justify-center border-[1.5px] border-dashed">
+      <div className="h-86pxr w-86pxr border-stroke-100 rounded-48pxr gap-y-4pxr flex flex-col items-center justify-center border-[1.5px] border-dashed">
         <IndividualIcons state={IndividualIconsState.UPLOAD} />
         <p className="text-bt3-sb text-gray-200">{hasUploaded ? '재업로드' : '업로드하기'}</p>
       </div>
 
       {file && (
-        <div className="max-w-514pxr space-x-3pxr h-22pxr flex flex-row items-center justify-center">
+        <div className="max-w-514pxr gap-x-3pxr h-22pxr flex flex-row items-center justify-center">
           <span className="text-b3-rg max-w-470pxr overflow-hidden text-center text-ellipsis whitespace-nowrap text-black">
             {file.name}
           </span>

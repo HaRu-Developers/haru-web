@@ -13,10 +13,10 @@ const EndRecordingModal = ({ onClose, onAbort, onProceed }: EndRecordingModalPro
       <button onClick={onClose} className="top-22pxr right-20pxr absolute">
         <CrossIcons state={CrossIconsState.SIZE_20_GRAY_200} />
       </button>
-      <div className="space-y-6pxr flex flex-col items-center justify-center text-center">
+      <div className="gap-y-6pxr flex flex-col items-center justify-center text-center">
         <p className="text-t3-bd text-black">회의 내용 녹음을 종료하시겠어요?</p>
       </div>
-      <div className="space-y-6pxr mt-28pxr flex flex-col items-center justify-center">
+      <div className="gap-y-6pxr mt-28pxr flex flex-col items-center justify-center">
         <ConfirmEndingRecordButton onClick={onAbort} isEndingRecord />
         <ConfirmEndingRecordButton onClick={onProceed} isEndingRecord={false} />
       </div>

@@ -42,7 +42,7 @@ const DisplaySurveyLinkWithCopyButton = ({ surveyLink }: DisplaySurveyLinkWithCo
     showToast('설문 링크가 클립보드에 복사되었습니다!');
   };
   return (
-    <div className="w-320pxr h-38pxr space-x-10pxr border-stroke-200 rounded-7pxr px-14pxr py-8pxr flex items-center justify-center border bg-white">
+    <div className="w-320pxr h-38pxr gap-x-10pxr border-stroke-200 rounded-7pxr px-14pxr py-8pxr flex items-center justify-center border bg-white">
       <input
         type="text"
         value={surveyLink}

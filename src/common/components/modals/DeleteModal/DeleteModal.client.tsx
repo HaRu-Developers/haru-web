@@ -52,11 +52,11 @@ const DeleteModal = ({ modalType, onClose, onAbort, onProceed }: DeleteModalProp
   return (
     <div className="w-398pxr h-250pxr rounded-12pxr shadow-modal flex flex-col items-center justify-center">
       <IndividualIcons state={IndividualIconsState.WARNING} />
-      <div className="space-y-6pxr mt-13pxr w-317pxr flex flex-col items-center justify-center text-center">
+      <div className="gap-y-6pxr mt-13pxr w-317pxr flex flex-col items-center justify-center text-center">
         <p className="text-t3-bd text-black">{currentConfig.main}</p>
         <p className="text-b3-rg text-gray-300">{currentConfig.sub}</p>
       </div>
-      <div className="space-x-10pxr mt-28pxr flex flex-row">
+      <div className="gap-x-10pxr mt-28pxr flex flex-row">
         {currentConfig.abortButton}
         {currentConfig.proceedButton}
       </div>

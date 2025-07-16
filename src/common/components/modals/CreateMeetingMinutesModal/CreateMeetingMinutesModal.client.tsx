@@ -28,7 +28,7 @@ const CreateMeetingMinutesModal = ({ onClose, onNextStep }: CreateMeetingMinutes
   };
 
   return (
-    <div className="space-y-16pxr m-24pxr rounded-16pxr w-582pxr h-408pxr shadow-modal flex flex-col items-center justify-center">
+    <div className="gap-y-16pxr p-24pxr rounded-16pxr w-582pxr h-408pxr shadow-modal flex flex-col items-center justify-center">
       <div className="w-534pxr h-32pxr flex items-center justify-between">
         <p className="text-t3-bd text-black">새로운 회의록</p>
 
@@ -42,7 +42,7 @@ const CreateMeetingMinutesModal = ({ onClose, onNextStep }: CreateMeetingMinutes
         value={meetingTitle}
         onChange={setMeetingTitle}
       />
-      <div className="w-534pxr space-y-8pxr items-center justify-center">
+      <div className="w-534pxr gap-y-8pxr items-center justify-center">
         <p className="text-cap1-rg text-gray-200">회의 안건지 업로드</p>
         <FileDropzone onFileChange={handleFileChange} initialFile={selectedFile} />
       </div>

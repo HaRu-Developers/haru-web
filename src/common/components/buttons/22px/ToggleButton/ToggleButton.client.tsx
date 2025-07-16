@@ -1,7 +1,5 @@
 'use client';
 
-import { useState } from 'react';
-
 import clsx from 'clsx';
 
 import { ToggleButtonProps } from './ToggleButton.types';
@@ -16,36 +14,28 @@ import { ToggleButtonProps } from './ToggleButton.types';
 const ToggleButton = ({
   onLabel = 'On',
   offLabel = 'Off',
-  initialState = false,
+  state,
   onToggle,
+  className,
 }: ToggleButtonProps) => {
-  const [isOn, setIsOn] = useState<boolean>(initialState);
-
-  const handleToggle = () => {
-    setIsOn((prev) => {
-      const newState = !prev;
-      onToggle?.(newState); // onToggle 함수 호출에 대한 Optional Chaining
-      return newState;
-    });
-  };
-
   return (
     <button
       type="button"
-      onClick={handleToggle}
+      onClick={onToggle}
       className={clsx(
         'h-22pxr w-44pxr flex cursor-pointer items-center rounded-full transition-colors duration-200',
-        isOn ? 'bg-primary' : 'bg-gray-600',
+        state ? 'bg-primary' : 'bg-gray-600',
+        className, // 추가적인 스타일링을 위한 className
       )}
-      aria-pressed={isOn}
+      aria-pressed={state}
     >
       <span
         className={clsx(
           'shadow-toggle-switch border-stroke-200 h-18pxr w-18pxr rounded-100pxr inline-block transform border-[0.5px] bg-white transition-transform duration-200',
-          isOn ? 'translate-x-24pxr' : 'translate-x-2pxr',
+          state ? 'translate-x-24pxr' : 'translate-x-2pxr',
         )}
       />
-      <span className="sr-only">{isOn ? onLabel : offLabel}</span>
+      <span className="sr-only">{state ? onLabel : offLabel}</span>
     </button>
   );
 };

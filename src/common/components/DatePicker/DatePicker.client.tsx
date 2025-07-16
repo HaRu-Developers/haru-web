@@ -60,7 +60,7 @@ const DatePicker = ({ selectedDates = [], onChange, onConfirm, onCancel }: DateP
     if (isUserSelectOrPropGivenSelectExists && isNewSelectedModified) {
       setSelected(propGivenSelectedDate);
     }
-  }, []); // 기존에 있던 selected는 제거 - 필요없음.
+  }, []); // 의존성 배열 제거
 
   const toggleDate = (date: Date) => {
     const exists = selected.some((d) => d.getTime() === date.getTime());

@@ -96,7 +96,7 @@ const FileDropzone = ({ onFileChange, initialFile = null }: FileDropzoneProps) =
 
       {file && (
         <div className="max-w-514pxr space-x-3pxr h-22pxr flex flex-row items-center justify-center">
-          <span className="text-b3-rg overflow-hidden text-ellipsis whitespace-nowrap text-black">
+          <span className="text-b3-rg max-w-470pxr overflow-hidden text-center text-ellipsis whitespace-nowrap text-black">
             {file.name}
           </span>
           <button

@@ -3,6 +3,7 @@
 import InputFieldModal from '@common/components/inputs/modals/InputFieldModal/InputFieldModal.client';
 import CongratulateSignUpModal from '@common/components/modals/CongratulateSignUpModal/CongratulateSignUpModal.client';
 import CreateMeetingMinutesModal from '@common/components/modals/CreateMeetingMinutesModal/CreateMeetingMinutesModal.client';
+import CreateNewEventModal from '@common/components/modals/CreateNewEventModal/CreateNewEventModal.client';
 import DeleteModal from '@common/components/modals/DeleteModal/DeleteModal.client';
 import { DeleteModalType } from '@common/components/modals/DeleteModal/DeleteModal.types';
 import DownloadModal from '@common/components/modals/DownloadModal/DownloadModal.client';
@@ -99,13 +100,8 @@ const TestModalsPage = () => {
         <CreateMeetingMinutesModal onClose={handleDevMode} onNextStep={handleDevMode} />
       </div>
       <span className="col-span-3 mb-2 text-center">모달: 새로운 이벤트</span>
-      <div className="grid grid-cols-3 grid-rows-2 gap-4">
-        <InputFieldModal
-          title="회의명"
-          placeholder="회의명을 입력하세요"
-          value=""
-          onChange={handleDevMode}
-        />
+      <div className="">
+        <CreateNewEventModal onClose={handleDevMode} onNextStep={handleDevMode} />
       </div>
       <span className="col-span-3 mb-2 text-center">모달: </span>
       <div className="grid grid-cols-3 grid-rows-2 gap-4"></div>

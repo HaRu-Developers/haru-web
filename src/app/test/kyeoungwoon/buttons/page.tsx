@@ -144,7 +144,7 @@ const ButtonTestPage = () => {
           <SkipForNowButton buttonType={SkipForNowButtonType.SIZE_38} />
           <SkipForNowButton buttonType={SkipForNowButtonType.SIZE_48} />
         </div>
-        <ToggleButton />
+        {/* <ToggleButton /> */}
       </div>
       <div className="flex flex-row gap-x-2"></div>
       <div className="flex flex-row gap-x-2"></div>

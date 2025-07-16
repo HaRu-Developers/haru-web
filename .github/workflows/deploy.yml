@@ -65,23 +65,23 @@ jobs:
           echo "RELEASE_VERSION=$RELEASE_VERSION" >> $GITHUB_ENV
           echo "🏷️ Release version set: $RELEASE_VERSION"
 
-      # - name: Give build.sh execute permission
-      #   run: |
-      #     echo "🔐 Setting execute permission for build.sh..."
-      #     chmod +x ./scripts/build.sh
-      #     ls -la ./scripts/build.sh
-      #     echo "✅ Permission set successfully"
+      - name: Give build.sh execute permission
+        run: |
+          echo "🔐 Setting execute permission for build.sh..."
+          chmod +x ./scripts/build.sh
+          ls -la ./scripts/build.sh
+          echo "✅ Permission set successfully"
 
-      # - name: Run build script
-      #   run: |
-      #     echo "🔨 Starting build process..."
-      #     echo "📄 Build script contents:"
-      #     head -10 ./scripts/build.sh
-      #     echo "🚀 Executing build script..."
-      #     ./scripts/build.sh
-      #     echo "✅ Build completed successfully"
-      #     echo "📁 Output directory contents:"
-      #     ls -la output/ || echo "❌ Output directory not found"
+      - name: Run build script
+        run: |
+          echo "🔨 Starting build process..."
+          echo "📄 Build script contents:"
+          head -10 ./scripts/build.sh
+          echo "🚀 Executing build script..."
+          ./scripts/build.sh
+          echo "✅ Build completed successfully"
+          echo "📁 Output directory contents:"
+          ls -la output/ || echo "❌ Output directory not found"
 
       - name: 커밋 메세지 설정 # fallback to commit message
         id: commit_msg
@@ -108,7 +108,7 @@ jobs:
           SSH_DEPLOY_KEY: ${{ env.SSH_DEPLOY_KEY }}
           API_TOKEN_GITHUB: ${{ env.AUTO_ACTIONS }}
         with:
-          source-directory: .
+          source-directory: output
           destination-github-username: ${{ env.PUSH_DESTINATION_GITHUB_USERNAME }}
           destination-repository-name: ${{ env.PUSH_DESTINATION_REPOSITORY_NAME }}
           user-email: ${{ env.EMAIL }}

@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/nextjs';
 
-import InputInviteMember from '@common/components/inputs/InputInviteMember.client';
+import InputInviteMember from '@common/components/inputs/InputInviteMember/InputInviteMember.client';
 
 const meta: Meta<typeof InputInviteMember> = {
   title: 'Components/inputInviteMember',

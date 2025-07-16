@@ -1,4 +1,4 @@
-import ChartContainer from '@common/components/Survey/ChartContainer/ChartContainer.server';
+import ChartContainer from '@common/components/survey/ChartContainer/ChartContainer.server';
 
 import { SubjectiveAnswersProps } from './SubjectiveAnswer.types';
 

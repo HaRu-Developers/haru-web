@@ -1,3 +1,5 @@
+'use client';
+
 import clsx from 'clsx';
 
 import FeaturedFileIcons from '@icons/FeaturedFileIcons/FeaturedFileIcons';
@@ -44,10 +46,10 @@ const BoxedFile = ({
           />
         ) : (
           <div className="pt-47pxr pb-13pxr flex flex-col gap-1 px-3.5">
-            <div className="h-[9px] rounded-[3px] bg-gray-600" />
-            <div className="h-[9px] rounded-[3px] bg-gray-600" />
-            <div className="h-[9px] rounded-[3px] bg-gray-600" />
-            <div className="h-[9px] rounded-[3px] bg-gray-600" />
+            <div className="h-9pxr rounded-3pxr bg-gray-600" />
+            <div className="h-9pxr rounded-3pxr bg-gray-600" />
+            <div className="h-9pxr rounded-3pxr bg-gray-600" />
+            <div className="h-9pxr rounded-3pxr bg-gray-600" />
           </div>
         )}
       </div>

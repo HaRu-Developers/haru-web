@@ -1,21 +1,21 @@
 import { Meta, StoryObj } from '@storybook/nextjs';
 
-import OnBoarding from '@common/components/inputs/OnBoarding.client';
+import InputOnboading from '@common/components/inputs/InputOnboarding/InputOnboarding.client';
 import {
   OnboardingMode,
   OnboardingState,
   OnboardingType,
-} from '@common/components/inputs/OnBoarding.types';
+} from '@common/components/inputs/InputOnboarding/InputOnboarding.types';
 
-const meta: Meta<typeof OnBoarding> = {
-  title: 'Components/OnBoarding',
-  component: OnBoarding,
+const meta: Meta<typeof InputOnboading> = {
+  title: 'Components/inputs/InputOnboarding',
+  component: InputOnboading,
   tags: ['autodocs'],
 };
 
 export default meta;
 
-type Story = StoryObj<typeof OnBoarding>;
+type Story = StoryObj<typeof InputOnboading>;
 
 export const Default: Story = {
   args: {
@@ -56,7 +56,7 @@ export const Error: Story = {
   },
 };
 
-export const APPROVAL: Story = {
+export const Approval: Story = {
   args: {
     mode: OnboardingMode.DEFAULT,
     title: '이메일 주소',

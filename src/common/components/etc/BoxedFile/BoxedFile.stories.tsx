@@ -1,6 +1,7 @@
 import { Meta, StoryObj } from '@storybook/nextjs';
 
-import BoxedFile from './BoxedFile.client';
+import BoxedFile from '@common/components/etc/BoxedFile/BoxedFile.client';
+
 import { DocumentType } from './BoxedFile.types';
 
 const meta: Meta<typeof BoxedFile> = {

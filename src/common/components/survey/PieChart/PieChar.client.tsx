@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react';
 
 import { ArcElement, Chart, Legend, PieController, Tooltip } from 'chart.js';
 
-import ChartContainer from '@common/components/Survey/ChartContainer/ChartContainer.server';
+import ChartContainer from '@common/components/survey/ChartContainer/ChartContainer.server';
 
 import { PieChartProps } from './PieChart.types';
 import getPieChartConfig from './pie-chart-config';

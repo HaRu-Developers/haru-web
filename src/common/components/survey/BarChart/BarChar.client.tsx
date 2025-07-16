@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react';
 
 import { BarController, BarElement, CategoryScale, Chart, LinearScale, Tooltip } from 'chart.js';
 
-import ChartContainer from '@common/components/Survey/ChartContainer/ChartContainer.server';
+import ChartContainer from '@common/components/survey/ChartContainer/ChartContainer.server';
 
 import type { BarChartProps } from './BarChart.types';
 import createChartConfig from './bar-chart-config';

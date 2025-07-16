@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/nextjs';
 
-import SelectBoxTag from './SelectBoxTag.client';
+import SelectBoxTag from '@common/components/select-box/SelectBoxTag/SelectBoxTag.client';
 
 const meta: Meta<typeof SelectBoxTag> = {
   title: 'Components/SelectBoxTag',

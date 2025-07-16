@@ -1,5 +1,7 @@
 import React, { useRef, useState } from 'react';
 
+import clsx from 'clsx';
+
 import CrossIcons from '@icons/CrossIcons/CrossIcons';
 import { CrossIconsState } from '@icons/CrossIcons/CrossIcons.types';
 import IndividualIcons from '@icons/IndividualIcons/IndividualIcons';
@@ -33,8 +35,18 @@ const FileDropzone = ({ onFileChange, initialFile = null }: FileDropzoneProps) =
     e.preventDefault();
     e.stopPropagation();
     setDragActive(false);
+    const acceptedTypes = [
+      'application/pdf',
+      'application/msword',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    ];
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      updateFile(e.dataTransfer.files[0]);
+      const droppedFile = e.dataTransfer.files[0];
+      if (acceptedTypes.includes(droppedFile.type)) {
+        updateFile(droppedFile);
+      } else {
+        alert('PDF 또는 Word 문서만 업로드할 수 있습니다.');
+      }
     }
   };
 
@@ -64,11 +76,19 @@ const FileDropzone = ({ onFileChange, initialFile = null }: FileDropzoneProps) =
       onDragOver={handleDrag}
       onDragLeave={handleDrag}
       onDrop={handleDrop}
-      className="w-534pxr h-166pxr rounded-12pxr space-y-8pxr flex flex-col items-center justify-center bg-[#F8F8FA]"
+      className={clsx(
+        'w-534pxr h-166pxr rounded-12pxr space-y-8pxr flex flex-col items-center justify-center bg-[#F8F8FA]',
+        dragActive && 'border-2 border-blue-500 bg-blue-50',
+      )}
     >
       {/* 숨겨진 파일 인풋 */}
-      <input ref={inputRef} type="file" className="hidden" onChange={handleChange} />
-
+      <input
+        ref={inputRef}
+        type="file"
+        className="hidden"
+        onChange={handleChange}
+        accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      />
       <div className="h-86pxr w-86pxr border-stroke-100 rounded-48pxr space-y-4pxr flex flex-col items-center justify-center border-[1.5px] border-dashed">
         <IndividualIcons state={IndividualIconsState.UPLOAD} />
         <p className="text-bt3-sb text-gray-200">{hasUploaded ? '재업로드' : '업로드하기'}</p>

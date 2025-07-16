@@ -1,7 +1,7 @@
 'use client';
 
-import IndividualIcons from '@common/components/icons/IndividualIcons/IndividualIcons';
-import { IndividualIconsState } from '@common/components/icons/IndividualIcons/IndividualIcons.types';
+import IndividualIcons from '@icons/IndividualIcons/IndividualIcons';
+import { IndividualIconsState } from '@icons/IndividualIcons/IndividualIcons.types';
 
 import { InputSerchBoxProps } from './InputSearchBox.types';
 

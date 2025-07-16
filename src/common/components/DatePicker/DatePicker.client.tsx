@@ -14,7 +14,6 @@ import DatePickerHeader from './DatePickerHeader/DatePickerHeader.client';
  * 사용자가 날짜를 선택할 수 있는 UI를 제공합니다.
  * 선택된 날짜는 외부에서 관리할 수 있으며, 확인/취소 버튼을 통해 선택을 완료하거나 취소할 수 있습니다.
  */
-
 const DatePicker = ({ selectedDates = [], onChange, onConfirm, onCancel }: DatePickerProps) => {
   const [selected, setSelected] = useState<Date[]>(selectedDates);
   const [activeStartDate, setActiveStartDate] = useState<Date>(

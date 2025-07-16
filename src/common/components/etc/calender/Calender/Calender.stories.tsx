@@ -119,7 +119,7 @@ export const Over: Story = {
   },
 };
 
-export const week: Story = {
+export const Week: Story = {
   args: {
     startDate: today,
     endDate: WeekendLater,

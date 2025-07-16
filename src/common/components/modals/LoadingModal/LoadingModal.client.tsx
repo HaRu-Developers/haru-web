@@ -4,7 +4,6 @@ import CrossIcons from '@icons/CrossIcons/CrossIcons';
 import { CrossIconsState } from '@icons/CrossIcons/CrossIcons.types';
 
 import LoadingBar from '@common/components/LoadingBar/LoadingBar.server';
-import ProgressBar from '@common/components/ProgressBar/ProgressBar.server';
 
 import { LoadingModalProps, LoadingModalType } from './LoadingModal.types';
 

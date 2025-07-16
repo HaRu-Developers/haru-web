@@ -7,7 +7,7 @@ import CreateWorkspaceButton from '@common/components/buttons/48px/CreateWorkspa
 
 import { CongratulateSignUpModalProps } from './CongratulateSignUpModal.types';
 
-const CongratulateSignUpModal = ({ onClose, onWorkspaceCreate }: CongratulateSignUpModalProps) => {
+const CongratulateSignUpModal = ({ onWorkspaceCreate }: CongratulateSignUpModalProps) => {
   return (
     <div className="w-604pxr h-459pxr rounded-16pxr shadow-modal flex flex-col items-center justify-center">
       <IndividualIcons state={IndividualIconsState.CONGRATULATE_SIGN_UP} />

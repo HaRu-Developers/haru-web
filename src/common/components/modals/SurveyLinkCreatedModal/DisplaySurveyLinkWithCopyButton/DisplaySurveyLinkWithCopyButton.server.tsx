@@ -8,7 +8,7 @@ const DisplaySurveyLinkWithCopyButton = ({ surveyLink }: DisplaySurveyLinkWithCo
   // GPT 통한 자아실현 ,, 추후 hook 등으로 분리할 필요가 있어보입니다.
   const showToast = (message: string) => {
     const toast = document.createElement('div');
-    toast.textContent = '설문 링크가 클립보드에 복사되었습니다!';
+    toast.textContent = message;
     toast.style.position = 'fixed';
     toast.style.bottom = '40px';
     toast.style.left = '50%';

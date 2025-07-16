@@ -13,7 +13,7 @@ import { SkipForNowButtonType } from '@common/components/buttons/diverse-size/Sk
 
 import { DeleteModalProps, DeleteModalType } from './DeleteModal.types';
 
-const DeleteModal = ({ modalType, onClose, onAbort, onProceed }: DeleteModalProps) => {
+const DeleteModal = ({ modalType, onAbort, onProceed }: DeleteModalProps) => {
   const modalConfig = {
     [DeleteModalType.DELETE_REPORT]: {
       main: '정말 이 리포트를 삭제하시겠습니까?',

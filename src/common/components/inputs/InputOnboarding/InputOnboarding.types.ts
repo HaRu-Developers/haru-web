@@ -13,7 +13,7 @@ export enum OnboardingMode {
   DEFAULT = 'DEFAULT',
   EDITABLE = 'EDITABLE',
 }
-export interface OnboardingProps {
+export interface InputOnboardingProps {
   mode?: OnboardingMode;
   title: string;
   inputValue: string;

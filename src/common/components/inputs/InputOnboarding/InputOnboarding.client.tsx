@@ -8,8 +8,8 @@ import EyeIcons from '@icons/EyeIcons/EyeIcons';
 import { EyeIconsState } from '@icons/EyeIcons/EyeIcons.types';
 
 import {
+  InputOnboardingProps,
   OnboardingMode,
-  OnboardingProps,
   OnboardingState,
   OnboardingType,
 } from './InputOnboarding.types';
@@ -18,7 +18,7 @@ import {
   인풋 온보딩 컴포넌트
  */
 
-const OnBoarding = ({
+const InputOnboarding = ({
   mode = OnboardingMode.DEFAULT,
   title,
   inputValue,
@@ -27,7 +27,7 @@ const OnBoarding = ({
   type = OnboardingType.SHOW,
   message,
   state = OnboardingState.DEFAULT,
-}: OnboardingProps) => {
+}: InputOnboardingProps) => {
   const [isShowing, setIsShowing] = useState<boolean>(type === OnboardingType.SHOW);
   const handleShow = () => {
     setIsShowing((prev) => !prev);
@@ -77,4 +77,4 @@ const OnBoarding = ({
   );
 };
 
-export default OnBoarding;
+export default InputOnboarding;

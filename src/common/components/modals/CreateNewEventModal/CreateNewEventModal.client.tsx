@@ -1,6 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+
+import clsx from 'clsx';
 
 import CrossIcons from '@icons/CrossIcons/CrossIcons';
 import { CrossIconsState } from '@icons/CrossIcons/CrossIcons.types';
@@ -16,6 +18,7 @@ import SelectBoxTag from '@common/components/select-box/SelectBoxTag/SelectBoxTa
 
 import CommonText from '../CommonText/CommonText.server';
 import { CommonTextType } from '../CommonText/CommonText.types';
+import DateTimePicker from '../DateTimePicker/DateTimePicker.client';
 import { CreateNewEventModalProps } from './CreateNewEventModal.types';
 
 /**
@@ -28,87 +31,23 @@ const CreateNewEventModal = ({ onClose, onNextStep }: CreateNewEventModalProps) 
   const [datePickerVisible, setDatePickerVisible] = useState<boolean>(false);
   const [timePickerVisible, setTimePickerVisible] = useState<boolean>(false);
 
+  useEffect(() => {
+    if (temporaryDate) {
+      setPeriod(temporaryDate);
+    }
+  }, [temporaryDate]);
+
   const {
     conditions,
     toggleLike,
     toggleFollow,
     togglePeriod,
     // toggleKeyword,
-    // setPeriod,
+    setPeriod,
     // addKeyword,
     // removeKeyword,
     // setFriendTagRequirement,
   } = useCreateEventConditions();
-
-  const handleDateChange = (dates: Date[]) => {
-    if (dates.length > 0) {
-      setTemporaryDate((prev) => {
-        const newDate = dates[0];
-        if (!prev) {
-          prev = new Date();
-        }
-        prev?.setFullYear(newDate.getFullYear());
-        prev?.setMonth(newDate.getMonth());
-        prev?.setDate(newDate.getDate());
-        // console.log('Selected date:', prev);
-        return prev;
-      });
-    }
-  };
-
-  const handleDateCancel = () => {
-    setTemporaryDate(null);
-    setDatePickerVisible(false);
-  };
-
-  const handleDateConfirm = (dates: Date[]) => {
-    if (dates.length > 0) {
-      setTemporaryDate((prev) => {
-        const newDate = dates[0];
-        prev?.setFullYear(newDate.getFullYear());
-        prev?.setMonth(newDate.getMonth());
-        prev?.setDate(newDate.getDate());
-        return prev;
-      });
-      setDatePickerVisible(false);
-    } else {
-      alert('날짜를 선택해 주세요.');
-    }
-  };
-
-  const handleTimeChange = (time: string) => {
-    const [hours, minutes] = time.split(':').map(Number);
-    if (!temporaryDate) {
-      const temp = new Date();
-      temp.setDate(temp.getDate() + 1);
-      temp.setHours(hours);
-      temp.setMinutes(minutes);
-      setTemporaryDate(temp);
-    } else {
-      setTemporaryDate((prev) => {
-        if (prev) {
-          prev.setHours(hours);
-          prev.setMinutes(minutes);
-        }
-        return prev;
-      });
-    }
-  };
-
-  const extractDate = (date: Date | null): string | undefined => {
-    if (!date) return undefined;
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    return `${year}.${month}.${day}`;
-  };
-
-  const extractTime = (date: Date | null): string | undefined => {
-    if (!date) return undefined;
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    return `${hours}:${minutes}`;
-  };
 
   return (
     <div className="p-24pxr rounded-16pxr w-582pxr shadow-modal flex flex-col items-center justify-center">
@@ -176,40 +115,10 @@ const CreateNewEventModal = ({ onClose, onNextStep }: CreateNewEventModalProps) 
             className="mt-3pxr"
           />
           {conditions.period.isActive && (
-            <div className="mt-8pxr gap-x-8pxr flex w-full flex-row">
-              <div className="relative">
-                <button
-                  onClick={() => setDatePickerVisible((prev) => !prev)}
-                  className="px-12pxr py-6pxr rounded-4pxr w-261pxr border-stroke-200 border bg-white text-left"
-                >
-                  <p className="text-b3-rg text-gray-400">
-                    {extractDate(temporaryDate) || '마감일을 선택해 주세요.'}
-                  </p>
-                </button>
-                {datePickerVisible && (
-                  <div className="left-0pxr top-0pxr absolute z-10">
-                    <DatePicker
-                      onChange={handleDateChange}
-                      onCancel={handleDateCancel}
-                      onConfirm={handleDateConfirm}
-                    />
-                  </div>
-                )}
-              </div>
-              <button
-                onClick={() => setTimePickerVisible((prev) => !prev)}
-                className="px-12pxr py-6pxr rounded-4pxr w-261pxr border-stroke-200 relative border bg-white text-left"
-              >
-                <p className="text-b3-rg text-gray-400">
-                  {extractTime(temporaryDate) || '마감 시간을 선택해 주세요.'}
-                </p>
-              </button>
-              {timePickerVisible && (
-                <div className="absolute z-10">
-                  <TimePicker onTimeSelect={handleTimeChange} />
-                </div>
-              )}
-            </div>
+            <DateTimePicker
+              selectedDateTime={temporaryDate}
+              setSelectedDateTime={setTemporaryDate}
+            />
           )}
         </div>
         {/* 특정 키워드 포함 여부 */}

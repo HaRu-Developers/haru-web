@@ -1,4 +1,4 @@
-export const Routes = {
+export const ROUTES = {
   MAIN: '/main',
   AI_MEETING_MANAGER: '/ai-meeting-manager',
   SNS_EVENT_ASSISTANT: '/sns-event-assistant',

@@ -1,11 +1,12 @@
-name: Preview
+name: Vercel Preview deployment
 
 on:
   pull_request:
     branches: ['main', 'develop']
+  workflow_dispatch:
 
 jobs:
-  vercel-preview:
+  vercel-preview-deployment:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -17,39 +18,77 @@ jobs:
       VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout To Repository
+        uses: actions/checkout@v4
 
-      - name: Setup pnpm
+      - name: pnpm 설정
         uses: pnpm/action-setup@v4
         with:
           version: 8
 
-      - name: Setup Node.js
+      - name: Node.js 설정
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'pnpm'
 
-      - name: Install dependencies
+      - name: pnpm 의존성 설치
         run: pnpm install
 
-      - name: Install Vercel CLI
-        run: npm install --global vercel@latest
+      - name: Vercel CLI 설치
+        run: pnpm install --global vercel@latest
 
-      - name: Pull Vercel Environment
+      - name: Vercel preview 환경 pull
         run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
 
-      - name: Build Project
+      - name: Vercel 프로젝트 빌드
         run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
 
-      - name: Deploy to Preview
+      - name: Vercel Preview 배포
         id: deploy
         run: |
           DEPLOY_URL=$(vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }})
           echo "preview_url=$DEPLOY_URL" >> $GITHUB_OUTPUT
 
-      - name: Comment Preview URL
+      - name: UTC to KST 변환
+        id: convert_utc_to_kst
+        run: |
+          TS="${{ github.event.pull_request.updated_at }}"
+          KST=$(date -d "$TS +9 hours" +"%Y-%m-%d %H:%M:%S")
+          echo "kst_time=$KST" >> $GITHUB_OUTPUT
+
+      - name: Comment에 Preview URL 기록
         uses: thollander/actions-comment-pull-request@v2
         with:
           message: |
-            🎉 구현한 기능 Preview: ${{ steps.deploy.outputs.preview_url }}
+            ### ✨ Vercel Preview Deployed
+
+            📦 PR #${{ github.event.pull_request.number }} by @${{ github.event.pull_request.user.login }} 
+            🌿 [${{ github.head_ref }}] → [${{ github.base_ref }}]
+            📅 KST ${{ steps.convert_utc_to_kst.outputs.kst_time }}
+
+            #### 🔗 Links
+            **[✨ Preview 사이트 보러가기](${{ steps.deploy.outputs.preview_url }})**
+
+            > 💡 변경사항을 실제 환경에서 확인해보세요!
+            ---
+            *Powered by Vercel* ⚡
+
+          comment_tag: 'vercel_deploy_${{ github.event.pull_request.number }}'
+          mode: 'upsert'
+
+      - name: 배포 결과 요약
+        if: always()
+        run: |
+          echo "🎯 ========================================="
+          echo "🏁 Vercel Preview Deployment Complete"
+          echo "🎯 ========================================="
+          echo "📦 PR Number: #${{ github.event.pull_request.number }}"
+          echo "🌿 Source: ${{ github.head_ref }}"
+          echo "🎯 Target: ${{ github.base_ref }}"
+          echo "📝 Commit: ${{ github.sha }}"
+          echo "⚡ Job Status: ${{ job.status }}"
+          echo "🌐 Deploy Status: ${{ steps.deploy.outcome }}"
+          echo "🔗 Preview URL: ${{ steps.deploy.outputs.preview_url }}"
+          echo "⏰ Completed at: $(date)"
+          echo "🎯 ========================================="

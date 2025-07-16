@@ -1,40 +1,124 @@
-name: deploy
+name: Vercel Production Deployment
 
 on:
   push:
-    branches: [main, develop]
+    branches: [main, develop] # main, develop 브랜치에 push될 때 실행
+  workflow_dispatch:
+    inputs:
+      GITHUB_ACCESS_TOKEN:
+        description: 'GitHub Token for authentication'
+      GITHUB_SSH_DEPLOY_KEY:
+        description: 'SSH Deploy Key for Git operations'
+      PUSH_DESTINATION_GITHUB_USERNAME:
+        description: 'GitHub username for the destination repository'
+      PUSH_DESTINATION_REPOSITORY_NAME:
+        description: 'Name of the destination repository'
+      PUSH_DESTINATION_TARGET_BRANCH:
+        description: 'Target branch in the destination repository'
 
 jobs:
-  build:
+  vercel-production-deployment:
+    env:
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      PUSH_DESTINATION_GITHUB_USERNAME: ${{ github.event.inputs.PUSH_DESTINATION_GITHUB_USERNAME || secrets.PUSH_DESTINATION_GITHUB_USERNAME }}
+      PUSH_DESTINATION_REPOSITORY_NAME: ${{ github.event.inputs.PUSH_DESTINATION_REPOSITORY_NAME || secrets.PUSH_DESTINATION_REPOSITORY_NAME }}
+      PUSH_DESTINATION_TARGET_BRANCH: ${{ github.event.inputs.PUSH_DESTINATION_TARGET_BRANCH || secrets.PUSH_DESTINATION_TARGET_BRANCH }}
+      EMAIL: ${{ secrets.EMAIL }}
+      SSH_DEPLOY_KEY: ${{ github.event.inputs.GITHUB_SSH_DEPLOY_KEY || secrets.SSH_DEPLOY_KEY }}
+      AUTO_ACTIONS: ${{ github.event.inputs.GITHUB_ACCESS_TOKEN || secrets.AUTO_ACTIONS }}
+
     runs-on: ubuntu-latest
-    container: pandoc/latex
+    # container: pandoc/latex # pandoc/latex 컨테이너 환경에서 실행
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4 # 저장소 코드를 체크아웃
 
-      - name: Install mustache (to update the date)
-        run: apk add ruby && gem install mustache
+      - name: 환경 변수 값 확인
+        run: |
+          echo "PUSH_DESTINATION_GITHUB_USERNAME: $PUSH_DESTINATION_GITHUB_USERNAME"
+          echo "PUSH_DESTINATION_REPOSITORY_NAME: $PUSH_DESTINATION_REPOSITORY_NAME"
+          echo "PUSH_DESTINATION_TARGET_BRANCH: $PUSH_DESTINATION_TARGET_BRANCH"
+          echo "EMAIL: $EMAIL"
+          echo "SSH_DEPLOY_KEY: ${SSH_DEPLOY_KEY:+[SET]}"
+          echo "AUTO_ACTIONS: ${AUTO_ACTIONS:+[SET]}"
 
-      - name: Set RELEASE_VERSION env var
-        run: echo "RELEASE_VERSION=haru@$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+      - name: GitHub Actions 실행 환경 정보 출력 # Actions 환경 정보 출력
+        run: |
+          echo "🚀 Starting deployment process..."
+          echo "📋 Current working directory: $(pwd)"
+          echo "📁 Directory contents:"
+          ls -la
+          echo "🌿 Current branch: ${GITHUB_REF#refs/heads/}"
+          echo "📝 Commit SHA: $GITHUB_SHA"
+
+      # mustache data.json template.mustache > output.md
+      # 이런 식으로 활용하기 위해서 있는 step이나, 현재 프로젝트에서는 사용하지 않는 관계로 제거
+      # - name: Install mustache (to update the date) # Mustache 템플릿 엔진 설치
+      #   run: |
+      #     echo "📦 Installing mustache template engine..."
+      #     apk add ruby && gem install mustache
+      #     echo "✅ Mustache installed successfully"
+
+      - name: RELEASE_VERSION 환경변수 설정 # Set release version based on commit SHA
+        run: |
+          RELEASE_VERSION="haru@$(git rev-parse --short HEAD)"
+          echo "RELEASE_VERSION=$RELEASE_VERSION" >> $GITHUB_ENV
+          echo "🏷️ Release version set: $RELEASE_VERSION"
 
       - name: Give build.sh execute permission
-        run: chmod +x ./build.sh
+        run: |
+          echo "🔐 Setting execute permission for build.sh..."
+          chmod +x ./scripts/build.sh
+          ls -la ./scripts/build.sh
+          echo "✅ Permission set successfully"
 
       - name: Run build script
-        run: ./build.sh
+        run: |
+          echo "🔨 Starting build process..."
+          echo "📄 Build script contents:"
+          head -10 ./scripts/build.sh
+          echo "🚀 Executing build script..."
+          ./scripts/build.sh
+          echo "✅ Build completed successfully"
+          echo "📁 Output directory contents:"
+          ls -la output/ || echo "❌ Output directory not found"
 
-      - name: Pushes to another repository
+      - name: 커밋 메세지 설정 # fallback to commit message
+        id: commit_msg
+        run: |
+          echo "📝 ========================================="
+          echo "🔧 Generating deployment message..."
+          echo "📝 ========================================="
+
+          if [[ "${{ github.event.head_commit.message }}" =~ \(#([0-9]+)\) ]]; then
+            PR_NUM="${BASH_REMATCH[1]}"
+            COMMIT_MSG="Deploy PR #$PR_NUM from ${{ github.ref_name }}"
+          else
+            COMMIT_MSG="Deploy from ${{ github.ref_name }} - ${{ github.sha }}"
+          fi
+
+          echo "commit_message=$COMMIT_MSG" >> $GITHUB_OUTPUT
+          echo "📋 Using commit message: $COMMIT_MSG"
+          echo "✅ ========================================="
+
+      - name: 다른 레포지토리로 배포
         id: push_directory
         uses: cpina/github-action-push-to-another-repository@main
         env:
-          API_TOKEN_GITHUB: ${{ secrets.AUTO_ACTIONS }}
+          SSH_DEPLOY_KEY: ${{ env.SSH_DEPLOY_KEY }}
+          API_TOKEN_GITHUB: ${{ env.AUTO_ACTIONS }}
         with:
-          source-directory: 'output'
-          destination-github-username: S-Gihun
-          destination-repository-name: haru-web
-          user-email: ${{ secrets.EMAIL }}
-          commit-message: ${{ github.event.commits[0].message }}
-          target-branch: main
+          source-directory: output
+          destination-github-username: ${{ env.PUSH_DESTINATION_GITHUB_USERNAME }}
+          destination-repository-name: ${{ env.PUSH_DESTINATION_REPOSITORY_NAME }}
+          user-email: ${{ env.EMAIL }}
+          commit-message: ${{ steps.commit_msg.outputs.commit_message }}
+          target-branch: ${{ env.PUSH_DESTINATION_TARGET_BRANCH }}
+          create-target-branch-if-needed: true
 
-      - name: Test get variable exported by push-to-another-repository
-        run: echo $DESTINATION_CLONED_DIRECTORY
+      - name: 배포 결과 요약
+        run: |
+          echo "🎉 Deployment completed successfully!"
+          echo "📊 Summary:"
+          echo "  - Release version: $RELEASE_VERSION"
+          echo "  - Target repository: ${{ env.PUSH_DESTINATION_GITHUB_USERNAME }}/${{ env.PUSH_DESTINATION_REPOSITORY_NAME }}"

@@ -1,4 +1,4 @@
-name: 'Chromatic Deployment'
+name: 'Storybook Deployment to Chromatic'
 
 on:
   pull_request:
@@ -9,48 +9,92 @@ on:
     branches: [main, develop]
     paths:
       - '**.stories.tsx'
+  workflow_dispatch:
 
 permissions:
   contents: read
   pull-requests: write
 
 jobs:
-  chromatic-deployment:
+  storybook-deployment-chromatic:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout source
-        uses: actions/checkout@v3
+      - name: Checkout To Repository
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Setup pnpm
+      - name: pnpm 설정
         uses: pnpm/action-setup@v4
         with:
           version: 8
 
-      - name: Setup Node.js
+      - name: Node.js 설정
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'pnpm'
 
-      - name: Install dependencies
-        run: pnpm install --no-frozen-lockfile
+      - name: pnpm 의존성 설치
+        run: pnpm install
 
-      - name: Publish to Chromatic
+      - name: Storybook 설정 파일 확인
+        run: |
+          if [ -f ".storybook/main.ts" ] || [ -f ".storybook/main.js" ]; then
+            echo "✅ Storybook config found"
+            ls -la .storybook/
+          else
+            echo "❌ Storybook config not found"
+            exit 1
+          fi
+
+      - name: Chromatic 배포
         id: publish_chromatic
-        uses: chromaui/action@v1
+        uses: chromaui/action@latest
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           buildScriptName: build-storybook
           onlyChanged: true
 
-      - name: Comment on PR
+      - name: UTC to KST 변환
+        id: convert_utc_to_kst
+        run: |
+          TS="${{ github.event.head_commit.timestamp }}"
+          KST=$(date -d "$TS +9 hours" +"%Y-%m-%d %H:%M:%S")
+          echo "kst_time=$KST" >> $GITHUB_OUTPUT
+
+      - name: Comment에 Chromatic URL 기록
         if: ${{ github.event_name == 'pull_request' }}
-        uses: thollander/actions-comment-pull-request@v2
+        uses: thollander/actions-comment-pull-request@v3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          pull-request-number: ${{ github.event.pull_request.number }}
-          message: '🚀 **storybook**: ${{ steps.publish_chromatic.outputs.storybookUrl }}'
+          pr-number: ${{ github.event.pull_request.number }}
+          message: |
+            ### 🎨 Storybook Deployed
+
+            📦 PR #${{ github.event.pull_request.number }} by ${{ github.event.pull_request.user.login }}
+            👤 ${{ github.event.head_commit.author.name }} @${{ github.event.head_commit.author.username }}
+            📅 KST ${{ steps.convert_utc_to_kst.outputs.kst_time }}
+
+            #### 🔗 Links
+            **[📖 Storybook 보러가기](${{ steps.publish_chromatic.outputs.storybookUrl }})**
+
+            ---
+            *Powered by Chromatic* ✨
+          comment-tag: 'storybook_deploy_${{ github.event.pull_request.number }}'
+          mode: 'upsert'
+
+      - name: 배포 결과 요약
+        if: ${{ github.event_name == 'push' }}
+        run: |
+          echo "✅ Push deployment completed"
+          echo "🎨 Storybook available at: ${{ steps.publish_chromatic.outputs.storybookUrl }}"
+
+      - name: Final deployment summary
+        if: always()
+        run: |
+          echo "🏁 Chromatic Deployment Workflow Complete"
+          echo "📊 Status: ${{ job.status }}"
+          echo "🔗 Storybook: ${{ steps.publish_chromatic.outputs.storybookUrl }}"

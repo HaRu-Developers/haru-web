@@ -16,7 +16,7 @@ const DEFAULT_CONDITIONS: EventConditions = {
   },
   friendTag: {
     isActive: false,
-    requiredFriendTag: NaN,
+    requiredFriendTag: null,
   },
 };
 
@@ -126,7 +126,7 @@ export const useCreateEventConditions = (initialConditions?: Partial<EventCondit
     }));
   }, []);
 
-  const setFriendTagRequirement = useCallback((requiredFriendTag: number) => {
+  const setFriendTagRequirement = useCallback((requiredFriendTag: number | null) => {
     setConditions((prev) => ({
       ...prev,
       friendTag: {

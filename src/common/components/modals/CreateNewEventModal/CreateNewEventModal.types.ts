@@ -16,7 +16,7 @@ export interface KeywordCondition {
 
 export interface FriendTagCondition {
   isActive: boolean;
-  requiredFriendTag: number;
+  requiredFriendTag: number | null;
 }
 
 export interface EventConditions {

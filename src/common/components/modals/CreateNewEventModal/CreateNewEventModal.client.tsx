@@ -48,9 +48,17 @@ const CreateNewEventModal = ({ onClose, onNextStep }: CreateNewEventModalProps) 
     reset,
   } = useCreateEventConditions();
 
+  /**
+   * 친구 태그 수 변경 핸들러
+   */
   const handleRequiredFriendTagChange = (value: string) => {
-    const numberValue = Number(value);
-    setFriendTagRequirement(value && !isNaN(numberValue) ? numberValue : NaN);
+    const numberValue = parseInt(value, 10);
+    if (!isNaN(numberValue)) {
+      // 숫자가 입력된 경우
+      setFriendTagRequirement(numberValue);
+    } else if (value === '') {
+      setFriendTagRequirement(null);
+    }
   };
 
   return (
@@ -170,11 +178,7 @@ const CreateNewEventModal = ({ onClose, onNextStep }: CreateNewEventModalProps) 
           {conditions.friendTag.isActive && (
             <InputFieldModal
               placeholder="수를 입력해 주세요."
-              value={
-                isNaN(conditions.friendTag.requiredFriendTag)
-                  ? ''
-                  : conditions.friendTag.requiredFriendTag.toString()
-              }
+              value={conditions.friendTag.requiredFriendTag?.toString() ?? ''}
               onChange={handleRequiredFriendTagChange}
               className="mt-8pxr"
             />

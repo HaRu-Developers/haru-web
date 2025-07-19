@@ -43,7 +43,7 @@ const BoxedFile = ({
         {thumbnailUrl ? (
           <Image
             src={thumbnailUrl}
-            alt=""
+            alt="파일 이미지"
             className="rounded-10pxr h-full w-full object-cover object-top pt-10"
           />
         ) : (

@@ -1,0 +1,34 @@
+@layer utilities {
+  .animate-fade-in-up {
+    @apply translate-y-4 opacity-0;
+    animation: fade-in-up 0.5s ease-in-out forwards;
+  }
+
+  /* 로딩 바 */
+  .animate-loading-bar {
+    background-image: linear-gradient(to right, #0075ff, #00a3ff 48.4375%, #00ffff);
+    animation: loading-bar 1.5s ease infinite;
+  }
+}
+
+@keyframes fade-in-up {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes loading-bar {
+  0% {
+    width: 0%;
+    opacity: 1;
+  }
+  70% {
+    width: 100%;
+    opacity: 1;
+  }
+  100% {
+    width: 100%;
+    opacity: 0;
+  }
+}

@@ -2,7 +2,7 @@ const { execSync } = require('child_process');
 
 try {
   const branch = execSync('git symbolic-ref --short HEAD').toString().trim();
-  if (['main', 'release'].includes(branch)) {
+  if (['main', 'develop', 'release'].includes(branch)) {
     console.error(`🚫 [${branch}] 브랜치에서는 rebase를 허용하지 않습니다.`);
     process.exit(1);
   }

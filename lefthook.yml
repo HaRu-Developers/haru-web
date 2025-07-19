@@ -7,7 +7,7 @@ pre-commit:
         echo "🔍 ========================================="
         echo "🔧 Running ESLint on staged files..."
         echo "🔍 ========================================="
-        pnpm exec eslint {staged_files} --fix
+        pnpm exec eslint {staged_files} --fix || exit 1
         echo "✅ ESLint completed successfully!"
       stage_fixed: true
     prettier:
@@ -16,7 +16,7 @@ pre-commit:
         echo "💅 ========================================="
         echo "🎨 Running Prettier on staged files..."
         echo "💅 ========================================="
-        pnpm exec prettier --write {staged_files}
+        pnpm exec prettier --write {staged_files} || exit 1
         echo "✅ Code formatting completed!"
       stage_fixed: true
     type-check:
@@ -24,7 +24,7 @@ pre-commit:
         echo "🔍 ========================================="
         echo "📝 Running TypeScript type checking..."
         echo "🔍 ========================================="
-        pnpm type-check
+        pnpm type-check || exit 1
         echo "✅ Type checking completed successfully!"
 
 prepare-commit-msg: # 원래는 아예 필요가 없음, 하지만 추후 gitmoji 자동 생성을 위해 남겨둡니다.
@@ -34,7 +34,7 @@ prepare-commit-msg: # 원래는 아예 필요가 없음, 하지만 추후 gitmoj
         echo "📝 ========================================="
         echo "🏷️  Preparing commit message..."
         echo "📝 ========================================="
-        node scripts/prepare-commit-msg.cjs {{1}}
+        node scripts/prepare-commit-msg.cjs {{1}} || exit 1
         echo "✅ Commit message prepared!"
 
 commit-msg:
@@ -44,7 +44,7 @@ commit-msg:
         echo "📋 ========================================="
         echo "🔍 Validating commit message format..."
         echo "📋 ========================================="
-        node scripts/run-commitlint.cjs {{1}}
+        node scripts/run-commitlint.cjs {{1}} || exit 1
         echo "✅ Commit message validation passed!"
 
 pre-rebase:
@@ -54,7 +54,7 @@ pre-rebase:
         echo "🔄 ========================================="
         echo "🧹 Checking repository cleanliness..."
         echo "🔄 ========================================="
-        node scripts/pre-rebase-check.cjs
+        node scripts/pre-rebase-check.cjs || exit 1
         echo "✅ Repository clean check completed!"
 
 pre-push:
@@ -71,7 +71,7 @@ pre-push:
           echo "🔨 ========================================="
           echo "🏗️ Running production build..."
           echo "🔨 ========================================="
-          pnpm build
+          pnpm build || exit 1
           echo "🎉 ========================================="
           echo "✅ Build completed successfully!"
           echo "🚀 Ready to push!"

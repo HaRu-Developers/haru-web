@@ -2,6 +2,11 @@ import { useState } from 'react';
 
 import clsx from 'clsx';
 
+import ArrowIcons from '@icons/ArrowIcons/ArrowIcons';
+import { ArrowIconsState } from '@icons/ArrowIcons/ArrowIcons.types';
+import IndividualIcons from '@icons/IndividualIcons/IndividualIcons';
+import { IndividualIconsState } from '@icons/IndividualIcons/IndividualIcons.types';
+
 import DatePicker from '@common/components/DatePicker/DatePicker.client';
 import { TimePicker } from '@common/components/TimePicker/TimePicker.client';
 
@@ -87,11 +92,12 @@ const DateTimePicker = ({ selectedDateTime, setSelectedDateTime }: DateTimePicke
       <div className="relative">
         <button
           onClick={() => setDatePickerVisible((prev) => !prev)}
-          className="px-12pxr py-6pxr rounded-4pxr w-261pxr border-stroke-200 border bg-white text-left"
+          className="px-12pxr py-6pxr rounded-4pxr w-261pxr border-stroke-200 flex items-center justify-between border bg-white text-left"
         >
           <p className={clsx('text-b3-rg', selectedDateTime ? 'text-black' : 'text-gray-400')}>
             {extractDate(selectedDateTime) || '마감일을 선택해 주세요.'}
           </p>
+          <IndividualIcons state={IndividualIconsState.CALENDAR} />
         </button>
         {datePickerVisible && (
           <div className="left-0pxr top-0pxr absolute z-10">
@@ -106,11 +112,12 @@ const DateTimePicker = ({ selectedDateTime, setSelectedDateTime }: DateTimePicke
       <div className="relative">
         <button
           onClick={() => setTimePickerVisible((prev) => !prev)}
-          className="px-12pxr py-6pxr rounded-4pxr w-261pxr border-stroke-200 border bg-white text-left"
+          className="px-12pxr py-6pxr rounded-4pxr w-261pxr border-stroke-200 flex items-center justify-between border bg-white text-left"
         >
           <p className={clsx('text-b3-rg', selectedDateTime ? 'text-black' : 'text-gray-400')}>
             {extractTime(selectedDateTime) || '마감 시간을 선택해 주세요.'}
           </p>
+          <ArrowIcons state={ArrowIconsState.DOWN} />
         </button>
         {timePickerVisible && (
           <div className="left-0pxr top-0pxr absolute z-10">

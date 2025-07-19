@@ -26,7 +26,6 @@ type Story = StoryObj<DatePickerProps>;
 
 // Interactive wrapper to manage state internally
 const InteractiveWrapper = (args: DatePickerProps) => {
-  // selectedDates prop 제거
   return (
     <DatePicker
       {...args}

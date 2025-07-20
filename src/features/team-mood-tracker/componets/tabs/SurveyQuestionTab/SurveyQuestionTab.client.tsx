@@ -4,7 +4,8 @@ import FeatureTabIcons from '@icons/FeatureTabIcons/FeatureTabIcons';
 import { FeatureTabIconsState } from '@icons/FeatureTabIcons/FeatureTabIcons.types';
 
 import CategoryOption from '@common/components/CategoryOption/CategoryOption.client';
-import IconButton from '@common/components/buttons/IconButton/IconButton.client';
+
+import IconButton from '@buttons/IconButton/IconButton.client';
 
 import {
   SurveyQuestionTabLabels,

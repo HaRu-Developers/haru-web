@@ -7,8 +7,9 @@ import FeatureTabIcons from '@icons/FeatureTabIcons/FeatureTabIcons';
 import { FeatureTabIconsState } from '@icons/FeatureTabIcons/FeatureTabIcons.types';
 
 import CategoryOption from '@common/components/CategoryOption/CategoryOption.client';
-import DownloadButton from '@common/components/buttons/30px/DownloadButton/DownloadButton.client';
-import IconButton from '@common/components/buttons/IconButton/IconButton.client';
+
+import DownloadButton from '@buttons/30px/DownloadButton/DownloadButton.client';
+import IconButton from '@buttons/IconButton/IconButton.client';
 
 import { SnsFileTabLabels, SnsFileTabType } from '@features/sns-event-assistant/constants/tabs';
 

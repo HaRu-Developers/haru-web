@@ -90,7 +90,22 @@ export const SnsGnbTabLabels: Record<SnsGnbTabType, string> = {
 };
 
 // 섹션 구성 설정
-export const sectionConfigs = {
+// 객체 형태
+type StaticSectionConfig = {
+  title: string;
+  options: { label: string; key: SectionOptionKey }[];
+};
+
+// 함수 형태 (CUSTOM용)
+type CustomSectionConfigFn = (title: string) => StaticSectionConfig;
+
+type SectionConfigs = {
+  [K in Exclude<GnbSection, GnbSection.CUSTOM>]: StaticSectionConfig;
+} & {
+  [GnbSection.CUSTOM]: CustomSectionConfigFn;
+};
+
+export const sectionConfigs: SectionConfigs = {
   [GnbSection.MAIN]: {
     title: GnbSectionLabels[GnbSection.MAIN],
     options: [

@@ -10,21 +10,21 @@ import CategoryOption from '@common/components/CategoryOption/CategoryOption.cli
 import DownloadButton from '@common/components/buttons/30px/DownloadButton/DownloadButton.client';
 import IconButton from '@common/components/buttons/IconButton/IconButton.client';
 
-import { TabLabels, TabType } from '@features/sns-event-assistant/constants/tabs';
+import { SnsFileTabLabels, SnsFileTabType } from '@features/sns-event-assistant/constants/tabs';
 
-import { TabProps } from './Tab.types';
+import { TabProps } from './SnsFileTab.types';
 
-const tabs = Object.values(TabType);
+const tabs = Object.values(SnsFileTabType);
 
-const Tab = ({ current, counts }: TabProps) => {
+const SnsFileTab = ({ current, counts }: TabProps) => {
   const searchParams = useSearchParams();
   const pathname = usePathname() ?? '';
 
-  const handleDownloadClick = (tab: TabType) => {
+  const handleDownloadClick = (tab: SnsFileTabType) => {
     console.log(`${tab} 탭에서 다운로드 클릭`);
   };
 
-  const handleCopyClick = (tab: TabType) => {
+  const handleCopyClick = (tab: SnsFileTabType) => {
     console.log(`${tab} 탭에서 복사 클릭`);
   };
   return (
@@ -34,14 +34,14 @@ const Tab = ({ current, counts }: TabProps) => {
         {tabs.map((tab) => {
           const rawParams = searchParams?.toString() ?? '';
           const params = new URLSearchParams(rawParams);
-          params.set('snsTab', tab); // 현재 탭 값 설정
+          params.set('snsFileTab', tab); // 현재 탭 값 설정
 
           return (
             <Link key={tab} href={`${pathname}?${params.toString()}`}>
               <CategoryOption
-                label={TabLabels[tab as TabType]}
+                label={SnsFileTabLabels[tab as SnsFileTabType]}
                 active={current === tab}
-                {...(tab !== TabType.SNS_LINK && { count: counts[tab] ?? 0 })}
+                {...(tab !== SnsFileTabType.SNS_LINK && { count: counts[tab] ?? 0 })}
               />
             </Link>
           );
@@ -49,12 +49,12 @@ const Tab = ({ current, counts }: TabProps) => {
       </div>
 
       {/* 버튼 영역 */}
-      {current !== TabType.SNS_LINK && (
+      {current !== SnsFileTabType.SNS_LINK && (
         <div className="gap-12pxr inline-flex items-center">
           <div className="inline-flex">
             <IconButton
               onClick={() => handleCopyClick(current)}
-              ariaLabel={`${TabLabels[current]} 복사`}
+              ariaLabel={`${SnsFileTabLabels[current]} 복사`}
             >
               <FeatureTabIcons state={FeatureTabIconsState.COPY} />
             </IconButton>
@@ -66,4 +66,4 @@ const Tab = ({ current, counts }: TabProps) => {
   );
 };
 
-export default Tab;
+export default SnsFileTab;

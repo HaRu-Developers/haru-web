@@ -38,6 +38,8 @@ const Toast = ({ toast }: ToastProps) => {
 
   return (
     <div
+      role="alert"
+      aria-live="assertive"
       onClick={handleClick}
       className={clsx(
         'gap-6pxr border-stroke-200 px-24pxr py-12pxr shadow-audio-bar h-50pxr w-300pxr flex cursor-pointer items-center justify-center overflow-hidden rounded border-solid bg-gray-700 text-center text-ellipsis whitespace-nowrap transition-all duration-500 ease-in-out',

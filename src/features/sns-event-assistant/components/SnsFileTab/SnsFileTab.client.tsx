@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 import FeatureTabIcons from '@icons/FeatureTabIcons/FeatureTabIcons';
 import { FeatureTabIconsState } from '@icons/FeatureTabIcons/FeatureTabIcons.types';
@@ -18,7 +18,6 @@ import { TabProps } from './SnsFileTab.types';
 const tabs = Object.values(SnsFileTabType);
 
 const SnsFileTab = ({ current, counts }: TabProps) => {
-  const searchParams = useSearchParams();
   const pathname = usePathname() ?? '';
 
   const handleDownloadClick = (tab: SnsFileTabType) => {
@@ -33,8 +32,7 @@ const SnsFileTab = ({ current, counts }: TabProps) => {
       {/* 탭 영역 */}
       <div className="gap-9pxr inline-flex">
         {tabs.map((tab) => {
-          const rawParams = searchParams?.toString() ?? '';
-          const params = new URLSearchParams(rawParams);
+          const params = new URLSearchParams();
           params.set('snsFileTab', tab); // 현재 탭 값 설정
 
           return (

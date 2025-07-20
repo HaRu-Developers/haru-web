@@ -23,78 +23,70 @@ import SurveyQuestionTab from '@features/team-mood-tracker/componets/tabs/Survey
 import TeamMoodReportTab from '@features/team-mood-tracker/componets/tabs/TeamMoodReportTab/TeamMoodReportTab.client';
 
 const TestPage = async ({ searchParams }: { searchParams: Promise<SearchParamsType> }) => {
-  // TAB_AI 회의 진행 매니저_좌측
-  const { leftTab } = await searchParams;
-  const formattedLeftTab = parseEnumQueryParam(leftTab, LeftTabType, LeftTabType.MEETING_SUMMARY);
+  // // TAB_AI 회의 진행 매니저_좌측
+  // const { leftTab } = await searchParams;
+  // const formattedLeftTab = parseEnumQueryParam(leftTab, LeftTabType, LeftTabType.MEETING_SUMMARY);
 
   // // TAB_SNS 이벤트 어시스턴트
   // const { snsFileTab } = await searchParams;
-  // const formattedTab = parseEnumQueryParam(snsFileTab, SnsFileTabType, SnsFileTabType.PARTICIPANT_LIST);
+  // const formattedTab = parseEnumQueryParam(
+  //   snsFileTab,
+  //   SnsFileTabType,
+  //   SnsFileTabType.PARTICIPANT_LIST,
+  // );
   // // 실제로는 서버에서 count 가져오기
   // const participantCount = 10;
   // const winnerCount = 10;
 
-  // // TAB_팀 분위기 트래커
-  // // 실제로는 서버에서 설문 정보 가져오기
-  // const survey = {
-  //   isSubmitted: true,
-  // };
+  // TAB_팀 분위기 트래커
+  // 실제로는 서버에서 설문 정보 가져오기
+  const survey = {
+    isSubmitted: true,
+  };
 
-  // const { moodTab } = await searchParams;
-  // const formattedTab = parseEnumQueryParam(
-  //   moodTab,
-  //   TeamMoodReportTabType,
-  //   TeamMoodReportTabType.TEAM_MOOD_REPORT,
-  // );
-  // // 실제로는 서버에서 count 가져오기
-  // const ResponseSummary = 10;
+  const { moodTab } = await searchParams;
+  const formattedTab = parseEnumQueryParam(
+    moodTab,
+    TeamMoodReportTabType,
+    TeamMoodReportTabType.TEAM_MOOD_REPORT,
+  );
+  // 실제로는 서버에서 count 가져오기
+  const ResponseSummary = 10;
 
   return (
-    <div className="flex gap-4">
-      {/* <div> */}
+    // <div className="flex gap-4">
+    <div>
       {/* TAB_AI 회의 진행 매니저_좌측 */}
-      <div>
-        <Suspense fallback={<div>탭 로딩 중...</div>}>
-          <LeftTab current={formattedLeftTab} />
-        </Suspense>
-        <Suspense fallback={<div>패널 로딩 중...</div>}>
-          <LeftPanel tab={formattedLeftTab} />
-        </Suspense>
+      {/* <div>
+        <LeftTab current={formattedLeftTab} />
+        <LeftPanel tab={formattedLeftTab} />
       </div>
       <div>
         <RightPanel />
-      </div>
+      </div> */}
       {/* TAB_SNS 이벤트 어시스턴트 */}
       {/* <div>
-        <Suspense fallback={<div>탭 로딩 중...</div>}>
-          <SnsFileTab
-            current={formattedTab}
-            counts={{
-              [SnsFileTabType.PARTICIPANT_LIST]: participantCount,
-              [SnsFileTabType.WINNER_LIST]: winnerCount,
-            }}
-          />
-        </Suspense>
-        <Suspense fallback={<div>패널 로딩 중...</div>}>
-          <SnsFilePanel tab={formattedTab} />
-        </Suspense>
+        <SnsFileTab
+          current={formattedTab}
+          counts={{
+            [SnsFileTabType.PARTICIPANT_LIST]: participantCount,
+            [SnsFileTabType.WINNER_LIST]: winnerCount,
+          }}
+        />
+        <SnsFilePanel tab={formattedTab} />
       </div> */}
       {/* TAB_팀 분위기 트래커 */}
-      {/* <SurveyQuestionTab survey={survey} />
+      <SurveyQuestionTab survey={survey} />
       <SurveyQuestionPanel survey={survey} />
       <div>
-        <Suspense fallback={<div>탭 로딩 중...</div>}>
-          <TeamMoodReportTab
-            current={formattedTab}
-            counts={{
-              [TeamMoodReportTabType.ANSWER_SUMMARY]: ResponseSummary,
-            }}
-          />
-        </Suspense>
-        <Suspense fallback={<div>패널 로딩 중...</div>}>
-          <TeamMoodReportPanel tab={formattedTab} />
-        </Suspense>
-      </div> */}
+        <TeamMoodReportTab
+          current={formattedTab}
+          counts={{
+            [TeamMoodReportTabType.ANSWER_SUMMARY]: ResponseSummary,
+          }}
+        />
+        <TeamMoodReportPanel tab={formattedTab} />
+      </div>
     </div>
   );
 };

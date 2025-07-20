@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 import { GnbSection, SnsGnbTabLabels, SnsGnbTabType, sectionConfigs } from '@common/constants/gnbs';
 
@@ -12,7 +12,6 @@ import { GnbTopProps } from './GnbTop.types';
 
 const GnbTop = ({ section, title, current }: GnbTopProps) => {
   const pathname = usePathname() ?? '';
-  const searchParams = useSearchParams();
 
   const config =
     section === GnbSection.CUSTOM ? sectionConfigs[section](title ?? '') : sectionConfigs[section];
@@ -32,8 +31,7 @@ const GnbTop = ({ section, title, current }: GnbTopProps) => {
         <div className="border-b-stroke-200 py-13pxr flex h-14 items-center gap-2.5 self-stretch border-b border-solid bg-white px-6">
           {isTabSection
             ? (Object.keys(SnsGnbTabLabels) as SnsGnbTabType[]).map((tab) => {
-                const rawParams = searchParams?.toString() ?? '';
-                const params = new URLSearchParams(rawParams);
+                const params = new URLSearchParams();
                 params.set('snsGnbTab', tab);
 
                 return (

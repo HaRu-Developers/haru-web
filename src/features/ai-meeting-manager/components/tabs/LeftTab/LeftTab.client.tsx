@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 import FeatureTabIcons from '@icons/FeatureTabIcons/FeatureTabIcons';
 import { FeatureTabIconsState } from '@icons/FeatureTabIcons/FeatureTabIcons.types';
@@ -21,7 +21,6 @@ import { LeftTabProps } from './LeftTab.types';
 const tabs = Object.values(LeftTabType);
 
 const LeftTab = ({ current }: LeftTabProps) => {
-  const searchParams = useSearchParams();
   const pathname = usePathname() ?? '';
 
   const { isEditing } = useTabInfo();
@@ -50,8 +49,7 @@ const LeftTab = ({ current }: LeftTabProps) => {
       {/* 탭 영역 */}
       <div className="gap-9pxr inline-flex items-center">
         {tabs.map((tab) => {
-          const rawParams = searchParams?.toString() ?? '';
-          const params = new URLSearchParams(rawParams);
+          const params = new URLSearchParams();
           params.set('leftTab', tab); // 현재 탭 값 설정
 
           return (

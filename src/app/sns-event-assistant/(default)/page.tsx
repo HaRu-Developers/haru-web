@@ -1,5 +1,3 @@
-import { Suspense } from 'react';
-
 import { SearchParamsType } from '@common/types/routing.types';
 
 import { GnbSection, SnsGnbTabType } from '@common/constants/gnbs';
@@ -22,9 +20,7 @@ const SnsEventAssistantPage = async ({
 
   return (
     <>
-      <Suspense>
-        <GnbTop section={GnbSection.SNS_EVENT_ASSISTANT} current={formattedSnsGnbTab} />
-      </Suspense>
+      <GnbTop section={GnbSection.SNS_EVENT_ASSISTANT} current={formattedSnsGnbTab} />
       <div className="p-10">sns 이벤트 어시스턴트 페이지</div>
     </>
   );

@@ -1,12 +1,16 @@
-import Link from 'next/link';
+'use client';
 
-import ProfileDropdownIcons from '@icons/ProfileDropdownIcons/ProfileDropdownIcons';
-import { ProfileDropdownIconsState } from '@icons/ProfileDropdownIcons/ProfileDropdownIcons.types';
+import { useRef } from 'react';
+
+import { ImageSize } from '@common/types/images.types';
+
+import useOutsideClick from '@common/hooks/useOutsideClick';
+
+import ProfileImage from '@common/components/images/ProfileImage/ProfileImage.client';
 
 import FooterButtons from '../FooterButtons/FooterButtons.client';
 import HeaderButtons from '../HeaderButtons/HeaderButtons.client';
-import ProfileImage from '../ProfileImage/ProfileImage.client';
-import WorkSpaceItem from '../WorkSpaceItem/WorkSpaceItem.server';
+import WorkSpaceItem from '../WorkSpaceItem/WorkSpaceItem.client';
 
 // 임시 데이터
 const profile = {
@@ -55,13 +59,35 @@ const workspaces = [
   },
 ];
 
-const SelectBoxProfile = () => {
+const SelectBoxProfile = ({
+  isOpen,
+  setIsOpen,
+}: {
+  isOpen: boolean;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
+  const boxRef = useRef<HTMLDivElement | null>(null);
+
+  useOutsideClick(boxRef, () => {
+    setIsOpen(false);
+  });
+
+  if (!isOpen) return null;
+
   return (
-    <div className="border-stroke-200 shadow-dropdown-popup w-302pxr flex flex-col items-start gap-2.5 rounded-2xl border border-solid bg-white p-4">
+    <div
+      ref={boxRef}
+      className="border-stroke-200 shadow-dropdown-popup w-302pxr flex flex-col items-start gap-2.5 rounded-2xl border border-solid bg-white p-4"
+    >
       <div className="flex flex-col items-start gap-2.5 self-stretch">
         <div className="flex flex-col gap-4">
           <div className="flex items-center gap-3.5">
-            <ProfileImage userId={profile.userId} src={profile.imagePath} name={profile.name} />
+            <ProfileImage
+              userId={profile.userId}
+              src={profile.imagePath}
+              name={profile.name}
+              size={ImageSize.LARGE}
+            />
             <div>
               <p className="text-cap1-rg text-black">{profile.name}</p>
               <p className="text-cap2-rg text-gray-400">{profile.email}</p>

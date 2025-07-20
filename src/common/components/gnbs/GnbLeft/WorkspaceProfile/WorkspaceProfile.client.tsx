@@ -5,11 +5,11 @@ import { useState } from 'react';
 import ArrowIcons from '@icons/ArrowIcons/ArrowIcons';
 import { ArrowIconsState } from '@icons/ArrowIcons/ArrowIcons.types';
 
-import FixedSizeImage from '@common/components/FixedSizeImage/FixedSizeImage.server';
-import SelectBoxProfile from '@common/components/select-box/select-box-profile/SelectBoxProfile/SelectBoxProfile.server';
+import WorkspaceProfileImage from '@common/components/images/WorkspaceProfileImage/WorkspaceProfileImage.client';
+import SelectBoxProfile from '@common/components/select-box/select-box-profile/SelectBoxProfile/SelectBoxProfile.client';
 
 const WorkSpaceProfile = () => {
-  const [isOpenSelectBoxProfile, setIsOpenSelectBoxProfile] = useState<boolean>(false);
+  const [isOpenSelectBoxProfile, setIsOpenSelectBoxProfile] = useState(false);
 
   const handleClick = () => {
     setIsOpenSelectBoxProfile(!isOpenSelectBoxProfile);
@@ -31,9 +31,9 @@ const WorkSpaceProfile = () => {
       >
         <div className="flex items-center justify-between self-stretch">
           <div className="flex items-center gap-2">
-            <FixedSizeImage
-              alt={`${workspace.title} 워크스페이스 프로필 이미지`}
+            <WorkspaceProfileImage
               src={workspace.imagePath}
+              title={workspace.title}
               className="w-20pxr h-20pxr"
             />
             <p className="text-cap1-rg text-black">{workspace.title}</p>
@@ -43,7 +43,7 @@ const WorkSpaceProfile = () => {
       </button>
       {isOpenSelectBoxProfile && (
         <div className="absolute top-full left-0 z-1 mt-1">
-          <SelectBoxProfile />
+          <SelectBoxProfile isOpen={isOpenSelectBoxProfile} setIsOpen={setIsOpenSelectBoxProfile} />
         </div>
       )}
     </div>

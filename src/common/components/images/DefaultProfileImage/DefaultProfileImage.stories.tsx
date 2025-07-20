@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 
-import DefaultProfileImage from './DefaultProfileImage.server';
+import { ImageSize } from '@common/types/images.types';
+
+import DefaultProfileImage from './DefaultProfileImage.client';
 
 const meta: Meta<typeof DefaultProfileImage> = {
   title: 'Components/DefaultProfileImage',
@@ -12,8 +14,8 @@ const meta: Meta<typeof DefaultProfileImage> = {
       defaultValue: '홍길동',
     },
     userId: {
-      control: BigInt,
-      defaultValue: 1n,
+      control: 'text',
+      defaultValue: '1n',
     },
     color: {
       control: 'color',
@@ -33,22 +35,22 @@ type Story = StoryObj<typeof DefaultProfileImage>;
 export const Default: Story = {
   args: {
     name: '홍길동',
-    userId: 1n,
+    userId: '1n',
   },
 };
 
 export const Small: Story = {
   args: {
     name: '김작은',
-    userId: 2n,
-    size: 'small',
+    userId: '2n',
+    size: ImageSize.SMALL,
   },
 };
 
 export const WithCustomColor: Story = {
   args: {
     name: '김커스텀',
-    userId: 1n,
+    userId: '1n',
     color: '#FFD700',
   },
 };
@@ -56,13 +58,13 @@ export const WithCustomColor: Story = {
 export const DifferentUsers: Story = {
   render: () => (
     <div className="flex gap-2">
-      <DefaultProfileImage name="유저A" userId={1n} />
-      <DefaultProfileImage name="유저B" userId={2n} />
-      <DefaultProfileImage name="유저C" userId={3n} />
-      <DefaultProfileImage name="유저A" userId={4n} />
-      <DefaultProfileImage name="유저B" userId={5n} />
-      <DefaultProfileImage name="유저C" userId={6n} />
-      <DefaultProfileImage name="유저C" userId={7n} />
+      <DefaultProfileImage name="유저A" userId="1n" />
+      <DefaultProfileImage name="유저B" userId="2n" />
+      <DefaultProfileImage name="유저C" userId="3n" />
+      <DefaultProfileImage name="유저A" userId="4n" />
+      <DefaultProfileImage name="유저B" userId="5n" />
+      <DefaultProfileImage name="유저C" userId="6n" />
+      <DefaultProfileImage name="유저C" userId="7n" />
     </div>
   ),
 };

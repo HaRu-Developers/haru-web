@@ -3,14 +3,14 @@ import Link from 'next/link';
 import ProfileDropdownIcons from '@icons/ProfileDropdownIcons/ProfileDropdownIcons';
 import { ProfileDropdownIconsState } from '@icons/ProfileDropdownIcons/ProfileDropdownIcons.types';
 
-import AddMemberButton from '../AddMemberButton/AddMemberButton.client';
 import FooterButtons from '../FooterButtons/FooterButtons.client';
+import HeaderButtons from '../HeaderButtons/HeaderButtons.client';
 import ProfileImage from '../ProfileImage/ProfileImage.client';
 import WorkSpaceItem from '../WorkSpaceItem/WorkSpaceItem.server';
 
 // 임시 데이터
 const profile = {
-  userId: 1n,
+  userId: '1n',
   imagePath: '/assets/images/profileImage.jpg',
   name: 'UMC 8기 운영진',
   email: 'tngh9509@gmail.com',
@@ -18,32 +18,38 @@ const profile = {
 
 const workspaces = [
   {
-    workspaceId: 1n,
+    workspaceId: '1n',
+    imagePath: '/assets/images/profileImage.jpg',
     title: 'UMC 8기 운영진 회의',
     isOwner: true,
   },
   {
-    workspaceId: 2n,
+    workspaceId: '2n',
+    imagePath: '/assets/images/profileImage.jpg',
     title: 'Team-Haru 22차 전사회의',
     isOwner: false,
   },
   {
-    workspaceId: 3n,
+    workspaceId: '3n',
+    imagePath: '/assets/images/profileImage.jpg',
     title: '멋쟁이사자처럼 11기',
     isOwner: false,
   },
   {
-    workspaceId: 4n,
+    workspaceId: '4n',
+    imagePath: '/assets/images/profileImage.jpg',
     title: '구름톤 유니브 8기',
     isOwner: false,
   },
   {
-    workspaceId: 5n,
+    workspaceId: '5n',
+    imagePath: '/assets/images/profileImage.jpg',
     title: '구름톤 유니브 7기',
     isOwner: false,
   },
   {
-    workspaceId: 6n,
+    workspaceId: '6n',
+    imagePath: '/assets/images/profileImage.jpg',
     title: '구름톤 유니브 6기',
     isOwner: false,
   },
@@ -61,16 +67,7 @@ const SelectBoxProfile = () => {
               <p className="text-cap2-rg text-gray-400">{profile.email}</p>
             </div>
           </div>
-          <div className="gap-6pxr flex">
-            <Link
-              href="/profile"
-              className="border-stroke-200 gap-3pxr rounded-7pxr flex h-7 items-center justify-center border border-solid bg-white px-2 py-1.5"
-            >
-              <ProfileDropdownIcons state={ProfileDropdownIconsState.PROFILE} />
-              <span className="text-cap1-md text-gray-400">프로필 설정</span>
-            </Link>
-            <AddMemberButton />
-          </div>
+          <HeaderButtons />
         </div>
 
         <div className="bg-stroke-200 h-px w-full"></div>
@@ -78,7 +75,12 @@ const SelectBoxProfile = () => {
         <div className="w-full">
           <p className="text-cap2-md mb-7pxr px-2.5 text-gray-400">내 워크스페이스</p>
           {workspaces.map((ws) => (
-            <WorkSpaceItem key={ws.workspaceId} workspaceId={ws.workspaceId} title={ws.title} />
+            <WorkSpaceItem
+              key={ws.workspaceId}
+              workspaceId={ws.workspaceId}
+              imagePath={ws.imagePath}
+              title={ws.title}
+            />
           ))}
         </div>
       </div>

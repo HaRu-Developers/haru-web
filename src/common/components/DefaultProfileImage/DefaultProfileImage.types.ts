@@ -1,5 +1,5 @@
 export interface DefaultProfileImageProps {
-  userId: bigint;
+  userId: string;
   name: string;
   color?: string;
   size?: 'small' | 'large';

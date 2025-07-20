@@ -5,16 +5,22 @@ import { useState } from 'react';
 import ArrowIcons from '@icons/ArrowIcons/ArrowIcons';
 import { ArrowIconsState } from '@icons/ArrowIcons/ArrowIcons.types';
 
-import DefaultProfileImage from '@common/components/DefaultProfileImage/DefaultProfileImage.server';
+import FixedSizeImage from '@common/components/FixedSizeImage/FixedSizeImage.server';
 import SelectBoxProfile from '@common/components/select-box/select-box-profile/SelectBoxProfile/SelectBoxProfile.server';
 
-import { ProfileProps } from './Profile.types';
-
-const Profile = ({ userId, name, email }: ProfileProps) => {
+const WorkSpaceProfile = () => {
   const [isOpenSelectBoxProfile, setIsOpenSelectBoxProfile] = useState<boolean>(false);
 
   const handleClick = () => {
     setIsOpenSelectBoxProfile(!isOpenSelectBoxProfile);
+  };
+
+  // 임시 데이터
+  const workspace = {
+    workspaceId: '1n',
+    title: 'UMC 8기 운영진',
+    imagePath: '/assets/images/profileImage.jpg',
+    isOwner: true,
   };
 
   return (
@@ -25,11 +31,12 @@ const Profile = ({ userId, name, email }: ProfileProps) => {
       >
         <div className="flex items-center justify-between self-stretch">
           <div className="flex items-center gap-2">
-            <DefaultProfileImage userId={userId} name={name} size="small" />
-            <span className="flex flex-col text-start">
-              <p className="text-cap1-rg text-black">{name}</p>
-              <p className="text-cap2-rg text-gray-300">{email}</p>
-            </span>
+            <FixedSizeImage
+              alt={`${workspace.title} 워크스페이스 프로필 이미지`}
+              src={workspace.imagePath}
+              className="w-20pxr h-20pxr"
+            />
+            <p className="text-cap1-rg text-black">{workspace.title}</p>
           </div>
           <ArrowIcons state={ArrowIconsState.DOWN} />
         </div>
@@ -43,4 +50,4 @@ const Profile = ({ userId, name, email }: ProfileProps) => {
   );
 };
 
-export default Profile;
+export default WorkSpaceProfile;

@@ -14,7 +14,7 @@ import { NavItemProps } from './NavItem.types';
 const NavItem = ({ item }: NavItemProps) => {
   const pathname = usePathname();
   const route = GnbSectionPaths[item];
-  const isCurrent = pathname?.startsWith(route) ?? false;
+  const isCurrent = route === '/' ? pathname === '/' : pathname.startsWith(route);
 
   return (
     <Link

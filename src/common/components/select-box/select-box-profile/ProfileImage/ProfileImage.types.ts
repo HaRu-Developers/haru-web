@@ -1,5 +1,5 @@
 export interface ProfileImageProps {
   src?: string;
-  userId: bigint;
+  userId: string;
   name: string;
 }

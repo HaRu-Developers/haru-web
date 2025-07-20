@@ -6,6 +6,7 @@ import { usePathname, useSearchParams } from 'next/navigation';
 import { GnbSection, SnsGnbTabLabels, SnsGnbTabType, sectionConfigs } from '@common/constants/gnbs';
 
 import CategoryOption from '@common/components/CategoryOption/CategoryOption.client';
+import InputSearchBox from '@common/components/inputs/InputSearchBox/InputSearchBox.client';
 
 import { GnbTopProps } from './GnbTop.types';
 
@@ -24,7 +25,7 @@ const GnbTop = ({ section, title, current }: GnbTopProps) => {
       {/* 상단 제목 */}
       <div className="border-b-stroke-200 h-60pxr py-13pxr flex items-center justify-between self-stretch border-b border-solid bg-white px-6">
         <p className="text-t5-sb text-black">{config.title}</p>
-        {!isCustomSection && <div>검색하기 영역</div>}
+        {!isCustomSection && <InputSearchBox />}
       </div>
       {!isCustomSection && (
         // 하단 탭 or 단순 옵션

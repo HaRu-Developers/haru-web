@@ -19,8 +19,10 @@ export const metadata: Metadata = {
 
 const RootLayout = ({
   children,
+  toaster,
 }: Readonly<{
   children: React.ReactNode;
+  toaster: React.ReactNode;
 }>) => {
   return (
     <html lang="ko">
@@ -31,6 +33,7 @@ const RootLayout = ({
         )}
       >
         {children}
+        {toaster}
       </body>
     </html>
   );

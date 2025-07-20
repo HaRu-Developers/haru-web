@@ -23,6 +23,7 @@ const tabStore = create<tabStoreState>()(
         setRightTab: (tab) => set({ rightTab: tab }),
       },
     })),
+    { name: 'TabStore' },
   ),
 );
 

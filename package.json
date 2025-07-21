@@ -19,18 +19,19 @@
     "chromatic": "npx chromatic --project-token=$CHROMATIC_PROJECT_TOKEN"
   },
   "dependencies": {
-    "chart.js": "^4.5.0",
     "@sentry/nextjs": "^9.33.0",
+    "chart.js": "^4.5.0",
     "clsx": "^2.1.1",
     "immer": "^10.1.1",
+    "import-in-the-middle": "^1.14.2",
     "next": "15.3.4",
     "react": "^19.0.0",
     "react-calendar": "^6.0.0",
     "react-dom": "^19.0.0",
-    "typescript-eslint": "^8.35.0",
-    "zustand": "^5.0.6",
     "require-in-the-middle": "^7.5.2",
-    "import-in-the-middle": "^1.14.2"
+    "typescript-eslint": "^8.35.0",
+    "zod": "^4.0.5",
+    "zustand": "^5.0.6"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^4.0.1",

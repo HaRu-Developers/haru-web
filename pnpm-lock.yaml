@@ -41,6 +41,9 @@ importers:
       typescript-eslint:
         specifier: ^8.35.0
         version: 8.35.0(eslint@9.29.0(jiti@2.4.2))(typescript@5.8.3)
+      zod:
+        specifier: ^4.0.5
+        version: 4.0.5
       zustand:
         specifier: ^5.0.6
         version: 5.0.6(@types/react@19.1.8)(immer@10.1.1)(react@19.1.0)
@@ -1046,7 +1049,6 @@ packages:
 
   '@evilmartians/lefthook@1.11.14':
     resolution: {integrity: sha512-vh6lqXVwh7uhI5C/gKB7InW8RyMFYXN27U4Hlum8ZBcDrOviF9fmcBJf4C6ZboWkD3j8v1qp4psc3bwynhPlTQ==}
-    cpu: [x64, arm64, ia32]
     os: [darwin, linux, win32]
     hasBin: true
 
@@ -5865,6 +5867,9 @@ packages:
   yocto-queue@1.2.1:
     resolution: {integrity: sha512-AyeEbWOu/TAXdxlV9wmGcR0+yh2j3vYPGOECcIj2S7MkrLyC7ne+oye2BKTItt0ii2PHk4cDy+95+LshzbXnGg==}
     engines: {node: '>=12.20'}
+
+  zod@4.0.5:
+    resolution: {integrity: sha512-/5UuuRPStvHXu7RS+gmvRf4NXrNxpSllGwDnCBcJZtQsKrviYXm54yDGV2KYNLT5kq0lHGcl7lqWJLgSaG+tgA==}
 
   zustand@5.0.6:
     resolution: {integrity: sha512-ihAqNeUVhe0MAD+X8M5UzqyZ9k3FFZLBTtqo6JLPwV53cbRB/mJwBI0PxcIgqhBBHlEs8G45OTDTMq3gNcLq3A==}
@@ -12316,6 +12321,8 @@ snapshots:
   yocto-queue@0.1.0: {}
 
   yocto-queue@1.2.1: {}
+
+  zod@4.0.5: {}
 
   zustand@5.0.6(@types/react@19.1.8)(immer@10.1.1)(react@19.1.0):
     optionalDependencies:

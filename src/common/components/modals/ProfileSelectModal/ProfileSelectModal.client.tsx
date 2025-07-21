@@ -11,7 +11,7 @@ import {
   ProfileSelectModalProps,
 } from './ProfileSelectModal.types';
 import { ProfileSelectModalMenuButton } from './ProfileSelectModalMenuButton/ProfileSelectModalMenuButton';
-import WorkspaceSettings from './WorkspaceSettings/WorkspaceSettings.client';
+import WorkspaceSettingsMenu from './WorkspaceSettingsMenu/WorkspaceSettingsMenu.client';
 
 const ProfileSelectModal = ({ onClose, onNextStep }: ProfileSelectModalProps) => {
   const [selectedMenu, setSelectedMenu] = useState<ProfileSelectModalMenuState>(
@@ -37,7 +37,7 @@ const ProfileSelectModal = ({ onClose, onNextStep }: ProfileSelectModalProps) =>
   const renderMenuContent = () => {
     switch (selectedMenu) {
       case ProfileSelectModalMenuState.WORKSPACE_SETTING:
-        return <WorkspaceSettings workspaceName="MOCK_WORKSPACE" />;
+        return <WorkspaceSettingsMenu workspaceName="MOCK_WORKSPACE" />;
       case ProfileSelectModalMenuState.PROFILE_SETTING:
         return <CommonText type={CommonTextType.T5_SB_BLACK} text="프로필 설정" />;
       case ProfileSelectModalMenuState.LOGOUT:

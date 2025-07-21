@@ -11,20 +11,9 @@ import InputInviteMember from '@common/components/inputs/InputInviteMember/Input
 import CommonText from '../../CommonText/CommonText.server';
 import { CommonTextType } from '../../CommonText/CommonText.types';
 import TeammateCard from '../TeammateCard/TeammateCard.client';
+import { Teammate, WorkspaceSettingsMenuProps } from './WorkspaceSettingsMenu.types';
 
-interface Teammate {
-  name: string;
-  userId: bigint;
-  email: string;
-}
-
-interface WorkspaceSettingsProps {
-  imageUrl?: string; // Optional prop for workspace image URL
-  workspaceName: string; // Optional prop for workspace name
-  teammateList?: Teammate[]; // Optional prop for teammate list
-}
-
-const mockTeammates = [
+const mockTeammates: Teammate[] = [
   {
     name: '홍길동',
     userId: 1n,
@@ -46,11 +35,11 @@ const mockTeammates = [
  * 설정 - 워크스페이스 세팅 설정
  *
  */
-const WorkspaceSettings = ({
+const WorkspaceSettingsMenu = ({
   imageUrl,
   workspaceName,
   teammateList = mockTeammates,
-}: WorkspaceSettingsProps) => {
+}: WorkspaceSettingsMenuProps) => {
   const [emailList, setEmailList] = useState<string[]>([]);
 
   const handleEmailChange = (emails: string[]) => {
@@ -143,4 +132,4 @@ const WorkspaceSettings = ({
   );
 };
 
-export default WorkspaceSettings;
+export default WorkspaceSettingsMenu;

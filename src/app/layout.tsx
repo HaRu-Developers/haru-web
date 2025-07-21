@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 
+import clsx from 'clsx';
+
 import '@styles/globals.css';
 
 const pretendard = localFont({
@@ -23,7 +25,10 @@ const RootLayout = ({
   return (
     <html lang="ko">
       <body
-        className={`${pretendard.variable} scrollbar-page flex min-h-screen flex-col items-center overflow-y-auto`}
+        className={clsx(
+          `scrollbar-page flex min-h-screen flex-col items-center overflow-y-auto`,
+          pretendard.variable,
+        )}
       >
         {children}
       </body>

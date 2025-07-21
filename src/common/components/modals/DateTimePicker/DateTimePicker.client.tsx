@@ -11,44 +11,47 @@ import DatePicker from '@common/components/DatePicker/DatePicker.client';
 import { TimePicker } from '@common/components/TimePicker/TimePicker.client';
 
 import { DateTimePickerProps } from './DateTimePicker.types';
+import { extractDate, extractTime } from './datetime-picker-util';
 
+/**
+ * DatePicker와 TimePicker를 포함해둔 컴포넌트입니다.
+ */
 const DateTimePicker = ({ selectedDateTime, setSelectedDateTime }: DateTimePickerProps) => {
   const [datePickerVisible, setDatePickerVisible] = useState<boolean>(false);
   const [timePickerVisible, setTimePickerVisible] = useState<boolean>(false);
 
-  const extractDate = (date: Date | null): string | undefined => {
-    if (!date) return undefined;
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    return `${year}.${month}.${day}`;
-  };
-
-  const extractTime = (date: Date | null): string | undefined => {
-    if (!date) return undefined;
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    return `${hours}:${minutes}`;
-  };
-
+  /**
+   * 날짜 선택 핸들러
+   * 선택된 날짜를 props로 주어진 상태에 저장해둔다.
+   */
   const handleDateChange = (dates: Date[]) => {
     setSelectedDateTime((prev) => {
       const newDate = dates[0];
       if (prev) {
-        newDate.setHours(prev.getHours());
-        newDate.setMinutes(prev.getMinutes());
-        newDate.setSeconds(prev.getSeconds());
-        newDate.setMilliseconds(prev.getMilliseconds());
+        newDate.setHours(
+          prev.getHours(),
+          prev.getMinutes(),
+          prev.getSeconds(),
+          prev.getMilliseconds(),
+        );
       }
       return newDate;
     });
   };
 
+  /**
+   * 날짜 선택 취소 핸들러
+   * 선택된 날짜를 초기화하고, 날짜 선택기를 닫는다.
+   */
   const handleDateCancel = () => {
     setSelectedDateTime(null);
     setDatePickerVisible(false);
   };
 
+  /**
+   * 날짜 선택 완료 핸들러
+   * 선택된 날짜를 props로 주어진 상태에 저장하고, 날짜 선택기를 닫는다.
+   */
   const handleDateConfirm = (dates: Date[]) => {
     if (dates.length > 0) {
       setSelectedDateTime((prev) => {
@@ -67,9 +70,13 @@ const DateTimePicker = ({ selectedDateTime, setSelectedDateTime }: DateTimePicke
     }
   };
 
+  /**
+   * 시간 선택 핸들러
+   * 선택된 시간을 props로 주어진 상태에 저장한다.
+   */
   const handleTimeChange = (time: string) => {
     const [hours, minutes] = time.split(':').map(Number);
-    console.log('Selected time:', time, 'Hours:', hours, 'Minutes:', minutes);
+    // console.log('Selected time:', time, 'Hours:', hours, 'Minutes:', minutes);
 
     setSelectedDateTime((prev) => {
       if (prev) {
@@ -85,13 +92,17 @@ const DateTimePicker = ({ selectedDateTime, setSelectedDateTime }: DateTimePicke
         return temp;
       }
     });
+    setTimePickerVisible(false);
   };
 
   return (
     <div className="mt-8pxr gap-x-8pxr flex w-full flex-row">
       <div className="relative">
         <button
-          onClick={() => setDatePickerVisible((prev) => !prev)}
+          onClick={() => {
+            setDatePickerVisible((prev) => !prev);
+            setTimePickerVisible(false);
+          }}
           className="px-12pxr py-6pxr rounded-4pxr w-261pxr border-stroke-200 flex items-center justify-between border bg-white text-left"
         >
           <p className={clsx('text-b3-rg', selectedDateTime ? 'text-black' : 'text-gray-400')}>
@@ -111,7 +122,10 @@ const DateTimePicker = ({ selectedDateTime, setSelectedDateTime }: DateTimePicke
       </div>
       <div className="relative">
         <button
-          onClick={() => setTimePickerVisible((prev) => !prev)}
+          onClick={() => {
+            setTimePickerVisible((prev) => !prev);
+            setDatePickerVisible(false);
+          }}
           className="px-12pxr py-6pxr rounded-4pxr w-261pxr border-stroke-200 flex items-center justify-between border bg-white text-left"
         >
           <p className={clsx('text-b3-rg', selectedDateTime ? 'text-black' : 'text-gray-400')}>
@@ -121,7 +135,7 @@ const DateTimePicker = ({ selectedDateTime, setSelectedDateTime }: DateTimePicke
         </button>
         {timePickerVisible && (
           <div className="left-0pxr top-0pxr absolute z-10">
-            <TimePicker onTimeSelect={handleTimeChange} />
+            <TimePicker onTimeSelect={handleTimeChange} selectedDateTime={selectedDateTime} />
           </div>
         )}
       </div>

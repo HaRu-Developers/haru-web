@@ -13,7 +13,7 @@ export const ProfileSelectModalMenuButton = ({
   return (
     <button
       className={clsx(
-        'w-172pxr h-34pxr px-12pxr rounded-10pxr items-center justify-center',
+        'w-172pxr h-34pxr px-12pxr rounded-10pxr flex items-center justify-center hover:bg-gray-600',
         isSelected && 'bg-gray-600',
         className,
       )}
@@ -21,9 +21,9 @@ export const ProfileSelectModalMenuButton = ({
       {...props}
     >
       <p
-        className={clsx('text-t7-sb text-start', {
-          'text-black': isSelected,
-          'text-gray-300': !isSelected,
+        className={clsx('w-full text-start', {
+          'text-t6-sb text-black': isSelected,
+          'text-b3-rg text-gray-300': !isSelected,
           'text-system-red': menuName === ProfileSelectModalMenuState.LOGOUT,
         })}
       >

@@ -10,13 +10,21 @@ import { IndividualIconsState } from '@icons/IndividualIcons/IndividualIcons.typ
 import DatePicker from '@common/components/DatePicker/DatePicker.client';
 import { TimePicker } from '@common/components/TimePicker/TimePicker.client';
 
+import CommonText from '../CommonText/CommonText.server';
+import { CommonTextType } from '../CommonText/CommonText.types';
 import { DateTimePickerProps } from './DateTimePicker.types';
 import { extractDate, extractTime } from './datetime-picker-util';
 
 /**
  * DatePicker와 TimePicker를 포함해둔 컴포넌트입니다.
  */
-const DateTimePicker = ({ selectedDateTime, setSelectedDateTime }: DateTimePickerProps) => {
+const DateTimePicker = ({
+  selectedDateTime,
+  setSelectedDateTime,
+  datePickerTitle,
+  timePickerTitle,
+  className,
+}: DateTimePickerProps) => {
   const [datePickerVisible, setDatePickerVisible] = useState<boolean>(false);
   const [timePickerVisible, setTimePickerVisible] = useState<boolean>(false);
 
@@ -96,48 +104,70 @@ const DateTimePicker = ({ selectedDateTime, setSelectedDateTime }: DateTimePicke
   };
 
   return (
-    <div className="mt-8pxr gap-x-8pxr flex w-full flex-row">
-      <div className="relative">
-        <button
-          onClick={() => {
-            setDatePickerVisible((prev) => !prev);
-            setTimePickerVisible(false);
-          }}
-          className="px-12pxr py-6pxr rounded-4pxr w-261pxr border-stroke-200 flex items-center justify-between border bg-white text-left"
-        >
-          <p className={clsx('text-b3-rg', selectedDateTime ? 'text-black' : 'text-gray-400')}>
-            {extractDate(selectedDateTime) || '마감일을 선택해 주세요.'}
-          </p>
-          <IndividualIcons state={IndividualIconsState.CALENDAR} />
-        </button>
-        {datePickerVisible && (
-          <div className="left-0pxr top-0pxr absolute z-10">
-            <DatePicker
-              onChange={handleDateChange}
-              onCancel={handleDateCancel}
-              onConfirm={handleDateConfirm}
-            />
-          </div>
+    <div className={clsx('mt-8pxr gap-x-8pxr flex w-full flex-row', className)}>
+      {/* DatePicker 부분 */}
+      <div className="flex flex-col items-start">
+        {datePickerTitle && (
+          <CommonText
+            type={CommonTextType.CAP1_RG}
+            className="mb-8pxr text-gray-200"
+            text={datePickerTitle}
+          />
         )}
+        <div className="relative">
+          <button
+            onClick={() => {
+              setDatePickerVisible((prev) => !prev);
+              setTimePickerVisible(false);
+            }}
+            className="px-12pxr py-6pxr rounded-4pxr w-261pxr border-stroke-200 flex items-center justify-between border bg-white text-left"
+          >
+            <p className={clsx('text-b3-rg', selectedDateTime ? 'text-black' : 'text-gray-400')}>
+              {extractDate(selectedDateTime) || '마감일을 선택해 주세요.'}
+            </p>
+            <IndividualIcons state={IndividualIconsState.CALENDAR} />
+          </button>
+          {datePickerVisible && (
+            <div className="left-0pxr top-0pxr absolute z-10">
+              <DatePicker
+                onChange={handleDateChange}
+                onCancel={handleDateCancel}
+                onConfirm={handleDateConfirm}
+              />
+            </div>
+          )}
+        </div>
       </div>
-      <div className="relative">
-        <button
-          onClick={() => {
-            setTimePickerVisible((prev) => !prev);
-            setDatePickerVisible(false);
-          }}
-          className="px-12pxr py-6pxr rounded-4pxr w-261pxr border-stroke-200 flex items-center justify-between border bg-white text-left"
-        >
-          <p className={clsx('text-b3-rg', selectedDateTime ? 'text-black' : 'text-gray-400')}>
-            {extractTime(selectedDateTime) || '마감 시간을 선택해 주세요.'}
-          </p>
-          <ArrowIcons state={ArrowIconsState.DOWN} />
-        </button>
-        {timePickerVisible && (
-          <div className="left-0pxr top-0pxr absolute z-10">
-            <TimePicker onTimeSelect={handleTimeChange} selectedDateTime={selectedDateTime} />
-          </div>
+
+      {/* TimePicker 부분 */}
+      <div className="flex flex-col items-start">
+        {timePickerTitle && (
+          <CommonText
+            type={CommonTextType.CAP1_RG}
+            className="mb-8pxr text-gray-200"
+            text={timePickerTitle}
+          />
         )}
+
+        <div className="relative">
+          <button
+            onClick={() => {
+              setTimePickerVisible((prev) => !prev);
+              setDatePickerVisible(false);
+            }}
+            className="px-12pxr py-6pxr rounded-4pxr w-261pxr border-stroke-200 flex items-center justify-between border bg-white text-left"
+          >
+            <p className={clsx('text-b3-rg', selectedDateTime ? 'text-black' : 'text-gray-400')}>
+              {extractTime(selectedDateTime) || '마감 시간을 선택해 주세요.'}
+            </p>
+            <ArrowIcons state={ArrowIconsState.DOWN} />
+          </button>
+          {timePickerVisible && (
+            <div className="left-0pxr top-35pxr absolute z-10">
+              <TimePicker onTimeSelect={handleTimeChange} selectedDateTime={selectedDateTime} />
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

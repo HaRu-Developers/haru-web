@@ -117,7 +117,10 @@ const CreateNewEventModal = ({ onClose, onNextStep }: CreateNewEventModalProps) 
           <ToggleButton
             className="absolute top-0 right-0"
             state={conditions.period.isActive}
-            onToggle={togglePeriod}
+            onToggle={() => {
+              setTemporaryDate(null);
+              togglePeriod();
+            }}
             initialState={conditions.period.isActive}
           />
           <CommonText type={CommonTextType.T6_SB} text="참여 기간" />

@@ -33,10 +33,15 @@ const SelectBoxOption = ({
     setIsOpen((prev) => !prev);
   };
   return (
-    <div className={clsx('text-cap1-md relative flex flex-col items-start gap-y-1', className)}>
+    <div
+      className={clsx(
+        'text-cap1-md relative flex flex-col items-center justify-center gap-y-1',
+        className,
+      )}
+    >
       <button
         className={clsx(
-          'border-stroke-200 h-34pxr rounded-6pxr flex w-full cursor-pointer flex-row items-center justify-between bg-white pr-4 pl-3 text-gray-100',
+          'border-stroke-200 h-34pxr rounded-6pxr pr-6pxr pl-12pxr gap-x-2pxr flex w-full cursor-pointer flex-row items-center justify-between bg-white text-gray-100',
           {
             'border-2': isOpen,
             border: !isOpen,
@@ -44,10 +49,10 @@ const SelectBoxOption = ({
         )}
         onClick={handleOpen}
       >
-        <span>{selectedOption?.label || placeholder}</span>
+        <span className="w-full text-center">{selectedOption?.label || placeholder}</span>
         <IndividualIcons
           state={IndividualIconsState.UNDER_ARROW}
-          className={clsx('pointer-events-none absolute right-0')}
+          className={clsx('pointer-events-none')}
         />
       </button>
 

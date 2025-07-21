@@ -65,7 +65,7 @@ const CreateNewEventModal = ({ onClose, onNextStep }: CreateNewEventModalProps) 
     <div className="p-24pxr rounded-16pxr w-582pxr shadow-modal flex flex-col items-center justify-center">
       {/* 모달 제목 + 닫기 버튼 */}
       <div className="w-534pxr h-32pxr flex items-center justify-between">
-        <CommonText type={CommonTextType.T3_BD} text="새로운 이벤트" />
+        <CommonText type={CommonTextType.T3_BD_BLACK} text="새로운 이벤트" />
         <button className="mr-2pxr" onClick={onClose}>
           <CrossIcons state={CrossIconsState.SIZE_20_GRAY_200} />
         </button>
@@ -89,12 +89,12 @@ const CreateNewEventModal = ({ onClose, onNextStep }: CreateNewEventModalProps) 
 
       {/* 이벤트 조건 설정 */}
       <div className="mt-25pxr gap-y-12pxr flex w-full flex-col items-start justify-center">
-        <CommonText type={CommonTextType.T5_SB} text="이벤트 당첨 조건" />
+        <CommonText type={CommonTextType.T5_SB_BLACK} text="이벤트 당첨 조건" />
         {/* 기본 참여 조건 선택 */}
         <div className="mt-12pxr flex w-full flex-col items-start justify-center">
-          <CommonText type={CommonTextType.T6_SB} text="기본 참여 조건 선택" />
+          <CommonText type={CommonTextType.T6_SB_BLACK} text="기본 참여 조건 선택" />
           <CommonText
-            type={CommonTextType.CAP1_RG}
+            type={CommonTextType.CAP1_RG_GRAY_300}
             text="아래 항목 중 선택한 조건을 만족한 참여자만 수집해 드려요."
             className="mt-3pxr"
           />
@@ -123,9 +123,9 @@ const CreateNewEventModal = ({ onClose, onNextStep }: CreateNewEventModalProps) 
             }}
             initialState={conditions.period.isActive}
           />
-          <CommonText type={CommonTextType.T6_SB} text="참여 기간" />
+          <CommonText type={CommonTextType.T6_SB_BLACK} text="참여 기간" />
           <CommonText
-            type={CommonTextType.CAP1_RG}
+            type={CommonTextType.CAP1_RG_GRAY_300}
             text="아래 항목 중 선택한 조건을 만족한 참여자만 수집해 드려요."
             className="mt-3pxr"
           />
@@ -144,9 +144,9 @@ const CreateNewEventModal = ({ onClose, onNextStep }: CreateNewEventModalProps) 
             onToggle={toggleKeyword}
             initialState={conditions.keyword.isActive}
           />
-          <CommonText type={CommonTextType.T6_SB} text="특정 키워드 포함 여부" />
+          <CommonText type={CommonTextType.T6_SB_BLACK} text="특정 키워드 포함 여부" />
           <CommonText
-            type={CommonTextType.CAP1_RG}
+            type={CommonTextType.CAP1_RG_GRAY_300}
             text="특정 단어나 해시태그가 포함된 댓글만 선별해 드려요."
             className="mt-3pxr"
           />
@@ -172,9 +172,9 @@ const CreateNewEventModal = ({ onClose, onNextStep }: CreateNewEventModalProps) 
             onToggle={toggleFriendTag}
             initialState={conditions.friendTag.isActive}
           />
-          <CommonText type={CommonTextType.T6_SB} text="친구 태그 여부" />
+          <CommonText type={CommonTextType.T6_SB_BLACK} text="친구 태그 여부" />
           <CommonText
-            type={CommonTextType.CAP1_RG}
+            type={CommonTextType.CAP1_RG_GRAY_300}
             text="입력한 수 이상의 친구를 태그했는지 확인해 드려요."
             className="mt-3pxr"
           />

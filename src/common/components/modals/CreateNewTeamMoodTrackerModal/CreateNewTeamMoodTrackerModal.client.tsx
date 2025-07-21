@@ -47,7 +47,7 @@ const CreateNewTeamMoodTrackerModal = ({
     <div className="p-24pxr rounded-16pxr w-582pxr shadow-modal flex flex-col items-center justify-center">
       {/* 모달 제목 + 닫기 버튼 */}
       <div className="h-32pxr flex w-full items-center justify-between">
-        <CommonText type={CommonTextType.T3_BD} text="새로운 팀 분위기 설문" />
+        <CommonText type={CommonTextType.T3_BD_BLACK} text="새로운 팀 분위기 설문" />
         <button className="mr-2pxr" onClick={onClose}>
           <CrossIcons state={CrossIconsState.SIZE_20_GRAY_200} />
         </button>
@@ -79,9 +79,9 @@ const CreateNewTeamMoodTrackerModal = ({
       {/* 답변 공개 범위 설정 부분 */}
       <div className="mt-24pxr flex w-full justify-between">
         <div className="flex-col items-start justify-center">
-          <CommonText type={CommonTextType.T5_SB} text="답변 공개 범위 설정" />
+          <CommonText type={CommonTextType.T5_SB_BLACK} text="답변 공개 범위 설정" />
           <CommonText
-            type={CommonTextType.CAP1_RG}
+            type={CommonTextType.CAP1_RG_GRAY_300}
             text={
               "'전체 공개' 선택 시, 모든 응답과 리포트 내용이 워크스페이스 내 사람들과 공유돼요."
             }

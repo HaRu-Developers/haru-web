@@ -109,7 +109,7 @@ const DateTimePicker = ({
       <div className="flex flex-col items-start">
         {datePickerTitle && (
           <CommonText
-            type={CommonTextType.CAP1_RG}
+            type={CommonTextType.CAP1_RG_GRAY_300}
             className="mb-8pxr text-gray-200"
             text={datePickerTitle}
           />
@@ -143,7 +143,7 @@ const DateTimePicker = ({
       <div className="flex flex-col items-start">
         {timePickerTitle && (
           <CommonText
-            type={CommonTextType.CAP1_RG}
+            type={CommonTextType.CAP1_RG_GRAY_300}
             className="mb-8pxr text-gray-200"
             text={timePickerTitle}
           />

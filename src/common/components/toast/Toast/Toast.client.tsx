@@ -4,9 +4,9 @@ import { useEffect, useState } from 'react';
 
 import clsx from 'clsx';
 
-import { ToastType } from '@common/types/toast.types';
-
 import { useToastActions } from '@common/hooks/stores/useToastStore';
+
+import { ToastType } from '@common/components/toast/types/toast.types';
 
 import { ToastProps } from './Toast.types';
 

@@ -1,4 +1,4 @@
-import { ToastItem } from '@common/types/toast.types';
+import { ToastItem } from '@common/components/toast/types/toast.types';
 
 export interface ToastProps {
   toast: ToastItem;

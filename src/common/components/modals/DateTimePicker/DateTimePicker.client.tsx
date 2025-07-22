@@ -63,21 +63,26 @@ const DateTimePicker = ({
    * 선택된 날짜를 props로 주어진 상태에 저장하고, 날짜 선택기를 닫는다.
    */
   const handleDateConfirm = (dates: Date[]) => {
-    if (dates.length > 0) {
-      setSelectedDateTime((prev) => {
-        const newDate = dates[0];
-        if (prev) {
-          newDate.setHours(prev.getHours());
-          newDate.setMinutes(prev.getMinutes());
-          newDate.setSeconds(prev.getSeconds());
-          newDate.setMilliseconds(prev.getMilliseconds());
-        }
-        return newDate;
-      });
+    // 날짜가 없으면 null 처리 + 닫기
+    if (dates.length === 0) {
+      setSelectedDateTime(null);
       setDatePickerVisible(false);
-    } else {
-      alert('날짜를 선택해 주세요.');
+      return;
     }
+
+    const newDate = dates[0];
+
+    setSelectedDateTime((prev) => {
+      if (prev) {
+        newDate.setHours(prev.getHours());
+        newDate.setMinutes(prev.getMinutes());
+        newDate.setSeconds(prev.getSeconds());
+        newDate.setMilliseconds(prev.getMilliseconds());
+      }
+      return newDate;
+    });
+
+    setDatePickerVisible(false);
   };
 
   /**

@@ -22,7 +22,7 @@ export const Default: Story = {
 
 export const Hover: Story = {
   args: {
-    mode: InputFileTitleMode.HOVER,
+    mode: InputFileTitleMode.HOVER, // 명시적으로만 사용
   },
 };
 

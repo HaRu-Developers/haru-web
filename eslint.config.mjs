@@ -49,7 +49,7 @@ const eslintConfig = [
       // custom type
       '**/svgr.d.ts',
 
-      "next.config.ts",
+      'next.config.ts',
     ],
   },
   // Next.js의 core-web-vitals와 typescript 설정을 확장
@@ -87,7 +87,6 @@ const eslintConfig = [
     files: ['**/*.jsx', '**/*.tsx'],
     plugins: {
       // React와 React Hooks 플러그인 설정
-      react: eslintPluginReact,
       'react-hooks': eslintPluginReactHooks,
     },
     settings: {

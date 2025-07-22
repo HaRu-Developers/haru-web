@@ -1,5 +1,6 @@
 export interface RecentWorkspaceProps {
-  workspaceId: bigint;
+  workspaceId: string;
+  imagePath: string;
   title: string;
   isOwner: boolean;
 }

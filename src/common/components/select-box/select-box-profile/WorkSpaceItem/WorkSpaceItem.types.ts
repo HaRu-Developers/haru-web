@@ -1,4 +1,5 @@
 export interface WorkSpaceItemProps {
-  workspaceId: bigint;
+  workspaceId: string;
+  imagePath: string;
   title: string;
 }

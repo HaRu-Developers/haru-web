@@ -1,13 +1,13 @@
 import { Meta, StoryObj } from '@storybook/nextjs';
 
-import NextStepButton from '@/common/components/buttons/30px/NextStepButton';
+import NextStepButton from '../NextStepButton/NextStepButton.client';
 
 const meta: Meta<typeof NextStepButton> = {
   title: 'Components/NextStepButton',
   component: NextStepButton,
   tags: ['autodocs'],
   argTypes: {
-    isActive: {
+    disabled: {
       control: 'boolean',
       description: '활성화 여부',
       defaultValue: true,
@@ -21,12 +21,12 @@ type Story = StoryObj<typeof NextStepButton>;
 
 export const Active: Story = {
   args: {
-    isActive: true,
+    disabled: true,
   },
 };
 
 export const Inactive: Story = {
   args: {
-    isActive: false,
+    disabled: false,
   },
 };

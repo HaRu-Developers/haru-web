@@ -11,7 +11,7 @@ import { ButtonsCommonProps } from '../../types/buttons.common.types';
 const ConnectInstagramAccountButton = ({ onClick, ...props }: ButtonsCommonProps) => {
   return (
     <button
-      className="text-b3-rg border-stroke-100 inline-flex h-[48px] w-[414px] items-center justify-center space-x-[4px] rounded-[9px] border bg-white py-[16.5px] text-gray-100"
+      className="text-b3-rg border-stroke-100 inline-flex h-[48px] w-[414px] items-center justify-center gap-x-[4px] rounded-[9px] border bg-white py-[16.5px] text-gray-100"
       onClick={onClick}
       {...props}
     >

@@ -1,6 +1,10 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
+  images: {
+    domains: ['picsum.photos'],
+  },
+
   // Turbopack 설정:
   // `next dev --turbopack`으로 실행할 때 적용됩니다.
   // Next.js 15에서 '@svgr/webpack'이 Turbopack과 어떻게 정확히 통합되는지는

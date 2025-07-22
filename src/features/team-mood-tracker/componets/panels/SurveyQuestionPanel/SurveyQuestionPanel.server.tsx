@@ -7,7 +7,7 @@ import { SurveyQuestionPanelProps } from './SurveyQuestionPanel.types';
 
 const SurveyQuestionPanel = ({ survey }: SurveyQuestionPanelProps) => {
   const { isSubmitted } = survey;
-  const currentTab = survey.isSubmitted
+  const currentTab = isSubmitted
     ? SurveyQuestionTabType.SURVEY_LIST
     : SurveyQuestionTabType.SURVEY_GENERATE;
   return (

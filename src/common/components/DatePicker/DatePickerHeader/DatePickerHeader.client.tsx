@@ -14,17 +14,13 @@ import type { DatePickerHeaderProps } from './DatePickerHeader.types';
 
 const DatePickerHeader = ({ current, onPrev, onNext }: DatePickerHeaderProps) => (
   <div className="flex items-center justify-between rounded-t-2xl bg-white">
-    <button onClick={onPrev} aria-label="이전 달">
-      <ArrowButton direction={ArrowButtonDirection.LEFT} />
-    </button>
+    <ArrowButton direction={ArrowButtonDirection.LEFT} onClick={onPrev} aria-label="이전 달" />
 
     <div className="text-bt1-sb text-black">
       {current.toLocaleString('en-US', { month: 'long', year: 'numeric' })}
     </div>
 
-    <button onClick={onNext} aria-label="다음 달">
-      <ArrowButton direction={ArrowButtonDirection.RIGHT} />
-    </button>
+    <ArrowButton direction={ArrowButtonDirection.RIGHT} onClick={onNext} aria-label="다음 달" />
   </div>
 );
 

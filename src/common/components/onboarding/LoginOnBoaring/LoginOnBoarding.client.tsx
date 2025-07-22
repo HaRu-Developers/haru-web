@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 
 import Image from 'next/image';
 
+import clsx from 'clsx';
+
 import AiManagerImage from '@assets/images/onboarding/AiMananger.png';
 import SnsEventAssistantImage from '@assets/images/onboarding/SnsEventAssistant.png';
 import TeamVibeMaker from '@assets/images/onboarding/TeamVibeMaker.png';
@@ -57,9 +59,10 @@ const LoginOnBoarding = () => {
               onClick={() => goToSlide(idx)}
               aria-label={`슬라이드 ${idx + 1}`}
               title={`슬라이드 ${idx + 1}`}
-              className={`h-11pxr w-11pxr rounded-full transition-all duration-300 ${
-                idx === currentIndex ? 'bg-primary' : 'bg-primary/20'
-              }`}
+              className={clsx('h-11pxr w-11pxr rounded-full transition-all duration-300', {
+                'bg-primary': idx === currentIndex,
+                'bg-stroke-200': idx !== currentIndex,
+              })}
             />
           ))}
         </div>

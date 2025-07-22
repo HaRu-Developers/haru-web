@@ -13,21 +13,21 @@ const imageCtaConfig: Record<ImageCtaType, ImageCtaConfig> = {
     color: 'text-primary',
     ctaIconState: CtaIconsState.AI_MEETING_MANAGER,
     plusIconState: PlusIconsState.SIZE_16_PRIMARY,
-    marginBottom: 'mb-20-5pxr',
+    marginBottom: 'mb-20pxr',
   },
   [ImageCtaType.SNS_EVENT_ASSISTANT]: {
     title: 'SNS 이벤트 어시스턴트',
     color: 'text-secondary-green',
     ctaIconState: CtaIconsState.SNS_EVENT_ASSISTANT,
     plusIconState: PlusIconsState.SIZE_16_SECONDARY_GREEN,
-    marginBottom: 'mb-20-5pxr',
+    marginBottom: 'mb-20pxr',
   },
   [ImageCtaType.TEAM_MOOD_TRACKER]: {
     title: '팀 분위기 트래커',
     color: 'text-secondary-blue',
     ctaIconState: CtaIconsState.TEAM_MOOD_TRACKER,
     plusIconState: PlusIconsState.SIZE_16_SECONDARY_BLUE,
-    marginBottom: 'mb-14-5pxr',
+    marginBottom: 'mb-14pxr',
   },
 };
 
@@ -36,12 +36,12 @@ const ImageCta = ({ type, onClick }: ImageCtaProps) => {
 
   return (
     <div
-      className="border-stroke-100 py-27pxr flex h-56 w-82.5 flex-col items-center justify-center rounded-2xl border-[1.5px] border-dashed bg-white text-center hover:bg-gray-600"
+      className="border-stroke-100 py-28pxr flex h-56 w-82.5 flex-col items-center justify-center rounded-2xl border-[1.5px] border-dashed bg-white text-center hover:bg-gray-600"
       onClick={onClick}
     >
-      <h3 className="text-t4-bd mb-10-5pxr text-black">{config.title}</h3>
+      <h3 className="text-t4-bd mb-10pxr text-black">{config.title}</h3>
 
-      <div className={`gap-0-5pxr flex items-center ${config.color} ${config.marginBottom}`}>
+      <div className={`gap-2pxr flex items-center ${config.color} ${config.marginBottom}`}>
         <PlusIcons state={config.plusIconState} />
         <span className="text-bt1-sb">Create New</span>
       </div>

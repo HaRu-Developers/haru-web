@@ -8,7 +8,7 @@ import InviteButton from '@common/components/buttons/32px/InviteButton/InviteBut
 import EmailChip from '@common/components/inputs/input-invite-member/emails/EmailChip/EmailChip.client';
 import EmailTag from '@common/components/inputs/input-invite-member/emails/EmailTag/EmailTag.client';
 
-import { isValidEmail } from '@/utils/valid-email-utils';
+import { isValidEmail } from '@common/utils/valid-email-utils';
 
 import { InputInviteMemberProps } from './InputInviteMember.types';
 

@@ -2,7 +2,7 @@ import clsx from 'clsx';
 
 import { profileColors } from '@common/constants/profile';
 
-import hashCode from '@common/utils/hashCode';
+import hashCode from '@common/utils/hash-code';
 
 import { DefaultProfileImageProps } from './DefaultProfileImage.types';
 

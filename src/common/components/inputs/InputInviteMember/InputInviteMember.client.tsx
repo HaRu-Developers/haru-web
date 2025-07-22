@@ -37,6 +37,7 @@ const InputInviteMember = ({
   onChange,
   onEmailsChange,
   onInvite,
+  className,
 }: InputInviteMemberProps) => {
   const [value, setValue] = useState<string>(propInputValue);
   const [emails, setEmails] = useState<string[]>(propInputEmails);
@@ -106,9 +107,10 @@ const InputInviteMember = ({
   };
 
   return (
-    <div className="text-b3-rg w-534pxr flex flex-col items-start gap-2">
+    <div className={clsx('text-b3-rg w-534pxr flex flex-col items-start gap-2', className)}>
       <span className="text-cap1-rg text-gray-200">{title}</span>
       <div
+        // 이메일이 늘어남에 따라서 높이가 변화하기 위해 min-height를 설정
         className={clsx(
           'h-min-48pxr rounded-9pxr py-9pxr flex w-full shrink-0 items-center justify-between gap-2.5 px-3.5',
           {

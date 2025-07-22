@@ -14,13 +14,13 @@ const DownloadModal = ({ onClose, onPdfDownload, onWordDownload }: DownloadModal
       <button onClick={onClose} className="top-22pxr right-20pxr absolute">
         <CrossIcons state={CrossIconsState.SIZE_20_GRAY_200} />
       </button>
-      <div className="space-y-6pxr flex flex-col items-center justify-center text-center">
+      <div className="gap-y-6pxr flex flex-col items-center justify-center text-center">
         <p className="text-t3-bd text-black">다운로드 파일 형식 선택하기</p>
         <p className="text-b3-rg text-gray-300">
           다운로드하고자 하시는 파일의 형식을 선택해주세요.
         </p>
       </div>
-      <div className="space-y-6pxr mt-28pxr flex flex-col items-center justify-center">
+      <div className="gap-y-6pxr mt-28pxr flex flex-col items-center justify-center">
         <FileDownloadButton onClick={onPdfDownload} buttonType={FileDownloadButtonType.PDF} />
         <FileDownloadButton onClick={onWordDownload} buttonType={FileDownloadButtonType.WORD} />
       </div>

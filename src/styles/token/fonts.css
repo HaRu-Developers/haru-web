@@ -20,6 +20,13 @@
     letter-spacing: -0.02em;
   }
 
+  .text-t3-sb {
+    font-size: var(--text-20pxr);
+    font-weight: 600;
+    line-height: 130%;
+    letter-spacing: -0.025rem;
+  }
+
   .text-t3-bd {
     font-size: var(--text-20pxr);
     line-height: 130%;

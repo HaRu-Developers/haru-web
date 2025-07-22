@@ -6,7 +6,6 @@ export const useTabInfo = () =>
   tabStoreState(
     useShallow((state) => ({
       isEditing: state.isEditing,
-      rightTab: state.rightTab,
     })),
   );
 

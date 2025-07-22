@@ -11,6 +11,7 @@ import {
   ProfileSelectModalProps,
 } from './ProfileSelectModal.types';
 import { ProfileSelectModalMenuButton } from './ProfileSelectModalMenuButton/ProfileSelectModalMenuButton';
+import ProfileSettingMenu from './ProfileSettingMenu/ProfileSettingMenu.client';
 import WorkspaceSettingsMenu from './WorkspaceSettingsMenu/WorkspaceSettingsMenu.client';
 
 const ProfileSelectModal = ({ onClose, onNextStep }: ProfileSelectModalProps) => {
@@ -18,33 +19,30 @@ const ProfileSelectModal = ({ onClose, onNextStep }: ProfileSelectModalProps) =>
     ProfileSelectModalMenuState.WORKSPACE_SETTING,
   );
 
-  const MENU_LIST: ProfileSelectModalMenu[] = [
-    {
-      type: ProfileSelectModalMenuState.WORKSPACE_SETTING,
-      isSelected: selectedMenu === ProfileSelectModalMenuState.WORKSPACE_SETTING,
-    },
-    {
-      type: ProfileSelectModalMenuState.PROFILE_SETTING,
-      isSelected: selectedMenu === ProfileSelectModalMenuState.PROFILE_SETTING,
-    },
-    {
-      type: ProfileSelectModalMenuState.LOGOUT,
-      isSelected: selectedMenu === ProfileSelectModalMenuState.LOGOUT,
-    },
-  ];
-
   // 메뉴별 렌더 함수 (switch-case 또는 객체 맵핑)
   const renderMenuContent = () => {
     switch (selectedMenu) {
       case ProfileSelectModalMenuState.WORKSPACE_SETTING:
         return <WorkspaceSettingsMenu workspaceName="MOCK_WORKSPACE" />;
       case ProfileSelectModalMenuState.PROFILE_SETTING:
-        return <CommonText type={CommonTextType.T5_SB_BLACK} text="프로필 설정" />;
-      case ProfileSelectModalMenuState.LOGOUT:
-        return <CommonText type={CommonTextType.T5_SB_BLACK} text="로그아웃" />;
+        return (
+          <ProfileSettingMenu
+            name="황지원"
+            email="thejeewon@gmail.com"
+            instagramAccount="thejeewon"
+          />
+        );
       default:
         return null;
     }
+  };
+
+  const handleMenuClick = (menu: ProfileSelectModalMenuState) => {
+    if (menu === ProfileSelectModalMenuState.LOGOUT) {
+      alert('로그아웃합니다. UNIMPLEMENTED');
+      onNextStep(); // 로그아웃 시 다음 단계로 이동
+    }
+    setSelectedMenu(menu);
   };
 
   return (
@@ -60,15 +58,24 @@ const ProfileSelectModal = ({ onClose, onNextStep }: ProfileSelectModalProps) =>
       <div className="h-614pxr flex w-full flex-row">
         {/* 본문 - 좌측 : 메뉴 선택 */}
         <div className="px-12pxr py-10pxr gap-y-4pxr border-stroke-200 flex flex-col border-r-1">
-          {MENU_LIST.map((menu) => (
-            <ProfileSelectModalMenuButton
-              key={menu.type}
-              menuName={menu.type}
-              isSelected={menu.isSelected}
-              className="mb-8pxr"
-              onClick={() => setSelectedMenu(menu.type)}
-            />
-          ))}
+          <ProfileSelectModalMenuButton
+            menuName={ProfileSelectModalMenuState.WORKSPACE_SETTING}
+            isSelected={selectedMenu === ProfileSelectModalMenuState.WORKSPACE_SETTING}
+            className="mb-8pxr"
+            onClick={() => handleMenuClick(ProfileSelectModalMenuState.WORKSPACE_SETTING)}
+          />
+          <ProfileSelectModalMenuButton
+            menuName={ProfileSelectModalMenuState.PROFILE_SETTING}
+            isSelected={selectedMenu === ProfileSelectModalMenuState.PROFILE_SETTING}
+            className="mb-8pxr"
+            onClick={() => handleMenuClick(ProfileSelectModalMenuState.PROFILE_SETTING)}
+          />
+          <ProfileSelectModalMenuButton
+            menuName={ProfileSelectModalMenuState.LOGOUT}
+            isSelected={selectedMenu === ProfileSelectModalMenuState.LOGOUT}
+            className="mt-8pxr"
+            onClick={() => handleMenuClick(ProfileSelectModalMenuState.LOGOUT)}
+          />
         </div>
         {/* 본문 - 우측 : 선택된 메뉴의 내용 */}
         {renderMenuContent()}

@@ -5,12 +5,11 @@ import { useEffect, useState } from 'react';
 import CrossIcons from '@icons/CrossIcons/CrossIcons';
 import { CrossIconsState } from '@icons/CrossIcons/CrossIcons.types';
 
-import { useCreateEventConditions } from '@common/hooks/useCreateEventConditions';
-
 import ToggleButton from '@common/components/buttons/22px/ToggleButton/ToggleButton.client';
 import NextStepButton from '@common/components/buttons/30px/NextStepButton/NextStepButton.client';
 import InputChips from '@common/components/inputs/InputChips/InputChips.client';
 import InputFieldModal from '@common/components/inputs/modals/InputFieldModal/InputFieldModal.client';
+import { useCreateEventConditions } from '@common/components/modals/CreateNewEventModal/useCreateEventConditions';
 import SelectBoxTag from '@common/components/select-box/SelectBoxTag/SelectBoxTag.client';
 
 import CommonText from '../CommonText/CommonText.server';

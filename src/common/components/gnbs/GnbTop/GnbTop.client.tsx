@@ -3,7 +3,9 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import { GnbSection, SnsGnbTabLabels, SnsGnbTabType, sectionConfigs } from '@common/constants/gnbs';
+import { GnbSection, SnsGnbTabType } from '@common/types/gnbs.types';
+
+import { SnsGnbTabLabels, sectionConfigs } from '@common/constants/gnbs.constants';
 
 import CategoryOption from '@common/components/CategoryOption/CategoryOption.client';
 import InputSearchBox from '@common/components/inputs/InputSearchBox/InputSearchBox.client';

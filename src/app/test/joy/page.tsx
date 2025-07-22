@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 
-import { SearchParamsType } from '@common/types/routing.types';
+import { SearchParamsType } from '@common/types/routes.types';
 
 import parseEnumQueryParam from '@common/utils/parseEnumQueryParam';
 

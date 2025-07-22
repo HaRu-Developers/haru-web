@@ -7,7 +7,11 @@ import clsx from 'clsx';
 
 import LeftGnbIcons from '@icons/LeftGnbIcons/LeftGnbIcons';
 
-import { GnbLeftNavItemIconState, GnbSectionLabels, GnbSectionPaths } from '@common/constants/gnbs';
+import {
+  GnbLeftNavItemIconState,
+  GnbSectionLabels,
+  GnbSectionPaths,
+} from '@common/constants/gnbs.constants';
 
 import { NavItemProps } from './NavItem.types';
 

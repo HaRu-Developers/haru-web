@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 
-import { GnbSection, SnsGnbTabType } from '@common/constants/gnbs';
+import { GnbSection, SnsGnbTabType } from '@common/types/gnbs.types';
 
 import GnbTop from './GnbTop.client';
 

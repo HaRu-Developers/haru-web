@@ -1,6 +1,5 @@
-import { SearchParamsType } from '@common/types/routing.types';
-
-import { GnbSection, SnsGnbTabType } from '@common/constants/gnbs';
+import { GnbSection, SnsGnbTabType } from '@common/types/gnbs.types';
+import { SearchParamsType } from '@common/types/routes.types';
 
 import parseEnumQueryParam from '@common/utils/parseEnumQueryParam';
 

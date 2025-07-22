@@ -1,7 +1,7 @@
 import HaruLogoIcons from '@icons/logos/HaruLogoIcons/HaruLogoIcons';
 import { HaruLogoIconsState } from '@icons/logos/HaruLogoIcons/HaruLogoIcons.types';
 
-import { GnbLeftNavItems } from '@common/constants/gnbs';
+import { GnbLeftNavItems } from '@common/constants/gnbs.constants';
 
 import NavItem from './NavItem/NavItem.client';
 import RecentWorkspace from './RecentWorkspace/RecentWorkspace.server';

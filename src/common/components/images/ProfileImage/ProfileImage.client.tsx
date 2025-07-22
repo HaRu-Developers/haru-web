@@ -6,10 +6,9 @@ import Image from 'next/image';
 
 import clsx from 'clsx';
 
-import { ImageSize } from '@common/types/images.types';
-
 import DefaultProfileImage from '@common/components/images/DefaultProfileImage/DefaultProfileImage.client';
 
+import { ImageSize } from '../types/images.common.types';
 import { ProfileImageProps } from './ProfileImage.types';
 
 const ProfileImage = ({ src, userId, name, size = ImageSize.SMALL }: ProfileImageProps) => {

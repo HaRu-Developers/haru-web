@@ -2,12 +2,11 @@
 
 import clsx from 'clsx';
 
-import { ImageSize } from '@common/types/images.types';
-
-import { profileColors } from '@common/constants/profile';
+import { PROFILE_COLORS } from '@common/constants/profile.constants';
 
 import hashCode from '@common/utils/hashCode';
 
+import { ImageSize } from '../types/images.common.types';
 import { DefaultProfileImageProps } from './DefaultProfileImage.types';
 
 const DefaultProfileImage = ({
@@ -21,8 +20,8 @@ const DefaultProfileImage = ({
   // 일반 로그인시 한 글자 추출
   const initial = name.slice(0, 1);
   // 같은 사용자면 같은 색상을 가지게
-  const colorIndex = hashCode(userId) % profileColors.length;
-  const backgroundColor = color ?? profileColors[colorIndex];
+  const colorIndex = hashCode(userId) % PROFILE_COLORS.length;
+  const backgroundColor = color ?? PROFILE_COLORS[colorIndex];
 
   const sizeClass = size === ImageSize.SMALL ? 'text-cap2-rg h-7 w-7 ' : 'text-b2-rg h-10 w-10';
 

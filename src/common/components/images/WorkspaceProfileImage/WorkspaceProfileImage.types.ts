@@ -1,4 +1,4 @@
-import { ImageSize } from '@common/types/images.types';
+import { ImageSize } from '../types/images.common.types';
 
 export interface WorkspaceProfileImageProps {
   src?: string;

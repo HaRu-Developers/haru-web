@@ -2,11 +2,10 @@
 
 import { useRef } from 'react';
 
-import { ImageSize } from '@common/types/images.types';
-
 import useOutsideClick from '@common/hooks/useOutsideClick';
 
 import ProfileImage from '@common/components/images/ProfileImage/ProfileImage.client';
+import { ImageSize } from '@common/components/images/types/images.common.types';
 
 import FooterButtons from '../FooterButtons/FooterButtons.client';
 import HeaderButtons from '../HeaderButtons/HeaderButtons.client';

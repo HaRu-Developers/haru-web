@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-import { GnbSection } from '@common/constants/gnbs';
+import { GnbSection } from '@common/types/gnbs.types';
 
 import GnbTop from '@common/components/gnbs/GnbTop/GnbTop.client';
 import GnbLeftLayout from '@common/components/layouts/GnbLeftLayout.server';

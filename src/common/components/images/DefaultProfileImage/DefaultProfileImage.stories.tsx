@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 
-import { ImageSize } from '@common/types/images.types';
-
+import { ImageSize } from '../types/images.common.types';
 import DefaultProfileImage from './DefaultProfileImage.client';
 
 const meta: Meta<typeof DefaultProfileImage> = {

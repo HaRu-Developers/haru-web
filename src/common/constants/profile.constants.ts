@@ -1,4 +1,4 @@
-export const profileColors: readonly string[] = [
+export const PROFILE_COLORS: readonly string[] = [
   '#E683A6',
   '#60B1AA',
   '#8C8CE7',

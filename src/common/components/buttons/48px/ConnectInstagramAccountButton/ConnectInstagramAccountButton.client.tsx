@@ -1,7 +1,7 @@
 'use client';
 
-import ThirdPartyLogoIcons from '@icons/logos/GoogleLogoIcon/ThirdPartyLogoIcons';
-import { ThirdPartyLogoIconsState } from '@icons/logos/GoogleLogoIcon/ThirdPartyLogoIcons.types';
+import ThirdPartyLogoIcons from '@icons/logos/ThirdPartyLogoIcon/ThirdPartyLogoIcons';
+import { ThirdPartyLogoIconsState } from '@icons/logos/ThirdPartyLogoIcon/ThirdPartyLogoIcons.types';
 
 import { ButtonsCommonProps } from '../../types/buttons.common.types';
 

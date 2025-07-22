@@ -2,6 +2,9 @@
 
 import { useState } from 'react';
 
+import ThirdPartyLogoIcons from '@icons/logos/ThirdPartyLogoIcon/ThirdPartyLogoIcons';
+import { ThirdPartyLogoIconsState } from '@icons/logos/ThirdPartyLogoIcon/ThirdPartyLogoIcons.types';
+
 // 테스트할 모든 컴포넌트들을 import 합니다.
 import ListFileAiMeetingManager from '@common/components/list-file/ListFileAiMeetingManager/ListFileAiMeetingManager.client';
 import ListFileSnsEventAssistant from '@common/components/list-file/ListFileSnsEventAssistant/ListFileSnsEventAssistant.client';
@@ -178,6 +181,7 @@ const ComprehensiveTestPage = () => {
           )}
         </section>
       </div>
+      <ThirdPartyLogoIcons state={ThirdPartyLogoIconsState.SIZE_22_INSTAGRAM} />
     </div>
   );
 };

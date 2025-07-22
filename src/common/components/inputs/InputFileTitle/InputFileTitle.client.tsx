@@ -6,10 +6,9 @@ import clsx from 'clsx';
 
 import { InputFileTitleMode, InputFileTitleProps } from './InputFileTitle.types';
 
-/**
+/*
  * 인풋 파일 타이틀 컴포넌트
  */
-
 const InputFileTitle = ({
   mode = InputFileTitleMode.DEFAULT,
   value,
@@ -17,16 +16,10 @@ const InputFileTitle = ({
   onCancel,
 }: InputFileTitleProps) => {
   const [inputValue, setInputValue] = useState<string>(value);
+  
   useEffect(() => {
     setInputValue(value);
   }, [value]);
-
-  const containerClass = clsx(
-    'flex w-676pxr h-36pxr items-center px-2 py-0.5 rounded-4pxr text-t1-sb text-black',
-    {
-      'border border-stroke-100': mode === InputFileTitleMode.EDITABLE,
-    },
-  );
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
@@ -40,22 +33,20 @@ const InputFileTitle = ({
   const handleBlur = () => {
     onSave?.(inputValue);
   };
-
-  if (mode === InputFileTitleMode.EDITABLE) {
-    return (
+  return (
       <input
         type="text"
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
         onKeyDown={handleKeyDown}
         onBlur={handleBlur}
-        className={clsx(containerClass, 'outline-none focus:outline-none')}
+        className={clsx('flex w-676pxr h-36pxr items-center px-2 py-0.5 rounded-4pxr text-t1-sb text-black outline-none focus:outline-none bg-white', {
+        'border border-stroke-100': mode === InputFileTitleMode.EDITABLE,
+        })}
+        readOnly={mode !== InputFileTitleMode.EDITABLE}
         autoFocus
       />
-    );
-  }
-
-  return <span className={clsx(containerClass, 'hover:bg-gray-600')}>{value}</span>;
+  );
 };
 
 export default InputFileTitle;

@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 
-import SurveryInfo from './SurveyInfo.server';
+import SurveyInfo from './SurveyInfo.server';
 
-const meta: Meta<typeof SurveryInfo> = {
-  title: 'Components/BoxText/SurveryInfo',
-  component: SurveryInfo,
+const meta: Meta<typeof SurveyInfo> = {
+  title: 'Components/BoxText/SurveyInfo',
+  component: SurveyInfo,
   tags: ['autodocs'],
   args: {
     title: 'UMC Ain 지부 워크숍 수요조사',
@@ -18,6 +18,6 @@ const meta: Meta<typeof SurveryInfo> = {
 
 export default meta;
 
-type Story = StoryObj<typeof SurveryInfo>;
+type Story = StoryObj<typeof SurveyInfo>;
 
 export const Default: Story = {};

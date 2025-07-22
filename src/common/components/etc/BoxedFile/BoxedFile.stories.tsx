@@ -45,7 +45,7 @@ export const Yesterday: Story = {
   },
 };
 
-export const image: Story = {
+export const Image: Story = {
   args: {
     title: title,
     lastOpened: new Date(),

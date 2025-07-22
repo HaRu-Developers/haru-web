@@ -1,12 +1,12 @@
-import { SurveryInfoProps } from './SurveyInfo.types';
+import { SurveyInfoProps } from './SurveyInfo.types';
 
-const SurveryInfo = ({ title, content }: SurveryInfoProps) => {
+const SurveyInfo = ({ title, content }: SurveyInfoProps) => {
   return (
-    <div className="flex w-167 flex-col rounded-xl bg-gray-700 px-8 py-4">
-      <h2 className="text-t5-sb mb-8-5pxr text-black">{title}</h2>
-      <div className="text-b3-rg leading-relaxed whitespace-pre-line text-black">{content}</div>
+    <div className="gap-3pxr flex w-167 flex-col rounded-xl bg-gray-700 px-8 py-4">
+      <div className="text-t5-sb flex h-8 items-center text-black">{title}</div>
+      <div className="text-b3-rg whitespace-pre-line text-black">{content}</div>
     </div>
   );
 };
 
-export default SurveryInfo;
+export default SurveyInfo;

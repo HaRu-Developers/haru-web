@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/nextjs';
 
 import Calender from '@common/components/etc/calender/Calender/Calender.client';
-import { DocumentFile, DocumentType } from '@common/components/etc/calender/common.types';
+import { DocumentFile, DocumentType } from '@common/components/etc/calender/types/calender.common.types';
 
 const meta: Meta<typeof Calender> = {
   title: 'Components/Etc/Calender/Calender',

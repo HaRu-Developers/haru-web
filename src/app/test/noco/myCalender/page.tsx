@@ -4,7 +4,7 @@ import { useMemo, useState } from 'react';
 
 import { DocumentType } from '@common/components/etc/BoxedFile/BoxedFile.types';
 import Calender from '@common/components/etc/calender/Calender/Calender.client';
-import { DocumentFile } from '@common/components/etc/calender/common.types';
+import { DocumentFile } from '@common/components/etc/calender/types/calender.common.types';
 
 // 벡엔드 방식으로 변경 예정 -> 일단 예시로만 사용
 const getCalendarDates = (currentDate: Date) => {

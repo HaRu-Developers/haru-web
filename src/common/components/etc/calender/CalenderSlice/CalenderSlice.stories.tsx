@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/nextjs';
 
 import CalenderSlice from '@common/components/etc/calender/CalenderSlice/CalenderSlice.client';
 
-import { DocumentType } from '../common.types';
+import { DocumentType } from '../types/calender.common.types';
 
 const meta: Meta<typeof CalenderSlice> = {
   title: 'Components/Etc/Calender/CalenderSlice',

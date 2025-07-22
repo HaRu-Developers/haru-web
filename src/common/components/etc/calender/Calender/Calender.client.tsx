@@ -1,3 +1,5 @@
+'use client';
+
 import CalenderSlice from '../CalenderSlice/CalenderSlice.client';
 import { CalendarProps } from './Calender.types';
 

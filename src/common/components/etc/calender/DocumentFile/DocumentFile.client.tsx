@@ -1,7 +1,9 @@
+'use client';
+
 import FeaturedFileIcons from '@icons/FeaturedFileIcons/FeaturedFileIcons';
 import { FeaturedFileIconsState } from '@icons/FeaturedFileIcons/FeaturedFileIcons.types';
 
-import { DocumentType } from '../common.types';
+import { DocumentType } from '../types/calender.common.types';
 import { DocumentFileProps } from './DocumentFile.types';
 
 const DocumentFile = ({ file, onClick }: DocumentFileProps) => {

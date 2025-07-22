@@ -1,19 +1,24 @@
 'use client';
 
+import InputFieldModal from '@common/components/inputs/modals/InputFieldModal/InputFieldModal.client';
 import CongratulateSignUpModal from '@common/components/modals/CongratulateSignUpModal/CongratulateSignUpModal.client';
+import CreateMeetingMinutesModal from '@common/components/modals/CreateMeetingMinutesModal/CreateMeetingMinutesModal.client';
+import CreateNewEventModal from '@common/components/modals/CreateNewEventModal/CreateNewEventModal.client';
+import CreateNewTeamMoodTrackerModal from '@common/components/modals/CreateNewTeamMoodTrackerModal/CreateNewTeamMoodTrackerModal.client';
 import DeleteModal from '@common/components/modals/DeleteModal/DeleteModal.client';
 import { DeleteModalType } from '@common/components/modals/DeleteModal/DeleteModal.types';
 import DownloadModal from '@common/components/modals/DownloadModal/DownloadModal.client';
 import EndRecordingModal from '@common/components/modals/EndRecordingModal/EndRecordingModal.client';
 import LoadingModal from '@common/components/modals/LoadingModal/LoadingModal.client';
 import { LoadingModalType } from '@common/components/modals/LoadingModal/LoadingModal.types';
+import ProfileSelectModal from '@common/components/modals/ProfileSelectModal/ProfileSelectModal.client';
 import ProgressModal from '@common/components/modals/ProgressModal/ProgressModal.client';
 import SurveyLinkCreatedModal from '@common/components/modals/SurveyLinkCreatedModal/SurveyLinkCreatedModal.client';
 
 const TestModalsPage = () => {
   const handleDevMode = () => console.log('Something Clicked');
   return (
-    <div className="space-y-30pxr my-50pxr flex flex-col items-center justify-center">
+    <div className="gap-y-30pxr my-50pxr flex flex-col items-center justify-center">
       {/* <div>
         <span>Loading Modal</span>
         <LoadingModal onClose={handleDevMode} />
@@ -92,12 +97,18 @@ const TestModalsPage = () => {
       <div className="">
         <CongratulateSignUpModal onClose={handleDevMode} onWorkspaceCreate={handleDevMode} />
       </div>
+      <span className="col-span-3 mb-2 text-center">모달: 새 파일 생성</span>
+      <div className="">
+        <CreateMeetingMinutesModal onClose={handleDevMode} onNextStep={handleDevMode} />
+      </div>
+      <span className="col-span-3 mb-2 text-center">모달: 새로운 이벤트</span>
+      <div className=""></div>
       <span className="col-span-3 mb-2 text-center">모달: </span>
-      <div className="grid grid-cols-3 grid-rows-2 gap-4"></div>
-      <span className="col-span-3 mb-2 text-center">모달: </span>
-      <div className="grid grid-cols-3 grid-rows-2 gap-4"></div>
-      <span className="col-span-3 mb-2 text-center">모달: </span>
-      <div className="grid grid-cols-3 grid-rows-2 gap-4"></div>
+      <div className="flex flex-col gap-40">
+        <CreateNewEventModal onClose={handleDevMode} onNextStep={handleDevMode} />
+        <CreateNewTeamMoodTrackerModal onClose={handleDevMode} onNextStep={handleDevMode} />
+        <ProfileSelectModal onClose={handleDevMode} onNextStep={handleDevMode} />
+      </div>
       <span className="col-span-3 mb-2 text-center">모달: </span>
       <div className="grid grid-cols-3 grid-rows-2 gap-4"></div>
       <span className="col-span-3 mb-2 text-center">모달: </span>

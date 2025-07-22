@@ -3,9 +3,10 @@ export interface Option {
   label: string;
 }
 
-export interface SelectBoxProps {
+export interface SelectBoxOptionProps {
   options: Option[];
   initState: string;
   onClick: (value: string) => void;
   placeholder?: string;
+  className?: string;
 }

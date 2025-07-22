@@ -19,7 +19,7 @@ const IndicatorIcons = ({ state }: IconsCommonProps<IndicatorIconsState>) => {
   switch (state) {
     case IndicatorIconsState.BAR_STEP_1:
       return (
-        <div className="flex items-center justify-center space-x-[7px]">
+        <div className="flex items-center justify-center gap-x-[7px]">
           <BarIndicator />
           <BarIndicator disabled />
           <BarIndicator disabled />
@@ -27,7 +27,7 @@ const IndicatorIcons = ({ state }: IconsCommonProps<IndicatorIconsState>) => {
       );
     case IndicatorIconsState.BAR_STEP_2:
       return (
-        <div className="flex items-center justify-center space-x-[7px]">
+        <div className="flex items-center justify-center gap-x-[7px]">
           <BarIndicator />
           <BarIndicator />
           <BarIndicator disabled />
@@ -35,7 +35,7 @@ const IndicatorIcons = ({ state }: IconsCommonProps<IndicatorIconsState>) => {
       );
     case IndicatorIconsState.BAR_STEP_3:
       return (
-        <div className="flex items-center justify-center space-x-[7px]">
+        <div className="flex items-center justify-center gap-x-[7px]">
           <BarIndicator />
           <BarIndicator />
           <BarIndicator />

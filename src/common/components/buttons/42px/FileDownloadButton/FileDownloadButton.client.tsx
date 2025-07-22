@@ -6,7 +6,7 @@ import { FileDownloadButtonProps, FileDownloadButtonType } from './FileDownloadB
 const FileDownloadButton = ({ buttonType, ...props }: FileDownloadButtonProps) => {
   return (
     <button
-      className="w-348pxr h-42pxr rounded-6pxr border-stroke-200 space-x-8pxr flex items-center justify-center border bg-white hover:bg-gray-600"
+      className="w-348pxr h-42pxr rounded-6pxr border-stroke-200 gap-x-8pxr flex items-center justify-center border bg-white hover:bg-gray-600"
       {...props}
     >
       <DownloadIcons

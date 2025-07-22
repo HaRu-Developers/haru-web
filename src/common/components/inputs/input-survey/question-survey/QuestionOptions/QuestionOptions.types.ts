@@ -1,4 +1,4 @@
-import { Type, Visibility } from '../../common.types';
+import { Type, Visibility } from '../../types/input-survey.common.types';
 
 export interface QuestionOptionsProps {
   optionList?: string[];

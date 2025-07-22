@@ -4,7 +4,7 @@ import { Meta, StoryObj } from '@storybook/nextjs';
 
 import InputSurvey from '@common/components/inputs/input-survey/InputSurvey/InputSurvey.client';
 
-import { Type, Visibility } from '../common.types';
+import { Type, Visibility } from '../types/input-survey.common.types';
 
 const meta: Meta<typeof InputSurvey> = {
   title: 'Components/inputs/InputSurvey',

@@ -1,4 +1,6 @@
-import { Type, Visibility } from '../../common.types';
+'use client';
+
+import { Type, Visibility } from '../../types/input-survey.common.types';
 import AddQuestion from '../AddQuestion/AddQuestion.client';
 import QuestionOptions from '../QuestionOptions/QuestionOptions.client';
 import SubjectQuestion from '../SubjectQuestion/SubjectQuestion.client';

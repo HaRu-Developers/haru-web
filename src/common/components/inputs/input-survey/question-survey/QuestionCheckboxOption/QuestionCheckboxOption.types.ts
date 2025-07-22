@@ -1,4 +1,4 @@
-import { Visibility } from '../../common.types';
+import { Visibility } from '../../types/input-survey.common.types';
 
 export interface QuestionCheckboxOptionProps {
   index: number;

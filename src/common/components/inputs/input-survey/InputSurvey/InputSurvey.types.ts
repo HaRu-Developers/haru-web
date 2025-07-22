@@ -1,4 +1,4 @@
-import { Type, Visibility } from '../common.types';
+import { Type, Visibility } from '../types/input-survey.common.types';
 
 export interface InputSurveyProps {
   title?: string; // 제목 visibility에 따라 readonly로 변함

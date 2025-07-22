@@ -1,3 +1,5 @@
+'use client';
+
 import { ButtonsSetveyProps } from './ButtonsSurvey.types';
 
 const ButtonsSurvey = ({ onDelete, onToggle }: ButtonsSetveyProps) => {

@@ -1,8 +1,10 @@
+'use client';
+
 import React from 'react';
 
 import clsx from 'clsx';
 
-import { Visibility } from '../common.types';
+import { Visibility } from '../types/input-survey.common.types';
 import { InputTitleSurveyProps } from './InputTitleSurvey.types';
 
 const InputTitleSurvey = ({

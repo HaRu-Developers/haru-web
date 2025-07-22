@@ -1,6 +1,8 @@
+'use client';
+
 import { useEffect, useRef } from 'react';
 
-import { Visibility } from '../../common.types';
+import { Visibility } from '../../types/input-survey.common.types';
 import { SubjectQuestionProps } from './SubjectQuestion.types';
 
 const SubjectQuestion = ({ description, visibility, onChange }: SubjectQuestionProps) => {

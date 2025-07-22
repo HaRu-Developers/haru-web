@@ -1,10 +1,12 @@
+'use client';
+
 import ButtonsSurvey from '@common/components/inputs/input-survey/ButtonsSurvey/ButtonsSurvey.client';
 import InputTitleSurvey from '@common/components/inputs/input-survey/InputTitleSurvey/InputTitleSurvey.client';
 import MovingBarSurvey from '@common/components/inputs/input-survey/MovingBarSurvey/MovingBarSurvey.client';
 import SelectBoxOption from '@common/components/select-box/SelectBoxOption/SelectBoxOption.client';
 import { Option } from '@common/components/select-box/SelectBoxOption/SelectBoxOption.types';
 
-import { Type, Visibility } from '../common.types';
+import { Type, Visibility } from '../types/input-survey.common.types';
 import QuestionSurvey from '../question-survey/QuestionSurvey/QuestionSurvey.client';
 import { InputSurveyProps } from './InputSurvey.types';
 

@@ -1,9 +1,9 @@
-import { useState } from 'react';
+'use client';
 
 import CheckboxIcons from '@icons/CheckboxIcons/CheckboxIcons';
 import { CheckboxIconsState } from '@icons/CheckboxIcons/CheckboxIcons.types';
 
-import { Visibility } from '../../common.types';
+import { Visibility } from '../../types/input-survey.common.types';
 import { QuestionChoiceOptionProps } from './QuestionChoiceOption.types';
 
 const QuestionChoiceOption = ({

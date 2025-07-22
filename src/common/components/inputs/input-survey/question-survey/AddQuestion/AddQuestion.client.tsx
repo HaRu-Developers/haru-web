@@ -1,7 +1,9 @@
+'use client';
+
 import CheckboxIcons from '@icons/CheckboxIcons/CheckboxIcons';
 import { CheckboxIconsState } from '@icons/CheckboxIcons/CheckboxIcons.types';
 
-import { Type } from '../../common.types';
+import { Type } from '../../types/input-survey.common.types';
 import { AddQuestionProps } from './AddQuestion.types';
 
 const AddQuestion = ({ type, onOptionAddClick, onEtcAddClick, isEtc }: AddQuestionProps) => {

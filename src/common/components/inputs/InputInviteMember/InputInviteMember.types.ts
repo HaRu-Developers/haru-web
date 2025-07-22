@@ -11,4 +11,5 @@ export interface InputInviteMemberProps {
   onChange?: (value: string) => void;
   onEmailsChange?: (emails: string[]) => void;
   onInvite?: (emails: string[]) => void;
+  className?: string;
 }

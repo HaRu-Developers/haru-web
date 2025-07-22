@@ -5,9 +5,6 @@ import type { Meta, StoryObj } from '@storybook/nextjs';
 import DatePicker from './DatePicker.client';
 import type { DatePickerProps } from './DatePicker.types';
 
-const today = new Date();
-today.setHours(0, 0, 0, 0);
-
 const meta: Meta<DatePickerProps> = {
   title: 'Components/DatePicker/DatePicker',
   component: DatePicker,
@@ -29,12 +26,10 @@ type Story = StoryObj<DatePickerProps>;
 
 // Interactive wrapper to manage state internally
 const InteractiveWrapper = (args: DatePickerProps) => {
-  const [selectedDates, setSelectedDates] = useState<Date[]>(args.selectedDates || []);
   return (
     <DatePicker
       {...args}
-      selectedDates={selectedDates}
-      onChange={(dates) => setSelectedDates(dates)}
+      onChange={(dates) => console.log('Changed dates:', dates)}
       onConfirm={(dates) => console.log('Confirmed dates:', dates)}
       onCancel={() => console.log('Canceled')}
     />

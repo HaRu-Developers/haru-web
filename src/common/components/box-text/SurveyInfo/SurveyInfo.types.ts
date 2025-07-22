@@ -1,4 +1,4 @@
-export interface SurveryInfoProps {
+export interface SurveyInfoProps {
   title: string;
   content: string;
 }

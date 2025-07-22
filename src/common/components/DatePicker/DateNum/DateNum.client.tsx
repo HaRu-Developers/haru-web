@@ -1,5 +1,7 @@
 'use client';
 
+import clsx from 'clsx';
+
 import type { DateNumProps } from './DateNum.types';
 import { baseStyle, dateNumVariants } from './date-num-styles';
 
@@ -27,12 +29,13 @@ const DateNum = ({ date, currentMonth, selectedList, onSelect }: DateNumProps) =
   const isPastDate = d.getTime() < today.getTime();
   const isAvailable = !isEmpty && !isPastDate;
 
-  let cls = baseStyle;
-  if (isEmpty) cls += ` ${dateNumVariants.empty}`;
-  else if (isSelected) cls += ` ${dateNumVariants.selected}`;
-  else if (isToday) cls += ` ${dateNumVariants.today}`;
-  else if (isPastDate) cls += ` ${dateNumVariants.past}`;
-  else if (isAvailable) cls += ` ${dateNumVariants.available}`;
+  const cls = clsx(baseStyle, {
+    [dateNumVariants.empty]: isEmpty,
+    [dateNumVariants.selected]: isSelected && !isEmpty,
+    [dateNumVariants.today]: isToday && !isSelected && !isEmpty,
+    [dateNumVariants.past]: isPastDate && !isSelected && !isToday && !isEmpty,
+    [dateNumVariants.available]: isAvailable && !isSelected && !isToday && !isPastDate,
+  });
 
   return (
     <div

@@ -16,21 +16,21 @@ import { IndividualIconsState } from './IndividualIcons.types';
 const IndividualIcons = ({ state, className }: IconsCommonProps<IndividualIconsState>) => {
   switch (state) {
     case IndividualIconsState.CONGRATULATE_SIGN_UP:
-      return <CongratulationIcon className={clsx('h-[174.47px] w-[202.36px]', className)} />;
+      return <CongratulationIcon className={clsx('h-174.47pxr w-202.36pxr', className)} />;
     case IndividualIconsState.WARNING:
-      return <WarningIcon className={clsx('h-[36px] w-[36px]', className)} />;
+      return <WarningIcon className={clsx('h-36pxr w-36pxr', className)} />;
     case IndividualIconsState.UNDER_ARROW:
-      return <UnderArrowIcon className={clsx('h-[20px] w-[20px]', className)} />;
+      return <UnderArrowIcon className={clsx('h-20pxr w-20pxr', className)} />;
     case IndividualIconsState.SEARCH:
-      return <SearchIcon className={clsx('h-[18px] w-[18px]', className)} />;
+      return <SearchIcon className={clsx('h-18pxr w-18pxr', className)} />;
     case IndividualIconsState.CALENDAR:
-      return <CalendarIcon className={clsx('h-[18px] w-[18px]', className)} />;
+      return <CalendarIcon className={clsx('h-18pxr w-18pxr', className)} />;
     case IndividualIconsState.UPLOAD:
-      return <UploadIcon className={clsx('h-[24px] w-[24px]', className)} />;
+      return <UploadIcon className={clsx('h-24pxr w-24pxr', className)} />;
     case IndividualIconsState.GROUP:
-      return <GroupIcon className={clsx('h-[20px] w-[20px]', className)} />;
+      return <GroupIcon className={clsx('h-20pxr w-20pxr', className)} />;
     case IndividualIconsState.EMAIL:
-      return <EmailIcon className={clsx('h-[20px] w-[20px]', className)} />;
+      return <EmailIcon className={clsx('h-20pxr w-20pxr', className)} />;
     default:
       return null;
   }

@@ -1,5 +1,7 @@
 'use client';
 
+import Image from 'next/image';
+
 import clsx from 'clsx';
 
 import FeaturedFileIcons from '@icons/FeaturedFileIcons/FeaturedFileIcons';
@@ -39,9 +41,9 @@ const BoxedFile = ({
         {iconState && <FeaturedFileIcons state={iconState} className={clsx(iconClass)} />}
 
         {thumbnailUrl ? (
-          <img
+          <Image
             src={thumbnailUrl}
-            alt=""
+            alt="파일 이미지"
             className="rounded-10pxr h-full w-full object-cover object-top pt-10"
           />
         ) : (

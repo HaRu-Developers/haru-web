@@ -1,13 +1,12 @@
 'use client';
 
-import CalenderSlice from '../CalenderSlice/CalenderSlice.client';
-import { CalendarProps } from './Calender.types';
+import CalenderSlice from '../CalendarSlice/CalenderSlice.client';
+import { CalendarProps } from './Calendar.types';
 
 /*
  * 캘린더 컴포넌트
  */
-
-const Calender = ({
+const Calendar = ({
   startDate,
   endDate,
   documents,
@@ -43,4 +42,4 @@ const Calender = ({
   );
 };
 
-export default Calender;
+export default Calendar;

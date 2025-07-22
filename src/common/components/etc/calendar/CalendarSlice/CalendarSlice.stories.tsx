@@ -1,17 +1,17 @@
 import { Meta, StoryObj } from '@storybook/nextjs';
 
-import CalenderSlice from '@common/components/etc/calender/CalenderSlice/CalenderSlice.client';
+import CalendarSlice from '@common/components/etc/calendar/CalendarSlice/CalenderSlice.client';
 
-import { DocumentType } from '../types/calender.common.types';
+import { DocumentType } from '../types/calendar.common.types';
 
-const meta: Meta<typeof CalenderSlice> = {
-  title: 'Components/Etc/Calender/CalenderSlice',
-  component: CalenderSlice,
+const meta: Meta<typeof CalendarSlice> = {
+  title: 'Components/Etc/Calendar/CalendarSlice',
+  component: CalendarSlice,
   tags: ['autodocs'],
 };
 
 export default meta;
-type Story = StoryObj<typeof CalenderSlice>;
+type Story = StoryObj<typeof CalendarSlice>;
 
 const files = [
   {

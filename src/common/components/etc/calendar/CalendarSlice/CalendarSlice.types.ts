@@ -1,4 +1,4 @@
-import { DocumentFile } from '../types/calender.common.types';
+import { DocumentFile } from '../types/calendar.common.types';
 
 export interface CalendarSliceProps {
   date: Date; // 해당 날짜

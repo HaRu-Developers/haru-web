@@ -1,10 +1,10 @@
 import { Meta, StoryObj } from '@storybook/nextjs';
 
-import DocumentFile from '@common/components/etc/calender/DocumentFile/DocumentFile.client';
-import { DocumentType } from '@common/components/etc/calender/types/calender.common.types';
+import DocumentFile from '@common/components/etc/calendar/DocumentFile/DocumentFile.client';
+import { DocumentType } from '@common/components/etc/calendar/types/calendar.common.types';
 
 const meta: Meta<typeof DocumentFile> = {
-  title: 'Components/Etc/Calender/DocumentFile',
+  title: 'Components/Etc/Calendar/DocumentFile',
   component: DocumentFile,
   tags: ['autodocs'],
 };

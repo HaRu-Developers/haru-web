@@ -1,4 +1,4 @@
-import { DocumentFile } from '../types/calender.common.types';
+import { DocumentFile } from '../types/calendar.common.types';
 
 export interface DocumentFileProps {
   file: DocumentFile;

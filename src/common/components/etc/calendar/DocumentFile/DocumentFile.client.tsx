@@ -3,9 +3,14 @@
 import FeaturedFileIcons from '@icons/FeaturedFileIcons/FeaturedFileIcons';
 import { FeaturedFileIconsState } from '@icons/FeaturedFileIcons/FeaturedFileIcons.types';
 
-import { DocumentType } from '../types/calender.common.types';
+import { DocumentType } from '../types/calendar.common.types';
 import { DocumentFileProps } from './DocumentFile.types';
 
+/*
+ * 문서 파일 컴포넌트
+ * 각 문서 파일을 보여주는 컴포넌트
+ * 클릭 시 onClick 이벤트를 발생시킴
+ */
 const DocumentFile = ({ file, onClick }: DocumentFileProps) => {
   const documentIconMap = {
     [DocumentType.AI_MEETING_MANAGER]: FeaturedFileIconsState.SIZE_16_AI_MANAGER_FILE,

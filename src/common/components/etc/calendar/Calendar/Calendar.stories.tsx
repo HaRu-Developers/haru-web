@@ -1,17 +1,17 @@
 import { Meta, StoryObj } from '@storybook/nextjs';
 
-import Calender from '@common/components/etc/calender/Calender/Calender.client';
-import { DocumentFile, DocumentType } from '@common/components/etc/calender/types/calender.common.types';
+import Calendar from '@common/components/etc/calendar/Calendar/Calendar.client';
+import { DocumentFile, DocumentType } from '@common/components/etc/calendar/types/calendar.common.types';
 
-const meta: Meta<typeof Calender> = {
-  title: 'Components/Etc/Calender/Calender',
-  component: Calender,
+const meta: Meta<typeof Calendar> = {
+  title: 'Components/Etc/Calendar/Calendar',
+  component: Calendar,
   tags: ['autodocs'],
 };
 
 export default meta;
 
-type Story = StoryObj<typeof Calender>;
+type Story = StoryObj<typeof Calendar>;
 
 const today = new Date();
 const firstDayOfMonth = new Date(Date.UTC(today.getFullYear(), today.getMonth(), 1)); // UTC 사용 안할 시 오늘 날짜가 값은 정상이지만 내일로 밀리는 버그가 있음

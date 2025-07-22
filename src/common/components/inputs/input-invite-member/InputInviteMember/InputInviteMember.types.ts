@@ -7,4 +7,5 @@ export interface InputInviteMemberProps {
   onEmailsChange?: (emails: string[]) => void; // 이메일 목록 변경 시 호출되는 함수
   onInvite?: (emails: string[]) => void; // 초대 버튼 클릭 시 이메일 목록 반환 및 기존 이메일 제거
   onRemove?: (email: string) => void; // 삭제된 이메일 반환
+  className?: string; // 추가적인 클래스 이름
 }

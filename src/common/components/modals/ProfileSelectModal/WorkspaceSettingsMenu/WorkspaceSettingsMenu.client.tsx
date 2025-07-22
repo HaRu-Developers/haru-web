@@ -6,7 +6,7 @@ import Image from 'next/image';
 
 import AddWorkspaceButton from '@common/components/buttons/30px/AddWorkspaceButton/AddWorkspaceButton.client';
 import SaveButton from '@common/components/buttons/38px/SaveButton/SaveButton.client';
-import InputInviteMember from '@common/components/inputs/InputInviteMember/InputInviteMember.client';
+import InputInviteMember from '@common/components/inputs/input-invite-member/InputInviteMember/InputInviteMember.client';
 
 import CommonText from '../../CommonText/CommonText.server';
 import { CommonTextType } from '../../CommonText/CommonText.types';
@@ -40,13 +40,27 @@ const WorkspaceSettingsMenu = ({
   workspaceName,
   teammateList = mockTeammates,
 }: WorkspaceSettingsMenuProps) => {
-  const [emailList, setEmailList] = useState<string[]>([]);
-
-  const handleEmailChange = (emails: string[]) => {
-    // console.log('이메일 목록 업데이트:', emails);
-    setEmailList(emails);
+  // 내부적으로 처리 되서 반환 됩니다.
+  const [value, setValue] = useState<string>('');
+  const [emails, setEmails] = useState<string[]>([]);
+  const handleValueChange = (value: string) => {
+    // 입력 되는 값 반환 합니다.
+    setValue(value);
   };
-
+  const handleEmailChange = (emails: string[]) => {
+    // 이메일 목록 변경 될 때 마다 호출 됩니다. -> 제거, 추가, 변경 모두 포함
+    // 이메일 양식 안 지키면 추가 안됩니다.
+    setEmails(emails);
+  };
+  const handleRemoveEmail = (email: string) => {
+    // 이메일 자동으로 제거 됩니다 -> 제거 된 이메일만 반환, 변경된 사항은 handleEmailChange로 반환
+    console.log('이메일 제거:', email);
+  };
+  const handleInvite = (emails: string[]) => {
+    // 초대 버튼 클릭 시 호출 됩니다. -> 이메일 목록 반환
+    // 이메일 목록은 여기서 반환되고 기존 이메일 목록은 제거됩니다.
+    console.log('초대할 이메일 목록:', emails);
+  };
   return (
     <div className="px-35pxr py-24pxr scrollbar-component gap-y-24pxr flex h-full w-full flex-col overflow-y-auto">
       <CommonText type={CommonTextType.T4_BD_BLACK} text="워크스페이스 기본 정보" />
@@ -95,8 +109,13 @@ const WorkspaceSettingsMenu = ({
         {/* 새로운 팀원 추가하기 섹션 */}
         <InputInviteMember
           title="새로운 팀원 추가하기"
+          emails={emails}
+          value={value}
           placeholder="초대할 팀원의 이메일을 입력해주세요."
+          onValueChange={handleValueChange}
           onEmailsChange={handleEmailChange}
+          onInvite={handleInvite}
+          onRemove={handleRemoveEmail}
           className="mt-12pxr"
         />
 

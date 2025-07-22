@@ -24,6 +24,7 @@ const InputInviteMember = ({
   onEmailsChange,
   onInvite,
   onRemove,
+  className,
 }: InputInviteMemberProps) => {
   const [isFocused, setIsFocused] = useState<boolean>(false);
 
@@ -77,7 +78,7 @@ const InputInviteMember = ({
   };
 
   return (
-    <div className="text-b3-rg w-534pxr flex flex-col items-start gap-2">
+    <div className={clsx('text-b3-rg w-534pxr flex flex-col items-start gap-2', className)}>
       {/* 타이틀 부분 */}
       <span className="text-cap1-rg text-gray-200">{title}</span>
       {/* 이메일 입력 및 초대 버튼 부분 */}

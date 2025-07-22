@@ -7,12 +7,8 @@ import CategoryOption from '@common/components/CategoryOption/CategoryOption.cli
 
 import IconButton from '@buttons/IconButton/IconButton.client';
 
-import {
-  SurveyQuestionTabLabels,
-  SurveyQuestionTabType,
-} from '@features/team-mood-tracker/constants/tabs';
-
-import { SurveyQuestionTabProps } from './SurveyQuestionTab.types';
+import { SurveyQuestionTabLabels } from './SurveyQuestionTab.constants';
+import { SurveyQuestionTabProps, SurveyQuestionTabType } from './SurveyQuestionTab.types';
 
 const SurveyQuestionTab = ({ survey }: SurveyQuestionTabProps) => {
   const { isSubmitted } = survey;

@@ -12,11 +12,10 @@ import DownloadButton from '@buttons/30px/DownloadButton/DownloadButton.client';
 import EditCompleteButton from '@buttons/30px/EditCompleteButton/EditCompleteButton.client';
 import IconButton from '@buttons/IconButton/IconButton.client';
 
-import { LeftTabLabels, LeftTabType } from '@features/ai-meeting-manager/constants/tabs';
-
 import { useTabActions, useTabInfo } from '@features/ai-meeting-manager/hooks/stores/useTabStore';
 
-import { LeftTabProps } from './LeftTab.types';
+import { LeftTabLabels } from './LeftTab.constants';
+import { LeftTabProps, LeftTabType } from './LeftTab.types';
 
 const tabs = Object.values(LeftTabType);
 
@@ -45,7 +44,7 @@ const LeftTab = ({ current }: LeftTabProps) => {
   };
 
   return (
-    <div className="border-stroke-200 w-720pxr py-13pxr flex h-14 shrink-0 items-center justify-between border-b border-solid bg-white px-5">
+    <div className="border-stroke-200 w-720pxr py-13pxr px-32pxr flex h-14 shrink-0 items-center justify-between border-b border-solid bg-white">
       {/* 탭 영역 */}
       <div className="gap-9pxr inline-flex items-center">
         {tabs.map((tab) => {

@@ -11,7 +11,7 @@
  * @returns {T} - 유효한 enum 값 또는 기본값
  *
  */
-const parseEnumQueryParam = <T extends string>(
+const parseEnum = <T extends string>(
   value: unknown,
   enumObject: Record<string, T>,
   defaultValue: T,
@@ -21,4 +21,4 @@ const parseEnumQueryParam = <T extends string>(
     : defaultValue;
 };
 
-export default parseEnumQueryParam;
+export default parseEnum;

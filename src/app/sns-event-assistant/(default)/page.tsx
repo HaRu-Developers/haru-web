@@ -1,7 +1,7 @@
 import { GnbSection, SnsGnbTabType } from '@common/types/gnbs.types';
 import { SearchParamsType } from '@common/types/routes.types';
 
-import parseEnumQueryParam from '@common/utils/parseEnumQueryParam';
+import parseEnum from '@common/utils/parse-enum';
 
 import GnbTop from '@common/components/gnbs/GnbTop/GnbTop.client';
 
@@ -11,11 +11,7 @@ const SnsEventAssistantPage = async ({
   searchParams: Promise<SearchParamsType>;
 }) => {
   const { snsGnbTab } = await searchParams;
-  const formattedSnsGnbTab = parseEnumQueryParam(
-    snsGnbTab,
-    SnsGnbTabType,
-    SnsGnbTabType.ALL_EVENTS,
-  );
+  const formattedSnsGnbTab = parseEnum(snsGnbTab, SnsGnbTabType, SnsGnbTabType.ALL_EVENTS);
 
   return (
     <>

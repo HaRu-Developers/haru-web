@@ -87,6 +87,7 @@ const eslintConfig = [
     files: ['**/*.jsx', '**/*.tsx'],
     plugins: {
       // React와 React Hooks 플러그인 설정
+      react: eslintPluginReact,
       'react-hooks': eslintPluginReactHooks,
     },
     settings: {

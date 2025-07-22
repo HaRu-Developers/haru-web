@@ -1,7 +1,5 @@
 import type { Metadata } from 'next';
 
-import { GnbSection, SnsGnbTabType } from '@common/types/gnbs.types';
-
 import GnbLeftLayout from '@common/components/layouts/GnbLeftLayout.server';
 
 export const metadata: Metadata = {

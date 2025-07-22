@@ -4,7 +4,7 @@ import clsx from 'clsx';
 
 import { PROFILE_COLORS } from '@common/constants/profile.constants';
 
-import hashCode from '@common/utils/hashCode';
+import hashCode from '@common/utils/hash-code';
 
 import { ImageSize } from '../types/images.common.types';
 import { DefaultProfileImageProps } from './DefaultProfileImage.types';

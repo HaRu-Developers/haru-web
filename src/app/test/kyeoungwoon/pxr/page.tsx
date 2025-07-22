@@ -1,6 +1,6 @@
 const PxrTestPage = () => {
   return (
-    <div className="flex flex-col space-y-4">
+    <div className="flex flex-col gap-y-4">
       <p className="text-16pxr">안녕하세요!</p>
       <p className="text-32pxr">안녕하세요!</p>
       <div className="w-320pxr h-16pxr bg-blue-500">넓이 320px에 높이 16px 입니다.!</div>

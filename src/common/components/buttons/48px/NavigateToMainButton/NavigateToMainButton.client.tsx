@@ -1,18 +1,21 @@
 import clsx from 'clsx';
 
-interface NavigateToMainButtonProps {
-  isActive: boolean;
+import { ButtonsCommonProps } from '../../types/buttons.common.types';
+
+interface NavigateToMainButtonProps extends ButtonsCommonProps {
+  disabled: boolean;
 }
 
 /**
  * '메인 홈으로 이동' 버튼
  */
-const NavigateToMainButton = ({ isActive }: NavigateToMainButtonProps) => {
+const NavigateToMainButton = ({ disabled, className }: NavigateToMainButtonProps) => {
   return (
     <button
       className={clsx(
-        'text-button-1 inline-flex h-[48px] w-[260px] items-center justify-center rounded-[9px] px-[12px] py-[17px] text-white',
-        isActive ? 'bg-gray-100' : 'bg-gray-500',
+        'text-button-1 h-48pxr w-260pxr rounded-9pxr px-12pxr py-17pxr inline-flex items-center justify-center text-white',
+        disabled ? 'bg-gray-100' : 'bg-gray-500',
+        className,
       )}
     >
       메인 홈으로 이동

@@ -27,7 +27,11 @@ const Template = () => {
   return (
     <div className="bg-white p-4">
       <DatePickerBody
-        activeStartDate={new Date(selectedDates[0].getFullYear(), selectedDates[0].getMonth(), 1)}
+        activeStartDate={
+          selectedDates[0]
+            ? new Date(selectedDates[0].getFullYear(), selectedDates[0].getMonth(), 1)
+            : new Date()
+        }
         selectedDates={selectedDates}
         onChange={toggleDate}
         onActiveStartDateChange={({ activeStartDate }) => {

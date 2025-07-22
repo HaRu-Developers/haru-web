@@ -33,8 +33,10 @@ const DateTimePicker = ({
    * 선택된 날짜를 props로 주어진 상태에 저장해둔다.
    */
   const handleDateChange = (dates: Date[]) => {
+    const newDate = dates[0];
+    if (!newDate) return;
+
     setSelectedDateTime((prev) => {
-      const newDate = dates[0];
       if (prev) {
         newDate.setHours(
           prev.getHours(),

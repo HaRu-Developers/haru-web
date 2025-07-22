@@ -56,7 +56,7 @@ const DatePicker = ({ onChange, onConfirm, onCancel }: DatePickerProps) => {
       <DatePickerHeader current={activeStartDate} onPrev={prev} onNext={next} />
       <DatePickerBody
         activeStartDate={activeStartDate}
-        selectedDates={selected}
+        selectedDates={selected ?? []}
         onChange={toggleDate}
         onActiveStartDateChange={({ activeStartDate }) =>
           activeStartDate && setActiveStartDate(activeStartDate)

@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import clsx from 'clsx';
 
-import { timeSlots } from '@/utils/timePickerUtils';
+import { timeSlots } from '@common/utils/time-picker-utils';
 
 import { TimePickerProps } from './TimePicker.types';
 

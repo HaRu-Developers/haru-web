@@ -107,7 +107,7 @@ const InputInviteMember = ({
               className={clsx('h-30pxr flex-1 outline-none')}
             />
           </div>
-          <InviteButton onClick={handleInvite} />
+          <InviteButton onClick={handleInvite} disabled={emails.length === 0} />
         </div>
         {value.trim() && <EmailTag value={value} onClick={handleAddEmail} />}
       </div>

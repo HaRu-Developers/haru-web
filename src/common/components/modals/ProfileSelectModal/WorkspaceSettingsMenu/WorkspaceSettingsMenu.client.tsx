@@ -116,7 +116,7 @@ const WorkspaceSettingsMenu = ({
           onEmailsChange={handleEmailChange}
           onInvite={handleInvite}
           onRemove={handleRemoveEmail}
-          className="mt-12pxr"
+          className="mt-12pxr w-534pxr"
         />
 
         {/* 팀원 목록 */}

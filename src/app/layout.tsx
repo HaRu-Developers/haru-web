@@ -5,6 +5,8 @@ import clsx from 'clsx';
 
 import '@styles/globals.css';
 
+import Toaster from '@common/components/toast/Toaster/Toaster.client';
+
 const pretendard = localFont({
   src: '../assets/fonts/pretendard/PretendardVariable.woff2',
   variable: '--font-pretendard',
@@ -26,11 +28,12 @@ const RootLayout = ({
     <html lang="ko">
       <body
         className={clsx(
-          `scrollbar-page flex min-h-screen flex-col items-center overflow-y-auto`,
+          'scrollbar-page flex min-h-screen flex-col items-center overflow-y-auto',
           pretendard.variable,
         )}
       >
         {children}
+        <Toaster />
       </body>
     </html>
   );

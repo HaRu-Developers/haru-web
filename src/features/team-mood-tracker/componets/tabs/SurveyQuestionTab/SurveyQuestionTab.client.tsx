@@ -14,6 +14,56 @@ import {
 
 import { SurveyQuestionTabProps } from './SurveyQuestionTab.types';
 
+// ✅ 설문 문항 생성
+// 작성 완료
+// - 현재 탭(surveyQuestionTab)을 '설문 문항 생성' → '설문 문항'으로 변경
+// - 작성 완료 버튼 → IconButton으로 바꾸기
+
+// ✅ 설문 문항 생성
+// 작성 완료
+// - 현재 탭(surveyQuestionTab)을 '설문 문항 생성' → '설문 문항'으로 변경
+// - 작성 완료 버튼 → IconButton으로 바꾸기
+
+// ✅ 설문 문항 생성
+// 작성 완료
+// - 현재 탭(surveyQuestionTab)을 '설문 문항 생성' → '설문 문항'으로 변경
+// - 작성 완료 버튼 → IconButton으로 바꾸기
+
+// ✅ 설문 문항 생성
+// 작성 완료
+// - 현재 탭(surveyQuestionTab)을 '설문 문항 생성' → '설문 문항'으로 변경
+// - 작성 완료 버튼 → IconButton으로 바꾸기
+
+// ✅ 설문 문항 생성
+// 작성 완료
+// - 현재 탭(surveyQuestionTab)을 '설문 문항 생성' → '설문 문항'으로 변경
+// - 작성 완료 버튼 → IconButton으로 바꾸기
+
+// ✅ 설문 문항 생성
+// 작성 완료
+// - 현재 탭(surveyQuestionTab)을 '설문 문항 생성' → '설문 문항'으로 변경
+// - 작성 완료 버튼 → IconButton으로 바꾸기
+
+// ✅ 설문 문항 생성
+// 작성 완료
+// - 현재 탭(surveyQuestionTab)을 '설문 문항 생성' → '설문 문항'으로 변경
+// - 작성 완료 버튼 → IconButton으로 바꾸기
+
+// ✅ 설문 문항 생성
+// 작성 완료
+// - 현재 탭(surveyQuestionTab)을 '설문 문항 생성' → '설문 문항'으로 변경
+// - 작성 완료 버튼 → IconButton으로 바꾸기
+
+// ✅ 설문 문항 생성
+// 작성 완료
+// - 현재 탭(surveyQuestionTab)을 '설문 문항 생성' → '설문 문항'으로 변경
+// - 작성 완료 버튼 → IconButton으로 바꾸기
+
+// ✅ 설문 문항 생성
+// 작성 완료
+// - 현재 탭(surveyQuestionTab)을 '설문 문항 생성' → '설문 문항'으로 변경
+// - 작성 완료 버튼 → IconButton으로 바꾸기
+
 const SurveyQuestionTab = ({ survey }: SurveyQuestionTabProps) => {
   const { isSubmitted } = survey;
   const currentTab = isSubmitted

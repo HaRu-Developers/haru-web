@@ -76,7 +76,7 @@ const InputInviteMember = ({
     onInvite?.(emails);
     onEmailsChange?.([]);
   };
-
+  const isDisabled = emails.length === 0;
   return (
     <div className={clsx('text-b3-rg flex flex-col items-start gap-2', className)}>
       {/* 타이틀 부분 */}
@@ -107,7 +107,11 @@ const InputInviteMember = ({
               className={clsx('h-30pxr flex-1 outline-none')}
             />
           </div>
-          <InviteButton onClick={handleInvite} disabled={emails.length === 0} />
+          <InviteButton
+            onClick={handleInvite}
+            disabled={isDisabled}
+            className={clsx({ 'cursor-default': isDisabled })}
+          />
         </div>
         {value.trim() && <EmailTag value={value} onClick={handleAddEmail} />}
       </div>

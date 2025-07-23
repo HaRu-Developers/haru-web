@@ -82,33 +82,35 @@ const InputInviteMember = ({
       {/* 타이틀 부분 */}
       {title && <span className="text-cap1-rg text-gray-200">{title}</span>}
       {/* 이메일 입력 및 초대 버튼 부분 */}
-      <div
-        className={clsx(
-          'h-min-48pxr rounded-9pxr py-9pxr flex w-full shrink-0 items-center justify-between gap-2.5 px-3.5',
-          {
-            'border-stroke-100 border': !isFocused,
-            'border-stroke-selected border-2': isFocused,
-          },
-        )}
-      >
-        <div className={clsx('flex w-full flex-wrap gap-2')}>
-          {emails.map((email) => (
-            <EmailChip key={email} email={email} onRemove={handleRemoveEmail} />
-          ))}
-          <input
-            type="text"
-            value={value}
-            placeholder={emails.length > 0 ? '' : placeholder}
-            onChange={handleChange}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-            onKeyDown={handleInputKeyDown}
-            className={clsx('h-30pxr flex-1 outline-none')}
-          />
+      <div className="flex flex-col gap-1">
+        <div
+          className={clsx(
+            'h-min-48pxr rounded-9pxr py-9pxr flex w-full shrink-0 items-center justify-between gap-2.5 px-3.5',
+            {
+              'border-stroke-100 border': !isFocused,
+              'border-stroke-selected border-2': isFocused,
+            },
+          )}
+        >
+          <div className={clsx('flex w-full flex-wrap gap-2')}>
+            {emails.map((email) => (
+              <EmailChip key={email} email={email} onRemove={handleRemoveEmail} />
+            ))}
+            <input
+              type="text"
+              value={value}
+              placeholder={emails.length > 0 ? '' : placeholder}
+              onChange={handleChange}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+              onKeyDown={handleInputKeyDown}
+              className={clsx('h-30pxr flex-1 outline-none')}
+            />
+          </div>
+          <InviteButton onClick={handleInvite} />
         </div>
-        <InviteButton onClick={handleInvite} />
+        {value.trim() && <EmailTag value={value} onClick={handleAddEmail} />}
       </div>
-      {value.trim() && <EmailTag value={value} onClick={handleAddEmail} />}
     </div>
   );
 };

@@ -60,8 +60,9 @@ module.exports = {
     '^@common/mutations/(.*)$',
     '^@common/apis/(.*)$',
     '^@common/components/(.*)$',
-    '^@buttons/(.*)$', // 버튼 컴포넌트
+    '^@common/stores/(.*)$',
     '^@common/(.*)$', // 나머지 공통 루트
+    '^@buttons/(.*)$', // 버튼 컴포넌트
 
     // 도메인 모듈 (features)
     '^@features/.*/types/(.*)$',

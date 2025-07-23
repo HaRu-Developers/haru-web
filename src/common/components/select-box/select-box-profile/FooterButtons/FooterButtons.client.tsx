@@ -6,8 +6,8 @@ import ProfileDropdownIcons from '@icons/ProfileDropdownIcons/ProfileDropdownIco
 import { ProfileDropdownIconsState } from '@icons/ProfileDropdownIcons/ProfileDropdownIcons.types';
 
 const FooterButtons = () => {
-  const handleAddWorkspace = () => {
-    console.log('워크스페이스 추가 버튼 클릭');
+  const handleEditProfile = () => {
+    console.log('프로필 설정 버튼 클릭');
   };
 
   const handleLogout = () => {
@@ -16,11 +16,12 @@ const FooterButtons = () => {
 
   return (
     <div className="flex w-full items-center justify-between">
-      <button onClick={handleAddWorkspace} className="rounded-7pxr h-7 bg-gray-700 px-2 py-1.5">
-        <div className="gap-3pxr flex items-center">
-          <PlusIcons state={PlusIconsState.SIZE_16_GRAY_300} />
-          <span className="text-cap1-md text-gray-300">워크스페이스 추가</span>
-        </div>
+      <button
+        onClick={handleEditProfile}
+        className="border-stroke-200 gap-3pxr rounded-7pxr flex h-7 items-center justify-center border border-solid bg-white px-2 py-1.5"
+      >
+        <ProfileDropdownIcons state={ProfileDropdownIconsState.PROFILE} />
+        <span className="text-cap1-md text-gray-300">프로필 설정</span>
       </button>
       <button onClick={handleLogout} className="gap-3pxr flex items-center">
         <ProfileDropdownIcons state={ProfileDropdownIconsState.LOGOUT} />

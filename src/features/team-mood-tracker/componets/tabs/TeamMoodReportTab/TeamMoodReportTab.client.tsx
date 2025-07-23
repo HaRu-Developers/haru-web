@@ -1,14 +1,15 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 import FeatureTabIcons from '@icons/FeatureTabIcons/FeatureTabIcons';
 import { FeatureTabIconsState } from '@icons/FeatureTabIcons/FeatureTabIcons.types';
 
 import CategoryOption from '@common/components/CategoryOption/CategoryOption.client';
-import DownloadButton from '@common/components/buttons/30px/DownloadButton/DownloadButton.client';
-import IconButton from '@common/components/buttons/IconButton/IconButton.client';
+
+import DownloadButton from '@buttons/30px/DownloadButton/DownloadButton.client';
+import IconButton from '@buttons/IconButton/IconButton.client';
 
 import {
   TeamMoodReportTabLabels,
@@ -20,7 +21,6 @@ import { TeamMoodReportTabProps } from './TeamMoodReportTab.types';
 const tabs = Object.values(TeamMoodReportTabType);
 
 const TeamMoodReportTab = ({ current, counts }: TeamMoodReportTabProps) => {
-  const searchParams = useSearchParams();
   const pathname = usePathname() ?? '';
 
   const handleDownloadClick = () => {
@@ -40,8 +40,7 @@ const TeamMoodReportTab = ({ current, counts }: TeamMoodReportTabProps) => {
       {/* 탭 영역 */}
       <div className="gap-9pxr inline-flex">
         {tabs.map((tab) => {
-          const rawParams = searchParams?.toString() ?? '';
-          const params = new URLSearchParams(rawParams);
+          const params = new URLSearchParams();
           params.set('moodTab', tab); // 현재 탭 값 설정
 
           return (

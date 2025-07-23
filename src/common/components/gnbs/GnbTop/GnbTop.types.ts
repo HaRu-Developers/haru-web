@@ -1,4 +1,4 @@
-import { GnbSection, SnsGnbTabType } from '@common/constants/gnbs';
+import { GnbSection, SnsGnbTabType } from '@common/types/gnbs.types';
 
 export interface GnbTopProps {
   section: GnbSection;

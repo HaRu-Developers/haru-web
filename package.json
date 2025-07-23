@@ -23,13 +23,15 @@
     "chart.js": "^4.5.0",
     "clsx": "^2.1.1",
     "immer": "^10.1.1",
+    "import-in-the-middle": "^1.14.2",
     "next": "15.3.4",
     "react": "^19.1.0",
     "react-calendar": "^6.0.0",
     "react-dom": "^19.1.0",
-    "zustand": "^5.0.6",
-    "import-in-the-middle": "^1.14.2",
-    "require-in-the-middle": "^7.5.2"
+    "require-in-the-middle": "^7.5.2",
+    "typescript-eslint": "^8.35.0",
+    "zod": "^4.0.5",
+    "zustand": "^5.0.6"
   },
   "devDependencies": {
     "typescript-eslint": "^8.37.0",

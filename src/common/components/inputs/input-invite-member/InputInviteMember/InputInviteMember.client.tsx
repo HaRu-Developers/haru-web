@@ -4,11 +4,11 @@ import { useState } from 'react';
 
 import clsx from 'clsx';
 
+import { isValidEmail } from '@common/utils/valid-email-utils';
+
 import InviteButton from '@common/components/buttons/32px/InviteButton/InviteButton.client';
 import EmailChip from '@common/components/inputs/input-invite-member/emails/EmailChip/EmailChip.client';
 import EmailTag from '@common/components/inputs/input-invite-member/emails/EmailTag/EmailTag.client';
-
-import { isValidEmail } from '@common/utils/valid-email-utils';
 
 import { InputInviteMemberProps } from './InputInviteMember.types';
 
@@ -78,9 +78,9 @@ const InputInviteMember = ({
   };
 
   return (
-    <div className={clsx('text-b3-rg w-534pxr flex flex-col items-start gap-2', className)}>
+    <div className={clsx('text-b3-rg flex flex-col items-start gap-2', className)}>
       {/* 타이틀 부분 */}
-      <span className="text-cap1-rg text-gray-200">{title}</span>
+      {title && <span className="text-cap1-rg text-gray-200">{title}</span>}
       {/* 이메일 입력 및 초대 버튼 부분 */}
       <div
         className={clsx(

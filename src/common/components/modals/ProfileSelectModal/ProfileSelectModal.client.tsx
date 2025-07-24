@@ -5,11 +5,7 @@ import { CrossIconsState } from '@icons/CrossIcons/CrossIcons.types';
 
 import CommonText from '../CommonText/CommonText.server';
 import { CommonTextType } from '../CommonText/CommonText.types';
-import {
-  ProfileSelectModalMenu,
-  ProfileSelectModalMenuState,
-  ProfileSelectModalProps,
-} from './ProfileSelectModal.types';
+import { ProfileSelectModalMenuState, ProfileSelectModalProps } from './ProfileSelectModal.types';
 import { ProfileSelectModalMenuButton } from './ProfileSelectModalMenuButton/ProfileSelectModalMenuButton';
 import ProfileSettingMenu from './ProfileSettingMenu/ProfileSettingMenu.client';
 import WorkspaceSettingsMenu from './WorkspaceSettingsMenu/WorkspaceSettingsMenu.client';

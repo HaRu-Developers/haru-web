@@ -4,6 +4,15 @@ import clsx from 'clsx';
 
 import { InputFieldModalProps } from './InputFieldModal.types';
 
+/**
+ * 입력 필드 모달 컴포넌트
+ * @param title - 모달 제목
+ * @param placeholder - 입력 필드 플레이스홀더
+ * @param value - 입력 필드 값
+ * @param type - 입력 필드 타입 (기본값: 'text')
+ * @param onChange - 입력 필드 값 변경 핸들러
+ * @param className - 추가 클래스 이름
+ */
 const InputFieldModal = ({
   title,
   placeholder,

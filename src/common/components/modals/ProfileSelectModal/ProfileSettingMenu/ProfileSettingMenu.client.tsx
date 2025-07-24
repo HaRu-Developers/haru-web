@@ -1,6 +1,7 @@
 'use client';
 
 import ChangePasswordButton from '@common/components/buttons/30px/ChangePasswordButton/ChangePasswordButton.client';
+import { ChangePasswordButtonState } from '@common/components/buttons/30px/ChangePasswordButton/ChangePasswordButton.types';
 import SocialConnectButton from '@common/components/buttons/30px/SocialConnectButton/SocialConnectButton.client';
 import SaveButton from '@common/components/buttons/38px/SaveButton/SaveButton.client';
 
@@ -42,7 +43,10 @@ const ProfileSettingMenu = ({ name, email, instagramAccount }: ProfileSettingMen
           {/* 비밀번호 변경 */}
           <div className="gap-y-8pxr flex flex-col">
             <CommonText type={CommonTextType.CAP1_RG_GRAY_200} text="비밀번호" />
-            <ChangePasswordButton onClick={() => {}} />
+            <ChangePasswordButton
+              onClick={() => {}}
+              state={ChangePasswordButtonState.COLOR_WHITE}
+            />
           </div>
         </div>
       </div>

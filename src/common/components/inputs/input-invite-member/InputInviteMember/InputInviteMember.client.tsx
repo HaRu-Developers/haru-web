@@ -74,7 +74,6 @@ const InputInviteMember = ({
   const handleInvite = () => {
     if (emails.length === 0) return;
     onInvite?.(emails);
-    onEmailsChange?.([]);
   };
   const isDisabled = emails.length === 0;
   return (

@@ -4,4 +4,5 @@ export enum OnboardingIconsState {
   CALENDAR = 'CALENDAR',
   MOOD_TRACKER = 'MOOD_TRACKER',
   CHECK = 'CHECK',
+  WORKSPACE_DEFAULT = 'WORKSPACE_DEFAULT',
 }

@@ -21,8 +21,14 @@ const ProfileImage = ({ src, userId, name, size = ImageSize.SMALL }: ProfileImag
   const sizeClass = size === ImageSize.SMALL ? 'h-7 w-7 ' : 'h-10 w-10';
 
   return (
-    <div className={clsx('relative', sizeClass)}>
-      <Image src={src} alt="프로필 이미지" fill onError={() => setHasError(true)} />
+    <div className={clsx('relative rounded-sm', sizeClass)}>
+      <Image
+        src={src}
+        alt="프로필 이미지"
+        fill
+        style={{ objectFit: 'cover', borderRadius: '100px' }}
+        onError={() => setHasError(true)}
+      />
     </div>
   );
 };

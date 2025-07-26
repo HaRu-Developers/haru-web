@@ -1,15 +1,10 @@
-'use client';
-
-import { useRef } from 'react';
-
-import useOutsideClick from '@common/hooks/useOutsideClick';
-
 import ModalPortal from '@common/components/ModalPortal/ModalPortal.server';
 import ProfileImage from '@common/components/images/ProfileImage/ProfileImage.client';
 import { ImageSize } from '@common/components/images/types/images.common.types';
 
 import FooterButtons from './FooterButtons/FooterButtons.client';
 import HeaderButtons from './HeaderButtons/HeaderButtons.client';
+import NewWorkspaceButton from './NewWorkspaceButton/NewWorkspaceButton.client';
 import WorkSpaceItem from './WorkSpaceItem/WorkSpaceItem.client';
 
 // 임시 데이터
@@ -66,12 +61,6 @@ const SelectBoxProfile = ({
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const boxRef = useRef<HTMLDivElement | null>(null);
-
-  useOutsideClick(boxRef, () => {
-    setIsOpen(false);
-  });
-
   if (!isOpen) return null;
 
   return (
@@ -84,7 +73,10 @@ const SelectBoxProfile = ({
         }}
       >
         {/* 드롭다운 모달 */}
-        <div className="border-stroke-200 shadow-dropdown-popup w-302pxr top-112pxr left-16pxr fixed z-2 flex flex-col items-start gap-2.5 rounded-2xl border border-solid bg-white p-4">
+        <div
+          className="border-stroke-200 shadow-dropdown-popup w-302pxr top-112pxr left-16pxr fixed z-2 flex flex-col items-start gap-2.5 rounded-2xl border border-solid bg-white p-4"
+          onClick={(e) => e.stopPropagation()}
+        >
           <div className="flex flex-col items-start gap-2.5 self-stretch">
             <div className="flex flex-col gap-4">
               <div className="flex items-center gap-3.5">
@@ -115,10 +107,11 @@ const SelectBoxProfile = ({
                   isOwner={ws.isOwner}
                 />
               ))}
+              <NewWorkspaceButton />
             </div>
           </div>
 
-          <div className="bg-stroke-200 h-pxr w-full"></div>
+          <div className="bg-stroke-200 h-1pxr w-full"></div>
 
           <FooterButtons />
         </div>

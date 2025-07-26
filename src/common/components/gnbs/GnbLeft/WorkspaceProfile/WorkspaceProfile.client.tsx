@@ -6,7 +6,7 @@ import ArrowIcons from '@icons/ArrowIcons/ArrowIcons';
 import { ArrowIconsState } from '@icons/ArrowIcons/ArrowIcons.types';
 
 import WorkspaceProfileImage from '@common/components/images/WorkspaceProfileImage/WorkspaceProfileImage.client';
-import SelectBoxProfile from '@common/components/select-box/SelectBoxProfile/SelectBoxProfile.client';
+import SelectBoxProfile from '@common/components/select-box/SelectBoxProfile/SelectBoxProfile.server';
 
 const WorkSpaceProfile = () => {
   const [isOpenSelectBoxProfile, setIsOpenSelectBoxProfile] = useState(false);
@@ -35,7 +35,7 @@ const WorkSpaceProfile = () => {
               workspaceId={workspace.workspaceId}
               src={workspace.imagePath}
               title={workspace.title}
-              className="w-20pxr h-20pxr"
+              className="w-20pxr h-20pxr rounded-100pxr text-cap3-rg"
             />
             <p className="text-cap1-rg text-black">{workspace.title}</p>
           </div>

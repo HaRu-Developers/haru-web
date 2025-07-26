@@ -19,7 +19,7 @@ const SelectBoxProfileItem = ({ workspaceId, imagePath, title, isOwner }: WorkSp
           workspaceId={workspaceId}
           src={imagePath}
           title={title}
-          className="w-18pxr h-18pxr"
+          className="w-18pxr h-18pxr text-cap3-rg"
         />
         <p className="text-b3-rg text-black">{title}</p>
       </span>

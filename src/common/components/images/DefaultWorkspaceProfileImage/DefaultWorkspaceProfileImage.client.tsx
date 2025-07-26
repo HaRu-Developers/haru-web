@@ -21,7 +21,7 @@ const DefaultWorkspaceProfileImage = ({
   return (
     <div
       className={clsx(
-        `text-cap3-rg rounded-100pxr flex shrink-0 items-center justify-center text-white`,
+        `rounded-2pxr flex shrink-0 items-center justify-center text-white`,
         className,
       )}
       style={{ background: backgroundColor }}

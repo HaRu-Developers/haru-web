@@ -10,8 +10,8 @@ import DefaultWorkspaceProfileImage from '../DefaultWorkspaceProfileImage/Defaul
 import { WorkspaceProfileImageProps } from './WorkspaceProfileImage.types';
 
 const WorkspaceProfileImage = ({
-  src,
   workspaceId,
+  src,
   title,
   className,
 }: WorkspaceProfileImageProps) => {
@@ -29,6 +29,7 @@ const WorkspaceProfileImage = ({
         src={src}
         alt={`${title} 워크스페이스 프로필 이미지`}
         fill
+        style={{ objectFit: 'cover', borderRadius: '2px' }}
         onError={() => setHasError(true)}
       />
     </div>

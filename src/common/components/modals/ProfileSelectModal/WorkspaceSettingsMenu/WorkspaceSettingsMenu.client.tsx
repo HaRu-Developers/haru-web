@@ -6,6 +6,7 @@ import Image from 'next/image';
 
 import AddWorkspaceButton from '@common/components/buttons/30px/AddWorkspaceButton/AddWorkspaceButton.client';
 import SaveButton from '@common/components/buttons/38px/SaveButton/SaveButton.client';
+import WorkspaceProfileImage from '@common/components/images/WorkspaceProfileImage/WorkspaceProfileImage.client';
 import InputInviteMember from '@common/components/inputs/input-invite-member/InputInviteMember/InputInviteMember.client';
 
 import CommonText from '../../CommonText/CommonText.server';
@@ -36,8 +37,9 @@ const mockTeammates: Teammate[] = [
  *
  */
 const WorkspaceSettingsMenu = ({
+  workspaceId,
   imageUrl,
-  workspaceName,
+  title,
   teammateList = mockTeammates,
 }: WorkspaceSettingsMenuProps) => {
   // 내부적으로 처리 되서 반환 됩니다.
@@ -72,14 +74,12 @@ const WorkspaceSettingsMenu = ({
         <div className="gap-y-8pxr flex flex-col">
           <CommonText type={CommonTextType.CAP1_RG_GRAY_300} text="워크스페이스 대표 사진" />
           <div className="w-76pxr h-76pxr p-8pxr rounded-9pxr border-stroke-100 border">
-            {/* next/image는 width/height 또는 fill이 필수이기 때문에 중첩해서 div 적용 */}
-            <div className="relative h-full w-full">
-              <Image
-                src={imageUrl ?? 'https://picsum.photos/200'} // Fallback image if no URL is provided
-                alt="워크스페이스 대표 사진"
-                fill
-              />
-            </div>
+            <WorkspaceProfileImage
+              workspaceId={workspaceId}
+              src={imageUrl}
+              title={title}
+              className="text-t3-sb rounded-2pxr h-full w-full"
+            />
           </div>
         </div>
 
@@ -87,7 +87,7 @@ const WorkspaceSettingsMenu = ({
         <div className="gap-y-8pxr flex flex-col">
           <CommonText type={CommonTextType.CAP1_RG_GRAY_300} text="워크스페이스 명" />
           <div className="py-7pxr px-10pxr text-b3-rg rounded-4pxr border-stroke-200 border text-black">
-            {workspaceName || 'No Workspace Name'} {/* Fallback text if no name is provided */}
+            {title ?? 'No Workspace Name'} {/* Fallback text if no name is provided */}
           </div>
         </div>
       </div>
@@ -121,10 +121,7 @@ const WorkspaceSettingsMenu = ({
 
         {/* 팀원 목록 */}
         <div className="gap-y-8pxr mt-16pxr flex flex-col">
-          <CommonText
-            type={CommonTextType.CAP1_RG_GRAY_200}
-            text={`${workspaceName} 워크스페이스 팀원`}
-          />
+          <CommonText type={CommonTextType.CAP1_RG_GRAY_200} text={`${title} 워크스페이스 팀원`} />
 
           {/* 팀원 카드 컴포넌트 */}
           <div className="gap-8pxr flex flex-row flex-wrap">

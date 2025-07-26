@@ -4,6 +4,7 @@ import { useRef } from 'react';
 
 import useOutsideClick from '@common/hooks/useOutsideClick';
 
+import ModalPortal from '@common/components/ModalPortal/ModalPortal.server';
 import ProfileImage from '@common/components/images/ProfileImage/ProfileImage.client';
 import { ImageSize } from '@common/components/images/types/images.common.types';
 
@@ -15,7 +16,7 @@ import WorkSpaceItem from './WorkSpaceItem/WorkSpaceItem.client';
 const profile = {
   userId: '1n',
   imagePath: '/assets/images/profileImage.jpg',
-  name: 'UMC 8기 운영진',
+  name: '기쁨',
   email: 'tngh9509@gmail.com',
 };
 
@@ -74,47 +75,55 @@ const SelectBoxProfile = ({
   if (!isOpen) return null;
 
   return (
-    <div
-      ref={boxRef}
-      className="border-stroke-200 shadow-dropdown-popup w-302pxr flex flex-col items-start gap-2.5 rounded-2xl border border-solid bg-white p-4"
-    >
-      <div className="flex flex-col items-start gap-2.5 self-stretch">
-        <div className="flex flex-col gap-4">
-          <div className="flex items-center gap-3.5">
-            <ProfileImage
-              userId={profile.userId}
-              src={profile.imagePath}
-              name={profile.name}
-              size={ImageSize.LARGE}
-            />
-            <div>
-              <p className="text-cap1-rg text-black">{profile.name}</p>
-              <p className="text-cap2-rg text-gray-400">{profile.email}</p>
+    <ModalPortal>
+      {/* 배경 영역 */}
+      <div
+        className="fixed inset-0 z-1"
+        onClick={() => {
+          setIsOpen(false);
+        }}
+      >
+        {/* 드롭다운 모달 */}
+        <div className="border-stroke-200 shadow-dropdown-popup w-302pxr top-112pxr left-16pxr fixed z-2 flex flex-col items-start gap-2.5 rounded-2xl border border-solid bg-white p-4">
+          <div className="flex flex-col items-start gap-2.5 self-stretch">
+            <div className="flex flex-col gap-4">
+              <div className="flex items-center gap-3.5">
+                <ProfileImage
+                  userId={profile.userId}
+                  src={profile.imagePath}
+                  name={profile.name}
+                  size={ImageSize.LARGE}
+                />
+                <div>
+                  <p className="text-cap1-rg text-black">{profile.name}</p>
+                  <p className="text-cap2-rg text-gray-400">{profile.email}</p>
+                </div>
+              </div>
+              <HeaderButtons />
+            </div>
+
+            <div className="bg-stroke-200 h-px w-full"></div>
+
+            <div className="w-full">
+              <p className="text-cap2-md mb-7pxr px-2.5 text-gray-400">내 워크스페이스</p>
+              {workspaces.map((ws) => (
+                <WorkSpaceItem
+                  key={ws.workspaceId}
+                  workspaceId={ws.workspaceId}
+                  imagePath={ws.imagePath}
+                  title={ws.title}
+                  isOwner={ws.isOwner}
+                />
+              ))}
             </div>
           </div>
-          <HeaderButtons />
-        </div>
 
-        <div className="bg-stroke-200 h-px w-full"></div>
+          <div className="bg-stroke-200 h-pxr w-full"></div>
 
-        <div className="w-full">
-          <p className="text-cap2-md mb-7pxr px-2.5 text-gray-400">내 워크스페이스</p>
-          {workspaces.map((ws) => (
-            <WorkSpaceItem
-              key={ws.workspaceId}
-              workspaceId={ws.workspaceId}
-              imagePath={ws.imagePath}
-              title={ws.title}
-              isOwner={ws.isOwner}
-            />
-          ))}
+          <FooterButtons />
         </div>
       </div>
-
-      <div className="bg-stroke-200 h-pxr w-full"></div>
-
-      <FooterButtons />
-    </div>
+    </ModalPortal>
   );
 };
 

@@ -22,7 +22,7 @@ const GnbTop = ({ section, title, current }: GnbTopProps) => {
   const isCustomSection = section === GnbSection.CUSTOM;
 
   return (
-    <div className="flex w-300 flex-col items-start">
+    <div className="flex w-full flex-col items-start">
       {/* 상단 제목 */}
       <div className="border-b-stroke-200 h-60pxr py-13pxr flex items-center justify-between self-stretch border-b border-solid bg-white px-6">
         <p className="text-t3-sb text-black">{config.title}</p>

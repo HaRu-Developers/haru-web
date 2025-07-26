@@ -45,7 +45,7 @@ const LeftTab = ({ current }: LeftTabProps) => {
   };
 
   return (
-    <div className="border-stroke-200 w-720pxr py-13pxr flex h-14 shrink-0 items-center justify-between border-b border-solid bg-white px-5">
+    <div className="border-stroke-200 py-13pxr flex h-14 w-full shrink-0 items-center justify-between border-b border-solid bg-white px-5">
       {/* 탭 영역 */}
       <div className="gap-9pxr inline-flex items-center">
         {tabs.map((tab) => {

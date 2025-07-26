@@ -32,6 +32,7 @@ const WorkSpaceProfile = () => {
         <div className="flex items-center justify-between self-stretch">
           <div className="flex items-center gap-2">
             <WorkspaceProfileImage
+              workspaceId={workspace.workspaceId}
               src={workspace.imagePath}
               title={workspace.title}
               className="w-20pxr h-20pxr"
@@ -42,9 +43,7 @@ const WorkSpaceProfile = () => {
         </div>
       </button>
       {isOpenSelectBoxProfile && (
-        <div className="absolute top-full left-0 z-1 mt-1">
-          <SelectBoxProfile isOpen={isOpenSelectBoxProfile} setIsOpen={setIsOpenSelectBoxProfile} />
-        </div>
+        <SelectBoxProfile isOpen={isOpenSelectBoxProfile} setIsOpen={setIsOpenSelectBoxProfile} />
       )}
     </div>
   );

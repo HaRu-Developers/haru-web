@@ -32,6 +32,8 @@ const DefaultProfileImage = ({
         sizeClass,
       )}
       style={{ background: backgroundColor }}
+      role="img"
+      aria-label={`사용자 ${name}의 기본 프로필 이미지`}
     >
       <p>{initial}</p>
     </div>

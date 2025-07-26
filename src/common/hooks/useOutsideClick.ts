@@ -12,6 +12,7 @@ const useOutsideClick = (ref: React.RefObject<HTMLElement | null>, onOutsideClic
     };
 
     document.addEventListener('click', handleClick);
+
     return () => {
       document.removeEventListener('click', handleClick);
     };

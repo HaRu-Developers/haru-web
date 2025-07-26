@@ -6,14 +6,21 @@ import Image from 'next/image';
 
 import clsx from 'clsx';
 
+import DefaultWorkspaceProfileImage from '../DefaultWorkspaceProfileImage/DefaultWorkspaceProfileImage.client';
 import { WorkspaceProfileImageProps } from './WorkspaceProfileImage.types';
 
-const WorkspaceProfileImage = ({ src, title, className }: WorkspaceProfileImageProps) => {
+const WorkspaceProfileImage = ({
+  src,
+  workspaceId,
+  title,
+  className,
+}: WorkspaceProfileImageProps) => {
   const [hasError, setHasError] = useState(false);
 
   if (!src || hasError) {
-    // TODO: 여기에 기본 이미지
-    return;
+    return (
+      <DefaultWorkspaceProfileImage workspaceId={workspaceId} title={title} className={className} />
+    );
   }
 
   return (

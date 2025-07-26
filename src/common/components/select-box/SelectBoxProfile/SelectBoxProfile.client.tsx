@@ -7,9 +7,9 @@ import useOutsideClick from '@common/hooks/useOutsideClick';
 import ProfileImage from '@common/components/images/ProfileImage/ProfileImage.client';
 import { ImageSize } from '@common/components/images/types/images.common.types';
 
-import FooterButtons from '../FooterButtons/FooterButtons.client';
-import HeaderButtons from '../HeaderButtons/HeaderButtons.client';
-import WorkSpaceItem from '../WorkSpaceItem/WorkSpaceItem.client';
+import FooterButtons from './FooterButtons/FooterButtons.client';
+import HeaderButtons from './HeaderButtons/HeaderButtons.client';
+import WorkSpaceItem from './WorkSpaceItem/WorkSpaceItem.client';
 
 // 임시 데이터
 const profile = {
@@ -48,7 +48,7 @@ const workspaces = [
     workspaceId: '5n',
     imagePath: '/assets/images/profileImage.jpg',
     title: '구름톤 유니브 7기',
-    isOwner: false,
+    isOwner: true,
   },
   {
     workspaceId: '6n',
@@ -105,6 +105,7 @@ const SelectBoxProfile = ({
               workspaceId={ws.workspaceId}
               imagePath={ws.imagePath}
               title={ws.title}
+              isOwner={ws.isOwner}
             />
           ))}
         </div>

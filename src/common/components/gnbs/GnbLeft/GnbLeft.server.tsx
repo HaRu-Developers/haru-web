@@ -1,6 +1,7 @@
 import HaruLogoIcons from '@icons/logos/HaruLogoIcons/HaruLogoIcons';
 import { HaruLogoIconsState } from '@icons/logos/HaruLogoIcons/HaruLogoIcons.types';
 
+import { Category } from '@common/constants/common.constants';
 import { GnbLeftNavItems } from '@common/constants/gnbs.constants';
 
 import NavItem from './NavItem/NavItem.client';
@@ -13,10 +14,32 @@ const GnbLeft = () => {
     {
       documentId: '1n',
       title: 'UMC 8기 운영진 회의',
+      documentType: Category,
+      lastOpened: '2025-07-15T16:00:00+09:00',
     },
     {
       documentId: '2n',
       title: 'Team-Haru 22차 전사회의',
+      documentType: Category,
+      lastOpened: '2025-07-15T16:00:00+09:00',
+    },
+    {
+      documentId: '3n',
+      title: 'Team-Haru 22차 전사회의',
+      documentType: Category,
+      lastOpened: '2025-07-15T16:00:00+09:00',
+    },
+    {
+      documentId: '4n',
+      title: 'Team-Haru 22차 전사회의',
+      documentType: Category,
+      lastOpened: '2025-07-15T16:00:00+09:00',
+    },
+    {
+      documentId: '5n',
+      title: 'Team-Haru 22차 전사회의',
+      documentType: Category,
+      lastOpened: '2025-07-15T16:00:00+09:00',
     },
   ];
 

@@ -6,7 +6,7 @@ import ArrowIcons from '@icons/ArrowIcons/ArrowIcons';
 import { ArrowIconsState } from '@icons/ArrowIcons/ArrowIcons.types';
 
 import WorkspaceProfileImage from '@common/components/images/WorkspaceProfileImage/WorkspaceProfileImage.client';
-import SelectBoxProfile from '@common/components/select-box/select-box-profile/SelectBoxProfile/SelectBoxProfile.client';
+import SelectBoxProfile from '@common/components/select-box/SelectBoxProfile/SelectBoxProfile.client';
 
 const WorkSpaceProfile = () => {
   const [isOpenSelectBoxProfile, setIsOpenSelectBoxProfile] = useState(false);

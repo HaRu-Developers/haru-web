@@ -6,16 +6,14 @@ import Image from 'next/image';
 
 import clsx from 'clsx';
 
-import LeftGnbIcons from '@icons/LeftGnbIcons/LeftGnbIcons';
-import { LeftGnbIconsState } from '@icons/LeftGnbIcons/LeftGnbIcons.types';
-
 import { WorkspaceProfileImageProps } from './WorkspaceProfileImage.types';
 
 const WorkspaceProfileImage = ({ src, title, className }: WorkspaceProfileImageProps) => {
   const [hasError, setHasError] = useState(false);
 
   if (!src || hasError) {
-    return <LeftGnbIcons state={LeftGnbIconsState.RECENT_FILE} />;
+    // TODO: 여기에 기본 이미지
+    return;
   }
 
   return (

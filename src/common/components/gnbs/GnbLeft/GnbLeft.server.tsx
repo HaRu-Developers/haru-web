@@ -4,23 +4,19 @@ import { HaruLogoIconsState } from '@icons/logos/HaruLogoIcons/HaruLogoIcons.typ
 import { GnbLeftNavItems } from '@common/constants/gnbs.constants';
 
 import NavItem from './NavItem/NavItem.client';
-import RecentWorkspace from './RecentWorkspace/RecentWorkspace.server';
+import RecentDocumentItem from './RecentDocumentItem/RecentDocumentItem.server';
 import WorkSpaceProfile from './WorkspaceProfile/WorkspaceProfile.client';
 
 const GnbLeft = () => {
   // 임시 데이터
-  const recentWorkspaces = [
+  const recentDocuments = [
     {
-      workspaceId: '1n',
+      documentId: '1n',
       title: 'UMC 8기 운영진 회의',
-      imagePath: '/assets/images/profileImage.jpg',
-      isOwner: true,
     },
     {
-      workspaceId: '2n',
+      documentId: '2n',
       title: 'Team-Haru 22차 전사회의',
-      imagePath: '/assets/images/profileImage.jpg',
-      isOwner: false,
     },
   ];
 
@@ -40,14 +36,8 @@ const GnbLeft = () => {
         recent
       </h4>
       <div className="w-210pxr flex flex-col items-start gap-1">
-        {recentWorkspaces.map((workspace) => (
-          <RecentWorkspace
-            key={workspace.workspaceId}
-            workspaceId={workspace.workspaceId}
-            imagePath={workspace.imagePath}
-            title={workspace.title}
-            isOwner={workspace.isOwner}
-          />
+        {recentDocuments.map((doc) => (
+          <RecentDocumentItem key={doc.documentId} documentId={doc.documentId} title={doc.title} />
         ))}
       </div>
     </div>

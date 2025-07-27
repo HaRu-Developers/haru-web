@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
-import notFoundImage from '@assets/images/404.png';
+import notFoundImage from '@assets/images/404/mixed.png';
 
 import CustomButton from '@buttons/38px/CustomButton/CustomButton.client';
 

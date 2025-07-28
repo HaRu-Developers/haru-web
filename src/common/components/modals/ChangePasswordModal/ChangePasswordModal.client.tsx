@@ -34,15 +34,15 @@ const ChangePasswordModal = ({ onClose, onNextStep }: ChangePasswordModalProps) 
         onChange={setCurrentPassword}
       />
       <InputFieldModal
-        title="새 비밀번호"
-        placeholder="새 비밀번호를 입력해 주세요."
+        title="새로운 비밀번호"
+        placeholder="새로운 비밀번호를 입력해 주세요."
         type="password"
         value={newPassword}
         onChange={setNewPassword}
       />
       <InputFieldModal
-        title="새 비밀번호 확인"
-        placeholder="새 비밀번호를 다시 입력해 주세요."
+        title="새로운 비밀번호 확인"
+        placeholder="새로운 비밀번호를 한 번 더 입력해 주세요."
         type="password"
         value={confirmPassword}
         onChange={setConfirmPassword}

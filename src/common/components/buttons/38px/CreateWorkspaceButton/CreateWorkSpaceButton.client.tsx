@@ -11,12 +11,12 @@ const CreateWorkSpaceButton = ({ onClick, ...props }: ButtonsCommonProps) => {
   return (
     <button
       className={clsx(
-        'text-bt1-sb h-38pxr w-145pxr rounded-7pxr inline-flex items-center justify-center bg-gray-100 text-white',
+        'text-bt1-sb h-38pxr w-171pxr rounded-7pxr inline-flex items-center justify-center bg-gray-100 text-white',
       )}
       {...props}
       onClick={onClick}
     >
-      워크스페이스 생성
+      워크스페이스 생성하기
     </button>
   );
 };

@@ -11,12 +11,8 @@ import CategoryOption from '@common/components/CategoryOption/CategoryOption.cli
 import DownloadButton from '@buttons/30px/DownloadButton/DownloadButton.client';
 import IconButton from '@buttons/IconButton/IconButton.client';
 
-import {
-  TeamMoodReportTabLabels,
-  TeamMoodReportTabType,
-} from '@features/team-mood-tracker/constants/tabs';
-
-import { TeamMoodReportTabProps } from './TeamMoodReportTab.types';
+import { TeamMoodReportTabLabels } from './TeamMoodReportTab.constants';
+import { TeamMoodReportTabProps, TeamMoodReportTabType } from './TeamMoodReportTab.types';
 
 const tabs = Object.values(TeamMoodReportTabType);
 

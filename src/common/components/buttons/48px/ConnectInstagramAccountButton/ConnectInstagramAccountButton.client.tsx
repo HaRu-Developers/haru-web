@@ -1,14 +1,19 @@
 'use client';
 
-import ThirdPartyLogoIcons from '@icons/logos/GoogleLogoIcon/ThirdPartyLogoIcons';
-import { ThirdPartyLogoIconsState } from '@icons/logos/GoogleLogoIcon/ThirdPartyLogoIcons.types';
+import ThirdPartyLogoIcons from '@icons/logos/ThirdPartyLogoIcon/ThirdPartyLogoIcons';
+import { ThirdPartyLogoIconsState } from '@icons/logos/ThirdPartyLogoIcon/ThirdPartyLogoIcons.types';
 
-import { ButtonsCommonProps } from '../../types/buttons.common.types';
+import { ConnectInstagramAccountButtonProps } from './ConnectInstagramAccountButton.types';
 
 /**
  * 'Instagram 계정 연동하기' 버튼
  */
-const ConnectInstagramAccountButton = ({ onClick, ...props }: ButtonsCommonProps) => {
+
+const ConnectInstagramAccountButton = ({
+  isConnected,
+  onClick,
+  ...props
+}: ConnectInstagramAccountButtonProps) => {
   return (
     <button
       className="text-b3-rg border-stroke-100 inline-flex h-[48px] w-[414px] items-center justify-center gap-x-[4px] rounded-[9px] border bg-white py-[16.5px] text-gray-100"
@@ -16,7 +21,7 @@ const ConnectInstagramAccountButton = ({ onClick, ...props }: ButtonsCommonProps
       {...props}
     >
       <ThirdPartyLogoIcons state={ThirdPartyLogoIconsState.INSTAGRAM_DEFAULT} />
-      <p>Instagram 계정 연동하기</p>
+      <p>{isConnected ? '다른 Instagram 계정으로 연동하기' : 'Instagram 계정 연동하기'}</p>
     </button>
   );
 };

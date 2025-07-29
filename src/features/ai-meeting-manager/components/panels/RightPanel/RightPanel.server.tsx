@@ -6,7 +6,8 @@ import { AiQuestionIconsState } from '@icons/AiQuestionIcons/AiQuestionIcons.typ
 import AiQuestionCard from '@common/components/AiQuestionCard/AiQuestionCard.client';
 import CategoryOption from '@common/components/CategoryOption/CategoryOption.client';
 
-import { RightTabLabels, RightTabType } from '@features/ai-meeting-manager/constants/tabs';
+import { RightTabLabels } from './RightPanel.constants';
+import { RightTabType } from './RightPanel.types';
 
 const RightPanel = () => {
   const hasMeetingLog = true; // 실제로는 서버에서 가져오기
@@ -26,14 +27,16 @@ const RightPanel = () => {
         </div>
         <h4>회의 내용에 맞춰 질문을 추천해 드려요.</h4>
       </div>
-      <div className="gap-12pxr px-20pxr flex flex-col items-start">
-        <AiQuestionCard
-          aiRecommendQuestion={
-            '해당 금액에 밥값 외에 음료까지 포함되는 건가요? 아니면 순수 식사만 기준인가요?'
-          }
-          userAnswer={'그럼 회비는 인당 25,000원으로 가정하고, 예산 구조를 항목별로 나눠봅시다.'}
-        />
-      </div>
+      {hasMeetingLog && (
+        <div className="gap-12pxr px-20pxr flex flex-col items-start">
+          <AiQuestionCard
+            aiRecommendQuestion={
+              '해당 금액에 밥값 외에 음료까지 포함되는 건가요? 아니면 순수 식사만 기준인가요?'
+            }
+            userAnswer={'그럼 회비는 인당 25,000원으로 가정하고, 예산 구조를 항목별로 나눠봅시다.'}
+          />
+        </div>
+      )}
     </>
   );
 };

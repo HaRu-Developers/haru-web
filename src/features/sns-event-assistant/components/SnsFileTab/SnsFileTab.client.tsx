@@ -11,8 +11,8 @@ import CategoryOption from '@common/components/CategoryOption/CategoryOption.cli
 import DownloadButton from '@buttons/30px/DownloadButton/DownloadButton.client';
 import IconButton from '@buttons/IconButton/IconButton.client';
 
-import { SnsFileTabLabels, SnsFileTabType } from '@features/sns-event-assistant/constants/tabs';
-
+import { SnsFileTabLabels } from './SnsFile.constants';
+import { SnsFileTabType } from './SnsFileTab.types';
 import { TabProps } from './SnsFileTab.types';
 
 const tabs = Object.values(SnsFileTabType);

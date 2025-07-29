@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 
-import { SnsFileTabType } from '@features/sns-event-assistant/constants/tabs';
-
 import SnsFileTab from './SnsFileTab.client';
+import { SnsFileTabType } from './SnsFileTab.types';
 
 const meta: Meta<typeof SnsFileTab> = {
   title: 'Components/sns-event-assistant/SnsFileTab',

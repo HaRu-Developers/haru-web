@@ -17,6 +17,7 @@ const tabStore = create<tabStoreState>()(
         setEditing: (val) => set({ isEditing: val }),
       },
     })),
+    { name: 'TabStore' },
   ),
 );
 

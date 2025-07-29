@@ -1,5 +1,4 @@
-import { SnsFileTabType } from '@features/sns-event-assistant/constants/tabs';
-
+import { SnsFileTabType } from '../SnsFileTab/SnsFileTab.types';
 import { SnsFilePanelProps } from './SnsFilePanel.types';
 import ParticipantList from './components/ParticipantList/ParticipantList.server';
 import SnsLink from './components/SnsLink/SnsLink.server';

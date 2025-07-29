@@ -1,11 +1,7 @@
 import { CtaIconsState } from '@icons/Cta/CtaIcons.types';
 import { PlusIconsState } from '@icons/PlusIcons/PlusIcons.types';
 
-export enum ImageCtaType {
-  AI_MEETING_MANAGER = 'AI_MEETING_MANAGER',
-  SNS_EVENT_ASSISTANT = 'SNS_EVENT_ASSISTANT',
-  TEAM_MOOD_TRACKER = 'TEAM_MOOD_TRACKER',
-}
+import { FileType } from '@common/types/file-type.enum';
 
 export interface ImageCtaConfig {
   title: string;
@@ -16,6 +12,6 @@ export interface ImageCtaConfig {
 }
 
 export interface ImageCtaProps {
-  type: ImageCtaType;
+  type: FileType;
   onClick: () => void;
 }

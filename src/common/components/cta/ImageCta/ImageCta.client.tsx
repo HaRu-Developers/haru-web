@@ -5,24 +5,26 @@ import { CtaIconsState } from '@icons/Cta/CtaIcons.types';
 import PlusIcons from '@icons/PlusIcons/PlusIcons';
 import { PlusIconsState } from '@icons/PlusIcons/PlusIcons.types';
 
-import { ImageCtaConfig, ImageCtaProps, ImageCtaType } from './ImageCta.types';
+import { FileType } from '@common/types/file-type.enum';
 
-const imageCtaConfig: Record<ImageCtaType, ImageCtaConfig> = {
-  [ImageCtaType.AI_MEETING_MANAGER]: {
+import { ImageCtaConfig, ImageCtaProps } from './ImageCta.types';
+
+const imageCtaConfig: Record<FileType, ImageCtaConfig> = {
+  [FileType.AI_MEETING_MANAGER]: {
     title: 'AI 회의 진행 매니저',
     color: 'text-primary',
     ctaIconState: CtaIconsState.AI_MEETING_MANAGER,
     plusIconState: PlusIconsState.SIZE_16_PRIMARY,
     marginBottom: 'mb-20pxr',
   },
-  [ImageCtaType.SNS_EVENT_ASSISTANT]: {
+  [FileType.SNS_EVENT_ASSISTANT]: {
     title: 'SNS 이벤트 어시스턴트',
     color: 'text-secondary-green',
     ctaIconState: CtaIconsState.SNS_EVENT_ASSISTANT,
     plusIconState: PlusIconsState.SIZE_16_SECONDARY_GREEN,
     marginBottom: 'mb-20pxr',
   },
-  [ImageCtaType.TEAM_MOOD_TRACKER]: {
+  [FileType.TEAM_MOOD_TRACKER]: {
     title: '팀 분위기 트래커',
     color: 'text-secondary-blue',
     ctaIconState: CtaIconsState.TEAM_MOOD_TRACKER,

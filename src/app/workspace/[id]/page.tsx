@@ -2,17 +2,18 @@
 
 import { useState } from 'react';
 
+import { FileType } from '@common/types/file-type.enum';
+
 import ImageCta from '@common/components/cta/ImageCta/ImageCta.client';
-import { ImageCtaType } from '@common/components/cta/ImageCta/ImageCta.types';
 import ImageCtaSkeleton from '@common/components/cta/ImageCta/ImageCtaSkeleton';
 import BoxedFile from '@common/components/etc/BoxedFile/BoxedFile.client';
 import { DocumentType } from '@common/components/etc/BoxedFile/BoxedFile.types';
 import BoxedFileSkeleton from '@common/components/etc/BoxedFile/BoxedFileSkelton';
 
 const ctaItems = [
-  { type: ImageCtaType.AI_MEETING_MANAGER, onClick: () => console.log('AI') },
-  { type: ImageCtaType.SNS_EVENT_ASSISTANT, onClick: () => console.log('SNS') },
-  { type: ImageCtaType.TEAM_MOOD_TRACKER, onClick: () => console.log('TEAM') },
+  { type: FileType.AI_MEETING_MANAGER, onClick: () => console.log('AI') },
+  { type: FileType.SNS_EVENT_ASSISTANT, onClick: () => console.log('SNS') },
+  { type: FileType.TEAM_MOOD_TRACKER, onClick: () => console.log('TEAM') },
 ];
 
 // 더미 데이터

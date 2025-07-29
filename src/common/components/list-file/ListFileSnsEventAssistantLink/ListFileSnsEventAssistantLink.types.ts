@@ -1,5 +1,5 @@
 export interface ListFileSnsEventAssistantLinkProps {
-  snsEventId: number;
+  snsEventId: string;
   title: string;
   updatedAt: string;
   snsLink: string;

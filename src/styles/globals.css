@@ -3,11 +3,10 @@
 @import './token/scrollbar.css';
 @import './token/colors.css';
 @import './token/fonts.css';
-@import './token/custom-style.css';
 @import './token/shadows.css';
 @import './token/break-point.css';
 @import './token/define-pxr.css';
-
+@import './custom-style.css';
 @import './animation.css';
 
 @layer base {

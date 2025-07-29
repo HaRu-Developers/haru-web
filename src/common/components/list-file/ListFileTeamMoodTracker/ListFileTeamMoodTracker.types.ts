@@ -1,10 +1,10 @@
 export interface ListFileTeamMoodTrackerProps {
-  surveyId: number;
+  surveyId: string;
   title: string;
   createdAt: string;
   dueDate: string;
   respondentsNum: number;
   isCheckMode: boolean;
   isChecked: boolean;
-  onCheckToggle: (id: number) => void;
+  onCheckToggle: (id: string) => void;
 }

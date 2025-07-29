@@ -1,8 +1,8 @@
 export interface ListFileAiMeetingManagerProps {
-  meetingId: number;
+  meetingId: string;
   title: string;
   updatedAt: string;
   isCheckMode: boolean;
   isChecked: boolean;
-  onCheckToggle: (id: number) => void;
+  onCheckToggle: (id: string) => void;
 }

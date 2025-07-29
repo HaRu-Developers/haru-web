@@ -45,6 +45,7 @@ const WorkspaceSettingsMenu = ({
   // 내부적으로 처리 되서 반환 됩니다.
   const [value, setValue] = useState<string>('');
   const [emails, setEmails] = useState<string[]>([]);
+
   const handleValueChange = (value: string) => {
     // 입력 되는 값 반환 합니다.
     setValue(value);
@@ -63,6 +64,7 @@ const WorkspaceSettingsMenu = ({
     // 이메일 목록은 여기서 반환되고 기존 이메일 목록은 제거됩니다.
     console.log('초대할 이메일 목록:', emails);
   };
+
   return (
     <div className="px-35pxr py-24pxr scrollbar-component gap-y-24pxr flex h-full w-full flex-col overflow-y-auto">
       <CommonText type={CommonTextType.T4_BD_BLACK} text="워크스페이스 기본 정보" />

@@ -7,14 +7,20 @@ import StartButton from '@common/components/buttons/48px/StartButton/StartButton
 import SkipForNowButton from '@common/components/buttons/diverse-size/SkipForNowButton/SkipForNowButton.client';
 import { SkipForNowButtonType } from '@common/components/buttons/diverse-size/SkipForNowButton/SkipForNowButton.types';
 
+import { OnboardingToastType } from '@features/on-boarding/types/OnboardingToast.types';
+
 import {
   useInstagramConnection,
   useOnboardingActions,
   useOnboardingState,
 } from '@features/on-boarding/hooks/stores/useOnBoardingStore';
+import { useOnboardingToastActions } from '@features/on-boarding/hooks/stores/useOnboardingToastStore';
 
 const OnBoardingInstaStep = () => {
   const router = useRouter();
+
+  // 토스트 띄우기 유틸
+  const { showOnboardingToast } = useOnboardingToastActions();
 
   const isConnected = useInstagramConnection();
   const { setInstagramConnected } = useOnboardingActions();
@@ -26,6 +32,11 @@ const OnBoardingInstaStep = () => {
   const handleConnectInstagram = () => {
     // 실제 연동 로직 연결 - 추후
     setInstagramConnected(true); // 예시로 바로 true
+    // 온보딩 토스트 띄우기
+    showOnboardingToast({
+      type: OnboardingToastType.SUCCESS_SNS_ACCOUNT,
+      snsAccount: 'k_nijy',
+    });
   };
 
   const handleCreateWorkSpace = () => {

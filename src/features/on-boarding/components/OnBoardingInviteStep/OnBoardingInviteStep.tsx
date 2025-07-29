@@ -8,15 +8,21 @@ import SkipForNowButton from '@common/components/buttons/diverse-size/SkipForNow
 import { SkipForNowButtonType } from '@common/components/buttons/diverse-size/SkipForNowButton/SkipForNowButton.types';
 import InputInviteMember from '@common/components/inputs/input-invite-member/InputInviteMember/InputInviteMember.client';
 
+import { OnboardingToastType } from '@features/on-boarding/types/OnboardingToast.types';
+
 import {
   useOnboardingActions,
   useOnboardingEmails,
 } from '@features/on-boarding/hooks/stores/useOnBoardingStore';
+import { useOnboardingToastActions } from '@features/on-boarding/hooks/stores/useOnboardingToastStore';
 
 const OnBoardingInviteStep = () => {
   const { setEmails, nextStep } = useOnboardingActions();
   const emails = useOnboardingEmails();
   const [value, setValue] = useState('');
+
+  // 토스트 띄우기 유틸
+  const { showOnboardingToast } = useOnboardingToastActions();
 
   const handleSkip = () => {
     nextStep();
@@ -25,6 +31,16 @@ const OnBoardingInviteStep = () => {
   const handleNext = () => {
     if (emails.length === 0) return;
     nextStep();
+  };
+
+  const handleInvite = (emails: string[]) => {
+    // 초대 버튼 클릭 시 호출 됩니다. -> 이메일 목록 반환
+    // 이메일 목록은 여기서 반환되고 기존 이메일 목록은 제거됩니다.
+    console.log('초대할 이메일 목록:', emails);
+    // 온보딩 토스트 띄우귀
+    showOnboardingToast({
+      type: OnboardingToastType.SUCCESS_INVITE,
+    });
   };
 
   const isNextButtonDisabled = emails.length === 0;
@@ -44,6 +60,7 @@ const OnBoardingInviteStep = () => {
           title=""
           value={value}
           onValueChange={setValue}
+          onInvite={handleInvite}
           emails={emails}
           onEmailsChange={setEmails}
         />

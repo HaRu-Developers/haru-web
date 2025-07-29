@@ -5,7 +5,8 @@ export enum DocumentType {
 }
 export interface BoxedFileProps {
   title: string;
-  lastOpened?: Date;
+  lastOpened?: string;
   thumbnailUrl?: string;
   documentType: DocumentType;
+  onClick: () => void;
 }

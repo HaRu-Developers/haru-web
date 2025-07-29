@@ -39,6 +39,7 @@ export const Default: Story = {
         onInvite={(emails: string[]) => console.log(emails, '초대 클릭')}
         onEmailsChange={handleEmailChange}
         onRemove={(email: string) => console.log(email, '이메일 제거')}
+        className="w-534pxr"
       />
     );
   },
@@ -74,5 +75,40 @@ export const Add: Story = {
     onValueChange: (value: string) => console.log(value),
     onInvite: (emails: string[]) => console.log(emails),
     onEmailsChange: (emails: string[]) => console.log(emails),
+  },
+};
+
+export const NoTitle: Story = {
+  args: {
+    emails: ['example1@email.com', 'example2@email.com', 'example3@email.com'],
+    value: 'example4@email.com',
+    placeholder: '초대할 팀원을 입력해주세요.',
+    onValueChange: (value: string) => console.log(value),
+    onInvite: (emails: string[]) => console.log(emails),
+    onEmailsChange: (emails: string[]) => console.log(emails),
+  },
+};
+
+export const pxr534: Story = {
+  args: {
+    emails: ['example1@email.com', 'example2@email.com', 'example3@email.com'],
+    value: 'example4@email.com',
+    placeholder: '초대할 팀원을 입력해주세요.',
+    onValueChange: (value: string) => console.log(value),
+    onInvite: (emails: string[]) => console.log(emails),
+    onEmailsChange: (emails: string[]) => console.log(emails),
+    className: 'w-534pxr',
+  },
+};
+
+export const pxr414: Story = {
+  args: {
+    emails: ['example1@email.com', 'example2@email.com', 'example3@email.com'],
+    value: 'example4@email.com',
+    placeholder: '초대할 팀원을 입력해주세요.',
+    onValueChange: (value: string) => console.log(value),
+    onInvite: (emails: string[]) => console.log(emails),
+    onEmailsChange: (emails: string[]) => console.log(emails),
+    className: 'w-414pxr',
   },
 };

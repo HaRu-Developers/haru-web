@@ -9,6 +9,11 @@
     background-image: linear-gradient(to right, #0075ff, #00a3ff 48.4375%, #00ffff);
     animation: loading-bar 1.5s ease infinite;
   }
+
+  /* 배경색 Pulse */
+  .animate-bg-pulse {
+    animation: bg-pulse 750ms ease-out 1ms infinite;
+  }
 }
 
 @keyframes fade-in-up {
@@ -30,5 +35,15 @@
   100% {
     width: 100%;
     opacity: 0;
+  }
+}
+
+@keyframes bg-pulse {
+  0%,
+  100% {
+    background-color: rgba(0, 0, 0, 0.03);
+  }
+  50% {
+    background-color: rgba(0, 0, 0, 0.06);
   }
 }

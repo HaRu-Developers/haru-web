@@ -11,9 +11,9 @@ const MoveToNextButton = ({ disabled, onClick, width, ...props }: MoveToNextButt
   return (
     <button
       className={clsx(
-        'text-bt1-sb inline-flex h-[48px] items-center justify-center rounded-[9px] px-[152px] py-[17px] whitespace-nowrap text-white',
+        'text-bt1-sb h-48pxr rounded-9pxr py-17pxr inline-flex items-center justify-center whitespace-nowrap text-white',
         !disabled ? 'bg-gray-100' : 'bg-gray-500',
-        width === MoveToNextButtonWidth.WIDTH_414 ? 'w-[414px]' : 'w-[260px]',
+        width === MoveToNextButtonWidth.WIDTH_414 ? 'w-414pxr' : 'w-260pxr',
       )}
       onClick={onClick}
       {...props}

@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 
-import { TeamMoodReportTabType } from '@features/team-mood-tracker/constants/tabs';
-
 import TeamMoodReportTab from './TeamMoodReportTab.client';
+import { TeamMoodReportTabType } from './TeamMoodReportTab.types';
 
 const meta: Meta<typeof TeamMoodReportTab> = {
   title: 'Components/team-mood-tracker/tabs/TeamMoodReportTab',

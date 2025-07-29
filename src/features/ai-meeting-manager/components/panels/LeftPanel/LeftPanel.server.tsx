@@ -1,5 +1,4 @@
-import { LeftTabType } from '@features/ai-meeting-manager/constants/tabs';
-
+import { LeftTabType } from '../../LeftTab/LeftTab.types';
 import { LeftPanelProps } from './LeftPanel.types';
 import MeetingSummary from './components/MeetingSummary/MeetingSummary.client';
 import MeetingVoiceLog from './components/MeetingVoiceLog/MeetingVoiceLog.server';

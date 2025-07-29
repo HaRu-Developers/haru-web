@@ -45,7 +45,9 @@ const WorkSpaceOnBoarding = () => {
   return (
     <section className="flex h-screen w-[50vw] items-center justify-center bg-gray-700">
       <div className="relative">
-        <Image src={WorkSpaceOnBoardingImage} alt="워크스페이스 온보딩 이미지" />
+        <div className="w-345pxr h-350pxr">
+          <Image src={WorkSpaceOnBoardingImage} alt="워크스페이스 온보딩 이미지" />
+        </div>
 
         {features.map((feature) => (
           <div key={feature.title} className={`${positionClass[feature.position]} z-20`}>

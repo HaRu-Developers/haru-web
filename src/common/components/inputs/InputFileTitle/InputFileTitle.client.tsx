@@ -16,7 +16,7 @@ const InputFileTitle = ({
   onCancel,
 }: InputFileTitleProps) => {
   const [inputValue, setInputValue] = useState<string>(value);
-  
+
   useEffect(() => {
     setInputValue(value);
   }, [value]);
@@ -34,18 +34,21 @@ const InputFileTitle = ({
     onSave?.(inputValue);
   };
   return (
-      <input
-        type="text"
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
-        onKeyDown={handleKeyDown}
-        onBlur={handleBlur}
-        className={clsx('flex w-676pxr h-36pxr items-center px-2 py-0.5 rounded-4pxr text-t1-sb text-black outline-none focus:outline-none bg-white', {
-        'border border-stroke-100': mode === InputFileTitleMode.EDITABLE,
-        })}
-        readOnly={mode !== InputFileTitleMode.EDITABLE}
-        autoFocus
-      />
+    <input
+      type="text"
+      value={inputValue}
+      onChange={(e) => setInputValue(e.target.value)}
+      onKeyDown={handleKeyDown}
+      onBlur={handleBlur}
+      className={clsx(
+        'w-676pxr h-36pxr rounded-4pxr text-t1-sb flex items-center bg-white px-2 py-0.5 text-black outline-none focus:outline-none',
+        {
+          'border-stroke-100 border': mode === InputFileTitleMode.EDITABLE,
+        },
+      )}
+      readOnly={mode !== InputFileTitleMode.EDITABLE}
+      autoFocus
+    />
   );
 };
 

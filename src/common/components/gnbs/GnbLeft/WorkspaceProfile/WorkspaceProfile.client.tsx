@@ -19,7 +19,7 @@ const WorkSpaceProfile = () => {
   const workspace = {
     workspaceId: '1n',
     title: 'UMC 8기 운영진',
-    imagePath: '/assets/images/profileImage.jpg',
+    imagePath: null,
     isOwner: true,
   };
 
@@ -32,10 +32,10 @@ const WorkSpaceProfile = () => {
         <div className="flex items-center justify-between self-stretch">
           <div className="flex items-center gap-2">
             <WorkspaceProfileImage
-              workspaceId={workspace.workspaceId}
               src={workspace.imagePath}
               title={workspace.title}
-              className="w-20pxr h-20pxr rounded-100pxr text-cap3-rg"
+              className="w-20pxr h-20pxr text-cap2-rg"
+              border
             />
             <p className="text-cap1-rg text-black">{workspace.title}</p>
           </div>

@@ -1,7 +1,7 @@
 import { ImageSize } from '../types/images.common.types';
 
 export interface ProfileImageProps {
-  src?: string;
+  src: string | null;
   userId: string;
   name: string;
   size?: ImageSize;

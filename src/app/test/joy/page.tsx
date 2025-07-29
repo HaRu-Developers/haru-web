@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 
 import { SearchParamsType } from '@common/types/routes.types';
 
-import parseEnum from '@common/utils/parse-enum';
+import parseEnum from '@common/utils/parse-enum.utils';
 
 import LeftTab from '@features/ai-meeting-manager/components/LeftTab/LeftTab.client';
 import { LeftTabType } from '@features/ai-meeting-manager/components/LeftTab/LeftTab.types';

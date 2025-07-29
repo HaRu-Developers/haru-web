@@ -34,10 +34,24 @@
     letter-spacing: -0.02em;
   }
 
+  .text-t4-md {
+    font-size: var(--text-18pxr);
+    line-height: 130%;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+  }
+
   .text-t4-bd {
     font-size: var(--text-18pxr);
     line-height: 130%;
     font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .text-t5-rg {
+    font-size: var(--text-16pxr);
+    line-height: 130%;
+    font-weight: 400;
     letter-spacing: -0.02em;
   }
 

@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 
-import { LeftTabType } from '@features/ai-meeting-manager/constants/tabs';
-
 import LeftTab from './LeftTab.client';
+import { LeftTabType } from './LeftTab.types';
 
 const meta: Meta<typeof LeftTab> = {
   title: 'Components/ai-meeting-manager/tabs/LeftTab',

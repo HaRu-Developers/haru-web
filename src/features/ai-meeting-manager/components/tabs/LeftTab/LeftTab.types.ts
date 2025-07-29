@@ -1,5 +1,0 @@
-import { LeftTabType } from '@features/ai-meeting-manager/constants/tabs';
-
-export interface LeftTabProps {
-  current: LeftTabType;
-}

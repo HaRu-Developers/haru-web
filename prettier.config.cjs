@@ -54,10 +54,9 @@ module.exports = {
     // 공통 모듈
     '^@common/types/(.*)$',
     '^@common/constants/(.*)$',
+    '^@common/schemas/(.*)$',
     '^@common/utils/(.*)$',
     '^@common/hooks/(.*)$',
-    '^@common/queries/(.*)$',
-    '^@common/mutations/(.*)$',
     '^@common/apis/(.*)$',
     '^@common/components/(.*)$',
     '^@common/stores/(.*)$',
@@ -67,10 +66,9 @@ module.exports = {
     // 도메인 모듈 (features)
     '^@features/.*/types/(.*)$',
     '^@features/.*/constants/(.*)$',
+    '^@features/.*/schemas/(.*)$',
     '^@features/.*/utils/(.*)$',
     '^@features/.*/hooks/(.*)$',
-    '^@features/.*/queries/(.*)$',
-    '^@features/.*/mutations/(.*)$',
     '^@features/.*/apis/(.*)$',
     '^@features/.*/components/(.*)$',
     '^@features/(.*)$', // 나머지 도메인 루트

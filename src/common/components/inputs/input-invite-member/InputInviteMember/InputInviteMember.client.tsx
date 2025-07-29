@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import clsx from 'clsx';
 
-import { isValidEmail } from '@common/utils/valid-email-utils';
+import { isValidEmail } from '@common/utils/valid-email.utils';
 
 import InviteButton from '@common/components/buttons/32px/InviteButton/InviteButton.client';
 import EmailChip from '@common/components/inputs/input-invite-member/emails/EmailChip/EmailChip.client';

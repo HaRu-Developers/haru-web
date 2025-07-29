@@ -23,7 +23,7 @@ const ProfileSelectModal = ({ onClose, onNextStep }: ProfileSelectModalProps) =>
   const renderMenuContent = () => {
     switch (selectedMenu) {
       case ProfileSelectModalMenuState.WORKSPACE_SETTING:
-        return <WorkspaceSettingsMenu workspaceName="MOCK_WORKSPACE" />;
+        return <WorkspaceSettingsMenu workspaceId="MOCK_WORKSPACE_ID" title="MOCK_WORKSPACE" />;
       case ProfileSelectModalMenuState.PROFILE_SETTING:
         return (
           <ProfileSettingMenu

@@ -1,4 +1,4 @@
-export interface RecentWorkspaceProps {
+export interface WorkSpaceItemProps {
   workspaceId: string;
   imagePath: string;
   title: string;

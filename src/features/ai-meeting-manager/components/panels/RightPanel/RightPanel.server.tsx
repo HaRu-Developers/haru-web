@@ -17,7 +17,7 @@ const RightPanel = () => {
 
   return (
     <>
-      <div className="border-stroke-200 w-480pxr py-13pxr flex h-14 shrink-0 flex-col items-start justify-center gap-2.5 border-b border-solid bg-white px-5">
+      <div className="border-stroke-200 lg:w-480pxr py-13pxr flex h-14 shrink-0 flex-col items-start justify-center gap-2.5 border-b border-solid bg-white px-5">
         <CategoryOption label={label} active />
       </div>
       <div className="gap-6pxr mt-36pxr mb-32pxr flex flex-col items-center">

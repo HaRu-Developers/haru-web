@@ -1,7 +1,7 @@
 import { GnbSection, SnsGnbTabType } from '@common/types/gnbs.types';
 import { SearchParamsType } from '@common/types/routes.types';
 
-import parseEnum from '@common/utils/parse-enum';
+import parseEnum from '@common/utils/parse-enum.utils';
 
 import GnbTop from '@common/components/gnbs/GnbTop/GnbTop.client';
 

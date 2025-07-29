@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/nextjs';
 import DefaultWorkspaceProfileImage from './DefaultWorkspaceProfileImage.client';
 
 const meta: Meta<typeof DefaultWorkspaceProfileImage> = {
-  title: 'Components/DefaultProfileImage',
+  title: 'Components/DefaultWorkspaceProfileImage',
   component: DefaultWorkspaceProfileImage,
   tags: ['autodocs'],
   argTypes: {

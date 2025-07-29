@@ -2,7 +2,7 @@
 
 import { ChangeEvent, useRef, useState } from 'react';
 
-import ChangableImage from '@common/components/ChangableImage/ChangableImage.client';
+import ChangableWorkspaceImage from '@common/components/ChangableWorkspaceImage/ChangableWorkspaceImage.client';
 import MoveToNextButton from '@common/components/buttons/48px/MoveToNextButton/MoveToNextButton.client';
 import { MoveToNextButtonWidth } from '@common/components/buttons/48px/MoveToNextButton/MoveToNextButton.types';
 
@@ -27,7 +27,7 @@ const OnBoardingImageStep = () => {
         아이콘을 클릭해 이미지를 업로드할 수 있어요.
       </p>
 
-      <ChangableImage
+      <ChangableWorkspaceImage
         title={name}
         initialPreview={previewUrlFromServer}
         onFileChange={(file) => {

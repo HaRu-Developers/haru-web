@@ -6,14 +6,14 @@ import clsx from 'clsx';
 
 import WorkspaceProfileImage from '@common/components/images/WorkspaceProfileImage/WorkspaceProfileImage.client';
 
-import { ChangableImageProps } from './ChangableImage.types';
+import { ChangableWorkspaceImageProps } from './ChangableWorkspaceImage.types';
 
-const ChangableImage = ({
+const ChangableWorkspaceImage = ({
   initialPreview = null,
   title,
   onFileChange,
   className,
-}: ChangableImageProps) => {
+}: ChangableWorkspaceImageProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [preview, setPreview] = useState<string | null>(initialPreview);
 
@@ -58,4 +58,4 @@ const ChangableImage = ({
   );
 };
 
-export default ChangableImage;
+export default ChangableWorkspaceImage;

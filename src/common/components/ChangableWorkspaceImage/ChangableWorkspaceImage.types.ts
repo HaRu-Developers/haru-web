@@ -1,4 +1,4 @@
-export interface ChangableImageProps {
+export interface ChangableWorkspaceImageProps {
   initialPreview?: string | null; // 초기 이미지 주소
   title: string; // 첫 글자 추출에 쓸 제목
   onFileChange?: (file: File) => void;

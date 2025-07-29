@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-import ChangableImage from '@common/components/ChangableImage/ChangableImage.client';
+import ChangableWorkspaceImage from '@common/components/ChangableWorkspaceImage/ChangableWorkspaceImage.client';
 import AddWorkspaceButton from '@common/components/buttons/30px/AddWorkspaceButton/AddWorkspaceButton.client';
 import SaveButton from '@common/components/buttons/38px/SaveButton/SaveButton.client';
 import WorkspaceProfileImage from '@common/components/images/WorkspaceProfileImage/WorkspaceProfileImage.client';
@@ -76,7 +76,7 @@ const WorkspaceSettingsMenu = ({
 
         <div className="gap-y-8pxr flex flex-col">
           <CommonText type={CommonTextType.CAP1_RG_GRAY_300} text="워크스페이스 대표 사진" />
-          <ChangableImage
+          <ChangableWorkspaceImage
             title={title}
             initialPreview={imageUrl}
             onFileChange={(file) => {

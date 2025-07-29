@@ -19,7 +19,7 @@
     "chromatic": "npx chromatic --project-token=$CHROMATIC_PROJECT_TOKEN"
   },
   "dependencies": {
-    "@sentry/nextjs": "^9.39.0",
+    "@sentry/nextjs": "^9.42.1",
     "@wavesurfer/react": "^1.0.11",
     "chart.js": "^4.5.0",
     "clsx": "^2.1.1",

@@ -10,9 +10,11 @@ import { ThirdPartyLogoIconsState } from './ThirdPartyLogoIcons.types';
 const ThirdPartyLogoIcons = ({ state, className }: IconsCommonProps<ThirdPartyLogoIconsState>) => {
   switch (state) {
     case ThirdPartyLogoIconsState.GOOGLE_DEFAULT:
-      return <GoogleLogoIcon className={clsx('h-[20px] w-[20px] text-gray-100', className)} />;
+      return <GoogleLogoIcon className={clsx('h-20pxr w-20pxr', className)} />;
     case ThirdPartyLogoIconsState.INSTAGRAM_DEFAULT:
-      return <InstagramLogoIcon className={clsx('h-[20px] w-[20px] text-gray-100', className)} />;
+      return <InstagramLogoIcon className={clsx('h-20pxr w-20pxr', className)} />;
+    case ThirdPartyLogoIconsState.SIZE_22_INSTAGRAM:
+      return <InstagramLogoIcon className={clsx('h-22pxr w-22pxr', className)} />;
     default:
       return null;
   }

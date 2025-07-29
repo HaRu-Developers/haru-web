@@ -6,8 +6,8 @@ import MovingBarSurvey from '@common/components/inputs/input-survey/MovingBarSur
 import SelectBoxOption from '@common/components/select-box/SelectBoxOption/SelectBoxOption.client';
 import { Option } from '@common/components/select-box/SelectBoxOption/SelectBoxOption.types';
 
-import { Type, Visibility } from '../types/input-survey.common.types';
 import QuestionSurvey from '../question-survey/QuestionSurvey/QuestionSurvey.client';
+import { Type, Visibility } from '../types/input-survey.common.types';
 import { InputSurveyProps } from './InputSurvey.types';
 
 const InputSurvey = ({

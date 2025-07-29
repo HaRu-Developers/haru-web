@@ -40,7 +40,7 @@ const BaseListFile = ({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className={clsx(
-        'w-1030pxr flex items-center justify-between py-4 transition-colors',
+        'flex w-full items-center justify-between py-4 transition-colors',
         {
           'bg-gray-600': isChecked,
           'hover:bg-gray-600': !isChecked,
@@ -50,7 +50,7 @@ const BaseListFile = ({
     >
       <div className="flex items-center">
         <div
-          className={clsx('mr-2.5 flex h-9 w-9 flex-shrink-0 items-center justify-center', {
+          className={clsx('mr-2.5 flex h-9 w-9 flex-shrink-0 items-center', {
             'cursor-pointer': isSelectable,
           })}
           onClick={isSelectable ? handleToggle : undefined}

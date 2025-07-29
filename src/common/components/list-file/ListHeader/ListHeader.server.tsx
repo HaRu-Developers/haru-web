@@ -36,7 +36,7 @@ const ListHeader = ({ fileType }: ListHeaderProps) => {
   };
   return (
     <div className="w-full">
-      <h4 className="text-cap1-md text-[#A0A0A0]">{getCtaDescription(fileType)}</h4>
+      <h4 className="text-cap1-md pr-42pxr text-[#A0A0A0]">{getCtaDescription(fileType)}</h4>
       <div className="mt-8pxr mb-9pxr h-1pxr w-full bg-[#E6E9EF]"></div>
     </div>
   );

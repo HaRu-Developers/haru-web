@@ -17,11 +17,9 @@ const ListFileTeamMoodTracker = ({
   onCheckToggle,
 }: ListFileTeamMoodTrackerProps) => {
   const rightContent = (
-    <div className="text-b3-rg flex items-center gap-x-20">
+    <div className="text-b3-rg gap-x-100pxr pr-42pxr flex items-center">
       {dueDate && <span className="text-b3-rg text-gray-200">{dueDate}</span>}
-      {respondentsNum !== undefined && (
-        <HumanIconWithText text={respondentsNum} className="mr-13" />
-      )}
+      {respondentsNum !== undefined && <HumanIconWithText text={respondentsNum} />}
     </div>
   );
 

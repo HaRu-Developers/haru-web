@@ -7,23 +7,23 @@ import TextCtaWrapper from '@common/components/cta/TextCtaWrapper/TextCtaWrapper
 import GnbTop from '@common/components/gnbs/GnbTop/GnbTop.client';
 import ListHeader from '@common/components/list-file/ListHeader/ListHeader.server';
 
-import ListFileTeamMoodTrakerWrapper from '@features/team-mood-tracker/componets/ListFileTeamMoodTrackerWrapper/ListFileTeamMoodTrackerWrapper.client';
+import ListFileAiMeetingManagerWrapper from '@features/ai-meeting-manager/components/ListFileAiMeetingManagerWrapper/ListFileAiMeetingManagerWrapper.types';
 
-const TeamMoodTrackerDefaultPage = () => {
+const AiMeetingAssistantDefaultPage = () => {
   return (
     <section>
-      <GnbTop section={GnbSection.TEAM_MOOD_TRACKER} />
+      <GnbTop section={GnbSection.AI_MEETING_MANAGER} />
       <div className="assistant-wrapper">
         {/* cta 부분 */}
-        {getCtaDescription(FileType.TEAM_MOOD_TRACKER)}
-        <TextCtaWrapper fileType={FileType.TEAM_MOOD_TRACKER} />
+        {getCtaDescription(FileType.AI_MEETING_MANAGER)}
+        <TextCtaWrapper fileType={FileType.AI_MEETING_MANAGER} />
         {/* 리스트 부분 */}
-        {getListTitle(FileType.TEAM_MOOD_TRACKER)}
-        <ListHeader fileType={FileType.TEAM_MOOD_TRACKER} />
-        <ListFileTeamMoodTrakerWrapper />
+        {getListTitle(FileType.AI_MEETING_MANAGER)}
+        <ListHeader fileType={FileType.AI_MEETING_MANAGER} />
+        <ListFileAiMeetingManagerWrapper />
       </div>
     </section>
   );
 };
 
-export default TeamMoodTrackerDefaultPage;
+export default AiMeetingAssistantDefaultPage;

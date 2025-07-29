@@ -7,12 +7,8 @@ import CategoryOption from '@common/components/CategoryOption/CategoryOption.cli
 
 import IconButton from '@buttons/IconButton/IconButton.client';
 
-import {
-  SurveyQuestionTabLabels,
-  SurveyQuestionTabType,
-} from '@features/team-mood-tracker/constants/tabs';
-
-import { SurveyQuestionTabProps } from './SurveyQuestionTab.types';
+import { SurveyQuestionTabLabels } from './SurveyQuestionTab.constants';
+import { SurveyQuestionTabProps, SurveyQuestionTabType } from './SurveyQuestionTab.types';
 
 // ✅ 설문 문항 생성
 // 작성 완료

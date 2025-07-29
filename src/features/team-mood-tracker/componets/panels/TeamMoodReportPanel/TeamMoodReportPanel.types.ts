@@ -1,4 +1,4 @@
-import { TeamMoodReportTabType } from '@features/team-mood-tracker/constants/tabs';
+import { TeamMoodReportTabType } from '../../tabs/TeamMoodReportTab/TeamMoodReportTab.types';
 
 export interface TeamMoodReportPanelProps {
   tab: TeamMoodReportTabType;

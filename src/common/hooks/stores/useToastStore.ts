@@ -1,6 +1,6 @@
 import { useShallow } from 'zustand/shallow';
 
-import toastStoreState from '@common/stores/toastStore';
+import toastStoreState from '@common/stores/toast-store';
 
 export const useToastInfo = () =>
   toastStoreState(

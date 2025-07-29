@@ -3,7 +3,10 @@
 import { useState } from 'react';
 
 import InputSurvey from '@common/components/inputs/input-survey/InputSurvey/InputSurvey.client';
-import { Type, Visibility } from '@common/components/inputs/input-survey/types/input-survey.common.types';
+import {
+  Type,
+  Visibility,
+} from '@common/components/inputs/input-survey/types/input-survey.common.types';
 
 const Page = () => {
   const [title, setTitle] = useState<string>('');

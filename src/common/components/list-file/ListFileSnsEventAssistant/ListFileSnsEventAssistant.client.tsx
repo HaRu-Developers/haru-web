@@ -17,9 +17,13 @@ const ListFileSnsEventAssistant = ({
   onCheckToggle,
 }: ListFileSnsEventAssistantProps) => {
   const rightContent = (
-    <div className="mr-13 flex items-center gap-x-20">
-      {participantCount !== undefined && <HumanIconWithText text={participantCount} />}
-      {winnerCount !== undefined && <HumanIconWithText text={winnerCount} />}
+    <div className="gap-30pxr pr-32pxr flex items-center">
+      <div className="w-90pxr flex items-center justify-center">
+        {participantCount !== undefined && <HumanIconWithText text={participantCount} />}
+      </div>
+      <div className="w-90pxr flex items-center justify-center">
+        {winnerCount !== undefined && <HumanIconWithText text={winnerCount} />}
+      </div>
     </div>
   );
 

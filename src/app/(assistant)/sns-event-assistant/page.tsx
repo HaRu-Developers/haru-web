@@ -1,29 +1,50 @@
-import { FileType } from '@common/types/file-type.enum';
-import { GnbSection } from '@common/types/gnbs.types';
+import { FileType, SNS_EVENT_ASSISTANT_LINK } from '@common/types/file-type.enum';
+import { GnbSection, SnsGnbTabType } from '@common/types/gnbs.types';
+import { SearchParamsType } from '@common/types/routes.types';
 
 import { getCtaDescription, getListTitle } from '@common/utils/assistant-mapping.utils';
+import parseEnum from '@common/utils/parse-enum.utils';
 
 import TextCtaWrapper from '@common/components/cta/TextCtaWrapper/TextCtaWrapper.client';
 import GnbTop from '@common/components/gnbs/GnbTop/GnbTop.client';
 import ListHeader from '@common/components/list-file/ListHeader/ListHeader.server';
 
-import ListFileAiMeetingManagerWrapper from '@features/ai-meeting-manager/components/ListFileAiMeetingManagerWrapper/ListFileAiMeetingManagerWrapper.types';
+import ListFileSnsEventAssistantLinkWrapper from '@features/sns-event-assistant/components/list-file-wrapper/ListFileSnsEventAssistantLinkWrapper/ListFileSnsEventAssistantLinkWrapper.client';
+import ListFileSnsEventAssistantWrapper from '@features/sns-event-assistant/components/list-file-wrapper/ListFileSnsEventAssistantWrapper/ListFileSnsEventAssistantWrapper.client';
 
-const AiMeetingAssistantDefaultPage = () => {
+const SnsEventAssistantDefaultPage = async ({
+  searchParams,
+}: {
+  searchParams: Promise<SearchParamsType>;
+}) => {
+  const { snsGnbTab } = await searchParams;
+  const formattedSnsGnbTabTab = parseEnum(snsGnbTab, SnsGnbTabType, SnsGnbTabType.ALL_EVENTS);
+
   return (
     <section>
-      <GnbTop section={GnbSection.AI_MEETING_MANAGER} />
+      <GnbTop section={GnbSection.SNS_EVENT_ASSISTANT} current={formattedSnsGnbTabTab} />
       <div className="assistant-wrapper">
-        {/* cta 부분 */}
-        {getCtaDescription(FileType.AI_MEETING_MANAGER)}
-        <TextCtaWrapper fileType={FileType.AI_MEETING_MANAGER} />
-        {/* 리스트 부분 */}
-        {getListTitle(FileType.AI_MEETING_MANAGER)}
-        <ListHeader fileType={FileType.AI_MEETING_MANAGER} />
-        <ListFileAiMeetingManagerWrapper />
+        {formattedSnsGnbTabTab === SnsGnbTabType.ALL_EVENTS ? (
+          <>
+            {/* cta 부분 */}
+            {getCtaDescription(FileType.SNS_EVENT_ASSISTANT)}
+            <TextCtaWrapper fileType={FileType.SNS_EVENT_ASSISTANT} />
+            {/* 리스트 부분 */}
+            {getListTitle(FileType.SNS_EVENT_ASSISTANT)}
+            <ListHeader fileType={FileType.SNS_EVENT_ASSISTANT} />
+            <ListFileSnsEventAssistantWrapper />
+          </>
+        ) : (
+          <>
+            {/* 리스트 부분 */}
+            {getListTitle(SNS_EVENT_ASSISTANT_LINK)}
+            <ListHeader fileType={SNS_EVENT_ASSISTANT_LINK} />
+            <ListFileSnsEventAssistantLinkWrapper />
+          </>
+        )}
       </div>
     </section>
   );
 };
 
-export default AiMeetingAssistantDefaultPage;
+export default SnsEventAssistantDefaultPage;

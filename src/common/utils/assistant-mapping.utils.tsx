@@ -1,7 +1,7 @@
 /**
  * assistant 구조에 사용되는 매핑 함수 모음
  */
-import { FileType } from '@common/types/file-type.enum';
+import { ExtendedFileType, FileType, SNS_EVENT_ASSISTANT_LINK } from '@common/types/file-type.enum';
 import { GnbSection } from '@common/types/gnbs.types';
 
 import BoldText from '@common/components/BoldText/BoldText.server';
@@ -26,7 +26,7 @@ export const getCtaDescription = (type: FileType) => {
 /**
  * 리스트 위 제목 컴포넌트 매핑
  */
-export const getListTitle = (type: FileType) => {
+export const getListTitle = (type: ExtendedFileType) => {
   switch (type) {
     case FileType.AI_MEETING_MANAGER:
       return <BoldText text={'내 AI 회의록'} className={'mt-56pxr mb-16pxr'} />;
@@ -34,6 +34,8 @@ export const getListTitle = (type: FileType) => {
       return <BoldText text={'내 이벤트 추첨 기록'} className={'mt-56pxr mb-16pxr'} />;
     case FileType.TEAM_MOOD_TRACKER:
       return <BoldText text={'내 팀 분위기 리포트'} className={'mt-56pxr mb-16pxr'} />;
+    case SNS_EVENT_ASSISTANT_LINK:
+      return <BoldText text={'SNS 링크 관리'} className={'mt-36pxr mb-16pxr'} />;
     default:
       return null;
   }

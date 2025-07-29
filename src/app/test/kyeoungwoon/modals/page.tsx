@@ -1,5 +1,6 @@
 'use client';
 
+// import GnbBottomAudioBar from '@common/components/gnbs/GnbBottomAudioBar/GnbBottomAudioBar.client';
 import InputFieldModal from '@common/components/inputs/modals/InputFieldModal/InputFieldModal.client';
 import ChangePasswordModal from '@common/components/modals/ChangePasswordModal/ChangePasswordModal.client';
 import CongratulateSignUpModal from '@common/components/modals/CongratulateSignUpModal/CongratulateSignUpModal.client';
@@ -133,6 +134,7 @@ const TestModalsPage = () => {
         <TermsModal onClose={handleDevMode} terms={marketingTerms} />
         <TermsModal onClose={handleDevMode} terms={serviceTerms} />
         <TermsModal onClose={handleDevMode} terms={privacyPolicy} />
+        {/* <GnbBottomAudioBar /> */}
       </div>
       <span className="col-span-3 mb-2 text-center">모달: </span>
       <div className="grid grid-cols-3 grid-rows-2 gap-4"></div>

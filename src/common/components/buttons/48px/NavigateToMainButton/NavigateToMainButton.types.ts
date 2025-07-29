@@ -1,5 +1,3 @@
-'use client';
-
 import { ButtonsCommonProps } from '../../types/buttons.common.types';
 
 export interface NavigateToMainButtonProps extends ButtonsCommonProps {

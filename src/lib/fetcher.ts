@@ -1,3 +1,5 @@
+import { joinURL } from '@common/utils/join-url.utils';
+
 import { captureApiError } from './sentry';
 
 interface CreateFetcherOptions {
@@ -55,17 +57,24 @@ const handleResponseError = async (res: Response, url: string, requestBodyRaw: u
 
 export const createFetcher =
   ({
-    baseURL = process.env.SERVER_API_BASE_URL,
+    baseURL = process.env.NEXT_PUBLIC_SERVER_API_BASE_URL,
     headers,
     fetchOptions,
   }: CreateFetcherOptions = {}) =>
   async <T>(path: string, options?: RequestInit): Promise<T> => {
-    const url =
-      typeof window === 'undefined' ? `${baseURL}${path}` : `${window.location.origin}/${path}`;
+    if (!baseURL) {
+      throw new Error('baseURL is not defined. Check your createFetcher arguments or .env file.');
+    }
+    const url = joinURL(baseURL, path);
+
+    // ★ 1. body가 FormData인지 확인합니다.
+    const isFormData = options?.body instanceof FormData;
 
     const mergedHeaders: HeadersInit = {
-      'Content-Type': 'application/json',
+      // ★ 2. FormData가 아닐 때만 Content-Type을 기본으로 설정합니다.
+      ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
       Accept: 'application/json',
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`,
       ...headers,
       ...options?.headers,
     };

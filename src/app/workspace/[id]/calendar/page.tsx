@@ -42,7 +42,7 @@ import { getCalendarDates } from '@common/components/etc/calendar/utils/calendar
  * }
  */
 
-const page = () => {
+const CalendarPage = () => {
   const { id: workspaceId } = useParams<{ id: string }>(); // Long 타입이긴 하지만 일단 string으로 받아옴
   useEffect(() => {
     console.log(`현재 워크스페이스의 ID: ${workspaceId}`); // workspaceId 확인용
@@ -160,4 +160,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default CalendarPage;

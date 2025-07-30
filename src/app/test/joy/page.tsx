@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 
 import { SearchParamsType } from '@common/types/routes.types';
 
-import parseEnum from '@common/utils/parse-enum';
+import parseEnum from '@common/utils/parse-enum.utils';
 
 import LeftTab from '@features/ai-meeting-manager/components/LeftTab/LeftTab.client';
 import { LeftTabType } from '@features/ai-meeting-manager/components/LeftTab/LeftTab.types';
@@ -24,27 +24,27 @@ const TestPage = async ({ searchParams }: { searchParams: Promise<SearchParamsTy
   // const { leftTab } = await searchParams;
   // const formattedLeftTab = parseEnum(leftTab, LeftTabType, LeftTabType.MEETING_SUMMARY);
 
-  // // TAB_SNS 이벤트 어시스턴트
-  // const { snsFileTab } = await searchParams;
-  // const formattedTab = parseEnum(snsFileTab, SnsFileTabType, SnsFileTabType.PARTICIPANT_LIST);
-  // // 실제로는 서버에서 count 가져오기
-  // const participantCount = 10;
-  // const winnerCount = 10;
-
-  // TAB_팀 분위기 트래커
-  // 실제로는 서버에서 설문 정보 가져오기
-  const survey = {
-    isSubmitted: true,
-  };
-
-  const { moodTab } = await searchParams;
-  const formattedTab = parseEnum(
-    moodTab,
-    TeamMoodReportTabType,
-    TeamMoodReportTabType.TEAM_MOOD_REPORT,
-  );
+  // TAB_SNS 이벤트 어시스턴트
+  const { snsFileTab } = await searchParams;
+  const formattedTab = parseEnum(snsFileTab, SnsFileTabType, SnsFileTabType.PARTICIPANT_LIST);
   // 실제로는 서버에서 count 가져오기
-  const ResponseSummary = 10;
+  const participantCount = 10;
+  const winnerCount = 10;
+
+  // // TAB_팀 분위기 트래커
+  // // 실제로는 서버에서 설문 정보 가져오기
+  // const survey = {
+  //   isSubmitted: true,
+  // };
+
+  // const { moodTab } = await searchParams;
+  // const formattedTab = parseEnum(
+  //   moodTab,
+  //   TeamMoodReportTabType,
+  //   TeamMoodReportTabType.TEAM_MOOD_REPORT,
+  // );
+  // // 실제로는 서버에서 count 가져오기
+  // const ResponseSummary = 10;
 
   return (
     // <div className="flex gap-4">
@@ -58,7 +58,7 @@ const TestPage = async ({ searchParams }: { searchParams: Promise<SearchParamsTy
         <RightPanel />
       </div> */}
       {/* TAB_SNS 이벤트 어시스턴트 */}
-      {/* <div>
+      <div>
         <SnsFileTab
           current={formattedTab}
           counts={{
@@ -67,9 +67,9 @@ const TestPage = async ({ searchParams }: { searchParams: Promise<SearchParamsTy
           }}
         />
         <SnsFilePanel tab={formattedTab} />
-      </div> */}
+      </div>
       {/* TAB_팀 분위기 트래커 */}
-      <SurveyQuestionTab survey={survey} />
+      {/* <SurveyQuestionTab survey={survey} />
       <SurveyQuestionPanel survey={survey} />
       <div>
         <TeamMoodReportTab
@@ -79,7 +79,7 @@ const TestPage = async ({ searchParams }: { searchParams: Promise<SearchParamsTy
           }}
         />
         <TeamMoodReportPanel tab={formattedTab} />
-      </div>
+      </div> */}
     </div>
   );
 };

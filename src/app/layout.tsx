@@ -28,11 +28,12 @@ const RootLayout = ({
     <html lang="ko">
       <body
         className={clsx(
-          'scrollbar-page flex min-h-screen flex-col items-center overflow-y-auto',
+          'scrollbar-page flex min-h-screen flex-col overflow-y-auto',
           pretendard.variable,
         )}
       >
         {children}
+        <div id="modal" />
         <Toaster />
       </body>
     </html>

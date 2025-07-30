@@ -9,6 +9,7 @@ import OnBoardingInstaStep from '@features/on-boarding/components/OnBoardingInst
 import OnBoardingInviteStep from '@features/on-boarding/components/OnBoardingInviteStep/OnBoardingInviteStep';
 import OnBoardingNameStep from '@features/on-boarding/components/OnBoardingNameStep/OnBoardingNameStep.client';
 import OnBoardingStepBar from '@features/on-boarding/components/OnBoardingStepBar/OnBoardingStepBar';
+import OnboardingToaster from '@features/on-boarding/components/onboarding-toast/OnboardingToaster/OnboardingToaster.client';
 
 const OnBoardingPage = () => {
   const { step } = useOnboardingState();
@@ -35,7 +36,10 @@ const OnBoardingPage = () => {
         <div className="mb-54pxr w-404pxr flex items-start">
           <OnBoardingStepBar />
         </div>
+        {/* 테스트용 버튼 */}
+        {/* TODO: 실제로는 mutation 에서 사용 */}
         {renderStepComponent()}
+        <OnboardingToaster />
       </div>
     </div>
   );

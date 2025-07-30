@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import type { Meta, StoryObj } from '@storybook/nextjs';
 
-import SelectBoxProfile from './SelectBoxProfile.client';
+import SelectBoxProfile from './SelectBoxProfile.server';
 
 const meta: Meta<typeof SelectBoxProfile> = {
   title: 'Components/select-box/SelectBoxProfile',

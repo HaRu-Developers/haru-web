@@ -76,7 +76,7 @@ const SurveyQuestionTab = ({ survey }: SurveyQuestionTabProps) => {
   };
 
   return (
-    <div className="border-stroke-200 px-266pxr py-13pxr flex h-14 w-300 shrink-0 items-center justify-between border-b border-solid bg-white">
+    <div className="border-stroke-200 px-266pxr py-13pxr flex h-14 w-full shrink-0 items-center justify-between border-b border-solid bg-white">
       <CategoryOption label={SurveyQuestionTabLabels[currentTab]} active />
       {isSubmitted ? (
         <IconButton onClick={handleFileClick} ariaLabel="설문 문항 보기">

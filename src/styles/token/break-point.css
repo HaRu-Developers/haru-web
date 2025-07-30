@@ -1,7 +1,7 @@
 @theme {
   --breakpoint-*: initial;
-  --breakpoint-md: 80rem; /* md: → min-width: 80rem (1920px) */
-  --breakpoint-lg: 90rem; /* lg: → min-width: 90rem (1728px) */
-  --breakpoint-xl: 108rem; /* xl: → min-width: 108rem (1440px) */
-  --breakpoint-2xl: 120rem; /* 2xl: → min-width: 120rem (1280px) */
+  --breakpoint-md: 80rem; /* md: → min-width: 1280px */
+  --breakpoint-lg: 90rem; /* lg: → min-width: 1440px */
+  --breakpoint-xl: 108rem; /* xl: → min-width: 1728px */
+  --breakpoint-2xl: 120rem; /* 2xl: → min-width: 1920px */
 }

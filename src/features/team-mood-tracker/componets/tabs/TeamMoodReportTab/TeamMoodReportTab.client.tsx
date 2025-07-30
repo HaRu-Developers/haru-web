@@ -32,7 +32,7 @@ const TeamMoodReportTab = ({ current, counts }: TeamMoodReportTabProps) => {
   };
 
   return (
-    <div className="border-stroke-200 px-266pxr py-13pxr flex h-14 w-300 shrink-0 items-center justify-between border-b border-solid bg-white">
+    <div className="border-stroke-200 px-266pxr py-13pxr flex h-14 w-full shrink-0 items-center justify-between border-b border-solid bg-white">
       {/* 탭 영역 */}
       <div className="gap-9pxr inline-flex">
         {tabs.map((tab) => {

@@ -52,7 +52,7 @@ const SelectBoxOption = ({
         <span className="w-full text-center">{selectedOption?.label || placeholder}</span>
         <IndividualIcons
           state={IndividualIconsState.UNDER_ARROW}
-          className={clsx('pointer-events-none absolute right-0')}
+          className={clsx('pointer-events-none')}
         />
       </button>
 

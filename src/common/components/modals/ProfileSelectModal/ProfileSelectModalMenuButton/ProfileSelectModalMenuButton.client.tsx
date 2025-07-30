@@ -1,3 +1,5 @@
+'use client';
+
 import clsx from 'clsx';
 
 import { ProfileSelectModalMenuState } from '../ProfileSelectModal.types';
@@ -16,14 +18,21 @@ export const ProfileSelectModalMenuButton = ({
     return (
       <button
         className={clsx(
-          'w-172pxr h-34pxr px-12pxr rounded-10pxr flex items-center justify-center hover:bg-gray-600',
+          'w-172pxr h-34pxr px-12pxr rounded-10pxr hover:text-b3-rg flex items-center justify-center hover:bg-gray-600',
           isSelected && 'bg-gray-600',
           className,
         )}
         onClick={onClick}
         {...props}
       >
-        <p className="text-system-red text-b3-rg w-full text-start">{menuName}</p>
+        <p
+          className={clsx('hover:text-b3-rg text-system-red w-full text-start', {
+            'text-t6-sb': isSelected,
+            'text-b3-rg': !isSelected,
+          })}
+        >
+          {menuName}
+        </p>
       </button>
     );
   }
@@ -39,7 +48,7 @@ export const ProfileSelectModalMenuButton = ({
       {...props}
     >
       <p
-        className={clsx('w-full text-start', {
+        className={clsx('hover:text-b3-rg w-full text-start', {
           'text-t6-sb text-black': isSelected,
           'text-b3-rg text-gray-300': !isSelected,
         })}

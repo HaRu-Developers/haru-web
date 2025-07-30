@@ -63,15 +63,18 @@ export const createFetcher =
   }: CreateFetcherOptions = {}) =>
   async <T>(path: string, options?: RequestInit): Promise<T> => {
     if (!baseURL) {
-      throw new Error('baseURL is not defined. Check your createFetcher arguments or .env file.');
+      throw new Error(
+        'API baseURL이 누락되었습니다. NEXT_PUBLIC_SERVER_API_BASE_URL 환경 변수를 확인하세요.',
+      );
     }
+
     const url = joinURL(baseURL, path);
 
-    // ★ 1. body가 FormData인지 확인합니다.
+    // body가 FormData인지 확인합니다.
     const isFormData = options?.body instanceof FormData;
 
     const mergedHeaders: HeadersInit = {
-      // ★ 2. FormData가 아닐 때만 Content-Type을 기본으로 설정합니다.
+      // FormData가 아닐 때만 Content-Type을 기본으로 설정합니다.
       ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
       Accept: 'application/json',
       Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`,

@@ -1,7 +1,5 @@
 'use client';
 
-import { ChangeEvent, useRef, useState } from 'react';
-
 import ChangableWorkspaceImage from '@common/components/ChangableWorkspaceImage/ChangableWorkspaceImage.client';
 import MoveToNextButton from '@common/components/buttons/48px/MoveToNextButton/MoveToNextButton.client';
 import { MoveToNextButtonWidth } from '@common/components/buttons/48px/MoveToNextButton/MoveToNextButton.types';
@@ -9,12 +7,28 @@ import { MoveToNextButtonWidth } from '@common/components/buttons/48px/MoveToNex
 import { useOnboardingActions } from '@features/on-boarding/hooks/stores/useOnBoardingStore';
 import { useOnboardingState } from '@features/on-boarding/hooks/stores/useOnBoardingStore';
 
+import { useCreateWorkspaceMutation } from '@features/on-boarding/mutations/useCreateWorkspaceMutation';
+
 const OnBoardingImageStep = () => {
   const { setImage, nextStep } = useOnboardingActions();
-  const { name } = useOnboardingState;
+  const { name, image } = useOnboardingState();
+
+  const { mutate } = useCreateWorkspaceMutation();
 
   const handleNext = () => {
-    nextStep();
+    mutate(
+      { name, image },
+      {
+        onSuccess: () => {
+          console.log('워크스페이스 생성 성공!');
+          nextStep();
+        },
+        onError: (error) => {
+          console.error('워크스페이스 생성 실패:', error);
+          alert('워크스페이스 생성에 실패했습니다.');
+        },
+      },
+    );
   };
 
   // 임시
@@ -31,6 +45,7 @@ const OnBoardingImageStep = () => {
         title={name}
         initialPreview={previewUrlFromServer}
         onFileChange={(file) => {
+          console.log('[OnBoardingImageStep] 선택한 이미지 파일:', file);
           setImage(file);
         }}
         className="mb-141pxr"

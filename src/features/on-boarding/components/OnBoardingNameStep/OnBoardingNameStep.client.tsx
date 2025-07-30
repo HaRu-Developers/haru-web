@@ -11,14 +11,16 @@ const OnBoardingNameStep = () => {
   const { setName, nextStep } = useOnboardingActions();
   const [inputName, setInputName] = useState('');
 
-  // 임시 더미 데이터
+  // 임시 더미 데이터, 추후 전역 user 정보로 대체 예정
   const user = {
     name: '황지원',
   };
 
   const handleNext = () => {
     if (!inputName.trim()) return;
-    setName(inputName.trim());
+    const trimmedName = inputName.trim();
+    console.log('[OnBoardingNameStep] 워크스페이스 이름:', trimmedName);
+    setName(trimmedName);
     nextStep();
   };
 

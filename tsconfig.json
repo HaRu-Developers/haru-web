@@ -27,14 +27,14 @@
       "@svgs/*": ["assets/svgs/*"],
       "@common/types/*": ["common/types/*"],
       "@common/constants/*": ["common/constants/*"],
+      "@common/schemas/*": ["common/schemas/*"],
       "@common/utils/*": ["common/utils/*"],
       "@common/hooks/*": ["common/hooks/*"],
-      "@common/queries/*": ["common/queries/*"],
-      "@common/mutations/*": ["common/mutations/*"],
       "@common/apis/*": ["common/apis/*"],
       "@common/components/*": ["common/components/*"],
-      "@buttons/*": ["common/components/buttons/*"],
+      "@common/stores/*": ["common/stores/*"],
       "@common/*": ["common/*"],
+      "@buttons/*": ["common/components/buttons/*"],
       "@features/*": ["features/*"],
       "@/*": ["*"]
     }

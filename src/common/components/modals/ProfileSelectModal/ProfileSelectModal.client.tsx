@@ -5,12 +5,8 @@ import { CrossIconsState } from '@icons/CrossIcons/CrossIcons.types';
 
 import CommonText from '../CommonText/CommonText.server';
 import { CommonTextType } from '../CommonText/CommonText.types';
-import {
-  ProfileSelectModalMenu,
-  ProfileSelectModalMenuState,
-  ProfileSelectModalProps,
-} from './ProfileSelectModal.types';
-import { ProfileSelectModalMenuButton } from './ProfileSelectModalMenuButton/ProfileSelectModalMenuButton';
+import { ProfileSelectModalMenuState, ProfileSelectModalProps } from './ProfileSelectModal.types';
+import { ProfileSelectModalMenuButton } from './ProfileSelectModalMenuButton/ProfileSelectModalMenuButton.client';
 import ProfileSettingMenu from './ProfileSettingMenu/ProfileSettingMenu.client';
 import WorkspaceSettingsMenu from './WorkspaceSettingsMenu/WorkspaceSettingsMenu.client';
 
@@ -23,7 +19,7 @@ const ProfileSelectModal = ({ onClose, onNextStep }: ProfileSelectModalProps) =>
   const renderMenuContent = () => {
     switch (selectedMenu) {
       case ProfileSelectModalMenuState.WORKSPACE_SETTING:
-        return <WorkspaceSettingsMenu workspaceName="MOCK_WORKSPACE" />;
+        return <WorkspaceSettingsMenu imageUrl={null} title="MOCK_WORKSPACE" />;
       case ProfileSelectModalMenuState.PROFILE_SETTING:
         return (
           <ProfileSettingMenu

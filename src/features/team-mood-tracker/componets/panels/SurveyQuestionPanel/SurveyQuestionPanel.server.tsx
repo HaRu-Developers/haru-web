@@ -1,8 +1,5 @@
-import {
-  SurveyQuestionTabLabels,
-  SurveyQuestionTabType,
-} from '@features/team-mood-tracker/constants/tabs';
-
+import { SurveyQuestionTabLabels } from '../../tabs/SurveyQuestionTab/SurveyQuestionTab.constants';
+import { SurveyQuestionTabType } from '../../tabs/SurveyQuestionTab/SurveyQuestionTab.types';
 import { SurveyQuestionPanelProps } from './SurveyQuestionPanel.types';
 
 const SurveyQuestionPanel = ({ survey }: SurveyQuestionPanelProps) => {

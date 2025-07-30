@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react';
 
-import DatePickerBody from './Body/DatePickerBody.client';
 import type { DatePickerProps } from './DatePicker.types';
+import DatePickerBody from './DatePickerBody/DatePickerBody.client';
 import DatePickerFooter from './DatePickerFooter/DatePickerFooter.client';
 import DatePickerHeader from './DatePickerHeader/DatePickerHeader.client';
 

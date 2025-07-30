@@ -6,7 +6,7 @@ import ArrowIcons from '@icons/ArrowIcons/ArrowIcons';
 import { ArrowIconsState } from '@icons/ArrowIcons/ArrowIcons.types';
 
 import WorkspaceProfileImage from '@common/components/images/WorkspaceProfileImage/WorkspaceProfileImage.client';
-import SelectBoxProfile from '@common/components/select-box/select-box-profile/SelectBoxProfile/SelectBoxProfile.client';
+import SelectBoxProfile from '@common/components/select-box/SelectBoxProfile/SelectBoxProfile.server';
 
 const WorkSpaceProfile = () => {
   const [isOpenSelectBoxProfile, setIsOpenSelectBoxProfile] = useState(false);
@@ -19,7 +19,7 @@ const WorkSpaceProfile = () => {
   const workspace = {
     workspaceId: '1n',
     title: 'UMC 8기 운영진',
-    imagePath: '/assets/images/profileImage.jpg',
+    imagePath: null,
     isOwner: true,
   };
 
@@ -34,7 +34,8 @@ const WorkSpaceProfile = () => {
             <WorkspaceProfileImage
               src={workspace.imagePath}
               title={workspace.title}
-              className="w-20pxr h-20pxr"
+              className="w-20pxr h-20pxr text-cap2-rg"
+              border
             />
             <p className="text-cap1-rg text-black">{workspace.title}</p>
           </div>
@@ -42,9 +43,7 @@ const WorkSpaceProfile = () => {
         </div>
       </button>
       {isOpenSelectBoxProfile && (
-        <div className="absolute top-full left-0 z-1 mt-1">
-          <SelectBoxProfile isOpen={isOpenSelectBoxProfile} setIsOpen={setIsOpenSelectBoxProfile} />
-        </div>
+        <SelectBoxProfile isOpen={isOpenSelectBoxProfile} setIsOpen={setIsOpenSelectBoxProfile} />
       )}
     </div>
   );

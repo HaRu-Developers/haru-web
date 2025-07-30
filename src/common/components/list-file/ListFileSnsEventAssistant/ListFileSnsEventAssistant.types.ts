@@ -1,10 +1,10 @@
 export interface ListFileSnsEventAssistantProps {
-  snsEventId: number;
+  snsEventId: string;
   title: string;
   updatedAt: string;
   participantCount: number;
   winnerCount: number;
   isCheckMode: boolean;
   isChecked: boolean;
-  onCheckToggle: (id: number) => void;
+  onCheckToggle: (id: string) => void;
 }

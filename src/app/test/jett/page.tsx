@@ -2,6 +2,9 @@
 
 import { useState } from 'react';
 
+import ThirdPartyLogoIcons from '@icons/logos/ThirdPartyLogoIcon/ThirdPartyLogoIcons';
+import { ThirdPartyLogoIconsState } from '@icons/logos/ThirdPartyLogoIcon/ThirdPartyLogoIcons.types';
+
 // 테스트할 모든 컴포넌트들을 import 합니다.
 import ListFileAiMeetingManager from '@common/components/list-file/ListFileAiMeetingManager/ListFileAiMeetingManager.client';
 import ListFileSnsEventAssistant from '@common/components/list-file/ListFileSnsEventAssistant/ListFileSnsEventAssistant.client';
@@ -10,19 +13,19 @@ import ListFileTeamMoodTracker from '@common/components/list-file/ListFileTeamMo
 
 // 더미 데이터 (기존과 동일)
 const dummyMeetings = [
-  { meetingId: 101, title: '주간 AI 기술 동향 공유 회의', updatedAt: '2025년 7월 8일, 10:00 AM' },
-  { meetingId: 102, title: '3분기 프로젝트 회고', updatedAt: '2025년 7월 5일, 3:30 PM' },
+  { meetingId: '101', title: '주간 AI 기술 동향 공유 회의', updatedAt: '2025년 7월 8일, 10:00 AM' },
+  { meetingId: '102', title: '3분기 프로젝트 회고', updatedAt: '2025년 7월 5일, 3:30 PM' },
 ];
 const dummySnsEvents = [
   {
-    snsEventId: 201,
+    snsEventId: '201',
     title: '여름 휴가 맞이 SNS 공유 이벤트',
     updatedAt: '2025년 7월 1일, 11:00 AM',
     participantCount: 1024,
     winnerCount: 10,
   },
   {
-    snsEventId: 202,
+    snsEventId: '202',
     title: '신제품 출시 기념 퀴즈 이벤트',
     updatedAt: '2025년 6월 28일, 5:00 PM',
     participantCount: 512,
@@ -31,7 +34,7 @@ const dummySnsEvents = [
 ];
 const dummySnsLinks = [
   {
-    snsEventId: 301,
+    snsEventId: '301',
     title: 'SNS 이벤트 결과 발표',
     updatedAt: '2025년 7월 9일, 12:00 PM',
     snsLink: 'https://example.com/event/result/1',
@@ -39,14 +42,14 @@ const dummySnsLinks = [
 ];
 const dummySurveys = [
   {
-    surveyId: 1,
+    surveyId: '1',
     title: 'UMC 운영진 정기 회의 만족도 조사',
     createdAt: '2025년 6월 11일, 7:32 PM',
     dueDate: '2025.07.19',
     respondentsNum: 32,
   },
   {
-    surveyId: 2,
+    surveyId: '2',
     title: '상반기 워크샵에 대한 팀원 의견 수렴',
     createdAt: '2025년 6월 12일, 6:00 PM',
     dueDate: '2025.07.20',
@@ -56,21 +59,21 @@ const dummySurveys = [
 
 const ComprehensiveTestPage = () => {
   // 1. 각 리스트 섹션별로 독립적인 상태와 핸들러를 생성합니다.
-  const [checkedMeetingIds, setCheckedMeetingIds] = useState<number[]>([]);
-  const [checkedSnsEventIds, setCheckedSnsEventIds] = useState<number[]>([]);
-  const [checkedSurveyIds, setCheckedSurveyIds] = useState<number[]>([]);
+  const [checkedMeetingIds, setCheckedMeetingIds] = useState<string[]>([]);
+  const [checkedSnsEventIds, setCheckedSnsEventIds] = useState<string[]>([]);
+  const [checkedSurveyIds, setCheckedSurveyIds] = useState<string[]>([]);
 
-  const handleMeetingToggle = (id: number) => {
+  const handleMeetingToggle = (id: string) => {
     setCheckedMeetingIds((prev) =>
       prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id],
     );
   };
-  const handleSnsEventToggle = (id: number) => {
+  const handleSnsEventToggle = (id: string) => {
     setCheckedSnsEventIds((prev) =>
       prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id],
     );
   };
-  const handleSurveyToggle = (id: number) => {
+  const handleSurveyToggle = (id: string) => {
     setCheckedSurveyIds((prev) =>
       prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id],
     );
@@ -178,6 +181,7 @@ const ComprehensiveTestPage = () => {
           )}
         </section>
       </div>
+      <ThirdPartyLogoIcons state={ThirdPartyLogoIconsState.SIZE_22_INSTAGRAM} />
     </div>
   );
 };

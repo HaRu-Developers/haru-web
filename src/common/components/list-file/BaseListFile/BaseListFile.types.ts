@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 import { FeaturedFileIconsState } from '@icons/FeaturedFileIcons/FeaturedFileIcons.types';
 
 export interface BaseListFileProps {
-  id: number;
+  id: string;
   title: string;
   subtitle: string;
   href: string;
@@ -11,7 +11,7 @@ export interface BaseListFileProps {
   isCheckMode?: boolean;
   isChecked?: boolean;
   isSelectable?: boolean;
-  onCheckToggle?: (id: number) => void;
+  onCheckToggle?: (id: string) => void;
   rightContent?: ReactNode;
   className?: string;
 }

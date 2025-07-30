@@ -22,7 +22,13 @@ const ProfileImage = ({ src, userId, name, size = ImageSize.SMALL }: ProfileImag
 
   return (
     <div className={clsx('relative', sizeClass)}>
-      <Image src={src} alt="프로필 이미지" fill onError={() => setHasError(true)} />
+      <Image
+        src={src}
+        alt="프로필 이미지"
+        fill
+        style={{ objectFit: 'cover', borderRadius: '100px' }}
+        onError={() => setHasError(true)}
+      />
     </div>
   );
 };

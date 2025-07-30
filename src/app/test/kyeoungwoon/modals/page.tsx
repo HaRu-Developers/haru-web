@@ -1,6 +1,8 @@
 'use client';
 
+// import GnbBottomAudioBar from '@common/components/gnbs/GnbBottomAudioBar/GnbBottomAudioBar.client';
 import InputFieldModal from '@common/components/inputs/modals/InputFieldModal/InputFieldModal.client';
+import ChangePasswordModal from '@common/components/modals/ChangePasswordModal/ChangePasswordModal.client';
 import CongratulateSignUpModal from '@common/components/modals/CongratulateSignUpModal/CongratulateSignUpModal.client';
 import CreateMeetingMinutesModal from '@common/components/modals/CreateMeetingMinutesModal/CreateMeetingMinutesModal.client';
 import CreateNewEventModal from '@common/components/modals/CreateNewEventModal/CreateNewEventModal.client';
@@ -13,7 +15,14 @@ import LoadingModal from '@common/components/modals/LoadingModal/LoadingModal.cl
 import { LoadingModalType } from '@common/components/modals/LoadingModal/LoadingModal.types';
 import ProfileSelectModal from '@common/components/modals/ProfileSelectModal/ProfileSelectModal.client';
 import ProgressModal from '@common/components/modals/ProgressModal/ProgressModal.client';
+import SearchModal from '@common/components/modals/SearchModal/SearchModal.client';
 import SurveyLinkCreatedModal from '@common/components/modals/SurveyLinkCreatedModal/SurveyLinkCreatedModal.client';
+import TermsModal from '@common/components/modals/terms/TermsModal.client';
+import {
+  marketingTerms,
+  privacyPolicy,
+  serviceTerms,
+} from '@common/components/modals/terms/term-data-mock';
 
 const TestModalsPage = () => {
   const handleDevMode = () => console.log('Something Clicked');
@@ -95,7 +104,16 @@ const TestModalsPage = () => {
       </div>
       <span className="col-span-3 mb-2 text-center">모달: 가입 환영</span>
       <div className="">
-        <CongratulateSignUpModal onClose={handleDevMode} onWorkspaceCreate={handleDevMode} />
+        <CongratulateSignUpModal
+          onClose={handleDevMode}
+          onWorkspaceCreate={handleDevMode}
+          isInvited={false}
+        />
+        <CongratulateSignUpModal
+          onClose={handleDevMode}
+          onWorkspaceCreate={handleDevMode}
+          isInvited={true}
+        />
       </div>
       <span className="col-span-3 mb-2 text-center">모달: 새 파일 생성</span>
       <div className="">
@@ -108,9 +126,16 @@ const TestModalsPage = () => {
         <CreateNewEventModal onClose={handleDevMode} onNextStep={handleDevMode} />
         <CreateNewTeamMoodTrackerModal onClose={handleDevMode} onNextStep={handleDevMode} />
         <ProfileSelectModal onClose={handleDevMode} onNextStep={handleDevMode} />
+        <ChangePasswordModal onClose={handleDevMode} onNextStep={handleDevMode} />
+        <SearchModal />
       </div>
       <span className="col-span-3 mb-2 text-center">모달: </span>
-      <div className="grid grid-cols-3 grid-rows-2 gap-4"></div>
+      <div className="flex flex-col gap-40">
+        <TermsModal onClose={handleDevMode} terms={marketingTerms} />
+        <TermsModal onClose={handleDevMode} terms={serviceTerms} />
+        <TermsModal onClose={handleDevMode} terms={privacyPolicy} />
+        {/* <GnbBottomAudioBar /> */}
+      </div>
       <span className="col-span-3 mb-2 text-center">모달: </span>
       <div className="grid grid-cols-3 grid-rows-2 gap-4"></div>
     </div>

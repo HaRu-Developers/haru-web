@@ -1,4 +1,4 @@
-import { LeftTabType } from '@features/ai-meeting-manager/constants/tabs';
+import { LeftTabType } from '../../LeftTab/LeftTab.types';
 
 export interface LeftPanelProps {
   tab: LeftTabType;

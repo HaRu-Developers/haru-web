@@ -10,7 +10,7 @@ import WorkSpaceItem from './WorkSpaceItem/WorkSpaceItem.client';
 // 임시 데이터
 const profile = {
   userId: '1n',
-  imagePath: '/assets/images/profileImage.jpg',
+  imagePath: null,
   name: '기쁨',
   email: 'tngh9509@gmail.com',
 };

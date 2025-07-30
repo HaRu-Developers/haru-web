@@ -2,8 +2,7 @@
 
 import { useState } from 'react';
 
-import Image from 'next/image';
-
+import ChangableWorkspaceImage from '@common/components/ChangableWorkspaceImage/ChangableWorkspaceImage.client';
 import AddWorkspaceButton from '@common/components/buttons/30px/AddWorkspaceButton/AddWorkspaceButton.client';
 import SaveButton from '@common/components/buttons/38px/SaveButton/SaveButton.client';
 import WorkspaceProfileImage from '@common/components/images/WorkspaceProfileImage/WorkspaceProfileImage.client';
@@ -37,7 +36,6 @@ const mockTeammates: Teammate[] = [
  *
  */
 const WorkspaceSettingsMenu = ({
-  workspaceId,
   imageUrl,
   title,
   teammateList = mockTeammates,
@@ -64,6 +62,9 @@ const WorkspaceSettingsMenu = ({
     // 이메일 목록은 여기서 반환되고 기존 이메일 목록은 제거됩니다.
     console.log('초대할 이메일 목록:', emails);
   };
+  const handleClickWorkspaceImage = () => {
+    console.log('워크스페이스 프로필 이미지 클릭');
+  };
 
   return (
     <div className="px-35pxr py-24pxr scrollbar-component gap-y-24pxr flex h-full w-full flex-col overflow-y-auto">
@@ -75,14 +76,13 @@ const WorkspaceSettingsMenu = ({
 
         <div className="gap-y-8pxr flex flex-col">
           <CommonText type={CommonTextType.CAP1_RG_GRAY_300} text="워크스페이스 대표 사진" />
-          <div className="w-76pxr h-76pxr p-8pxr rounded-9pxr border-stroke-100 border">
-            <WorkspaceProfileImage
-              workspaceId={workspaceId}
-              src={imageUrl}
-              title={title}
-              className="text-t3-sb rounded-2pxr h-full w-full"
-            />
-          </div>
+          <ChangableWorkspaceImage
+            title={title}
+            initialPreview={imageUrl}
+            onFileChange={(file) => {
+              console.log('바뀐 워크스페이스 프로필 이미지 주소: ', file);
+            }}
+          />
         </div>
 
         {/* 워크스페이스 정보 섹션 - 워크스페이스 명*/}

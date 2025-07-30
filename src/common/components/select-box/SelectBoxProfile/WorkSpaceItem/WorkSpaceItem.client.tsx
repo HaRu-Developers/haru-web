@@ -16,10 +16,10 @@ const SelectBoxProfileItem = ({ workspaceId, imagePath, title, isOwner }: WorkSp
     >
       <span className="gap-6pxr flex items-center">
         <WorkspaceProfileImage
-          workspaceId={workspaceId}
           src={imagePath}
           title={title}
-          className="w-18pxr h-18pxr text-cap3-rg"
+          className="w-18pxr h-18pxr text-cap2-rg"
+          border
         />
         <p className="text-b3-rg text-black">{title}</p>
       </span>

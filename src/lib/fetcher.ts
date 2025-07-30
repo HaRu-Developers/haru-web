@@ -38,6 +38,7 @@ const handleResponseError = async (res: Response, url: string, requestBodyRaw: u
   }
 
   const error = new Error(`❌ API error ${res.status}`);
+
   if (res.status >= 500) {
     captureApiError(
       error,
@@ -73,14 +74,39 @@ export const createFetcher =
     // body가 FormData인지 확인합니다.
     const isFormData = options?.body instanceof FormData;
 
-    const mergedHeaders: HeadersInit = {
-      // FormData가 아닐 때만 Content-Type을 기본으로 설정합니다.
-      ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
-      Accept: 'application/json',
-      Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`,
-      ...headers,
-      ...options?.headers,
-    };
+    // 1. Headers 클래스를 사용해 모든 헤더를 일관되고 안전하게 관리합니다.
+    //    (as any 같은 타입 단언 없이 타입 안정성을 지킬 수 있습니다.)
+    const mergedHeaders = new Headers(headers);
+
+    // 2. API 호출 시점에 전달된 개별 헤더를 병합합니다.
+    //    (이전 헤더를 덮어쓰므로 순서에 상관없이 동작합니다.)
+    if (options?.headers) {
+      new Headers(options.headers).forEach((value, key) => {
+        mergedHeaders.set(key, value);
+      });
+    }
+
+    // 3. 기본 헤더(Accept, Authorization)를 설정합니다.
+    //    (이미 설정된 값이 없다면 기본값을 사용합니다.)
+    if (!mergedHeaders.has('Accept')) {
+      mergedHeaders.set('Accept', 'application/json');
+    }
+    if (!mergedHeaders.has('Authorization') && process.env.NEXT_PUBLIC_ACCESS_TOKEN) {
+      mergedHeaders.set('Authorization', `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`);
+    }
+
+    // 4. FormData 여부에 따라 Content-Type을 최종적으로 제어합니다.
+    if (isFormData) {
+      // FormData일 경우, 다른 곳에서 실수로 Content-Type을 설정했더라도
+      // 여기서 확실하게 제거하여 브라우저가 자동으로 설정하도록 보장합니다.
+      mergedHeaders.delete('Content-Type');
+    } else {
+      // FormData가 아니면서 Content-Type이 설정되지 않은 경우에만
+      // 기본값으로 'application/json'을 설정합니다.
+      if (!mergedHeaders.has('Content-Type')) {
+        mergedHeaders.set('Content-Type', 'application/json');
+      }
+    }
 
     const mergedOptions: RequestInit = {
       ...fetchOptions,

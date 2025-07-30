@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 
-import Image404 from '@assets/images/404/Image404.png';
+import Image404 from '@assets/images/404/image.png';
 
 import CreateWorkspaceButton from '@common/components/buttons/38px/CreateWorkspaceButton/CreateWorkSpaceButton.client';
 

@@ -3,18 +3,20 @@
 import PlusIcons from '@icons/PlusIcons/PlusIcons';
 import { PlusIconsState } from '@icons/PlusIcons/PlusIcons.types';
 
-import { TextCtaConfig, TextCtaProps, TextCtaType } from './TextCta.types';
+import { FileType } from '@common/types/file-type.enum';
 
-const textCtaConfig: Record<TextCtaType, TextCtaConfig> = {
-  [TextCtaType.AI_MEETING_MANAGER]: {
+import { TextCtaConfig, TextCtaProps } from './TextCta.types';
+
+const textCtaConfig: Record<FileType, TextCtaConfig> = {
+  [FileType.AI_MEETING_MANAGER]: {
     iconState: PlusIconsState.SIZE_20_PRIMARY,
     color: 'text-primary',
   },
-  [TextCtaType.SNS_EVENT_ASSISTANT]: {
+  [FileType.SNS_EVENT_ASSISTANT]: {
     iconState: PlusIconsState.SIZE_20_SECONDARY_GREEN,
     color: 'text-secondary-green',
   },
-  [TextCtaType.TEAM_MOOD_TRACKER]: {
+  [FileType.TEAM_MOOD_TRACKER]: {
     iconState: PlusIconsState.SIZE_20_SECONDARY_BLUE,
     color: 'text-secondary-blue',
   },

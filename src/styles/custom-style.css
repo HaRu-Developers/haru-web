@@ -1,0 +1,8 @@
+@import 'tailwindcss';
+
+@layer utilities {
+  .assistant-wrapper {
+    padding-left: 85px;
+    padding-right: 85px;
+  }
+}

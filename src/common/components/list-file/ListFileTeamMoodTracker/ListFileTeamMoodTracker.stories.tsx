@@ -13,7 +13,7 @@ type Story = StoryObj<typeof ListFileTeamMoodTracker>;
 
 export const Default: Story = {
   args: {
-    surveyId: 1,
+    surveyId: '1',
     title: '6월 팀 분위기 트래커',
     createdAt: '2025.07.09',
     dueDate: '2025.07.15',

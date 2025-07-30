@@ -2,8 +2,6 @@
 
 import { useState } from 'react';
 
-import Link from 'next/link';
-
 import clsx from 'clsx';
 
 import CheckboxIcons from '@icons/CheckboxIcons/CheckboxIcons';
@@ -34,13 +32,20 @@ const BaseListFile = ({
 
   const showCheckbox = isSelectable && (isCheckMode || isHovered);
 
+  // a 태그 중첩 방지를 위해 최상위는 div, 클릭 시 라우팅은 onClick 핸들러로 처리
+  const handleClick = () => {
+    if (href) {
+      window.location.href = href; // 또는 router.push(href)
+    }
+  };
+
   return (
-    <Link
-      href={href}
+    <div
+      onClick={handleClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className={clsx(
-        'w-1030pxr flex items-center justify-between py-4 transition-colors',
+        'flex w-full items-center justify-between py-4 transition-colors',
         {
           'bg-gray-600': isChecked,
           'hover:bg-gray-600': !isChecked,
@@ -50,7 +55,7 @@ const BaseListFile = ({
     >
       <div className="flex items-center">
         <div
-          className={clsx('mr-2.5 flex h-9 w-9 flex-shrink-0 items-center justify-center', {
+          className={clsx('mr-2.5 flex h-9 w-9 flex-shrink-0 items-center', {
             'cursor-pointer': isSelectable,
           })}
           onClick={isSelectable ? handleToggle : undefined}
@@ -73,7 +78,7 @@ const BaseListFile = ({
       </div>
 
       {rightContent && !isCheckMode && <div className="flex items-center">{rightContent}</div>}
-    </Link>
+    </div>
   );
 };
 

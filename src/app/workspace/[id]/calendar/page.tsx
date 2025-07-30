@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { useParams } from 'next/navigation';
 
@@ -47,12 +47,13 @@ const page = () => {
   useEffect(() => {
     console.log(`현재 워크스페이스의 ID: ${workspaceId}`); // workspaceId 확인용
   }, [workspaceId]);
-  const firstDay = new Date(new Date().setDate(1));
-  const { startDate: initialStart, endDate: initialEnd } = getCalendarDates(firstDay);
+  const firstDay = useRef(new Date(new Date().setDate(1)));
+  const firstDayValue = firstDay.current;
+  const { startDate: initialStart, endDate: initialEnd } = getCalendarDates(firstDayValue);
 
   const [startDate, setStartDate] = useState<Date>(initialStart);
   const [endDate, setEndDate] = useState<Date>(initialEnd);
-  const [currentDate, setCurrentDate] = useState<Date>(firstDay);
+  const [currentDate, setCurrentDate] = useState<Date>(firstDayValue);
   const [documents, setDocuments] = useState<DocumentFile[][]>(
     Array(35)
       .fill([])
@@ -65,7 +66,7 @@ const page = () => {
       .fill([])
       .map(() => []);
 
-    if (currentDate.toDateString() === firstDay.toDateString()) {
+    if (currentDate.toDateString() === firstDayValue.toDateString()) {
       newDocuments[2] = [
         {
           id: 1,
@@ -105,7 +106,7 @@ const page = () => {
     }
 
     setDocuments(newDocuments);
-  }, [currentDate]);
+  }, [currentDate, firstDayValue]);
 
   // api 요청 방식 -> 아직 벡엔드 개발 중
   // const accessToken = 'test'; // 실제 토큰 로직으로 변경 예정

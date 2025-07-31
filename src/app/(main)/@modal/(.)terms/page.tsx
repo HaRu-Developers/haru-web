@@ -1,5 +1,3 @@
-'use client';
-
 import { useSearchParams } from 'next/navigation';
 
 // 임시 데이터
@@ -194,9 +192,6 @@ const termsData: Record<TermsModalType, Terms> = {
 ### 본 동의서는 2025년 7월 1일부터 적용됩니다.`,
   },
 };
-
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
 
 const TermsModalPage = () => {
   const searchParams = useSearchParams();

@@ -39,20 +39,13 @@ const OnBoardingInviteStep = () => {
 
   const handleInvite = (emailsToInvite: string[]) => {
     if (!workspaceId) {
-      console.error('워크스페이스 ID가 없습니다.');
       return;
     }
-
-    console.log('[OnBoardingInviteStep] 초대 API 요청 값:', {
-      workspaceId,
-      emails: emailsToInvite,
-    });
 
     inviteMembers(
       { workspaceId, emails: emailsToInvite },
       {
         onSuccess: () => {
-          console.log('워크스페이스 초대 성공');
           showOnboardingToast({ type: OnboardingToastType.SUCCESS_INVITE });
           setIsInvited(true);
         },
@@ -75,7 +68,6 @@ const OnBoardingInviteStep = () => {
       <div className="mb-217pxr relative">
         <InputInviteMember
           className="w-414pxr absolute"
-          title=""
           value={value}
           onValueChange={setValue}
           onInvite={handleInvite}

@@ -14,7 +14,6 @@ import { API_ENDPOINTS } from '@features/on-boarding/constants/end-point.constan
 import {
   useInstagramConnection,
   useOnboardingActions,
-  useOnboardingState,
   useOnboardingWorkspaceId,
 } from '@features/on-boarding/hooks/stores/useOnBoardingStore';
 import { useOnboardingToastActions } from '@features/on-boarding/hooks/stores/useOnboardingToastStore';
@@ -44,7 +43,7 @@ const OnBoardingInstaStep = () => {
     if (workspaceId) {
       router.push(API_ENDPOINTS.WORKSPACE_DETAIL(workspaceId));
     } else {
-      alert('워크스페이스 정보가 없습니다. 온보딩을 다시 진행해주세요.');
+      console.log('워크스페이스 정보가 없습니다. 온보딩을 다시 진행해주세요.');
     }
   };
 

@@ -19,7 +19,6 @@ const OnBoardingImageStep = () => {
       { name, image },
       {
         onSuccess: (data) => {
-          console.log('워크스페이스 생성 성공!', data);
           const newWorkspaceId = data?.result?.workspaceId;
 
           setWorkspaceId(newWorkspaceId);
@@ -27,7 +26,6 @@ const OnBoardingImageStep = () => {
         },
         onError: (error) => {
           console.error('워크스페이스 생성 실패:', error);
-          alert('워크스페이스 생성에 실패했습니다.');
         },
       },
     );
@@ -47,7 +45,6 @@ const OnBoardingImageStep = () => {
         title={name}
         initialPreview={previewUrlFromServer}
         onFileChange={(file) => {
-          console.log('[OnBoardingImageStep] 선택한 이미지 파일:', file);
           setImage(file);
         }}
         className="mb-141pxr"

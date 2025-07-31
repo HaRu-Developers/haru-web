@@ -19,7 +19,6 @@ const OnBoardingNameStep = () => {
   const handleNext = () => {
     if (!inputName.trim()) return;
     const trimmedName = inputName.trim();
-    console.log('[OnBoardingNameStep] 워크스페이스 이름:', trimmedName);
     setName(trimmedName);
     nextStep();
   };

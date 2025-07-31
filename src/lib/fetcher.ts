@@ -8,6 +8,14 @@ interface CreateFetcherOptions {
   fetchOptions?: RequestInit;
 }
 
+interface CustomRequestInit extends RequestInit {
+  /**
+   * 이 요청에 인증 헤더가 필요한지 여부를 결정합니다.
+   * `false`로 설정하면, 환경 변수에 토큰이 있더라도 Authorization 헤더를 보내지 않습니다.
+   */
+  auth?: boolean;
+}
+
 // 정상 응답 처리 함수
 const handleResponse = async (res: Response) => {
   return res.json();
@@ -62,7 +70,7 @@ export const createFetcher =
     headers,
     fetchOptions,
   }: CreateFetcherOptions = {}) =>
-  async <T>(path: string, options?: RequestInit): Promise<T> => {
+  async <T>(path: string, options?: CustomRequestInit): Promise<T> => {
     if (!baseURL) {
       throw new Error(
         'API baseURL이 누락되었습니다. NEXT_PUBLIC_SERVER_API_BASE_URL 환경 변수를 확인하세요.',
@@ -91,7 +99,15 @@ export const createFetcher =
     if (!mergedHeaders.has('Accept')) {
       mergedHeaders.set('Accept', 'application/json');
     }
-    if (!mergedHeaders.has('Authorization') && process.env.NEXT_PUBLIC_ACCESS_TOKEN) {
+
+    const requiresAuth = options?.auth !== false;
+
+    // 인증이 필요하고, 수동으로 설정된 Authorization 헤더가 없으며, 토큰이 존재할 때만 헤더를 추가합니다.
+    if (
+      requiresAuth &&
+      !mergedHeaders.has('Authorization') &&
+      process.env.NEXT_PUBLIC_ACCESS_TOKEN
+    ) {
       mergedHeaders.set('Authorization', `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`);
     }
 

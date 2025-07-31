@@ -13,4 +13,5 @@ export interface InviteMembersRequestDto {
 export interface CreateWorkspaceResponseDto {
   workspaceId: number;
   name: string;
+  imageUrl: string;
 }

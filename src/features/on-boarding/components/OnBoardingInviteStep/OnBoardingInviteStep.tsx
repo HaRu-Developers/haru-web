@@ -10,13 +10,12 @@ import InputInviteMember from '@common/components/inputs/input-invite-member/Inp
 
 import { OnboardingToastType } from '@features/on-boarding/types/OnboardingToast.types';
 
+import { useInviteMembersMutation } from '@features/on-boarding/hooks/mutations/useInviteMemberMutation';
 import {
   useOnboardingActions,
   useOnboardingState,
 } from '@features/on-boarding/hooks/stores/useOnBoardingStore';
 import { useOnboardingToastActions } from '@features/on-boarding/hooks/stores/useOnboardingToastStore';
-
-import { useInviteMembersMutation } from '@features/on-boarding/mutations/useInviteMemberMutation';
 
 const OnBoardingInviteStep = () => {
   const { setEmails, nextStep } = useOnboardingActions();

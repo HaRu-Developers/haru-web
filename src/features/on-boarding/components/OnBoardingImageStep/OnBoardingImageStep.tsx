@@ -4,13 +4,12 @@ import ChangableWorkspaceImage from '@common/components/ChangableWorkspaceImage/
 import MoveToNextButton from '@common/components/buttons/48px/MoveToNextButton/MoveToNextButton.client';
 import { MoveToNextButtonWidth } from '@common/components/buttons/48px/MoveToNextButton/MoveToNextButton.types';
 
+import { useCreateWorkspaceMutation } from '@features/on-boarding/hooks/mutations/useCreateWorkspaceMutation';
 import { useOnboardingActions } from '@features/on-boarding/hooks/stores/useOnBoardingStore';
 import { useOnboardingState } from '@features/on-boarding/hooks/stores/useOnBoardingStore';
 
-import { useCreateWorkspaceMutation } from '@features/on-boarding/mutations/useCreateWorkspaceMutation';
-
 const OnBoardingImageStep = () => {
-  const { setImage, nextStep } = useOnboardingActions();
+  const { setImage, nextStep, setWorkspaceId } = useOnboardingActions();
   const { name, image } = useOnboardingState();
 
   const { mutate } = useCreateWorkspaceMutation();
@@ -19,8 +18,11 @@ const OnBoardingImageStep = () => {
     mutate(
       { name, image },
       {
-        onSuccess: () => {
-          console.log('워크스페이스 생성 성공!');
+        onSuccess: (data) => {
+          console.log('워크스페이스 생성 성공!', data);
+          const newWorkspaceId = data?.result?.workspaceId;
+
+          setWorkspaceId(newWorkspaceId);
           nextStep();
         },
         onError: (error) => {

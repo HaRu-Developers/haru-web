@@ -2,8 +2,9 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import queryKeys from '@common/constants/query-key.constants';
 
-import { createWorkspace } from '../apis/post/create-workspace';
-import { CreateWorkspaceRequestDto } from '../types/apis.types';
+import { CreateWorkspaceRequestDto } from '@features/on-boarding/types/apis.types';
+
+import { createWorkspace } from '@features/on-boarding/apis/post/create-workspace';
 
 /**
  * 워크스페이스 생성을 위한 useMutation 커스텀 훅

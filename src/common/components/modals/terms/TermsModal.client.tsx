@@ -1,3 +1,5 @@
+'use client';
+
 import clsx from 'clsx';
 
 import CrossIcons from '@icons/CrossIcons/CrossIcons';

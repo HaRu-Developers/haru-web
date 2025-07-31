@@ -54,9 +54,9 @@ const GnbLeft = () => {
           recentDocuments.map((doc) => (
             <RecentDocumentItem
               key={doc.documentId}
+              workspaceId={workspaceId}
               documentId={doc.documentId}
               title={doc.title}
-              isLoading={false}
             />
           ))}
       </div>

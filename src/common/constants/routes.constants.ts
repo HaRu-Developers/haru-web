@@ -5,5 +5,5 @@ export const ROUTES = {
   SNS_EVENT_ASSISTANT: (workspaceId: number) => `/${workspaceId}/sns-event-assistant`,
   TEAM_MOOD_TRACKER: (workspaceId: number) => `/${workspaceId}/team-mood-tracker`,
   CALENDAR: (workspaceId: number) => `/${workspaceId}/calendar`,
-  DOCUMENT: (documentId: number) => `/document/${documentId}`,
+  DOCUMENT: (workspaceId: number, documentId: number) => `/${workspaceId}/document/${documentId}`,
 } as const;

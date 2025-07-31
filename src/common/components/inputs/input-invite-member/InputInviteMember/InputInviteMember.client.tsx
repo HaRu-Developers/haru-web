@@ -81,7 +81,7 @@ const InputInviteMember = ({
       {/* 타이틀 부분 */}
       {title && <span className="text-cap1-rg text-gray-200">{title}</span>}
       {/* 이메일 입력 및 초대 버튼 부분 */}
-      <div className="flex flex-col gap-1">
+      <div className="flex w-full flex-col gap-1">
         <div
           className={clsx(
             'h-min-48pxr rounded-9pxr py-9pxr flex w-full shrink-0 items-center justify-between gap-2.5 px-3.5',

@@ -2,40 +2,12 @@
 
 import { useState } from 'react';
 
-import { FileType } from '@common/types/file-type.enum';
-
 import ImageCta from '@common/components/cta/ImageCta/ImageCta.client';
 import ImageCtaSkeleton from '@common/components/cta/ImageCta/ImageCtaSkeleton';
 import BoxedFile from '@common/components/etc/BoxedFile/BoxedFile.client';
-import { DocumentType } from '@common/components/etc/BoxedFile/BoxedFile.types';
 import BoxedFileSkeleton from '@common/components/etc/BoxedFile/BoxedFileSkelton';
 
-const ctaItems = [
-  { type: FileType.AI_MEETING_MANAGER, onClick: () => console.log('AI') },
-  { type: FileType.SNS_EVENT_ASSISTANT, onClick: () => console.log('SNS') },
-  { type: FileType.TEAM_MOOD_TRACKER, onClick: () => console.log('TEAM') },
-];
-
-// 더미 데이터
-const docTypes: DocumentType[] = [
-  DocumentType.AI_MEETING_MANAGER,
-  DocumentType.SNS_EVENT_ASSISTANT,
-  DocumentType.TEAM_MOOD_TRACKER,
-];
-
-const now = new Date();
-const dummyFiles = Array.from({ length: 5 }, (_, index) => {
-  const date = new Date(now);
-  date.setHours(date.getHours() - index * 4);
-  const title = `${date.getMonth() + 1}월 ${date.getDate()}일 회의록`;
-
-  return {
-    title,
-    lastOpened: date.toISOString(),
-    documentType: docTypes[index % docTypes.length],
-    thumbnailUrl: '',
-  };
-});
+import { ctaItems, dummyFiles } from '@features/on-boarding/mocks/dummy-files';
 
 const WorkSpaceMainPage = () => {
   // 임시 로딩 상태 (실제 프로젝트에서는 API fetch 기준으로 변경)

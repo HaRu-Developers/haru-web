@@ -1,20 +1,34 @@
 'use client';
 
-import { ChangeEvent, useRef, useState } from 'react';
-
 import ChangableWorkspaceImage from '@common/components/ChangableWorkspaceImage/ChangableWorkspaceImage.client';
 import MoveToNextButton from '@common/components/buttons/48px/MoveToNextButton/MoveToNextButton.client';
 import { MoveToNextButtonWidth } from '@common/components/buttons/48px/MoveToNextButton/MoveToNextButton.types';
 
+import { useCreateWorkspaceMutation } from '@features/on-boarding/hooks/mutations/useCreateWorkspaceMutation';
 import { useOnboardingActions } from '@features/on-boarding/hooks/stores/useOnBoardingStore';
 import { useOnboardingState } from '@features/on-boarding/hooks/stores/useOnBoardingStore';
 
 const OnBoardingImageStep = () => {
-  const { setImage, nextStep } = useOnboardingActions();
-  const { name } = useOnboardingState;
+  const { setImage, nextStep, setWorkspaceId } = useOnboardingActions();
+  const { name, image } = useOnboardingState();
+
+  const { mutate } = useCreateWorkspaceMutation();
 
   const handleNext = () => {
-    nextStep();
+    mutate(
+      { name, image },
+      {
+        onSuccess: (data) => {
+          const newWorkspaceId = data?.result?.workspaceId;
+
+          setWorkspaceId(newWorkspaceId);
+          nextStep();
+        },
+        onError: (error) => {
+          console.error('워크스페이스 생성 실패:', error);
+        },
+      },
+    );
   };
 
   // 임시

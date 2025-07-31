@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs';
 
-import GnbLeft from './GnbLeft.server';
+import GnbLeft from './GnbLeft.client';
 
 const meta: Meta<typeof GnbLeft> = {
   title: 'Components/gnbs/GnbLeft',

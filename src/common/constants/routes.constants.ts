@@ -1,10 +1,9 @@
 export const ROUTES = {
-  MAIN: '/',
-  AI_MEETING_MANAGER: '/ai-meeting-assistant',
-  SNS_EVENT_ASSISTANT: '/sns-event-assistant',
-  TEAM_MOOD_TRACKER: '/team-mood-tracker',
-  CALENDAR: '/calendar',
   ONBOARDING: '/onboarding',
-  WORKSPACE: (workspaceId: string) => `/workspace/${workspaceId}`,
-  DOCUMENT: (documentId: string) => `/document/${documentId}`,
+  MAIN: (workspaceId: number) => `/${workspaceId}`,
+  AI_MEETING_MANAGER: (workspaceId: number) => `/${workspaceId}/ai-meeting-manager`,
+  SNS_EVENT_ASSISTANT: (workspaceId: number) => `/${workspaceId}/sns-event-assistant`,
+  TEAM_MOOD_TRACKER: (workspaceId: number) => `/${workspaceId}/team-mood-tracker`,
+  CALENDAR: (workspaceId: number) => `/${workspaceId}/calendar`,
+  DOCUMENT: (documentId: number) => `/document/${documentId}`,
 } as const;

@@ -211,6 +211,3 @@ const TermsModalPage = () => {
 };
 
 export default TermsModalPage;
-
-// 빌드 시 프리렌더링하지 않고 런타임에 SSR로만 처리하게
-export const dynamic = 'force-dynamic';

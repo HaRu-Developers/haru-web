@@ -1,6 +1,11 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
+  output: 'export',
+  exportPathMap: async function (defaultPathMap) {
+    delete defaultPathMap['/(main)/@modal/(.)terms'];
+    return defaultPathMap;
+  },
   images: {
     remotePatterns: [
       {

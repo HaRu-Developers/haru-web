@@ -13,7 +13,7 @@ const OnboardingLayout = ({
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
-  return <QueryClientProviders>{children}</QueryClientProviders>;
+  return <main>{children}</main>;
 };
 
 export default OnboardingLayout;

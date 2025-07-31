@@ -195,6 +195,9 @@ const termsData: Record<TermsModalType, Terms> = {
   },
 };
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 const TermsModalPage = () => {
   const searchParams = useSearchParams();
   const type = searchParams.get('type');

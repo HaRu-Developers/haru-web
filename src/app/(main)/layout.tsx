@@ -10,10 +10,17 @@ export const metadata: Metadata = {
 
 const MainLayout = ({
   children,
+  modal,
 }: Readonly<{
   children: React.ReactNode;
+  modal: React.ReactNode;
 }>) => {
-  return <FooterLayout>{children}</FooterLayout>;
+  return (
+    <FooterLayout>
+      {children}
+      {modal}
+    </FooterLayout>
+  );
 };
 
 export default MainLayout;

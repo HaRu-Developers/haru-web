@@ -1,9 +1,14 @@
+import Link from 'next/link';
+
 import HaruLogoIcons from '@icons/logos/HaruLogoIcons/HaruLogoIcons';
 import { HaruLogoIconsState } from '@icons/logos/HaruLogoIcons/HaruLogoIcons.types';
 
-import FooterLinks from './FooterLinks.client';
+import { TermsModalType } from '@common/components/modals/terms/TermsModal.types';
 
 const Footer = () => {
+  const termsOfServiceModalHref = `/terms?type=${TermsModalType.TERMS_OF_SERVICE}`;
+  const privacyPolicyModalHref = `/terms?type=${TermsModalType.PRIVACY_POLICY}`;
+
   return (
     <div className="h-299pxr gap-120pxr px-114pxr w-full items-start bg-gray-100 py-16">
       <div className="text-b3-rg flex flex-col items-start gap-6 text-white">
@@ -15,7 +20,15 @@ const Footer = () => {
             <span className="h-[15pxr] w-0.5 bg-gray-300" />
             <span>메일 : thejeewon@naver.com</span>
           </div>
-          <FooterLinks />
+          {/* 링크 부분 */}
+          <div className="flex items-center gap-2.5">
+            <Link className="cursor-pointer hover:underline" href={termsOfServiceModalHref}>
+              서비스이용약관
+            </Link>
+            <Link className="cursor-pointer hover:underline" href={privacyPolicyModalHref}>
+              개인정보처리방침
+            </Link>
+          </div>
         </div>
 
         <div className="flex flex-col items-start gap-0.5">

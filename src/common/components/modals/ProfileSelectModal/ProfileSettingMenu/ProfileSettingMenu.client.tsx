@@ -36,6 +36,8 @@ const ProfileSettingMenu = ({
       ChangePasswordModal,
       {
         onSubmit: handleChangePassword,
+        onClose: () => alert('비밀번호 변경 창이 닫혔습니다.'),
+        onNextStep: () => alert('다음 단계로 이동합니다.'),
       },
       {
         overlayClickToClose: true,

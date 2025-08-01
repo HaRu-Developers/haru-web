@@ -10,10 +10,17 @@ import useModalStore from '@common/stores/modal-store';
 const HeaderButtons = () => {
   const { openModal } = useModalStore();
   const handleWorkSpaceSetting = () => {
-    openModal(ProfileSelectModal, {
-      overlayClickToClose: true,
-      zIndex: 1000,
-    });
+    openModal(
+      ProfileSelectModal,
+      {
+        onClose: () => console.log('프로필 설정 창이 닫혔습니다.'),
+        onNextStep: () => console.log('다음 단계로 이동합니다.'),
+      },
+      {
+        overlayClickToClose: true,
+        zIndex: 1000,
+      },
+    );
   };
 
   const handleAddMember = () => {

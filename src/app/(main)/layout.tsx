@@ -14,8 +14,10 @@ export const metadata: Metadata = {
 
 const MainWIthoutWorkspaceLayout = ({
   children,
+  modal,
 }: Readonly<{
   children: React.ReactNode;
+  modal: React.ReactNode;
 }>) => {
   return (
     <FooterLayout>
@@ -23,6 +25,7 @@ const MainWIthoutWorkspaceLayout = ({
         <GnbTop section={GnbSection.MAIN} />
         {children}
       </GnbLeftLayout>
+      {modal}
     </FooterLayout>
   );
 };

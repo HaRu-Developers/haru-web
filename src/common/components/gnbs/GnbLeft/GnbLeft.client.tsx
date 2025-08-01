@@ -28,7 +28,10 @@ const GnbLeft = () => {
 
   return (
     <div className="border-stroke-200 p-16pxr flex w-60 shrink-0 flex-col border-r border-solid">
-      <HaruLogoIcons state={HaruLogoIconsState.MIXED} className="mb-8pxr mt-5pxr ml-5pxr" />
+      <HaruLogoIcons
+        state={HaruLogoIconsState.MIXED}
+        className="w-99pxr h-24pxr mb-8pxr mt-5pxr ml-5pxr"
+      />
       <div className="gap-16pxr flex flex-col">
         <WorkSpaceProfile />
         <div className="rounded-10pxr flex flex-col items-start gap-2 self-stretch">

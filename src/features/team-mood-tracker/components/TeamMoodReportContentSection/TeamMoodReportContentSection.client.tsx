@@ -1,8 +1,7 @@
 'use client';
 
+import MarkdownContent from '@common/components/MarkdownContent/MarkdownContent.server';
 import SurveyInSite from '@common/components/box-text/SurveyInSite/SurveyInSite.server';
-
-import MarkdownRenderer from '@features/team-mood-tracker/components/MarkdownRenderer/MarkdownRenderer.client';
 
 interface TeamMoodReportContentSectionProps {
   suggestionList: string[];
@@ -19,7 +18,9 @@ const TeamMoodReportContentSection = ({
         <SurveyInSite title="HaRu의 제안" items={suggestionList} />
       </div>
 
-      <MarkdownRenderer content={report} />
+      <div className="w-668pxr">
+        <MarkdownContent content={report} />
+      </div>
     </div>
   );
 };

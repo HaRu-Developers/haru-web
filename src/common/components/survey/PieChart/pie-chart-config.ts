@@ -29,7 +29,7 @@ const getPieChartConfig = (data: ChartData): ChartConfiguration => {
       responsive: true,
       maintainAspectRatio: false,
       layout: {
-        padding: { top: 50, right: 20, bottom: 0, left: 20 },
+        padding: { top: 50, right: 20, bottom: 20, left: 20 },
       },
       plugins: {
         legend: {

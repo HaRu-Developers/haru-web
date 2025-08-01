@@ -38,21 +38,25 @@ const TeamMoodTrackerDetailPage = () => {
 
   const handleCopyClick = async () => {
     const reportContent = reportResponse?.report;
-    if (!reportContent) return;
+
+    if (!reportContent || reportContent.trim() === '') {
+      alert('복사할 리포트 내용이 없습니다.');
+      return;
+    }
+
     try {
       await navigator.clipboard.writeText(reportContent);
       alert('리포트 내용이 클립보드에 복사되었습니다.');
     } catch (err) {
       console.error('클립보드 복사 실패:', err);
+      alert('클립보드 복사에 실패했습니다.');
     }
   };
 
-  // 2. 로딩 중일 때는 통합 스켈레톤 컴포넌트를 렌더링합니다.
   if (isLoading) {
     return <TeamMoodTrackerPageSkeleton />;
   }
 
-  // 3. 로딩이 끝난 후, 필요한 데이터가 없는 경우 에러를 표시합니다.
   if (
     (currentTab === TeamMoodReportTabType.ANSWER_SUMMARY && !surveyResponse) ||
     (currentTab === TeamMoodReportTabType.TEAM_MOOD_REPORT && !reportResponse)
@@ -62,7 +66,6 @@ const TeamMoodTrackerDetailPage = () => {
 
   if (!displayData) return null;
 
-  // 4. 데이터 로딩이 성공하면 실제 UI를 렌더링합니다.
   return (
     <div className="flex flex-col">
       <GnbTop section={GnbSection.CUSTOM} title={displayData.title} />

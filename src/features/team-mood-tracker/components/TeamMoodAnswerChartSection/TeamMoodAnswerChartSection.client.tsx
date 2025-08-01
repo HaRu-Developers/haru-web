@@ -8,7 +8,7 @@ import { SurveyQuestionType } from '@features/team-mood-tracker/constants/questi
 
 import { TeamMoodAnswerChartSectionProps } from './TeamMoodAnswerChartSection.types';
 
-const PIE_CHART_COLORS = ['#E65787', '#5E8BFF', '#FFD66C', '#84D1B6', '#B28DFF'];
+const PIE_CHART_COLORS = ['#E65787', '#5E8BFF', '#FFD66C', '#84D1B6', '#B28DFF']; // 임시 색상
 
 const TeamMoodAnswerChartSection = ({ responses }: TeamMoodAnswerChartSectionProps) => {
   return (

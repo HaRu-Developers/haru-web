@@ -8,7 +8,7 @@ import { ImageSize } from '@common/components/images/types/images.common.types';
 
 import { FileCreatedInfoProps } from './FileCreatedInfo.types';
 
-const CreatedInfo = ({ name, userId, dateTime }: FileCreatedInfoProps) => {
+const FileCreatedInfo = ({ name, userId, dateTime }: FileCreatedInfoProps) => {
   return (
     <div className="text-cap2-md gap-5pxr py-2pxr flex font-semibold text-gray-400">
       <DefaultProfileImage name={name} userId={userId} size={ImageSize.XSMALL} />
@@ -19,4 +19,4 @@ const CreatedInfo = ({ name, userId, dateTime }: FileCreatedInfoProps) => {
   );
 };
 
-export default CreatedInfo;
+export default FileCreatedInfo;

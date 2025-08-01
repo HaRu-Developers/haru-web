@@ -59,6 +59,7 @@ const GnbLeft = () => {
               key={doc.documentId}
               workspaceId={workspaceId}
               documentId={doc.documentId}
+              documentType={doc.documentType}
               title={doc.title}
             />
           ))}

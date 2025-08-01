@@ -12,7 +12,7 @@ const TeamMoodTrackerRootLayout = ({
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
-  return <>{children}</>;
+  return <GnbLeftLayout>{children}</GnbLeftLayout>;
 };
 
 export default TeamMoodTrackerRootLayout;

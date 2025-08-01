@@ -11,13 +11,12 @@ import RightPanel from '@features/ai-meeting-manager/components/panels/RightPane
 import SnsFilePanel from '@features/sns-event-assistant/components/SnsFilePanel/SnsFilePanel.server';
 import SnsFileTab from '@features/sns-event-assistant/components/SnsFileTab/SnsFileTab.client';
 import { SnsFileTabType } from '@features/sns-event-assistant/components/SnsFileTab/SnsFileTab.types';
-
-import SurveyQuestionPanel from '@features/team-mood-tracker/componets/panels/SurveyQuestionPanel/SurveyQuestionPanel.server';
-import TeamMoodReportPanel from '@features/team-mood-tracker/componets/panels/TeamMoodReportPanel/TeamMoodReportPanel.server';
-import SurveyQuestionTab from '@features/team-mood-tracker/componets/tabs/SurveyQuestionTab/SurveyQuestionTab.client';
-import { SurveyQuestionTabType } from '@features/team-mood-tracker/componets/tabs/SurveyQuestionTab/SurveyQuestionTab.types';
-import TeamMoodReportTab from '@features/team-mood-tracker/componets/tabs/TeamMoodReportTab/TeamMoodReportTab.client';
-import { TeamMoodReportTabType } from '@features/team-mood-tracker/componets/tabs/TeamMoodReportTab/TeamMoodReportTab.types';
+import SurveyQuestionPanel from '@features/team-mood-tracker/components/panels/SurveyQuestionPanel/SurveyQuestionPanel.server';
+import TeamMoodReportPanel from '@features/team-mood-tracker/components/panels/TeamMoodReportPanel/TeamMoodReportPanel.server';
+import SurveyQuestionTab from '@features/team-mood-tracker/components/tabs/SurveyQuestionTab/SurveyQuestionTab.client';
+import { SurveyQuestionTabType } from '@features/team-mood-tracker/components/tabs/SurveyQuestionTab/SurveyQuestionTab.types';
+import TeamMoodReportTab from '@features/team-mood-tracker/components/tabs/TeamMoodReportTab/TeamMoodReportTab.client';
+import { TeamMoodReportTabType } from '@features/team-mood-tracker/components/tabs/TeamMoodReportTab/TeamMoodReportTab.types';
 
 const TestPage = async ({ searchParams }: { searchParams: Promise<SearchParamsType> }) => {
   // // TAB_AI 회의 진행 매니저_좌측

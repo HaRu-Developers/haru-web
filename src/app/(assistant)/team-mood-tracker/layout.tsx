@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description: 'HaRu의 세 번째 기능인 팀 분위기 트래커의 페이지입니다.',
 };
 
-const TeamMoodTrackerRootLayout = ({
+const TeamMoodTrackerLayout = ({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -15,4 +15,4 @@ const TeamMoodTrackerRootLayout = ({
   return <GnbLeftLayout>{children}</GnbLeftLayout>;
 };
 
-export default TeamMoodTrackerRootLayout;
+export default TeamMoodTrackerLayout;

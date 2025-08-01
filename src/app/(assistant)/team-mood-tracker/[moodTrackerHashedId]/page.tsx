@@ -1,6 +1,6 @@
 'use client';
 
-import { useParams, useSearchParams } from 'next/navigation';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 
 import { GnbSection } from '@common/types/gnbs.types';
 
@@ -21,6 +21,7 @@ import { TeamMoodReportTabType } from '@features/team-mood-tracker/components/ta
 const TeamMoodTrackerDetailPage = () => {
   const searchParams = useSearchParams();
   const params = useParams<{ moodTrackerHashedId: string }>();
+  const router = useRouter();
   const moodTrackerHashedId = params.moodTrackerHashedId;
 
   const currentTab =
@@ -51,6 +52,10 @@ const TeamMoodTrackerDetailPage = () => {
       console.error('클립보드 복사 실패:', err);
       alert('클립보드 복사에 실패했습니다.');
     }
+  };
+
+  const handleDownloadClick = () => {
+    router.push(`/team-mood-tracker/${moodTrackerHashedId}/download`);
   };
 
   if (isLoading) {
@@ -89,6 +94,7 @@ const TeamMoodTrackerDetailPage = () => {
               [TeamMoodReportTabType.SURVEY_LIST]: 0,
             }}
             handleCopyClick={handleCopyClick}
+            handleDownloadClick={handleDownloadClick}
           />
         </div>
       </div>

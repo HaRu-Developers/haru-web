@@ -13,13 +13,26 @@ import CommonText from '../CommonText/CommonText.server';
 import { CommonTextType } from '../CommonText/CommonText.types';
 import { ChangePasswordModalProps } from './ChangePasswordModal.types';
 
-const ChangePasswordModal = ({ onClose, onNextStep }: ChangePasswordModalProps) => {
+const ChangePasswordModal = ({ onClose, onNextStep, onSubmit }: ChangePasswordModalProps) => {
   const [currentPassword, setCurrentPassword] = useState<string>('');
   const [newPassword, setNewPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
 
+  const handleSubmit = () => {
+    // 임시 제출
+    if (currentPassword.length === 0) {
+      alert('현재 비밀번호를 입력해주세요.');
+      return;
+    }
+    if (newPassword !== confirmPassword) {
+      alert('새로운 비밀번호와 확인 비밀번호가 일치하지 않습니다.');
+      return;
+    }
+    onSubmit?.(newPassword);
+    onClose?.(); // 모달 닫기
+  };
   return (
-    <div className="w-582pxr rounded-16pxr shadow-modal gap-y-16pxr p-24pxr flex flex-col items-center justify-center">
+    <div className="w-582pxr rounded-16pxr shadow-modal gap-y-16pxr p-24pxr flex flex-col items-center justify-center bg-white">
       {/* 모달 제목 + 닫기 버튼 */}
       <div className="h-32pxr flex w-full items-center justify-between">
         <CommonText type={CommonTextType.T3_BD_BLACK} text="비밀번호 변경" />
@@ -52,7 +65,7 @@ const ChangePasswordModal = ({ onClose, onNextStep }: ChangePasswordModalProps) 
       {/* 저장하기 버튼 */}
       <div className="mt-16pxr flex w-full items-center justify-end">
         <ChangePasswordButton
-          onClick={() => {}}
+          onClick={handleSubmit}
           disabled={false}
           state={ChangePasswordButtonState.COLOR_PRIMARY}
         />

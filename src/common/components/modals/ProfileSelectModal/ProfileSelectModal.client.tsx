@@ -1,7 +1,13 @@
-import { useState } from 'react';
+'use client';
+
+import { useEffect, useState } from 'react';
 
 import CrossIcons from '@icons/CrossIcons/CrossIcons';
 import { CrossIconsState } from '@icons/CrossIcons/CrossIcons.types';
+
+import { UserResponseDto } from '@features/profile/types/apis.types';
+
+import { readUser } from '@features/profile/apis/get/read-user';
 
 import CommonText from '../CommonText/CommonText.server';
 import { CommonTextType } from '../CommonText/CommonText.types';
@@ -14,18 +20,45 @@ const ProfileSelectModal = ({ onClose, onNextStep }: ProfileSelectModalProps) =>
   const [selectedMenu, setSelectedMenu] = useState<ProfileSelectModalMenuState>(
     ProfileSelectModalMenuState.WORKSPACE_SETTING,
   );
+  const [userData, setUserData] = useState<UserResponseDto | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [name, setName] = useState<string>('');
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        setIsLoading(true);
+        const response = await readUser();
+        const user: UserResponseDto = response.result;
+        setUserData(user);
+        if (user?.name) {
+          setName(user.name);
+        }
+      } catch (err) {
+        console.error('Failed to fetch user data:', err);
+        setError('사용자 정보를 불러오는 데 실패했습니다.');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchUserData();
+  }, []);
 
   // 메뉴별 렌더 함수 (switch-case 또는 객체 맵핑)
   const renderMenuContent = () => {
+    const email = userData?.email || '이메일 정보 없음';
+
+    console.log(name);
     switch (selectedMenu) {
       case ProfileSelectModalMenuState.WORKSPACE_SETTING:
         return <WorkspaceSettingsMenu imageUrl={null} title="MOCK_WORKSPACE" />;
       case ProfileSelectModalMenuState.PROFILE_SETTING:
         return (
           <ProfileSettingMenu
-            name="황지원"
-            email="thejeewon@gmail.com"
+            name={name}
+            email={email}
             instagramAccount="thejeewon"
+            onChange={setName}
           />
         );
       default:

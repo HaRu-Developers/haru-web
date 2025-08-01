@@ -1,13 +1,19 @@
 'use client';
 
-import PlusIcons from '@icons/PlusIcons/PlusIcons';
-import { PlusIconsState } from '@icons/PlusIcons/PlusIcons.types';
 import ProfileDropdownIcons from '@icons/ProfileDropdownIcons/ProfileDropdownIcons';
 import { ProfileDropdownIconsState } from '@icons/ProfileDropdownIcons/ProfileDropdownIcons.types';
 
+import ProfileSelectModal from '@common/components/modals/ProfileSelectModal/ProfileSelectModal.client';
+
+import useModalStore from '@common/stores/modal-store';
+
 const FooterButtons = () => {
+  const { openModal } = useModalStore();
   const handleEditProfile = () => {
-    console.log('프로필 설정 버튼 클릭');
+    openModal(ProfileSelectModal, {
+      overlayClickToClose: true,
+      zIndex: 1000,
+    });
   };
 
   const handleLogout = () => {

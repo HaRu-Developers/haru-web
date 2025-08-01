@@ -3,9 +3,17 @@
 import ProfileDropdownIcons from '@icons/ProfileDropdownIcons/ProfileDropdownIcons';
 import { ProfileDropdownIconsState } from '@icons/ProfileDropdownIcons/ProfileDropdownIcons.types';
 
+import ProfileSelectModal from '@common/components/modals/ProfileSelectModal/ProfileSelectModal.client';
+
+import useModalStore from '@common/stores/modal-store';
+
 const HeaderButtons = () => {
+  const { openModal } = useModalStore();
   const handleWorkSpaceSetting = () => {
-    console.log('워크 스페이스 설정 버튼 클릭');
+    openModal(ProfileSelectModal, {
+      overlayClickToClose: true,
+      zIndex: 1000,
+    });
   };
 
   const handleAddMember = () => {

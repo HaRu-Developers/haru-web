@@ -1,21 +1,67 @@
 'use client';
 
+import { useState } from 'react';
+
 import ChangePasswordButton from '@common/components/buttons/30px/ChangePasswordButton/ChangePasswordButton.client';
 import { ChangePasswordButtonState } from '@common/components/buttons/30px/ChangePasswordButton/ChangePasswordButton.types';
 import SocialConnectButton from '@common/components/buttons/30px/SocialConnectButton/SocialConnectButton.client';
 import SaveButton from '@common/components/buttons/38px/SaveButton/SaveButton.client';
 
+import useModalStore from '@common/stores/modal-store';
+
+import { updateUser } from '@features/profile/apis/patch/update-user';
+
+import ChangePasswordModal from '../../ChangePasswordModal/ChangePasswordModal.client';
 import CommonText from '../../CommonText/CommonText.server';
 import { CommonTextType } from '../../CommonText/CommonText.types';
-import { ConnectInstagramAccount } from '../../DeleteModal/DeleteModal.stories';
 
 interface ProfileSettingMenuProps {
   name: string;
   email: string;
   instagramAccount?: string;
+  onChange?: (name: string) => void;
 }
 
-const ProfileSettingMenu = ({ name, email, instagramAccount }: ProfileSettingMenuProps) => {
+const ProfileSettingMenu = ({
+  name,
+  email,
+  instagramAccount,
+  onChange,
+}: ProfileSettingMenuProps) => {
+  const [password, setPassword] = useState<string>('');
+  const { openModal } = useModalStore();
+
+  const handlePasswordModal = () => {
+    openModal(
+      ChangePasswordModal,
+      {
+        onSubmit: handleChangePassword,
+      },
+      {
+        overlayClickToClose: true,
+      },
+    );
+  };
+
+  const handleChangePassword = (newPassword: string) => {
+    if (newPassword.length === 0) {
+      alert('비밀번호를 입력해주세요.');
+      return;
+    }
+    setPassword(newPassword);
+    alert('비밀번호가 변경되었습니다.');
+  };
+
+  const handleSave = async () => {
+    if (password.length === 0) {
+      alert('비밀번호를 입력해주세요.');
+      return;
+    }
+    const response = await updateUser({ name, password });
+    console.log(response.result);
+    alert('프로필이 저장되었습니다.');
+  };
+
   return (
     <div className="px-35pxr py-24pxr gap-y-24pxr flex w-full flex-col">
       <CommonText type={CommonTextType.T4_BD_BLACK} text="프로필 설정" />
@@ -27,9 +73,11 @@ const ProfileSettingMenu = ({ name, email, instagramAccount }: ProfileSettingMen
           {/* 이름 */}
           <div className="gap-y-8pxr flex w-full flex-col items-start justify-center">
             <CommonText type={CommonTextType.CAP1_RG_GRAY_200} text="이름" />
-            <span className="border-stroke-200 rounded-4pxr px-10pxr text-b3-rg py-7pxr flex w-full items-start justify-start border text-black">
-              {name}
-            </span>
+            <input
+              value={name}
+              onChange={(event) => onChange?.(event.target.value)}
+              className="border-stroke-200 rounded-4pxr px-10pxr text-b3-rg py-7pxr flex w-full items-start justify-start border text-black"
+            />
           </div>
 
           {/* 이메일 주소 */}
@@ -44,7 +92,7 @@ const ProfileSettingMenu = ({ name, email, instagramAccount }: ProfileSettingMen
           <div className="gap-y-8pxr flex flex-col">
             <CommonText type={CommonTextType.CAP1_RG_GRAY_200} text="비밀번호" />
             <ChangePasswordButton
-              onClick={() => {}}
+              onClick={handlePasswordModal}
               state={ChangePasswordButtonState.COLOR_WHITE}
             />
           </div>
@@ -76,7 +124,7 @@ const ProfileSettingMenu = ({ name, email, instagramAccount }: ProfileSettingMen
         )}
       </div>
       {/* 저장하기 버튼 */}
-      <SaveButton onClick={() => {}} className="my-40pxr" />
+      <SaveButton onClick={handleSave} className="my-40pxr" />
     </div>
   );
 };

@@ -25,7 +25,6 @@ const NavItem = ({ item, workspaceId }: NavItemProps) => {
   const route = GnbSectionPaths(workspaceId)[item];
   const isCurrent = item === GnbSection.MAIN ? pathname === route : pathname.startsWith(route);
 
-  console.log(isCurrent);
   return (
     <Link
       href={route}

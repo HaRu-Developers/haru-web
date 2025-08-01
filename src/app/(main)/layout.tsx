@@ -7,12 +7,12 @@ import FooterLayout from '@common/components/layouts/FooterLayout.server';
 import GnbLeftLayout from '@common/components/layouts/GnbLeftLayout.server';
 
 export const metadata: Metadata = {
-  title: '메인 페이지',
+  title: '메인 페이지_소속된 워크스페이스 존재하지 않음',
   description:
-    '기능별 CTA 박스, 최근 열람한 파일, 그리고 내 캘린더를 한 눈에 조회할 수 있는 페이지입니다.',
+    '로그인은 완료하였으나 소속된 워크스페이스가 존재하지 않는 사용자에게 노출되는 메인 페이지입니다.',
 };
 
-const MainLayout = ({
+const MainWIthoutWorkspaceLayout = ({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -27,4 +27,4 @@ const MainLayout = ({
   );
 };
 
-export default MainLayout;
+export default MainWIthoutWorkspaceLayout;

@@ -2,10 +2,10 @@ import clsx from 'clsx';
 
 import { IconsCommonProps } from '@icons/types/icons.common.types';
 
-import DisplayIcon from '@svgs/Landing/LandingDisplay.svg';
-import GearIcon from '@svgs/Landing/LandingGear.svg';
-import GraphIcon from '@svgs/Landing/LandingGraph.svg';
-import TalkIcon from '@svgs/Landing/LandingTalk.svg';
+import DisplayIcon from '@svgs/landing/LandingDisplay.svg';
+import GearIcon from '@svgs/landing/LandingGear.svg';
+import GraphIcon from '@svgs/landing/LandingGraph.svg';
+import TalkIcon from '@svgs/landing/LandingTalk.svg';
 
 import { LandingNecessityIconsState } from './LandingNecessityIcons.types';
 

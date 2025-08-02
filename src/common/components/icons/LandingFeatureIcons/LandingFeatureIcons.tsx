@@ -2,23 +2,29 @@ import clsx from 'clsx';
 
 import { IconsCommonProps } from '@icons/types/icons.common.types';
 
-import CalendarIcon from '@svgs/Landing/LandingCalendar.svg';
-import EventIcon from '@svgs/Landing/LandingEvent.svg';
-import MeetingIcon from '@svgs/Landing/LandingMeeting.svg';
-import MoodTracker from '@svgs/Landing/LandingMoodTracker.svg';
+import CalendarIcon from '@svgs/landing/LandingCalendar.svg';
+import EventIcon from '@svgs/landing/LandingEvent.svg';
+import MeetingIcon from '@svgs/landing/LandingMeeting.svg';
+import MoodTracker from '@svgs/landing/LandingMoodTracker.svg';
 
 import { LandingFeatureIconsState } from './LandingFeatureIcons.types';
 
 const LandingFeatureIcons = ({ state, className }: IconsCommonProps<LandingFeatureIconsState>) => {
   switch (state) {
     case LandingFeatureIconsState.SIZE_24_CALENDAR:
-      return <CalendarIcon className={clsx('h-24pxr w-24pxr text-[#EA4E43]', className)} />;
+      return (
+        <CalendarIcon className={clsx('h-24pxr w-24pxr text-secondary-calendar', className)} />
+      );
     case LandingFeatureIconsState.SIZE_24_EVENT:
-      return <EventIcon className={clsx('h-24pxr w-24pxr text-[#F8792A]', className)} />;
+      return <EventIcon className={clsx('h-24pxr w-24pxr text-secondary-event', className)} />;
     case LandingFeatureIconsState.SIZE_24_MEETING:
-      return <MeetingIcon className={clsx('h-24pxr w-24pxr text-[#FAA700]', className)} />;
+      return (
+        <MeetingIcon className={clsx('h-24pxr w-24pxr text-secondary-ai-meeting', className)} />
+      );
     case LandingFeatureIconsState.SIZE_24_MOODTRACKER:
-      return <MoodTracker className={clsx('h-24pxr w-24pxr text-[#0A85D1]', className)} />;
+      return (
+        <MoodTracker className={clsx('h-24pxr w-24pxr text-secondary-mood-tracker', className)} />
+      );
     case LandingFeatureIconsState.SIZE_24_CALENDAR_WHITE:
       return <CalendarIcon className={clsx('h-24pxr w-24pxr text-white', className)} />;
     case LandingFeatureIconsState.SIZE_24_EVENT_WHITE:

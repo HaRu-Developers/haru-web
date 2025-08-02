@@ -2,8 +2,8 @@ import clsx from 'clsx';
 
 import { IconsCommonProps } from '@icons/types/icons.common.types';
 
-import RightArrowIcon from '@svgs/Landing/LandingRightArrow.svg';
-import UpRightArrowIcon from '@svgs/Landing/LandingUpRightArrow.svg';
+import RightArrowIcon from '@svgs/landing/LandingRightArrow.svg';
+import UpRightArrowIcon from '@svgs/landing/LandingUpRightArrow.svg';
 
 import { LandingArrowIconsState } from './LandingArrowIcons.types';
 

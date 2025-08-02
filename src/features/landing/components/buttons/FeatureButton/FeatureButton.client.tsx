@@ -14,10 +14,15 @@ const FeatureButton = ({
   name,
   iconType,
   className,
+  onButtonClick,
   onClick,
   disabled,
   ...props
 }: FeatureButtonProps) => {
+  const handleClick = () => {
+    onButtonClick?.(iconType);
+  };
+
   const iconStateMap = {
     [FeatureButtonType.CALENDAR]: {
       enabled: LandingFeatureIconsState.SIZE_24_CALENDAR,
@@ -36,7 +41,9 @@ const FeatureButton = ({
       disabled: LandingFeatureIconsState.SIZE_24_MOODTRACKER_WHITE,
     },
   };
+
   const iconState = disabled ? iconStateMap[iconType].disabled : iconStateMap[iconType].enabled;
+
   return (
     <button
       className={clsx(
@@ -47,7 +54,7 @@ const FeatureButton = ({
         },
         className,
       )}
-      onClick={onClick}
+      onClick={handleClick}
       disabled={disabled}
       {...props}
     >

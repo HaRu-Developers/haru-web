@@ -10,4 +10,5 @@ export enum FeatureButtonType {
 export interface FeatureButtonProps extends ButtonsCommonProps {
   name: string;
   iconType: FeatureButtonType;
+  onButtonClick?: (iconType: FeatureButtonType) => void;
 }

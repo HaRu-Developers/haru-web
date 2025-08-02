@@ -65,6 +65,13 @@
     letter-spacing: -0.02em;
   }
 
+  .text-t4-rg {
+    font-size: var(--text-18pxr);
+    line-height: 130%;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+
   .text-t4-md {
     font-size: var(--text-18pxr);
     line-height: 130%;

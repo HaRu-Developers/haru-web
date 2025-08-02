@@ -3,7 +3,7 @@ import ColorTitle from './ColorTitle/ColorTitle.server';
 
 const LandingIntroduction = () => {
   return (
-    <div className="w-1440pxr pb-113pxr flex flex-col items-center justify-center bg-gray-700">
+    <div className="pb-113pxr flex w-full flex-col items-center justify-center bg-gray-700">
       <TitleSection title2="Haru" title3="는 무슨 뜻인가요?" className="mt-103pxr mb-68pxr" />
       <div className="flex">
         <div className="mr-52pxr">

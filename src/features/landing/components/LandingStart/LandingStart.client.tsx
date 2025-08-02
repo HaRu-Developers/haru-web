@@ -6,7 +6,7 @@ import { LandingStartProps } from './LandingStart.types';
 
 const LandingStart = ({ onButtonClick }: LandingStartProps) => {
   return (
-    <div className="w-1440pxr py-92pxr gap-42pxr bg-landing-bg flex flex-col items-center justify-center">
+    <div className="py-92pxr gap-42pxr bg-landing-bg flex w-full flex-col items-center justify-center">
       {/* 배너 타이틀 영역 */}
       <div className="text-h2-bd flex flex-col items-center">
         <div>

@@ -5,7 +5,7 @@ import SectionLayout from '../SectionLayout/SectionLayout.server';
 
 const LandingNecessity = () => {
   return (
-    <div className="w-1440pxr gap-109pxr bg-landing-bg flex justify-center">
+    <div className="gap-109pxr bg-landing-bg flex w-full justify-center">
       <TitleSection
         title2="HaRu"
         title3="가 왜 필요한가요?"

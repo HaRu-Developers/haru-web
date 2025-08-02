@@ -11,7 +11,7 @@ const LandingBanner = () => {
   const [state, setState] = useState<FeatureButtonType>(FeatureButtonType.MEETING);
 
   return (
-    <div className="gap-68pxr bg-landing-bg py-68pxr w-1440pxr flex flex-col items-center justify-center">
+    <div className="gap-68pxr bg-landing-bg py-68pxr flex w-full flex-col items-center justify-center">
       {/* 배너 타이틀 영역 */}
       <TitleDisplay />
       {/* 배너 전체 영역 */}

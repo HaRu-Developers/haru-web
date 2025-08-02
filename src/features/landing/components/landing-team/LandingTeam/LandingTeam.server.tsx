@@ -1,9 +1,9 @@
 import TitleSection from '../../TitleSection/TitleSection.server';
 import TeamLayout from '../TeamLayout/TeamLayout.server';
 
-const LadingTeam = () => {
+const LandingTeam = () => {
   return (
-    <div className="w-1440pxr jusitfy-center bg-landing-bg flex flex-col items-center">
+    <div className="jusitfy-center bg-landing-bg flex w-full flex-col items-center">
       <TitleSection
         title1="팀"
         title2="HaRu"
@@ -67,4 +67,4 @@ const LadingTeam = () => {
   );
 };
 
-export default LadingTeam;
+export default LandingTeam;

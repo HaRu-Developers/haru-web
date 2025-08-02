@@ -7,7 +7,7 @@ import { ButtonsCommonProps } from '../../types/buttons.common.types';
 /**
  * CTA 로그인 회원가입 버튼 컴포넌트
  */
-const CtaFeatureButton = ({ className, onClick, ...props }: ButtonsCommonProps) => {
+const CtaSignButton = ({ className, onClick, ...props }: ButtonsCommonProps) => {
   return (
     <button
       className={clsx(
@@ -22,4 +22,4 @@ const CtaFeatureButton = ({ className, onClick, ...props }: ButtonsCommonProps) 
   );
 };
 
-export default CtaFeatureButton;
+export default CtaSignButton;

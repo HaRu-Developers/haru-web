@@ -5,3 +5,10 @@ export interface BaseResponseDto<T> {
   message: string;
   result: T;
 }
+
+// 에러 발생시 body 구조
+export interface ApiErrorBody {
+  isSuccess: boolean;
+  code: string;
+  message: string;
+}

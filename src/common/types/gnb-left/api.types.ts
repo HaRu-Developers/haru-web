@@ -7,7 +7,7 @@ export interface Document {
 }
 
 export interface fetchRecentDocumentsResquestDto {
-  workspaceId: number | null;
+  workspaceId: number;
 }
 
 export interface fetchRecentDocumentsResponseDto {

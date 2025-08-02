@@ -5,6 +5,37 @@
 }
 
 @layer utilities {
+  /* 랜딩 */
+  .text-h1-bd {
+    font-size: var(--text-64pxr);
+    line-height: 130%;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .text-h2-bd {
+    font-size: var(--text-54pxr);
+    line-height: 130%;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .text-h3-bd {
+    font-size: var(--text-44pxr);
+    line-height: 130%;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .text-h4-bd {
+    font-size: var(--text-34pxr);
+    line-height: 130%;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .text-h5-bd {
+    font-size: var(--text-30pxr);
+    line-height: 130%;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
   /* 제목 */
   .text-t1-sb {
     font-size: var(--text-28pxr);

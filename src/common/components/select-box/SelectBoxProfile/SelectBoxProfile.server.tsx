@@ -1,4 +1,4 @@
-import ModalPortal from '@common/components/ModalPortal/ModalPortal.server';
+import ModalPortal from '@common/components/ModalPortal/ModalPortal.client';
 import ProfileImage from '@common/components/images/ProfileImage/ProfileImage.client';
 import { ImageSize } from '@common/components/images/types/images.common.types';
 

@@ -8,7 +8,10 @@ import Image404 from '@assets/images/404/image.png';
 
 import CreateWorkspaceButton from '@common/components/buttons/38px/CreateWorkspaceButton/CreateWorkSpaceButton.client';
 
-const MainPage = () => {
+/**
+ * 소속 워크스페이스가 없을 때 페이지
+ */
+const MainWithoutWorkspacePage = () => {
   // 임시 로딩 상태 (실제 프로젝트에서는 API fetch 기준으로 변경)
   const [isLoading, setIsLoading] = useState(false);
 
@@ -29,4 +32,4 @@ const MainPage = () => {
   );
 };
 
-export default MainPage;
+export default MainWithoutWorkspacePage;

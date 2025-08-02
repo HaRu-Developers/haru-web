@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 
-import ModalPortal from '@common/components/ModalPortal/ModalPortal.server';
+import ModalPortal from '@common/components/ModalPortal/ModalPortal.client';
 
 import { ModalLayoutProps } from './ModalLayout.types';
 

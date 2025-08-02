@@ -12,12 +12,10 @@ export const metadata: Metadata = {
     '로그인은 완료하였으나 소속된 워크스페이스가 존재하지 않는 사용자에게 노출되는 메인 페이지입니다.',
 };
 
-const MainWIthoutWorkspaceLayout = ({
+const MainWithoutWorkspaceLayout = ({
   children,
-  modal,
 }: Readonly<{
   children: React.ReactNode;
-  modal: React.ReactNode;
 }>) => {
   return (
     <FooterLayout>
@@ -25,9 +23,8 @@ const MainWIthoutWorkspaceLayout = ({
         <GnbTop section={GnbSection.MAIN} />
         {children}
       </GnbLeftLayout>
-      {modal}
     </FooterLayout>
   );
 };
 
-export default MainWIthoutWorkspaceLayout;
+export default MainWithoutWorkspaceLayout;

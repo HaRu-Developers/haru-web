@@ -14,7 +14,7 @@ import BoxedFileSkeleton from '@common/components/etc/BoxedFile/BoxedFileSkelton
 
 import { ctaItems, dummyFiles } from '@features/on-boarding/mocks/dummy-files';
 
-const MainPage = () => {
+const MainWithWorkspacePage = () => {
   // 임시 로딩 상태 (실제 프로젝트에서는 API fetch 기준으로 변경)
   const [isLoading, setIsLoading] = useState(false);
   const hasworkSpace = true;
@@ -73,4 +73,4 @@ const MainPage = () => {
   );
 };
 
-export default MainPage;
+export default MainWithWorkspacePage;

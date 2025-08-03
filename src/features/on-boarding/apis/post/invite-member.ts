@@ -14,6 +14,7 @@ export const inviteMembers = async ({
     ON_BOARDING_API_ENDPOINTS.INVITE_MEMBERS,
     {
       method: 'POST',
+      auth: true,
       body: JSON.stringify({ workspaceId, emails }),
     },
   );

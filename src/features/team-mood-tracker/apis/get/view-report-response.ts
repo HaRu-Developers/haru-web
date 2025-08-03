@@ -16,6 +16,7 @@ export const viewReportResponse = async ({
     MOOD_TRACKER_API_ENDPOINTS.REPORTS(moodTrackerHashedId),
     {
       method: 'GET',
+      auth: true,
     },
   );
 

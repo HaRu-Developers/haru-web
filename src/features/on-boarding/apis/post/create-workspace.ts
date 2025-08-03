@@ -32,6 +32,7 @@ export const createWorkspace = async ({
     {
       method: 'POST',
       body: formData,
+      auth: true,
       headers: {},
     },
   );

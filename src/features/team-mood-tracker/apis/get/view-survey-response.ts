@@ -16,6 +16,7 @@ export const viewSurveyResponse = async ({
     MOOD_TRACKER_API_ENDPOINTS.RESPONSES(moodTrackerHashedId),
     {
       method: 'GET',
+      auth: true,
     },
   );
 

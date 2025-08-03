@@ -13,31 +13,31 @@ const GnbLeft = () => {
   // 임시 데이터
   const recentDocuments = [
     {
-      documentId: '1n',
+      documentId: 1,
       title: 'UMC 8기 운영진 회의',
       documentType: FileType,
       lastOpened: '2025-07-15T16:00:00+09:00',
     },
     {
-      documentId: '2n',
+      documentId: 2,
       title: 'Team-Haru 22차 전사회의',
       documentType: FileType,
       lastOpened: '2025-07-15T16:00:00+09:00',
     },
     {
-      documentId: '3n',
+      documentId: 3,
       title: 'Team-Haru 22차 전사회의',
       documentType: FileType,
       lastOpened: '2025-07-15T16:00:00+09:00',
     },
     {
-      documentId: '4n',
+      documentId: 4,
       title: 'Team-Haru 22차 전사회의',
       documentType: FileType,
       lastOpened: '2025-07-15T16:00:00+09:00',
     },
     {
-      documentId: '5n',
+      documentId: 5,
       title: 'Team-Haru 22차 전사회의',
       documentType: FileType,
       lastOpened: '2025-07-15T16:00:00+09:00',

@@ -1,4 +1,4 @@
 export interface RecentDocumentItemProps {
-  documentId: string;
+  documentId: number;
   title: string;
 }

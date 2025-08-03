@@ -5,6 +5,6 @@ export const ROUTES = {
   TEAM_MOOD_TRACKER: '/team-mood-tracker',
   CALENDAR: '/calendar',
   ONBOARDING: '/onboarding',
-  WORKSPACE: (workspaceId: string) => `/workspace/${workspaceId}`,
-  DOCUMENT: (documentId: string) => `/document/${documentId}`,
+  WORKSPACE: (workspaceId: number) => `/workspace/${workspaceId}`,
+  DOCUMENT: (documentId: number) => `/document/${documentId}`,
 } as const;

@@ -1,5 +1,5 @@
 export enum ImageSize {
-  XSMALL = 'XSMALL',
   SMALL = 'SMALL',
+  MEDIUM = 'MEDIUM',
   LARGE = 'LARGE',
 }

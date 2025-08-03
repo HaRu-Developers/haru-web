@@ -13,14 +13,15 @@ const DefaultProfileImage = ({
   name,
   userId,
   color,
-  size = ImageSize.SMALL,
+  size = ImageSize.MEDIUM,
 }: DefaultProfileImageProps) => {
-  const sizeClass =
-    size === ImageSize.XSMALL
-      ? 'text-cap2-rg h-4 w-4'
-      : size === ImageSize.SMALL
-        ? 'text-cap2-rg h-7 w-7'
-        : 'text-b2-rg h-10 w-10';
+  const sizeClassMap: Record<ImageSize, string> = {
+    [ImageSize.SMALL]: 'text-cap2-rg h-4 w-4',
+    [ImageSize.MEDIUM]: 'text-cap2-rg h-7 w-7',
+    [ImageSize.LARGE]: 'text-b2-rg h-10 w-10',
+  };
+
+  const sizeClass = sizeClassMap[size] ?? sizeClassMap[ImageSize.MEDIUM];
 
   // name이 문자열이 아니거나 비어있으면, 에러를 발생시키는 대신 안전한 대체 UI를 렌더링합니다.
   if (typeof name !== 'string' || !name) {

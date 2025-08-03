@@ -5,13 +5,13 @@ import MainWithoutWorkspacePage from '../../(without-workspace)/page';
 import TermsModalPage from '../../@modal/(.)terms/page';
 
 // 새로고침이나 직접 접근 시에도 TermsModalPage를 재활용
-const TermsStandalonePage = () => {
+const TermsStandalonePage = ({ params }: { params: Promise<{ workspaceId?: string }> }) => {
   return (
     <>
       <Suspense fallback={<div>로딩중...</div>}>
         <TermsModalPage />
       </Suspense>
-      <MainWithoutWorkspaceLayout>
+      <MainWithoutWorkspaceLayout params={params}>
         <MainWithoutWorkspacePage />
       </MainWithoutWorkspaceLayout>
     </>

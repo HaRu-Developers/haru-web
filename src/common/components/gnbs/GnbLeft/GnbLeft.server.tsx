@@ -1,23 +1,42 @@
-'use client';
+import { notFound } from 'next/navigation';
 
-import { notFound, useParams } from 'next/navigation';
+import { HydrationBoundary } from '@tanstack/react-query';
 
 import HaruLogoIcons from '@icons/logos/HaruLogoIcons/HaruLogoIcons';
 import { HaruLogoIconsState } from '@icons/logos/HaruLogoIcons/HaruLogoIcons.types';
 
 import { GnbLeftNavItems } from '@common/constants/gnbs.constants';
 
+import { getDehydratedState } from '@common/utils/dehydrate';
+
+import { fetchRecentDocuments } from '@common/apis/gnb-left/get/fetchRecentDocuments';
+
+import { GnbLeftProps } from './GnbLeft.types';
 import NavItem from './NavItem/NavItem.client';
 import RecentDocumentsSection from './RecentDocumentsSection/RecentDocumentsSection.server';
 import WorkSpaceProfile from './WorkspaceProfile/WorkspaceProfile.client';
 
-const GnbLeft = () => {
-  const params = useParams<{ workspaceId?: string }>();
-  const workspaceId = params.workspaceId ? Number(params.workspaceId) : null;
-
+const GnbLeft = async ({ workspaceId }: GnbLeftProps) => {
   // NaN이면 not-found.tsx로 이동
-  if (params.workspaceId && Number.isNaN(workspaceId)) {
+  if (Number.isNaN(workspaceId)) {
     notFound();
+  }
+
+  // Server Component에서 prefetch 실행
+  // workspaceId가 있을 때만 prefetch
+  let dehydratedState = undefined;
+  if (workspaceId !== null) {
+    const result = await getDehydratedState({
+      prefetch: async (qc) => {
+        console.log('>> prefetch 시작');
+        await qc.prefetchQuery({
+          queryKey: ['recentDocuments', workspaceId],
+          queryFn: () => fetchRecentDocuments({ workspaceId }),
+        });
+        console.log('>> prefetch 끝');
+      },
+    });
+    dehydratedState = result.dehydratedState;
   }
 
   return (
@@ -35,7 +54,11 @@ const GnbLeft = () => {
         </div>
         <div className="bg-stroke-200 h-1pxr w-full shrink-0"></div>
       </div>
-      {workspaceId && <RecentDocumentsSection workspaceId={workspaceId} />}
+      {workspaceId && (
+        <HydrationBoundary state={dehydratedState}>
+          <RecentDocumentsSection workspaceId={workspaceId} />
+        </HydrationBoundary>
+      )}
     </div>
   );
 };

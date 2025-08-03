@@ -6,13 +6,13 @@ import {
   fetchRecentDocumentsResquestDto,
 } from '@common/types/gnb-left/api.types';
 
-import { API_ENDPOINTS } from '@common/constants/gnb-left/end-point.constants';
+import { GNB_LEFT_API_ENDPOINTS } from '@common/constants/gnb-left/end-point.constants';
 
 export const fetchRecentDocuments = async ({
   workspaceId,
 }: fetchRecentDocumentsResquestDto): Promise<BaseResponseDto<fetchRecentDocumentsResponseDto>> => {
   const response = await defaultApi<BaseResponseDto<fetchRecentDocumentsResponseDto>>(
-    API_ENDPOINTS.RECENT_DOCUMENTS(workspaceId),
+    GNB_LEFT_API_ENDPOINTS.RECENT_DOCUMENTS(workspaceId),
     {
       method: 'GET',
       auth: true,

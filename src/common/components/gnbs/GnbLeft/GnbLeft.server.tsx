@@ -28,12 +28,10 @@ const GnbLeft = async ({ workspaceId }: GnbLeftProps) => {
   if (workspaceId !== null) {
     const result = await getDehydratedState({
       prefetch: async (qc) => {
-        console.log('>> prefetch 시작');
         await qc.prefetchQuery({
           queryKey: ['recentDocuments', workspaceId],
           queryFn: () => fetchRecentDocuments({ workspaceId }),
         });
-        console.log('>> prefetch 끝');
       },
     });
     dehydratedState = result.dehydratedState;

@@ -24,12 +24,7 @@ const QueryClientProviders = ({ children, dehydratedState }: QueryClientProvider
       }),
   );
 
-  return (
-    <QueryClientProvider client={queryClient}>
-      {/* 서버에서 가져온 데이터를 복원 */}
-      <HydrationBoundary state={dehydratedState}>{children}</HydrationBoundary>
-    </QueryClientProvider>
-  );
+  return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
 };
 
 export default QueryClientProviders;

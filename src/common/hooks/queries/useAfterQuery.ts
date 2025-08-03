@@ -27,6 +27,7 @@ interface AfterQueryOptions<TData, TError, TExtra = unknown>
   onError?: (error: TError) => void;
   /**
    * 추가 결과를 제공하는 옵션
+   * - select와 달리 data는 유지함, ui에서 사용할 부분을 미리 정리해두는 역할
    * - 직접 값(TExtra)을 주거나
    * - queryResult를 가공하는 함수 형태로 제공 가능
    */

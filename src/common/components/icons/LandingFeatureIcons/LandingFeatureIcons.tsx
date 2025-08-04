@@ -34,11 +34,15 @@ const LandingFeatureIcons = ({ state, className }: IconsCommonProps<LandingFeatu
     case LandingFeatureIconsState.SIZE_24_MOODTRACKER_WHITE:
       return <MoodTracker className={clsx('h-24pxr w-24pxr text-white', className)} />;
     case LandingFeatureIconsState.SIZE_62_EVENT:
-      return <EventIcon className={clsx('h-62pxr w-62pxr', className)} />;
+      return <EventIcon className={clsx('h-62pxr w-62pxr text-secondary-event', className)} />;
     case LandingFeatureIconsState.SIZE_62_MEETING:
-      return <MeetingIcon className={clsx('h-62pxr w-62pxr', className)} />;
+      return (
+        <MeetingIcon className={clsx('h-62pxr w-62pxr text-secondary-ai-meeting', className)} />
+      );
     case LandingFeatureIconsState.SIZE_62_MOODTRACKER:
-      return <MoodTracker className={clsx('h-62pxr w-62pxr', className)} />;
+      return (
+        <MoodTracker className={clsx('h-62pxr w-62pxr text-secondary-mood-tracker', className)} />
+      );
     default:
       return null;
   }

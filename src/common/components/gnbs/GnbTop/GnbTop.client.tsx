@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { useParams, usePathname } from 'next/navigation';
 
 import { GnbSection, SnsGnbTabType } from '@common/types/gnbs.types';
 
@@ -14,6 +14,9 @@ import { GnbTopProps } from './GnbTop.types';
 
 const GnbTop = ({ section, title, current }: GnbTopProps) => {
   const pathname = usePathname() ?? '';
+  const params = useParams<{ workspaceId?: string }>();
+
+  const searchPath = params.workspaceId ? `/workspace/${params.workspaceId}/search` : '#'; // 추후 상수화
 
   const config =
     section === GnbSection.CUSTOM ? sectionConfigs[section](title ?? '') : sectionConfigs[section];
@@ -26,7 +29,7 @@ const GnbTop = ({ section, title, current }: GnbTopProps) => {
       {/* 상단 제목 */}
       <div className="border-b-stroke-200 h-60pxr py-13pxr flex items-center justify-between self-stretch border-b border-solid bg-white px-6">
         <p className="text-t3-sb text-black">{config.title}</p>
-        {!isCustomSection && <InputSearchBox />}
+        {!isCustomSection && <InputSearchBox searchHref={searchPath} />}
       </div>
       {!isCustomSection && (
         // 하단 탭 or 단순 옵션

@@ -2,10 +2,13 @@
 
 import { useState } from 'react';
 
+import { GnbSection } from '@common/types/gnbs.types';
+
 import ImageCta from '@common/components/cta/ImageCta/ImageCta.client';
 import ImageCtaSkeleton from '@common/components/cta/ImageCta/ImageCtaSkeleton';
 import BoxedFile from '@common/components/etc/BoxedFile/BoxedFile.client';
 import BoxedFileSkeleton from '@common/components/etc/BoxedFile/BoxedFileSkelton';
+import GnbTop from '@common/components/gnbs/GnbTop/GnbTop.client';
 
 import { ctaItems, dummyFiles } from '@features/on-boarding/mocks/dummy-files';
 
@@ -15,6 +18,7 @@ const WorkSpaceMainPage = () => {
 
   return (
     <div className="flex flex-col items-center">
+      <GnbTop section={GnbSection.MAIN} />
       <div className="mb-74pxr flex flex-col">
         <div className="mt-36pxr mb-16pxr text-t3-bd">새로 시작하기</div>
         <div className="gap-20pxr md:gap-18pxr flex">

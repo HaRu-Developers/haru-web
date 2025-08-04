@@ -14,6 +14,7 @@ import { useViewSurveyResponse } from '@features/team-mood-tracker/hooks/mutatio
 
 import TeamMoodAnswerChartSection from '@features/team-mood-tracker/components/TeamMoodAnswerChartSection/TeamMoodAnswerChartSection.client';
 import TeamMoodReportContentSection from '@features/team-mood-tracker/components/TeamMoodReportContentSection/TeamMoodReportContentSection.client';
+import TeamMoodReportNoneContentSection from '@features/team-mood-tracker/components/TeamMoodReportNoneContentSection/TeamMoodReportNoneContentSection.server';
 import TeamMoodTrackerPageSkeleton from '@features/team-mood-tracker/components/TeamMoodTrackerSkeleton/TeamMoodTrackerSkeleton';
 import TeamMoodReportTab from '@features/team-mood-tracker/components/tabs/TeamMoodReportTab/TeamMoodReportTab.client';
 import { TeamMoodReportTabType } from '@features/team-mood-tracker/components/tabs/TeamMoodReportTab/TeamMoodReportTab.types';
@@ -99,12 +100,16 @@ const TeamMoodTrackerDetailPage = () => {
         </div>
       </div>
 
-      {currentTab === TeamMoodReportTabType.TEAM_MOOD_REPORT && reportResponse && (
-        <TeamMoodReportContentSection
-          suggestionList={reportResponse.suggestionList}
-          report={reportResponse.report}
-        />
-      )}
+      {currentTab === TeamMoodReportTabType.TEAM_MOOD_REPORT &&
+        (reportResponse?.report && reportResponse?.report.trim() !== '' ? (
+          <TeamMoodReportContentSection
+            suggestionList={reportResponse.suggestionList}
+            report={reportResponse.report}
+          />
+        ) : (
+          <TeamMoodReportNoneContentSection />
+        ))}
+
       {currentTab === TeamMoodReportTabType.ANSWER_SUMMARY && surveyResponse && (
         <TeamMoodAnswerChartSection responses={safeResponseList} />
       )}

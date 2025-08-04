@@ -1,12 +1,11 @@
 'use client';
 
-import MarkdownContent from '@common/components/MarkdownContent/MarkdownContent.server';
-import SurveyInSite from '@common/components/box-text/SurveyInSite/SurveyInSite.server';
+import { FileType } from '@common/types/file-type.enum';
 
-interface TeamMoodReportContentSectionProps {
-  suggestionList: string[];
-  report: string;
-}
+import SurveyInSite from '@common/components/box-text/SurveyInSite/SurveyInSite.server';
+import MarkdownContent from '@common/components/mark-down-content/MarkdownContent.server';
+
+import { TeamMoodReportContentSectionProps } from './TeamMoodReportContentSection.types';
 
 const TeamMoodReportContentSection = ({
   suggestionList,
@@ -19,7 +18,7 @@ const TeamMoodReportContentSection = ({
       </div>
 
       <div className="w-668pxr">
-        <MarkdownContent content={report} />
+        <MarkdownContent variant={FileType.TEAM_MOOD_TRACKER} content={report} />
       </div>
     </div>
   );

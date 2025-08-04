@@ -1,13 +1,20 @@
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
-import { MarkdownContentProps } from './MarkdownContent.types';
+import { MarkdownContentProps } from '../MarkdownContent.types';
 
-const MarkdownContent = ({ content }: MarkdownContentProps) => {
+{
+  /*
+  
+  임시 - 디자이너 문의 title, subtitle, headline, body 명시
+
+  */
+}
+
+const MarkdownContentForModal = ({ content }: MarkdownContentProps) => {
   console.log(content);
   return (
     <ReactMarkdown
-      // remarkGfm 플러그인을 사용하여 테이블, 취소선 등 확장 문법을 지원합니다.
       remarkPlugins={[remarkGfm]}
       components={{
         h1: ({ node, ...props }) => <h1 className="whitespace-pre-line" {...props} />,
@@ -23,4 +30,4 @@ const MarkdownContent = ({ content }: MarkdownContentProps) => {
   );
 };
 
-export default MarkdownContent;
+export default MarkdownContentForModal;

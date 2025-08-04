@@ -1,12 +1,20 @@
+import clsx from 'clsx';
+
 import { FileType } from '@common/types/file-type.enum';
 
 import TitleSection from '../../TitleSection/TitleSection.server';
 import FeatureImage from '../feature/FeatureImage/FeatureImage.server';
 import FeatureText from '../feature/FeatureText/FeatureText.client';
+import { LandingFeatureProps } from './LandingFeature.types';
 
-const LandingFeature = () => {
+const LandingFeature = ({ className }: LandingFeatureProps) => {
   return (
-    <div className="bg-landing-bg py-130pxr gap-y-80pxr flex w-full flex-col">
+    <div
+      className={clsx(
+        'bg-landing-bg py-130pxr gap-y-80pxr px-120pxr flex w-full flex-col',
+        className,
+      )}
+    >
       <TitleSection
         title1="당신의 하루를 위한 서비스,"
         title2="HaRu"

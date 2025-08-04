@@ -14,7 +14,7 @@ const CtaFeatureButton = ({ name, className, onClick, ...props }: ButtonsCommonP
   return (
     <button
       className={clsx(
-        'rounded-7pxr h-38pxr gap-3pxr py-6pxr pl-14pxr pr-12pxr inline-flex shrink-0 items-center justify-center bg-gray-100',
+        'rounded-7pxr h-38pxr gap-3pxr py-6pxr pl-14pxr pr-12pxr inline-flex w-fit shrink-0 items-center justify-center bg-gray-100',
         className,
       )}
       onClick={onClick}

@@ -29,7 +29,7 @@ const SearchModal = () => {
   };
 
   return (
-    <div className="shadow-modal rounded-12pxr w-800pxr h-527pxr flex flex-col items-center">
+    <div className="shadow-modal rounded-12pxr w-800pxr h-527pxr flex flex-col items-center bg-white">
       {/* 상단 검색 input 부분 */}
       <div className="border-stroke-200 h-58pxr px-16pxr pt-4pxr gap-x-8pxr rounded-t-12pxr flex w-full flex-row items-center justify-center border-b-1 bg-white">
         <IndividualIcons state={IndividualIconsState.SEARCH} />

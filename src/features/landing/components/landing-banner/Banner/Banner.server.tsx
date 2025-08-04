@@ -16,7 +16,6 @@ const Banner = ({ state }: BannerProps) => {
     [FeatureButtonType.MOODTRACKER]: MoodTrackerImage,
   };
   const imageSrc = imageMap[state];
-  console.log('imageSrc:', imageSrc);
   return (
     <div className="shadow-landing-page-banner rounded-t-28pxr w-871pxr h-475pxr flex shrink-0 items-center justify-center border-x-2 border-t-2 border-[#4A5568]">
       <div className="rounded-t-26pxr h-full w-full border-x-4 border-t-4 border-[#1A202C]">

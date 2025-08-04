@@ -11,7 +11,7 @@ const LandingTeam = ({ className }: LandingTeamProps) => {
   return (
     <div
       className={clsx(
-        'jusitfy-center bg-landing-bg gap-y-54pxr pt-103pxr pb-130pxr flex w-full flex-col items-center',
+        'bg-landing-bg gap-y-54pxr pt-103pxr pb-130pxr flex w-full flex-col items-center justify-center',
         className,
       )}
     >

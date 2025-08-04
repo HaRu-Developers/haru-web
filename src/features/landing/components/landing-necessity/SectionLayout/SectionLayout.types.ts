@@ -3,6 +3,5 @@ import { LandingNecessityIconsState } from '@icons/LandingNecessityIcons/Landing
 export interface SectionLayoutProps {
   state: LandingNecessityIconsState;
   title: string;
-  description1: string;
-  description2?: string;
+  description: string;
 }

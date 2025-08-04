@@ -2,16 +2,24 @@
 
 import React, { useState } from 'react';
 
+import clsx from 'clsx';
+
 import FeatureButton from '../../buttons/FeatureButton/FeatureButton.client';
 import { FeatureButtonType } from '../../buttons/FeatureButton/FeatureButton.types';
 import Banner from '../Banner/Banner.server';
 import TitleDisplay from '../TitleDisplay/TitleDisplay.server';
+import { LandingBannerProps } from './LandingBanner.types';
 
-const LandingBanner = () => {
+const LandingBanner = ({ className }: LandingBannerProps) => {
   const [state, setState] = useState<FeatureButtonType>(FeatureButtonType.MEETING);
 
   return (
-    <div className="gap-68pxr bg-landing-bg py-68pxr flex w-full flex-col items-center justify-center">
+    <div
+      className={clsx(
+        'gap-68pxr bg-landing-bg pt-68pxr pb-30pxr flex w-full flex-col items-center justify-center',
+        className,
+      )}
+    >
       {/* 배너 타이틀 영역 */}
       <TitleDisplay />
       {/* 배너 전체 영역 */}

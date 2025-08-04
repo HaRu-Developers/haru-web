@@ -3,7 +3,7 @@ import { LandingBannerIconsState } from '@icons/LandingBannerIcons/LandingBanner
 
 const TitleDisplay = () => {
   return (
-    <div className="h-166pxr text-h1-bd relative flex w-full flex-col items-center justify-center whitespace-nowrap">
+    <div className="text-h1-bd relative flex w-full flex-col items-center justify-center whitespace-nowrap">
       <LandingBannerIcons
         state={LandingBannerIconsState.UNDERBAR}
         className="top-76pxr ml-435pxr absolute"

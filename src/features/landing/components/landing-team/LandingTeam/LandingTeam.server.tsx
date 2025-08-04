@@ -1,17 +1,28 @@
+import clsx from 'clsx';
+
 import TitleSection from '../../TitleSection/TitleSection.server';
 import TeamLayout from '../TeamLayout/TeamLayout.server';
+import { LandingTeamProps } from './LandingTeam.types';
 
-const LandingTeam = () => {
+/*
+ * 랜딩의 팀 HaRu를 소개합니다! 페이지
+ */
+const LandingTeam = ({ className }: LandingTeamProps) => {
   return (
-    <div className="jusitfy-center bg-landing-bg flex w-full flex-col items-center">
+    <div
+      className={clsx(
+        'jusitfy-center bg-landing-bg gap-y-54pxr pt-103pxr pb-130pxr flex w-full flex-col items-center',
+        className,
+      )}
+    >
       <TitleSection
         title1="팀"
         title2="HaRu"
         title3="를 소개합니다!"
         description="당신의 하루를 위해, 팀 HaRu가 모였습니다."
-        className="mt-103pxr mb-54pxr items-center"
+        className="items-center"
       />
-      <div className="w-1200pxr gap-21pxr grid grid-cols-3">
+      <div className="gap-21pxr grid grid-cols-3">
         <TeamLayout
           name="황지원"
           position="PM"

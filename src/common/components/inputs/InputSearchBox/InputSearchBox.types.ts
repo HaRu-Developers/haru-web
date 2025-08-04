@@ -1,5 +1,4 @@
-export interface InputSerchBoxProps {
-  value?: string;
-  onChange?: (value: string) => void;
+export interface InputSearchBoxProps {
+  searchHref: string;
   placeholder?: string;
 }

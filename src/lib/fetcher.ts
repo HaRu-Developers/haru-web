@@ -120,7 +120,7 @@ export const createFetcher =
     const requiresAuth = options?.auth !== false;
 
     // TODO: PRODUCTION 환경에서는 삭제해야 합니다. by. @kyeoungwoon
-    // 인증이 필요하고, 수동으로 설정된 Authorization 헤더가 없으며, 토큰이 존재할 때만 헤더를 추가합니다.
+    // 1. 인증이 필요하고, 수동으로 설정된 Authorization 헤더가 없으며, 토큰이 존재할 때만 헤더를 추가합니다.
     if (
       requiresAuth &&
       !mergedHeaders.has('Authorization') &&
@@ -128,6 +128,9 @@ export const createFetcher =
     ) {
       mergedHeaders.set('Authorization', `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`);
     }
+
+    // TODO: axios 기준, withCredentials 옵션을 사용해야 합니다.
+    // localStorage나, cookie에 저장된 credentials를 loading 할 수 있도록 ..
 
     // 4. FormData 여부에 따라 Content-Type을 최종적으로 제어합니다.
     if (isFormData) {
@@ -194,3 +197,22 @@ export const createFetcher =
   };
 
 export const defaultApi = createFetcher({ fetchOptions: { cache: 'no-store' } });
+
+/**
+ * headers에 Authorization을 자동으로 포합합니다.
+ *
+ * TODO: 현재는 ACCESS_TOKEN을 환경변수에서 가져오지만, localStorage 등 추후 저장할 곳에서 가져오도록 변경할 필요가 있습니다.
+ */
+export const protectedApi = createFetcher({
+  fetchOptions: { cache: 'no-store' },
+  headers: { Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}` },
+});
+
+/**
+ * axios의 withCredentials를 사용한 것과 동일한 효과를 가진 fetcher입니다.
+ * @deprecated  HaRu BE에는 header를 통한 인증만 있기에 사실 상 필요는 없습니다.
+ */
+export const withCredentialsApi = createFetcher({
+  fetchOptions: { cache: 'no-store', credentials: 'include' },
+  headers: { Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}` },
+});

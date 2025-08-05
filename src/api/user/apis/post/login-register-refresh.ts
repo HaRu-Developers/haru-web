@@ -1,6 +1,6 @@
 import { defaultApi } from '@lib/fetcher';
 
-import { BaseResponseDto } from '@common/types/api.types';
+import { BaseResponseDto } from '@common/types/api.common.types';
 
 import {
   LoginRequestDto,
@@ -10,7 +10,7 @@ import {
   SignupRequestDto,
 } from '@features/auth/types/api.types';
 
-import { AUTH_API_ENDPOINTS } from '@features/auth/constants/api-end-point.constants';
+import { AUTH_API_ENDPOINTS } from '@/api/user/api-end-point.constants';
 
 export const signup = async ({ email, password, name, marketingAgreed }: SignupRequestDto) => {
   const response = await defaultApi<BaseResponseDto<object>>(AUTH_API_ENDPOINTS.SIGN_UP, {

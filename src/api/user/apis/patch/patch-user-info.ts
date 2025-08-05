@@ -1,10 +1,10 @@
 import { defaultApi } from '@lib/fetcher';
 
-import { BaseResponseDto } from '@common/types/api.types';
+import { BaseResponseDto } from '@common/types/api.common.types';
 
 import { PatchUserInfoRequestDto, UserInfoResponseDto } from '@features/auth/types/api.types';
 
-import { AUTH_API_ENDPOINTS } from '@features/auth/constants/api-end-point.constants';
+import { AUTH_API_ENDPOINTS } from '@/api/user/api-end-point.constants';
 
 export const patchUserInfo = async ({ name, password }: PatchUserInfoRequestDto) => {
   const response = await defaultApi<BaseResponseDto<UserInfoResponseDto>>(

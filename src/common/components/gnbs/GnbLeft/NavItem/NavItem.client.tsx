@@ -7,6 +7,8 @@ import clsx from 'clsx';
 
 import LeftGnbIcons from '@icons/LeftGnbIcons/LeftGnbIcons';
 
+import { GnbSection } from '@common/types/gnbs.types';
+
 import {
   GnbLeftNavItemIconState,
   GnbSectionLabels,
@@ -15,10 +17,13 @@ import {
 
 import { NavItemProps } from './NavItem.types';
 
-const NavItem = ({ item }: NavItemProps) => {
+const NavItem = ({ item, workspaceId }: NavItemProps) => {
   const pathname = usePathname();
-  const route = GnbSectionPaths[item];
-  const isCurrent = route === '/' ? pathname === '/' : pathname.startsWith(route);
+
+  if (!workspaceId) return null;
+
+  const route = GnbSectionPaths(workspaceId)[item];
+  const isCurrent = item === GnbSection.MAIN ? pathname === route : pathname.startsWith(route);
 
   return (
     <Link

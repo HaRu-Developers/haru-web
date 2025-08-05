@@ -1,3 +1,7 @@
+import { ApiErrorBody } from '@common/types/api.common.types';
+
+import { ApiError } from '@common/errors/ApiError';
+
 import { joinURL } from '@common/utils/join-url.utils';
 
 import { captureApiError } from './sentry';
@@ -30,7 +34,11 @@ const handleResponseError = async (res: Response, url: string, requestBodyRaw: u
   const contentType = res.headers.get('content-type');
   let requestBody: string;
   const responseBodyText = await res.text();
-  let responseBody: unknown = responseBodyText;
+  let responseBody: ApiErrorBody = {
+    isSuccess: false,
+    code: 'UNKNOWN',
+    message: `❌ API error ${res.status}`,
+  };
 
   // Serialize가 불가능할 경우를 handling 합니다.
   try {
@@ -43,13 +51,13 @@ const handleResponseError = async (res: Response, url: string, requestBodyRaw: u
   // JSON인 경우에만 파싱 시도
   if (contentType?.includes('application/json')) {
     try {
-      responseBody = JSON.parse(responseBodyText);
+      responseBody = JSON.parse(responseBodyText) as ApiErrorBody;
     } catch (_error) {
       // 파싱 실패시 문자열 유지
     }
   }
 
-  const error = new Error(`❌ API error ${res.status}`);
+  const error = new ApiError(res.status, responseBody);
 
   if (res.status >= 500) {
     captureApiError(
@@ -64,7 +72,6 @@ const handleResponseError = async (res: Response, url: string, requestBodyRaw: u
       'server-error',
     );
   }
-
   throw error;
 };
 

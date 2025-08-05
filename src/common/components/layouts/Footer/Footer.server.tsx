@@ -1,4 +1,7 @@
+'use client';
+
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 import HaruLogoIcons from '@icons/logos/HaruLogoIcons/HaruLogoIcons';
 import { HaruLogoIconsState } from '@icons/logos/HaruLogoIcons/HaruLogoIcons.types';
@@ -6,13 +9,15 @@ import { HaruLogoIconsState } from '@icons/logos/HaruLogoIcons/HaruLogoIcons.typ
 import { TermsModalType } from '@common/components/modals/terms/TermsModal.types';
 
 const Footer = () => {
-  const termsOfServiceModalHref = `/terms?type=${TermsModalType.TERMS_OF_SERVICE}`;
-  const privacyPolicyModalHref = `/terms?type=${TermsModalType.PRIVACY_POLICY}`;
+  const pathname = usePathname();
+
+  const termsOfServiceModalHref = `${pathname}/terms?type=${TermsModalType.TERMS_OF_SERVICE}`;
+  const privacyPolicyModalHref = `${pathname}/terms?type=${TermsModalType.PRIVACY_POLICY}`;
 
   return (
     <div className="h-299pxr gap-120pxr px-114pxr w-full items-start bg-gray-100 py-16">
       <div className="text-b3-rg flex flex-col items-start gap-6 text-white">
-        <HaruLogoIcons state={HaruLogoIconsState.MIXED} className="h-43px w-100pxr" />
+        <HaruLogoIcons state={HaruLogoIconsState.MIXED} className="h-28px w-115pxr" />
 
         <div className="flex flex-col items-start gap-1.5">
           <div className="flex items-center gap-2.5 self-stretch">

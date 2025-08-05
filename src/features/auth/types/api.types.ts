@@ -1,0 +1,78 @@
+// signup
+export interface SignupRequestDto {
+  email: string;
+  password: string;
+  name: string;
+  marketingAgreed: boolean;
+}
+// signup response는 빈 객체임
+
+// refresh token
+/**
+ * Refresh Token 요청 DTO
+ *
+ * Header에 들어가는 값 입니다.
+ * @deprecated custom fetcher의 구현에 따라 달라집니다.
+ */
+export interface RefreshAccessTokenRequestDto {
+  refreshToken: string;
+}
+
+export interface RefreshAccessTokenResponseDto {
+  userId: number;
+  accessToken: string;
+  refreshToken: string;
+}
+
+// login
+export interface LoginRequestDto {
+  email: string;
+  password: string;
+}
+
+export interface LoginResponseDto {
+  userid: number;
+  accessToken: string;
+  refreshToken: string;
+}
+
+// user info
+export interface PatchUserInfoRequestDto {
+  name?: string;
+  password?: string;
+}
+
+export interface UserInfoResponseDto {
+  id: bigint;
+  email: string;
+  imageUrl: string | null;
+  name: string;
+}
+
+// search user
+export interface SearchUserRequestDto {
+  email: string;
+}
+
+/**
+ * Search User 응답 DTO
+ *
+ * Response는 해당 DTO의 배열을 반환합니다.
+ *
+ * Generic에 배열로 전달하세요.
+ */
+export interface SearchUserResponseDto {
+  id: number;
+  email: string;
+  imageUrl: string | null;
+  name: string;
+}
+
+// logout
+
+/**
+ * @deprecated custom fetcher의 구현에 따라 달라집니다.
+ */
+export interface LogoutRequestDto {
+  accessToken: string;
+}

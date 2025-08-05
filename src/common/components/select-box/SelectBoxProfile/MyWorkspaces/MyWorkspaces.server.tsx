@@ -1,7 +1,7 @@
 import useFetchMyWorkspaces from '@api/workspace/get/queries/useFetchMyWorkspaces';
 
 import WorkSpaceItemSkeleton from './WorkspaceItem/WorkSpaceItemSkeleton.server';
-import WorkSpaceItem from './WorkspaceItem/WorkspaceItem.client';
+import WorkSpaceItem from './WorkspaceItem/WorkspaceItem.server';
 
 const MyWorkspaces = () => {
   const { isFetching, extra: workspaces } = useFetchMyWorkspaces();

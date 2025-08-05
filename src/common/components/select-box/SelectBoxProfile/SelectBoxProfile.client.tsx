@@ -1,3 +1,5 @@
+'use client';
+
 import ModalPortal from '@common/components/ModalPortal/ModalPortal.client';
 import ProfileImage from '@common/components/images/ProfileImage/ProfileImage.client';
 import { ImageSize } from '@common/components/images/types/images.common.types';
@@ -9,7 +11,7 @@ import NewWorkspaceButton from './NewWorkspaceButton/NewWorkspaceButton.client';
 
 // 임시 데이터
 const profile = {
-  userId: 1,
+  userId: '1',
   imageUrl: null,
   name: '기쁨',
   email: 'tngh9509@gmail.com',
@@ -61,6 +63,7 @@ const SelectBoxProfile = ({
               <p className="text-cap2-md mb-7pxr px-2.5 text-gray-400">내 워크스페이스</p>
               {/* 내 워크 스페이스 리스트 */}
               <MyWorkspaces />
+
               <NewWorkspaceButton />
             </div>
           </div>

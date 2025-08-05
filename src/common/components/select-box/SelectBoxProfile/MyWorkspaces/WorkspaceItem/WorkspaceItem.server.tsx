@@ -1,5 +1,3 @@
-'use client';
-
 import Link from 'next/link';
 
 import { Workspace } from '@api/workspace/api.types';

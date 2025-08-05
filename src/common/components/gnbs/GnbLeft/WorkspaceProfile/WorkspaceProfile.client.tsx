@@ -6,7 +6,7 @@ import ArrowIcons from '@icons/ArrowIcons/ArrowIcons';
 import { ArrowIconsState } from '@icons/ArrowIcons/ArrowIcons.types';
 
 import WorkspaceProfileImage from '@common/components/images/WorkspaceProfileImage/WorkspaceProfileImage.client';
-import SelectBoxProfile from '@common/components/select-box/SelectBoxProfile/SelectBoxProfile.server';
+import SelectBoxProfile from '@common/components/select-box/SelectBoxProfile/SelectBoxProfile.client';
 
 const WorkSpaceProfile = () => {
   const [isOpenSelectBoxProfile, setIsOpenSelectBoxProfile] = useState(false);
@@ -17,9 +17,9 @@ const WorkSpaceProfile = () => {
 
   // 임시 데이터
   const workspace = {
-    workspaceId: '1n',
+    workspaceId: '1',
     title: 'UMC 8기 운영진',
-    imagePath: null,
+    imageUrl: null,
     isOwner: true,
   };
 
@@ -32,7 +32,7 @@ const WorkSpaceProfile = () => {
         <div className="flex items-center justify-between self-stretch">
           <div className="flex items-center gap-2">
             <WorkspaceProfileImage
-              src={workspace.imagePath}
+              src={workspace.imageUrl}
               title={workspace.title}
               className="w-20pxr h-20pxr text-cap2-rg"
               border

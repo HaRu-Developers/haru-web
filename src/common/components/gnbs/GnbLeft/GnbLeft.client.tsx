@@ -3,6 +3,7 @@ import { HydrationBoundary } from '@tanstack/react-query';
 import HaruLogoIcons from '@icons/logos/HaruLogoIcons/HaruLogoIcons';
 import { HaruLogoIconsState } from '@icons/logos/HaruLogoIcons/HaruLogoIcons.types';
 
+import fetchMyWorkspaces from '@api/workspace/get/apis/fetchMyWorkspaces';
 import fetchRecentDocuments from '@api/workspace/get/apis/fetchRecentDocuments';
 
 import { GnbLeftNavItems } from '@common/constants/gnbs.constants';
@@ -26,6 +27,10 @@ const GnbLeft = async ({ workspaceId }: GnbLeftProps) => {
           queryKey: queryKeys.workspaces.recentDocuments(workspaceId).queryKey,
           queryFn: () => fetchRecentDocuments({ workspaceId }),
         });
+        await qc.prefetchQuery({
+          queryKey: queryKeys.workspaces.myWorkspaces.queryKey,
+          queryFn: fetchMyWorkspaces,
+        });
       },
     });
     dehydratedState = result.dehydratedState;
@@ -38,7 +43,9 @@ const GnbLeft = async ({ workspaceId }: GnbLeftProps) => {
         className="w-99pxr h-24pxr mb-8pxr mt-5pxr ml-5pxr"
       />
       <div className="gap-16pxr flex flex-col">
-        <WorkSpaceProfile />
+        <HydrationBoundary state={dehydratedState}>
+          <WorkSpaceProfile />
+        </HydrationBoundary>
         <div className="rounded-10pxr flex flex-col items-start gap-2 self-stretch">
           {GnbLeftNavItems.map((item) => (
             <NavItem key={item} item={item} workspaceId={workspaceId} />

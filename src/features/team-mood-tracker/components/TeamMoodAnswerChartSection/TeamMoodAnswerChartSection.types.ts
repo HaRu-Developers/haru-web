@@ -1,4 +1,4 @@
-import { SurveyQuestion } from '@features/team-mood-tracker/types/apis.types';
+import { SurveyQuestion } from '@/api/team-mood-tracker/apis.types';
 
 export interface TeamMoodAnswerChartSectionProps {
   responses: SurveyQuestion[];

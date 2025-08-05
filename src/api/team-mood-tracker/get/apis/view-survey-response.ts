@@ -5,9 +5,8 @@ import { BaseResponseDto } from '@common/types/api.common.types';
 import {
   GetViewSurveyRequestDto,
   GetViewSurveyResponseDto,
-} from '@features/team-mood-tracker/types/apis.types';
-
-import { MOOD_TRACKER_API_ENDPOINTS } from '@features/team-mood-tracker/constants/end-point.constants';
+} from '@/api/team-mood-tracker/apis.types';
+import { MOOD_TRACKER_API_ENDPOINTS } from '@/api/team-mood-tracker/end-point.constants';
 
 export const viewSurveyResponse = async ({
   moodTrackerHashedId,

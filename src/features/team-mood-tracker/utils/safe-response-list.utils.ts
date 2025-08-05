@@ -1,6 +1,6 @@
-import { SurveyQuestion } from '@features/team-mood-tracker/types/apis.types';
-
 import { SurveyQuestionType } from '@features/team-mood-tracker/constants/question.constants';
+
+import { SurveyQuestion } from '@/api/team-mood-tracker/apis.types';
 
 /**
  * @description API 응답의 responseList에서 각 질문 유형에 맞는 응답 배열이 실제로 존재하는 항목만 필터링합니다.

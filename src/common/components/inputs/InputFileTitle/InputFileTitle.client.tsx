@@ -41,7 +41,7 @@ const InputFileTitle = ({
       onKeyDown={handleKeyDown}
       onBlur={handleBlur}
       className={clsx(
-        'w-676pxr h-36pxr rounded-4pxr text-t1-sb flex items-center bg-white px-2 py-0.5 text-black outline-none focus:outline-none',
+        'w-676pxr h-36pxr rounded-4pxr text-t1-sb flex items-center bg-white py-0.5 text-black outline-none focus:outline-none',
         {
           'border-stroke-100 border': mode === InputFileTitleMode.EDITABLE,
         },

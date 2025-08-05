@@ -1,6 +1,6 @@
 export interface Teammate {
   name: string;
-  userId: number;
+  userId: string;
   email: string;
 }
 

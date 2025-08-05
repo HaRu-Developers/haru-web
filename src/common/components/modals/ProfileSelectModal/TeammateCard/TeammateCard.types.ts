@@ -1,6 +1,6 @@
 export interface TeammateCardProps {
   name: string;
-  userId: number;
+  userId: string;
   email: string;
   onClose: () => void;
 }

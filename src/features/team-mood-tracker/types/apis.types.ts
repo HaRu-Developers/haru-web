@@ -13,20 +13,20 @@ export interface GetViewReportRequestDto {
 
 // 모든 질문의 기본 구조
 interface BaseQuestion {
-  questionId: number;
+  questionId: string;
   questionTitle: string;
 }
 
 // 객관식 응답 항목
 export interface SurveyMultipleChoiceItem {
-  multipleChoiceId: number;
+  multipleChoiceId: string;
   content: string;
   selectedNum: number;
 }
 
 // 복수선택 응답 항목
 export interface SurveyCheckboxChoiceItem {
-  checkboxChoiceId: number;
+  checkboxChoiceId: string;
   content: string;
   selectedNum: number;
 }
@@ -50,7 +50,7 @@ export type SurveyQuestion =
 export interface GetViewSurveyResponseDto {
   moodTrackerHashedId: string;
   title: string;
-  creatorId: number;
+  creatorId: string;
   creatorName: string;
   updatedAt: string;
   dueDate: string;
@@ -61,7 +61,7 @@ export interface GetViewSurveyResponseDto {
 export interface GetViewReportResponseDto {
   moodTrackerHashedId: string;
   title: string;
-  creatorId: number;
+  creatorId: string;
   creatorName: string;
   updatedAt: string;
   dueDate: string;

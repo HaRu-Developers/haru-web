@@ -1,5 +1,5 @@
 export interface FileCreatedInfoProps {
   name: string;
-  userId: number;
+  userId: string;
   dateTime: string;
 }

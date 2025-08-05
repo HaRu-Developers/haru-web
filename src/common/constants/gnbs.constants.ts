@@ -33,7 +33,7 @@ export const GnbLeftNavItems: GnbLeftSection[] = [
 ];
 
 // 각 섹션에 대응하는 라우팅 경로
-export const GnbSectionPaths = (workspaceId: number) => ({
+export const GnbSectionPaths = (workspaceId: string) => ({
   [GnbSection.MAIN]: ROUTES.MAIN(workspaceId),
   [GnbSection.AI_MEETING_MANAGER]: ROUTES.AI_MEETING_MANAGER(workspaceId),
   [GnbSection.SNS_EVENT_ASSISTANT]: ROUTES.SNS_EVENT_ASSISTANT(workspaceId),

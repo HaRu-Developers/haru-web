@@ -9,7 +9,7 @@ import WorkSpaceItem from './WorkSpaceItem/WorkSpaceItem.client';
 
 // 임시 데이터
 const profile = {
-  userId: 1,
+  userId: '1',
   imagePath: null,
   name: '기쁨',
   email: 'tngh9509@gmail.com',
@@ -17,37 +17,37 @@ const profile = {
 
 const workspaces = [
   {
-    workspaceId: 1,
+    workspaceId: '1',
     imagePath: '/assets/images/profileImage.jpg',
     title: 'UMC 8기 운영진 회의',
     isOwner: true,
   },
   {
-    workspaceId: 2,
+    workspaceId: '2',
     imagePath: '/assets/images/profileImage.jpg',
     title: 'Team-Haru 22차 전사회의',
     isOwner: false,
   },
   {
-    workspaceId: 3,
+    workspaceId: '3',
     imagePath: '/assets/images/profileImage.jpg',
     title: '멋쟁이사자처럼 11기',
     isOwner: false,
   },
   {
-    workspaceId: 4,
+    workspaceId: '4',
     imagePath: '/assets/images/profileImage.jpg',
     title: '구름톤 유니브 8기',
     isOwner: false,
   },
   {
-    workspaceId: 5,
+    workspaceId: '5',
     imagePath: '/assets/images/profileImage.jpg',
     title: '구름톤 유니브 7기',
     isOwner: true,
   },
   {
-    workspaceId: 6,
+    workspaceId: '6',
     imagePath: '/assets/images/profileImage.jpg',
     title: '구름톤 유니브 6기',
     isOwner: false,

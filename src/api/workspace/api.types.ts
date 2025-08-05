@@ -1,13 +1,13 @@
 import { FileType } from '@common/types/file-type.enum';
 
 export interface Document {
-  documentId: number;
+  documentId: string;
   title: string;
   documentType: FileType;
 }
 
 export interface fetchRecentDocumentsResquestDto {
-  workspaceId: number;
+  workspaceId: string;
 }
 
 export interface fetchRecentDocumentsResponseDto {

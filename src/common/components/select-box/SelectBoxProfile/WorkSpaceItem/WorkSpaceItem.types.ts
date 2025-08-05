@@ -1,5 +1,5 @@
 export interface WorkSpaceItemProps {
-  workspaceId: number;
+  workspaceId: string;
   imagePath: string;
   title: string;
   isOwner: boolean;

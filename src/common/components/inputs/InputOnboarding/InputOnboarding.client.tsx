@@ -17,7 +17,6 @@ import {
 /*
   인풋 온보딩 컴포넌트
  */
-
 const InputOnboarding = ({
   mode = OnboardingMode.DEFAULT,
   title,

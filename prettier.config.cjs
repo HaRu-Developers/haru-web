@@ -54,6 +54,7 @@ module.exports = {
     // 공통 모듈
     '^@common/types/(.*)$',
     '^@common/constants/(.*)$',
+    '^@common/errors/(.*)$',
     '^@common/schemas/(.*)$',
     '^@common/utils/(.*)$',
     '^@common/hooks/(.*)$',

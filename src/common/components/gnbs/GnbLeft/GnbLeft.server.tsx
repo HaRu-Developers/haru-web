@@ -9,7 +9,7 @@ import { GnbLeftNavItems } from '@common/constants/gnbs.constants';
 
 import { getDehydratedState } from '@common/utils/dehydrate';
 
-import { fetchRecentDocuments } from '@common/apis/gnb-left/get/fetchRecentDocuments';
+import { fetchRecentDocuments } from '@/api/workspace/get/apis/fetchRecentDocuments';
 
 import { GnbLeftProps } from './GnbLeft.types';
 import NavItem from './NavItem/NavItem.client';

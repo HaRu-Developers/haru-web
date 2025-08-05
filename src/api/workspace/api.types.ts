@@ -1,4 +1,4 @@
-import { FileType } from '../file-type.enum';
+import { FileType } from '@common/types/file-type.enum';
 
 export interface Document {
   documentId: number;

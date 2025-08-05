@@ -2,16 +2,17 @@ import { useCallback } from 'react';
 
 import { notFound } from 'next/navigation';
 
-import { ApiErrorBody } from '@common/types/api.types';
-import { Document } from '@common/types/gnb-left/api.types';
+import { ApiErrorBody } from '@common/types/api.common.types';
 
 import { API_ERROR_CODES } from '@common/constants/api-error-codes.constants';
 import queryKeys from '@common/constants/query-key.constants';
 
-import { ApiError } from '@common/apis/ApiError';
-import { fetchRecentDocuments } from '@common/apis/gnb-left/get/fetchRecentDocuments';
+import { ApiError } from '@common/errors/ApiError';
 
-import { useAfterQuery } from '../useAfterQuery';
+import { useAfterQuery } from '@common/hooks/queries/useAfterQuery';
+
+import { Document } from '../../api.types';
+import { fetchRecentDocuments } from '../apis/fetchRecentDocuments';
 
 /**
  * gnb left에서 워크 스페이스의 최근 조회 파일 가져오는 훅

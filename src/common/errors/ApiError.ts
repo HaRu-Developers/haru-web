@@ -1,4 +1,9 @@
-import { ApiErrorBody } from '@common/types/api.types';
+/**
+ * 공통 에러 객체 클래스
+ *
+ * 모든 API 호출에서 에러를 통일된 형태로 다룸
+ */
+import { ApiErrorBody } from '@common/types/api.common.types';
 
 export class ApiError<T extends ApiErrorBody = ApiErrorBody> extends Error {
   status: number;

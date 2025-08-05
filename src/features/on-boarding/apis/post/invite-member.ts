@@ -1,6 +1,6 @@
 import { defaultApi } from '@lib/fetcher';
 
-import { BaseResponseDto } from '@common/types/api.types';
+import { BaseResponseDto } from '@common/types/api.common.types';
 
 import { InviteMembersRequestDto } from '@features/on-boarding/types/apis.types';
 

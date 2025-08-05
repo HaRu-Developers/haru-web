@@ -1,8 +1,8 @@
-import { ApiErrorBody } from '@common/types/api.types';
+import { ApiErrorBody } from '@common/types/api.common.types';
+
+import { ApiError } from '@common/errors/ApiError';
 
 import { joinURL } from '@common/utils/join-url.utils';
-
-import { ApiError } from '@common/apis/ApiError';
 
 import { captureApiError } from './sentry';
 

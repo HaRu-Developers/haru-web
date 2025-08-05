@@ -5,7 +5,7 @@ import { BaseResponseDto } from '@common/types/api.common.types';
 import { fetchRecentDocumentsResponseDto, fetchRecentDocumentsResquestDto } from '../../api.types';
 import { WORKSPACE_API_ENDPOINTS } from '../../end-point.constants';
 
-export const fetchRecentDocuments = async ({ workspaceId }: fetchRecentDocumentsResquestDto) => {
+const fetchRecentDocuments = async ({ workspaceId }: fetchRecentDocumentsResquestDto) => {
   const response = await defaultApi<BaseResponseDto<fetchRecentDocumentsResponseDto>>(
     WORKSPACE_API_ENDPOINTS.RECENT_DOCUMENTS(workspaceId),
     {
@@ -16,3 +16,5 @@ export const fetchRecentDocuments = async ({ workspaceId }: fetchRecentDocuments
 
   return response;
 };
+
+export default fetchRecentDocuments;

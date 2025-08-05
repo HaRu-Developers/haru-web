@@ -4,55 +4,16 @@ import { ImageSize } from '@common/components/images/types/images.common.types';
 
 import FooterButtons from './FooterButtons/FooterButtons.client';
 import HeaderButtons from './HeaderButtons/HeaderButtons.client';
+import MyWorkspaces from './MyWorkspaces/MyWorkspaces.server';
 import NewWorkspaceButton from './NewWorkspaceButton/NewWorkspaceButton.client';
-import WorkSpaceItem from './WorkSpaceItem/WorkSpaceItem.client';
 
 // 임시 데이터
 const profile = {
   userId: 1,
-  imagePath: null,
+  imageUrl: null,
   name: '기쁨',
   email: 'tngh9509@gmail.com',
 };
-
-const workspaces = [
-  {
-    workspaceId: 1,
-    imagePath: '/assets/images/profileImage.jpg',
-    title: 'UMC 8기 운영진 회의',
-    isOwner: true,
-  },
-  {
-    workspaceId: 2,
-    imagePath: '/assets/images/profileImage.jpg',
-    title: 'Team-Haru 22차 전사회의',
-    isOwner: false,
-  },
-  {
-    workspaceId: 3,
-    imagePath: '/assets/images/profileImage.jpg',
-    title: '멋쟁이사자처럼 11기',
-    isOwner: false,
-  },
-  {
-    workspaceId: 4,
-    imagePath: '/assets/images/profileImage.jpg',
-    title: '구름톤 유니브 8기',
-    isOwner: false,
-  },
-  {
-    workspaceId: 5,
-    imagePath: '/assets/images/profileImage.jpg',
-    title: '구름톤 유니브 7기',
-    isOwner: true,
-  },
-  {
-    workspaceId: 6,
-    imagePath: '/assets/images/profileImage.jpg',
-    title: '구름톤 유니브 6기',
-    isOwner: false,
-  },
-];
 
 const SelectBoxProfile = ({
   isOpen,
@@ -82,7 +43,7 @@ const SelectBoxProfile = ({
               <div className="flex items-center gap-3.5">
                 <ProfileImage
                   userId={profile.userId}
-                  src={profile.imagePath}
+                  src={profile.imageUrl}
                   name={profile.name}
                   size={ImageSize.LARGE}
                 />
@@ -98,15 +59,8 @@ const SelectBoxProfile = ({
 
             <div className="w-full">
               <p className="text-cap2-md mb-7pxr px-2.5 text-gray-400">내 워크스페이스</p>
-              {workspaces.map((ws) => (
-                <WorkSpaceItem
-                  key={ws.workspaceId}
-                  workspaceId={ws.workspaceId}
-                  imagePath={ws.imagePath}
-                  title={ws.title}
-                  isOwner={ws.isOwner}
-                />
-              ))}
+              {/* 내 워크 스페이스 리스트 */}
+              <MyWorkspaces />
               <NewWorkspaceButton />
             </div>
           </div>

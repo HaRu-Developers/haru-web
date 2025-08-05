@@ -12,12 +12,12 @@ import { ApiError } from '@common/errors/ApiError';
 import { useAfterQuery } from '@common/hooks/queries/useAfterQuery';
 
 import { Document } from '../../api.types';
-import { fetchRecentDocuments } from '../apis/fetchRecentDocuments';
+import fetchRecentDocuments from '../apis/fetchRecentDocuments';
 
 /**
- * gnb left에서 워크 스페이스의 최근 조회 파일 가져오는 훅
+ * 특정 워크 스페이스의 최근 조회 파일 가져오는 훅
  */
-const useFetchRecentDocuments = (workspaceId: number) => {
+const useFetchRecentDocuments = (workspaceId: string) => {
   const handleError = useCallback((error: ApiError<ApiErrorBody>) => {
     if (error.code === API_ERROR_CODES.WORKSPACE.NOT_FOUND) {
       notFound(); // Next.js not-found.tsx로 이동

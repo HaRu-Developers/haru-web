@@ -8,13 +8,13 @@ interface OnboardingStoreState {
   step: OnboardingStep;
   name: string;
   image: File | null;
-  workspaceId: number | null;
+  workspaceId: string | null;
   emails: string[];
   isInstagramConnected: boolean;
   actions: {
     setName: (name: string) => void;
     setImage: (file: File) => void;
-    setWorkspaceId: (id: number) => void;
+    setWorkspaceId: (id: string) => void;
     addEmail: (email: string) => void;
     removeEmail: (index: number) => void;
     setEmails: (emails: string[]) => void;

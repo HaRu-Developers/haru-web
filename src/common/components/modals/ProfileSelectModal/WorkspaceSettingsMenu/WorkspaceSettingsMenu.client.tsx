@@ -16,17 +16,17 @@ import { Teammate, WorkspaceSettingsMenuProps } from './WorkspaceSettingsMenu.ty
 const mockTeammates: Teammate[] = [
   {
     name: '홍길동',
-    userId: 1n,
+    userId: 1,
     email: 'honggildong@example.com',
   },
   {
     name: '김철수',
-    userId: 2n,
+    userId: 2,
     email: 'kimchulsoo@example.com',
   },
   {
     name: '이영희',
-    userId: 3n,
+    userId: 3,
     email: 'leeyounghee@example.com',
   },
 ];

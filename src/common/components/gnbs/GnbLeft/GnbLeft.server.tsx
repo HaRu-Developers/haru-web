@@ -30,7 +30,7 @@ const isNumericString = (str: string | null) => {
 const GnbLeft = async ({ workspaceId }: GnbLeftProps) => {
   // NaN이면 not-found.tsx로 이동
   // 의도하지 않은 동작이라면 추후 변동 바랍니다 @duwlsssss
-  if (isNumericString(workspaceId)) {
+  if (!isNumericString(workspaceId)) {
     notFound();
   }
 

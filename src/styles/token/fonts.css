@@ -84,6 +84,13 @@
     letter-spacing: -0.02em;
   }
 
+  .text-t7-rg {
+    font-size: var(--text-14pxr);
+    line-height: 130%;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+
   .text-t7-sb {
     font-size: var(--text-14pxr);
     line-height: 130%;

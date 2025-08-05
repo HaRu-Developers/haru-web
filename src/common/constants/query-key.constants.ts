@@ -8,6 +8,7 @@ const queryKeys = createQueryKeyStore({
     // 매개변수가 있는 키는 함수로 정의합니다.
     detail: (workspaceId: number) => [workspaceId],
     members: (workspaceId: number) => [workspaceId, 'members'],
+    recentDocuments: (workspaceId: number) => [workspaceId, 'recentDocuments'],
   },
 
   moodTracker: {

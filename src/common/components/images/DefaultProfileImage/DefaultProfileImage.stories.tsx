@@ -49,7 +49,7 @@ export const Small: Story = {
 export const WithCustomColor: Story = {
   args: {
     name: '김커스텀',
-    userId: 3,
+    userId: 1,
     color: '#FFD700',
   },
 };

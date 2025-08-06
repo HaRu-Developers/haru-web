@@ -16,23 +16,22 @@
  */
 import { DehydratedState, QueryClient, dehydrate } from '@tanstack/react-query';
 
+import { getQueryClient } from './get-query-client';
+
 interface DehydrationOptions {
-  // 쿼리 클라이언트 설정 다르게 하려면
-  queryClient?: QueryClient;
   // 원하는 prefetch 함수: 내부에서 여러 쿼리 실행 가능
   prefetch: (queryClient: QueryClient) => Promise<void>;
 }
 
 // 서버에서 데이터를 미리 fetch해, 직렬화된 React Query 상태 반환
 export const getDehydratedState = async ({
-  queryClient = new QueryClient(),
   prefetch,
 }: DehydrationOptions): Promise<{
   dehydratedState: DehydratedState;
-  queryClient: QueryClient;
 }> => {
+  const queryClient = getQueryClient();
   await prefetch(queryClient);
   const dehydratedState = dehydrate(queryClient); // React Query 캐시 직렬화
 
-  return { dehydratedState, queryClient };
+  return { dehydratedState };
 };

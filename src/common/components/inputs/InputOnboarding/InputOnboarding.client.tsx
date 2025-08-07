@@ -37,6 +37,9 @@ const InputOnboarding = ({
   return (
     <div className="text-b3-rg inline-flex flex-col items-start gap-1.5">
       <span>{title}</span>
+      {/* 인풋 박스 */}
+      {/* type이 HIDE인 경우 비밀번호 입력창 */}
+      {/* type이 SHOW인 경우 일반 입력창 */}
       <div className="relative">
         <input
           type={isShowing ? 'text' : 'password'}
@@ -64,6 +67,9 @@ const InputOnboarding = ({
           </div>
         )}
       </div>
+      {/* 메시지 */}
+      {/* state가 ERROR인 경우 빨간색, APPROVAL인 경우 초록색 */}
+      {/* 그 외의 경우는 기본 텍스트 색상 */}
       <span
         className={clsx('text-cap1-rg', {
           'text-system-red': state === OnboardingState.ERROR,

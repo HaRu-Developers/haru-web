@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 
 import { LOCAL_STORAGE_KEYS, LocalStorageValue } from '../constants/local-storage-key.constants';

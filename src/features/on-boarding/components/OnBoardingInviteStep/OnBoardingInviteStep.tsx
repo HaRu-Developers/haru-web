@@ -10,16 +10,20 @@ import InputInviteMember from '@common/components/inputs/input-invite-member/Inp
 
 import { OnboardingToastType } from '@features/on-boarding/types/OnboardingToast.types';
 
+import { useInviteMembersMutation } from '@features/on-boarding/hooks/mutations/useInviteMemberMutation';
 import {
   useOnboardingActions,
-  useOnboardingEmails,
+  useOnboardingState,
 } from '@features/on-boarding/hooks/stores/useOnBoardingStore';
 import { useOnboardingToastActions } from '@features/on-boarding/hooks/stores/useOnboardingToastStore';
 
 const OnBoardingInviteStep = () => {
   const { setEmails, nextStep } = useOnboardingActions();
-  const emails = useOnboardingEmails();
+  const { workspaceId, emails } = useOnboardingState();
   const [value, setValue] = useState('');
+  const [isInvited, setIsInvited] = useState(false); // 초대 완료 여부 state
+
+  const { mutate: inviteMembers, isPending: isInviting } = useInviteMembersMutation();
 
   // 토스트 띄우기 유틸
   const { showOnboardingToast } = useOnboardingToastActions();
@@ -33,31 +37,37 @@ const OnBoardingInviteStep = () => {
     nextStep();
   };
 
-  const handleInvite = (emails: string[]) => {
-    // 초대 버튼 클릭 시 호출 됩니다. -> 이메일 목록 반환
-    // 이메일 목록은 여기서 반환되고 기존 이메일 목록은 제거됩니다.
-    console.log('초대할 이메일 목록:', emails);
-    // 온보딩 토스트 띄우귀
-    showOnboardingToast({
-      type: OnboardingToastType.SUCCESS_INVITE,
-    });
-  };
+  const handleInvite = (emailsToInvite: string[]) => {
+    if (!workspaceId) {
+      return;
+    }
 
-  const isNextButtonDisabled = emails.length === 0;
+    inviteMembers(
+      { workspaceId, emails: emailsToInvite },
+      {
+        onSuccess: () => {
+          showOnboardingToast({ type: OnboardingToastType.SUCCESS_INVITE });
+          setIsInvited(true);
+        },
+        onError: (error) => {
+          console.error('멤버 초대 실패:', error);
+        },
+      },
+    );
+  };
 
   return (
     <div className="flex flex-col">
       <p className="text-t2-bd mb-6pxr whitespace-pre-line">
         {`워크스페이스에 초대할 팀원의 \n 이메일 주소를 입력해주세요.`}
       </p>
-      <p className="text-b2-rg mb-36pxr text-gray-200">
+      <p className="text-b2-rg mb-44pxr text-gray-200">
         함께할 팀원들의 이메일을 입력해 초대해 보세요.
       </p>
 
-      <div className="mb-228pxr relative">
+      <div className="mb-217pxr relative">
         <InputInviteMember
-          className="absolute"
-          title=""
+          className="w-414pxr absolute"
           value={value}
           onValueChange={setValue}
           onInvite={handleInvite}
@@ -67,13 +77,18 @@ const OnBoardingInviteStep = () => {
       </div>
 
       <div className="gap-8pxr flex">
-        <SkipForNowButton buttonType={SkipForNowButtonType.SIZE_48} onClick={handleSkip} />
-
-        <MoveToNextButton
-          onClick={handleNext}
-          width={MoveToNextButtonWidth.WIDTH_260}
-          disabled={isNextButtonDisabled}
-        />
+        {isInvited ? (
+          <MoveToNextButton onClick={handleNext} width={MoveToNextButtonWidth.WIDTH_414} />
+        ) : (
+          <>
+            <SkipForNowButton buttonType={SkipForNowButtonType.SIZE_48} onClick={handleSkip} />
+            <MoveToNextButton
+              onClick={handleNext}
+              width={MoveToNextButtonWidth.WIDTH_260}
+              disabled={true}
+            />
+          </>
+        )}
       </div>
     </div>
   );

@@ -27,6 +27,7 @@
       "@svgs/*": ["assets/svgs/*"],
       "@common/types/*": ["common/types/*"],
       "@common/constants/*": ["common/constants/*"],
+      "@common/errors/*": ["common/errors/*"],
       "@common/schemas/*": ["common/schemas/*"],
       "@common/utils/*": ["common/utils/*"],
       "@common/hooks/*": ["common/hooks/*"],

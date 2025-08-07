@@ -1,4 +1,8 @@
+import { FileType } from '@common/types/file-type.enum';
+
 export interface RecentDocumentItemProps {
-  documentId: string;
+  workspaceId: number | null;
+  documentType: FileType;
+  documentId: number;
   title: string;
 }

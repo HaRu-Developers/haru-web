@@ -2,10 +2,8 @@
  * assistant 구조에 사용되는 매핑 함수 모음
  */
 import { ExtendedFileType, FileType, SNS_EVENT_ASSISTANT_LINK } from '@common/types/file-type.enum';
-import { GnbSection } from '@common/types/gnbs.types';
 
 import BoldText from '@common/components/BoldText/BoldText.server';
-import GnbTop from '@common/components/gnbs/GnbTop/GnbTop.client';
 
 /**
  * cta 박스 위 설명 컴포넌트 매핑

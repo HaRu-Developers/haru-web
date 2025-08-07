@@ -1,6 +1,6 @@
 export interface Teammate {
   name: string;
-  userId: bigint;
+  userId: number;
   email: string;
 }
 

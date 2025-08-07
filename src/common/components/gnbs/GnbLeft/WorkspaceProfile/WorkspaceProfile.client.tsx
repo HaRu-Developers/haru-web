@@ -27,7 +27,7 @@ const WorkSpaceProfile = ({ workspaceId }: WorkspaceProfileProps) => {
 
   if (!hasWorkspaceId) {
     return (
-      <button className="h-46pxr px-7pxr py-5pxr flex w-52 shrink-0 cursor-not-allowed flex-col items-start justify-center">
+      <button className="h-46pxr px-7pxr py-5pxr mb-4pxr w-full cursor-not-allowed">
         <div className="flex items-center justify-between self-stretch">
           <div className="flex items-center gap-2">
             <WorkspaceProfileImage
@@ -49,7 +49,7 @@ const WorkSpaceProfile = ({ workspaceId }: WorkspaceProfileProps) => {
       {isFetching && <WorkspaceProfileSkeleton />}
       {!isFetching && hasValidWorkspace && (
         <>
-          <button className="h-46pxr px-7pxr py-5pxr w-full" onClick={handleClick}>
+          <button className="h-46pxr px-7pxr mb-4pxr py-5pxr w-full" onClick={handleClick}>
             <div className="flex items-center justify-between self-stretch">
               <div className="flex items-center gap-2">
                 <WorkspaceProfileImage

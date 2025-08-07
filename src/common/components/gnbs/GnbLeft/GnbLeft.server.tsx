@@ -49,10 +49,10 @@ const GnbLeft = async ({ workspaceId }: GnbLeftProps) => {
         state={HaruLogoIconsState.MIXED}
         className="w-99pxr h-24pxr mb-8pxr mt-5pxr ml-5pxr"
       />
+      <HydrationBoundary state={dehydratedState}>
+        <WorkSpaceProfile workspaceId={workspaceId} />
+      </HydrationBoundary>
       <div className="gap-16pxr flex flex-col">
-        <HydrationBoundary state={dehydratedState}>
-          <WorkSpaceProfile workspaceId={workspaceId} />
-        </HydrationBoundary>
         <div className="rounded-10pxr flex flex-col items-start gap-2 self-stretch">
           {GnbLeftNavItems.map((item) => (
             <NavItem key={item} item={item} workspaceId={workspaceId} />

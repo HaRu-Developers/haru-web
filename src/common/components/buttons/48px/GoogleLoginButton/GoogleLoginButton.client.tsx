@@ -5,12 +5,17 @@ import clsx from 'clsx';
 import ThirdPartyLogoIcons from '@icons/logos/ThirdPartyLogoIcon/ThirdPartyLogoIcons';
 import { ThirdPartyLogoIconsState } from '@icons/logos/ThirdPartyLogoIcon/ThirdPartyLogoIcons.types';
 
-import { ButtonsCommonProps } from '../../types/buttons.common.types';
+import { GoogleLoginButtonProps } from './GoogleLoginButton.types';
 
 /**
  * 'Google로 로그인하기' 버튼
  */
-const GoogleLoginButton = ({ className, onClick, ...props }: ButtonsCommonProps) => {
+const GoogleLoginButton = ({
+  className,
+  onClick,
+  buttonText,
+  ...props
+}: GoogleLoginButtonProps) => {
   return (
     <button
       className={clsx(
@@ -21,7 +26,7 @@ const GoogleLoginButton = ({ className, onClick, ...props }: ButtonsCommonProps)
       {...props}
     >
       <ThirdPartyLogoIcons state={ThirdPartyLogoIconsState.GOOGLE_DEFAULT} />
-      <p>Google로 로그인하기</p>
+      <p>{buttonText}</p>
     </button>
   );
 };

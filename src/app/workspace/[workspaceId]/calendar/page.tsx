@@ -1,3 +1,5 @@
+import { workspaceIdTypes } from '@common/types/workspace-id.types';
+
 import CalendarSection from '@common/components/etc/calendar/CalendarSection/CalendarSection.client';
 
 /*

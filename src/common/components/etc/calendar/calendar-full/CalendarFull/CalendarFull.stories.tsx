@@ -2,11 +2,10 @@ import { useState } from 'react';
 
 import { Meta, StoryObj } from '@storybook/nextjs';
 
+import { FileType } from '@common/types/file-type.enum';
+
 import CalendarFull from '@common/components/etc/calendar/calendar-full/CalendarFull/CalendarFull.client';
-import {
-  DocumentFile,
-  DocumentType,
-} from '@common/components/etc/calendar/types/calendar.common.types';
+import { DocumentList } from '@common/components/etc/calendar/types/calendar.common.types';
 
 const meta: Meta<typeof CalendarFull> = {
   title: 'Components/Etc/Calendar/CalendarFull',
@@ -27,17 +26,15 @@ export const Default: Story = {
     const [endDate, setEndDate] = useState<Date>(initialEnd);
     const [currentDate, setCurrentDate] = useState<Date>(new Date());
 
-    const mockDocuments: DocumentFile[][] = Array(35)
-      .fill([])
-      .map(() => []);
-    mockDocuments[0] = [
+    const mockDocuments: DocumentList[] = [
       {
-        id: 1,
+        documentId: 1,
         title: '회의록 - 테스트',
-        type: DocumentType.AI_MEETING_MANAGER,
+        documentType: FileType.AI_MEETING_MANAGER,
+        createdAt: '2025-06-29T00:00:00Z',
       },
     ];
-    const [documents, setDocuments] = useState<DocumentFile[][]>(mockDocuments);
+    const [documents, setDocuments] = useState<DocumentList[]>(mockDocuments);
 
     const handleCalChange = (newStartDate: Date, newEndDate: Date, currentDate: Date) => {
       setStartDate(newStartDate);
@@ -51,9 +48,11 @@ export const Default: Story = {
 
     return (
       <CalendarFull
+        title="캘린더"
         documents={documents}
-        currentDate={currentDate}
-        onCalChange={handleCalChange}
+        startDate={startDate}
+        endDate={endDate}
+        operatingMonth={7}
         onFileClick={handleFileClick}
       />
     );

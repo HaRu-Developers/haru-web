@@ -1,7 +1,9 @@
 import { Meta, StoryObj } from '@storybook/nextjs';
 
+import { FileType } from '@common/types/file-type.enum';
+
 import Calendar from '@common/components/etc/calendar/Calendar/Calendar.client';
-import { DocumentFile, DocumentType } from '@common/components/etc/calendar/types/calendar.common.types';
+import { DocumentList } from '@common/components/etc/calendar/types/calendar.common.types';
 
 const meta: Meta<typeof Calendar> = {
   title: 'Components/Etc/Calendar/Calendar',
@@ -14,7 +16,7 @@ export default meta;
 type Story = StoryObj<typeof Calendar>;
 
 const today = new Date();
-const firstDayOfMonth = new Date(Date.UTC(today.getFullYear(), today.getMonth(), 1)); // UTC 사용 안할 시 오늘 날짜가 값은 정상이지만 내일로 밀리는 버그가 있음
+const firstDayOfMonth = new Date(Date.UTC(today.getFullYear(), today.getMonth(), 1));
 const sunday = new Date(firstDayOfMonth);
 sunday.setDate(firstDayOfMonth.getDate() - firstDayOfMonth.getDay());
 const WeekendLater = new Date(sunday);
@@ -22,50 +24,40 @@ WeekendLater.setDate(sunday.getDate() + 6);
 const monthLater = new Date(sunday);
 monthLater.setDate(sunday.getDate() + 34);
 const operatingMonth = firstDayOfMonth.getMonth() + 1;
-const mockDocuments: DocumentFile[][] = [];
-const numberOfDays =
-  Math.floor((monthLater.getTime() - sunday.getTime()) / (1000 * 60 * 60 * 24)) + 1;
 
-for (let i = 0; i < numberOfDays; i++) {
-  // 날짜 별 배열 만들기 날짜 별 문서가 제한이 없음
-  mockDocuments.push([]);
-}
-
-if (mockDocuments[2]) {
-  mockDocuments[2].push({
-    id: 1,
+// mockDocuments를 1차원 배열로 정의
+const mockDocuments: DocumentList[] = [
+  {
+    documentId: 1,
     title: `회의록 - 2025년 6월 24일`,
-    type: DocumentType.AI_MEETING_MANAGER,
-  });
-}
-
-if (mockDocuments[9]) {
-  mockDocuments[9].push(
-    {
-      id: 2,
-      title: `7월 8일 회의록`,
-      type: DocumentType.AI_MEETING_MANAGER,
-    },
-    {
-      id: 3,
-      title: `SNS 이벤트 초안`,
-      type: DocumentType.SNS_EVENT_ASSISTANT,
-    },
-    {
-      id: 4,
-      title: `팀 분위기 보고서 Q1`,
-      type: DocumentType.TEAM_MOOD_TRACKER,
-    },
-  );
-}
-
-if (mockDocuments[19]) {
-  mockDocuments[19].push({
-    id: 5,
+    documentType: FileType.AI_MEETING_MANAGER,
+    createdAt: '2025-06-24T00:00:00Z',
+  },
+  {
+    documentId: 2,
+    title: `7월 8일 회의록`,
+    documentType: FileType.AI_MEETING_MANAGER,
+    createdAt: '2025-07-08T00:00:00Z',
+  },
+  {
+    documentId: 3,
+    title: `SNS 이벤트 초안`,
+    documentType: FileType.SNS_EVENT_ASSISTANT,
+    createdAt: '2025-07-08T00:00:00Z',
+  },
+  {
+    documentId: 4,
+    title: `팀 분위기 보고서 Q1`,
+    documentType: FileType.TEAM_MOOD_TRACKER,
+    createdAt: '2025-07-08T00:00:00Z',
+  },
+  {
+    documentId: 5,
     title: `월간 회의록 요약`,
-    type: DocumentType.AI_MEETING_MANAGER,
-  });
-}
+    documentType: FileType.AI_MEETING_MANAGER,
+    createdAt: '2025-07-19T00:00:00Z',
+  },
+];
 
 export const Week: Story = {
   args: {
@@ -73,8 +65,8 @@ export const Week: Story = {
     endDate: WeekendLater,
     documents: mockDocuments,
     operatingMonth: operatingMonth,
-    onFileClick: (id: number) => {
-      console.log(`Clicked on file with id: ${id}`);
+    onFileClick: (documentId: number) => {
+      console.log(`Clicked on file with documentId: ${documentId}`);
     },
   },
 };
@@ -85,8 +77,8 @@ export const Month: Story = {
     endDate: monthLater,
     documents: mockDocuments,
     operatingMonth: operatingMonth,
-    onFileClick: (id: number) => {
-      console.log(`Clicked on file with id: ${id}`);
+    onFileClick: (documentId: number) => {
+      console.log(`Clicked on file with documentId: ${documentId}`);
     },
   },
 };

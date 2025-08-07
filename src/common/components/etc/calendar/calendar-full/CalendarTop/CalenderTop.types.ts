@@ -1,6 +1,6 @@
 export interface CalendarTopProps {
   title: string;
-  onPrevClick: () => void;
-  onTodayClick: () => void;
-  onNextClick: () => void;
+  onPrevClick?: () => void;
+  onTodayClick?: () => void;
+  onNextClick?: () => void;
 }

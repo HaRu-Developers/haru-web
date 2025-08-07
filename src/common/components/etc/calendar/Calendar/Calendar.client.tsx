@@ -24,13 +24,21 @@ const Calendar = ({
     date.setDate(date.getDate() + i);
     return date;
   });
+
   return (
     <div className="w-1030pxr grid grid-cols-7">
       {dateList.map((date, idx) => (
         <CalenderSlice
           key={idx}
           date={date}
-          files={documents[idx] || []}
+          files={documents.filter((doc) => {
+            const docDate = new Date(doc.createdAt);
+            return (
+              docDate.getFullYear() === date.getFullYear() &&
+              docDate.getMonth() === date.getMonth() &&
+              docDate.getDate() === date.getDate()
+            );
+          })}
           isVisible={date.getMonth() === operatingMonth - 1}
           isToday={date.toISOString().split('T')[0] === today.toISOString().split('T')[0]}
           isSecondRowOrBelow={Math.floor(idx / 7) > 0}

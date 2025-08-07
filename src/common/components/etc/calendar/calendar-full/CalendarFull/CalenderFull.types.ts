@@ -1,8 +1,13 @@
-import { DocumentFile } from '../../types/calendar.common.types';
+import { DocumentList } from '../../types/calendar.common.types';
 
 export interface CalendarFullProps {
-  currentDate: Date;
-  documents: DocumentFile[][];
-  onCalChange?: (startDate: Date, endDate: Date, currentDate: Date) => void;
+  title: string;
+  startDate: Date;
+  endDate: Date;
+  operatingMonth: number;
+  documents: DocumentList[];
+  onPrevClick?: () => void;
+  onTodayClick?: () => void;
+  onNextClick?: () => void;
   onFileClick?: (id: number) => void;
 }

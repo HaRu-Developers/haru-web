@@ -4,8 +4,6 @@ import { ApiError } from '@common/errors/ApiError';
 
 import { joinURL } from '@common/utils/join-url.utils';
 
-import { getAccessToken } from '@apis/user/hooks/useLocalStorage';
-
 import { captureApiError } from './sentry';
 
 interface CreateFetcherOptions {
@@ -206,29 +204,6 @@ export const createFetcher =
   };
 
 export const defaultApi = createFetcher({ fetchOptions: { cache: 'no-store' } });
-
-/**
- * headers에 Authorization을 자동으로 포합합니다.
- */
-export const protectedApi = createFetcher({
-  fetchOptions: { cache: 'no-store' },
-  headers: (() => {
-    const accessToken = getAccessToken();
-    const envToken = process.env.NEXT_PUBLIC_ACCESS_TOKEN;
-
-    // 빈 문자열이 아닌 토큰이 있을 때만 Authorization 헤더 설정
-    if (accessToken) {
-      return { Authorization: `Bearer ${accessToken}` };
-    }
-
-    if (envToken) {
-      return { Authorization: `Bearer ${envToken}` };
-    }
-
-    // 토큰이 없으면 Authorization 헤더 없음
-    return undefined;
-  })(),
-});
 
 /**
  * axios의 withCredentials를 사용한 것과 동일한 효과를 가진 fetcher입니다.

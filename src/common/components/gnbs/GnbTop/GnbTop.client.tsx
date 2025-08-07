@@ -44,13 +44,19 @@ const GnbTop = ({ section, title, current, isSnsEventAssistantWithoutWorkspace }
                 const isDisabled =
                   isSnsEventAssistantWithoutWorkspace && tab !== SnsGnbTabType.ALL_EVENTS;
 
-                return (
-                  <Link key={tab} href={`${pathname}?${params.toString()}`}>
+                const route = `${pathname}?${params.toString()}`;
+
+                return isSnsEventAssistantWithoutWorkspace ? (
+                  <div key={tab}>
                     <CategoryOption
                       label={SnsGnbTabLabels[tab]}
                       active={isActive}
                       disabled={isDisabled}
                     />
+                  </div>
+                ) : (
+                  <Link key={tab} href={route}>
+                    <CategoryOption label={SnsGnbTabLabels[tab]} active={isActive} />
                   </Link>
                 );
               })

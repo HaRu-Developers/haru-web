@@ -2,8 +2,8 @@ import { notFound, redirect } from 'next/navigation';
 
 import { ROUTES } from '@common/constants/routes.constants';
 
-import GoogleLoginFail from '@features/auth/components/GoogleLoginFail/GoogleLoginFail.client';
-import GoogleLoginSuccess from '@features/auth/components/GoogleLoginSuccess/GoogleLoginSuccess.client';
+import GoogleLoginFail from '@features/auth/components/google-oauth/GoogleLoginFail/GoogleLoginFail.client';
+import GoogleLoginSuccess from '@features/auth/components/google-oauth/GoogleLoginSuccess/GoogleLoginSuccess.client';
 
 type GoogleCallbackQueryType = {
   status: 'success' | 'fail';

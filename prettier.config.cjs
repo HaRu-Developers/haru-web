@@ -35,6 +35,7 @@ module.exports = {
     '^(next/(.*)$)|^(next$)', // Next.js
 
     // 외부 라이브러리
+    '^@tanstack/react-query$', // React Query
     '<THIRD_PARTY_MODULES>',
 
     // 전역 스타일
@@ -43,13 +44,12 @@ module.exports = {
     // 정적 자산
     '^@icons/(.*)$',
     '^@assets/(.*)$',
-    
+
     // svg 컴포넌트
     '^@svgs/(.*)$',
 
     // 라이브러리 관련
     '^@lib/(.*)$',
-
 
     // 공통 모듈
     '^@common/types/(.*)$',
@@ -74,6 +74,9 @@ module.exports = {
     '^@features/.*/components/(.*)$',
     '^@features/(.*)$', // 나머지 도메인 루트
 
+    // API 모듈
+    '^@apis/(.*)$',
+
     // 기타 src 하위 경로
     '^@/(.*)$',
 
@@ -92,7 +95,7 @@ module.exports = {
 
   // pnpm install --save-dev prettier @prettier/plugin-xml
   // npx prettier --write "src/assets/**/*.svg"
-  // pnpm remove @prettier/plugin-xml  
+  // pnpm remove @prettier/plugin-xml
 
   // plugins: ['@trivago/prettier-plugin-sort-imports', 'prettier-plugin-tailwindcss', '@prettier/plugin-xml'],
   plugins: ['@trivago/prettier-plugin-sort-imports', 'prettier-plugin-tailwindcss'],

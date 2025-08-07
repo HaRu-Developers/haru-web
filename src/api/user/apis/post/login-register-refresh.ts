@@ -8,7 +8,7 @@ import {
   RefreshAccessTokenRequestDto,
   RefreshAccessTokenResponseDto,
   SignupRequestDto,
-} from '@features/auth/types/api.types';
+} from '@apis/user/api.types';
 
 import { AUTH_API_ENDPOINTS } from '@/api/user/api-end-point.constants';
 

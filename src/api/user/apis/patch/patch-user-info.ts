@@ -2,7 +2,7 @@ import { defaultApi } from '@lib/fetcher';
 
 import { BaseResponseDto } from '@common/types/api.common.types';
 
-import { PatchUserInfoRequestDto, UserInfoResponseDto } from '@features/auth/types/api.types';
+import { PatchUserInfoRequestDto, UserInfoResponseDto } from '@apis/user/api.types';
 
 import { AUTH_API_ENDPOINTS } from '@/api/user/api-end-point.constants';
 

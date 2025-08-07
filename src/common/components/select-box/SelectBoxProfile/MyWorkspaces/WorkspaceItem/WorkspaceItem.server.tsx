@@ -1,12 +1,12 @@
 import Link from 'next/link';
 
-import { Workspace } from '@api/workspace/api.types';
+import { WorkspaceSummary } from '@api/workspace/api.types';
 
 import { ROUTES } from '@common/constants/routes.constants';
 
 import WorkspaceProfileImage from '@common/components/images/WorkspaceProfileImage/WorkspaceProfileImage.client';
 
-const WorkspaceItem = ({ workspaceId, imageUrl, title, isOwner }: Workspace) => {
+const WorkspaceItem = ({ workspaceId, imageUrl, title, isOwner }: WorkspaceSummary) => {
   return (
     <Link
       href={ROUTES.MAIN(workspaceId)}

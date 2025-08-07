@@ -2,12 +2,12 @@ import { defaultApi } from '@lib/fetcher';
 
 import { BaseResponseDto } from '@common/types/api.common.types';
 
-import { fetchMyWorkspacesResponseDto } from '../../api.types';
-import { WORKSPACE_API_ENDPOINTS } from '../../end-point.constants';
+import { WORKSPACE_API_END_POINTS } from '../../api-end-point.constants';
+import { FetchMyWorkspacesResponseDto } from '../../api.types';
 
 const fetchMyWorkspaces = async () => {
-  const response = await defaultApi<BaseResponseDto<fetchMyWorkspacesResponseDto>>(
-    WORKSPACE_API_ENDPOINTS.MY_WORKSPACE,
+  const response = await defaultApi<BaseResponseDto<FetchMyWorkspacesResponseDto>>(
+    WORKSPACE_API_END_POINTS.MY_WORKSPACE,
     {
       method: 'GET',
       auth: true,

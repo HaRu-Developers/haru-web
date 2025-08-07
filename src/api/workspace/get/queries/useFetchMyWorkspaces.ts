@@ -6,7 +6,7 @@ import { ApiError } from '@common/errors/ApiError';
 
 import { useAfterQuery } from '@common/hooks/queries/useAfterQuery';
 
-import { Workspace } from '../../api.types';
+import { WorkspaceSummary } from '../../api.types';
 import fetchMyWorkspaces from '../apis/fetchMyWorkspaces';
 
 /**
@@ -14,9 +14,9 @@ import fetchMyWorkspaces from '../apis/fetchMyWorkspaces';
  */
 const useFetchMyWorkspaces = () => {
   return useAfterQuery<
-    { result: Workspace[] }, // TData
+    { result: WorkspaceSummary[] }, // TData
     ApiError<ApiErrorBody>, // TError
-    Workspace[] // TExtra
+    WorkspaceSummary[] // TExtra
   >({
     queryKey: queryKeys.workspaces.myWorkspaces.queryKey,
     queryFn: () => fetchMyWorkspaces(),

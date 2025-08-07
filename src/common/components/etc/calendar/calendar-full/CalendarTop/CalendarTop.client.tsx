@@ -3,7 +3,7 @@
 import Arrow from '@common/components/icons/ArrowIcons/ArrowIcons';
 import { ArrowIconsState } from '@common/components/icons/ArrowIcons/ArrowIcons.types';
 
-import { CalendarTopProps } from './CalenderTop.types';
+import { CalendarTopProps } from './CalendarTop.types';
 
 const CalendarTop = ({ title, onPrevClick, onTodayClick, onNextClick }: CalendarTopProps) => {
   return (

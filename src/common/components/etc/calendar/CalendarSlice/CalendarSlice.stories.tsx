@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/nextjs';
 
 import { FileType } from '@common/types/file-type.enum';
 
-import CalendarSlice from '@common/components/etc/calendar/CalendarSlice/CalenderSlice.client';
+import CalendarSlice from '@common/components/etc/calendar/CalendarSlice/CalendarSlice.client';
 
 const meta: Meta<typeof CalendarSlice> = {
   title: 'Components/Etc/Calendar/CalendarSlice',

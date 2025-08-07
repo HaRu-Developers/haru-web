@@ -4,7 +4,7 @@ import Calendar from '@common/components/etc/calendar/Calendar/Calendar.client';
 import CalendarBody from '@common/components/etc/calendar/calendar-full/CalendarBody/CalendarBody.server';
 import CalendarTop from '@common/components/etc/calendar/calendar-full/CalendarTop/CalendarTop.client';
 
-import { CalendarFullProps } from './CalenderFull.types';
+import { CalendarFullProps } from './CalendarFull.types';
 
 const CalendarFull = ({
   title,

@@ -2,12 +2,21 @@ import { useMutation } from '@tanstack/react-query';
 
 import { checkEmailDuplication, login } from '@apis/user/apis/post/login-register-refresh';
 
-export const useCheckEmailDuplication = () => {
+interface UseCheckEmailDuplicationProps {
+  onAvailable: () => void;
+  onUnavailable: () => void;
+}
+
+export const useCheckEmailDuplication = ({
+  onAvailable,
+  onUnavailable,
+}: UseCheckEmailDuplicationProps) => {
   return useMutation({
     mutationFn: checkEmailDuplication,
     onSuccess: (data) => {
-      if (data === 'AVAILABLE') return true;
-      else if (data === 'UNAVAILABLE') return false;
+      console.log('이메일 중복 체크 성공:', data);
+      if (data === 'AVAILABLE') onAvailable();
+      else if (data === 'UNAVAILABLE') onUnavailable();
       else {
         console.error('이메일 중복 체크 실패: 알 수 없는 상태', data);
         return false;

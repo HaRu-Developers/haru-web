@@ -1,11 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import RegisterButton from '@common/components/buttons/48px/RegisterButton/RegisterButton.client';
 import InputOnboarding from '@common/components/inputs/InputOnboarding/InputOnboarding.client';
 import { OnboardingType } from '@common/components/inputs/InputOnboarding/InputOnboarding.types';
 
+import { useCheckEmailDuplication } from '@apis/user/hooks/mutations/useCheckEmailDuplication';
 import { useRegister } from '@apis/user/hooks/mutations/useRegister';
 
 import TermsAgreeCheckbox from '../TermsAgreeCheckbox/TermsAgreeCheckbox.client';
@@ -17,6 +18,8 @@ const RegisterForm = () => {
   const [password, setPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
 
+  const [isAvailableEmail, setIsAvailableEmail] = useState<boolean | null>(null);
+
   const [termsAgreeState, setTermsAgreeState] = useState<TermsAgreeState>({
     serviceTerms: false,
     privacyPolicy: false,
@@ -24,6 +27,10 @@ const RegisterForm = () => {
   });
 
   const { mutate: register } = useRegister();
+  const { mutate: checkEmailDuplication } = useCheckEmailDuplication({
+    onAvailable: () => setIsAvailableEmail(true),
+    onUnavailable: () => setIsAvailableEmail(false),
+  });
 
   const handleRegister = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -38,11 +45,18 @@ const RegisterForm = () => {
 
   const isRegisterAvailable =
     email &&
+    isAvailableEmail &&
     name &&
     password &&
     confirmPassword &&
     termsAgreeState.serviceTerms &&
     termsAgreeState.privacyPolicy;
+
+  useEffect(() => {
+    if (email) {
+      checkEmailDuplication({ email });
+    }
+  }, [email]);
 
   return (
     <form className="gap-y-26pxr flex flex-col" onSubmit={handleRegister}>

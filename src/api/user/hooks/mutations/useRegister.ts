@@ -2,7 +2,7 @@ import { useRouter } from 'next/navigation';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { signup } from '../../post/login-register-refresh';
+import { signup } from '../../apis/post/login-register-refresh';
 
 export const useRegister = () => {
   const router = useRouter();

@@ -2,7 +2,7 @@ import { defaultApi } from '@lib/fetcher';
 
 import { BaseResponseDto } from '@common/types/api.common.types';
 
-import { AUTH_API_ENDPOINTS } from '@/api/user/api-end-point.constants';
+import { AUTH_API_ENDPOINTS } from '@apis/user/constants/api-end-point.constants';
 
 /**
  * AcessToken을 Header에 담아야 합니다.

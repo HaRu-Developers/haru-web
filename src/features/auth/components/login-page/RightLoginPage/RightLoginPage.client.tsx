@@ -9,7 +9,7 @@ import LoginButton from '@common/components/buttons/48px/LoginButton/LoginButton
 import InputOnboarding from '@common/components/inputs/InputOnboarding/InputOnboarding.client';
 import { OnboardingType } from '@common/components/inputs/InputOnboarding/InputOnboarding.types';
 
-import { useLogin } from '@apis/user/apis/hooks/mutations/useLogin';
+import { useLogin } from '@apis/user/hooks/mutations/useLogin';
 
 const RightLoginPage = () => {
   const [email, setEmail] = useState<string>('');

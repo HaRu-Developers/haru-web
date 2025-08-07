@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import { LOCAL_STORAGE_KEYS, LocalStorageValue } from '../constants/local-storage-key.constants';
+
 /**
  * useLocalStorage 훅은 로컬 스토리지(localStorage)에 값을 저장하고 불러오는 기능을 제공합니다.
  *
@@ -14,7 +16,7 @@ import { useState } from 'react';
  * const [value, setValue] = useLocalStorage<number>('count', 0);
  * setValue(5);
  */
-export const useLocalStorage = <T>(key: string, initialValue: T) => {
+const useLocalStorage = <T>(key: LocalStorageValue, initialValue: T) => {
   // window 객체는 server 환경에서는 undefined
 
   const readValue = (): T => {
@@ -48,6 +50,21 @@ export const useLocalStorage = <T>(key: string, initialValue: T) => {
   };
 
   return [storedValue, setValue] as const;
+};
+
+/**
+ * localStorage에서 토큰을 가져오는 함수
+ */
+export const getAccessToken = (): string => {
+  if (typeof window === 'undefined') {
+    return '';
+  }
+
+  try {
+    return window.localStorage.getItem(LOCAL_STORAGE_KEYS.ACCESS_TOKEN) || '';
+  } catch {
+    return '';
+  }
 };
 
 export default useLocalStorage;

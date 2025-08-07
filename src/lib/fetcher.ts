@@ -4,6 +4,8 @@ import { ApiError } from '@common/errors/ApiError';
 
 import { joinURL } from '@common/utils/join-url.utils';
 
+import { getAccessToken } from '@apis/user/hooks/useLocalStorage';
+
 import { captureApiError } from './sentry';
 
 interface CreateFetcherOptions {
@@ -207,12 +209,25 @@ export const defaultApi = createFetcher({ fetchOptions: { cache: 'no-store' } })
 
 /**
  * headers에 Authorization을 자동으로 포합합니다.
- *
- * TODO: 현재는 ACCESS_TOKEN을 환경변수에서 가져오지만, localStorage 등 추후 저장할 곳에서 가져오도록 변경할 필요가 있습니다.
  */
 export const protectedApi = createFetcher({
   fetchOptions: { cache: 'no-store' },
-  headers: { Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}` },
+  headers: (() => {
+    const accessToken = getAccessToken();
+    const envToken = process.env.NEXT_PUBLIC_ACCESS_TOKEN;
+
+    // 빈 문자열이 아닌 토큰이 있을 때만 Authorization 헤더 설정
+    if (accessToken) {
+      return { Authorization: `Bearer ${accessToken}` };
+    }
+
+    if (envToken) {
+      return { Authorization: `Bearer ${envToken}` };
+    }
+
+    // 토큰이 없으면 Authorization 헤더 없음
+    return undefined;
+  })(),
 });
 
 /**

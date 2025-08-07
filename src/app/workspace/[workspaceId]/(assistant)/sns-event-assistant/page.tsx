@@ -1,11 +1,9 @@
-import { notFound } from 'next/navigation';
-
 import { FileType, SNS_EVENT_ASSISTANT_LINK } from '@common/types/file-type.enum';
 import { GnbSection, SnsGnbTabType } from '@common/types/gnbs.types';
 import { SearchParamsType } from '@common/types/routes.types';
 
 import { getCtaDescription, getListTitle } from '@common/utils/assistant-mapping.utils';
-import isValidEnumValue from '@common/utils/is-valid-enum-value';
+import parseEnumOr404 from '@common/utils/parse-enum-or-404.utils';
 
 import TextCtaWrapper from '@common/components/cta/TextCtaWrapper/TextCtaWrapper.client';
 import GnbTop from '@common/components/gnbs/GnbTop/GnbTop.client';
@@ -21,11 +19,7 @@ const SnsEventAssistantDefaultPage = async ({
 }) => {
   const { snsGnbTab } = await searchParams;
 
-  if (!isValidEnumValue(snsGnbTab, SnsGnbTabType)) {
-    notFound(); // enum에 없는 값이면 404
-  }
-
-  const formattedSnsGnbTab = snsGnbTab as SnsGnbTabType;
+  const formattedSnsGnbTab = parseEnumOr404(snsGnbTab, SnsGnbTabType, SnsGnbTabType.ALL_EVENTS);
 
   return (
     <section>

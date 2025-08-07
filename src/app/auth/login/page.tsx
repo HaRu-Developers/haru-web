@@ -4,7 +4,7 @@ import RightLoginPage from '@features/auth/components/login-page/RightLoginPage/
 
 const LoginPage = () => {
   return (
-    <div className="flex h-screen w-full flex-row">
+    <div className="flex w-full flex-row">
       <LoginOnBoarding />
       <div className="flex w-[50vw] items-center justify-center">
         <RightLoginPage />

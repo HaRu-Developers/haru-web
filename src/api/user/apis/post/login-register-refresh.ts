@@ -54,5 +54,5 @@ export const login = async ({ email, password }: LoginRequestDto) => {
     }),
   });
 
-  return response;
+  return response.result;
 };

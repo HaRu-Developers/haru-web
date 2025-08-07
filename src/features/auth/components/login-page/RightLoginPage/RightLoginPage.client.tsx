@@ -7,11 +7,23 @@ import LoginButton from '@common/components/buttons/48px/LoginButton/LoginButton
 import InputOnboarding from '@common/components/inputs/InputOnboarding/InputOnboarding.client';
 import { OnboardingType } from '@common/components/inputs/InputOnboarding/InputOnboarding.types';
 
+import { useLogin } from '@apis/user/apis/hooks/mutations/useLogin';
+
 const RightLoginPage = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
-  const [loginAvailable, setLoginAvailable] = useState<boolean>(false);
+  // const [loginAvailable, setLoginAvailable] = useState<boolean>(false);
+
+  const loginMutation = useLogin();
+
+  const handleLogin = () => {
+    if (email && password) {
+      loginMutation.mutate({ email, password });
+    } else {
+      console.error('Complete the form before logging in.');
+    }
+  };
 
   return (
     <div className="w-414pxr flex h-full flex-col items-center justify-center">
@@ -32,7 +44,7 @@ const RightLoginPage = () => {
         <div className="bg-stroke-200 h-px flex-grow" />
       </div>
       {/* 이메일 & 비밀번호 폼 */}
-      <div className="gap-y-26pxr flex flex-col">
+      <form className="gap-y-26pxr flex flex-col" onSubmit={handleLogin}>
         <InputOnboarding
           title="이매일 주소"
           inputValue={email}
@@ -46,9 +58,9 @@ const RightLoginPage = () => {
           onChange={setPassword}
           type={OnboardingType.HIDE}
         />
-      </div>
+        <LoginButton className="mt-22pxr" disabled={!(email && password)} type="submit" />
+      </form>
       {/* 로그인하기 버튼 */}
-      <LoginButton className="mt-48pxr" disabled={!loginAvailable} />
       {/* 가입하기 버튼 */}
       <div className="mt-44pxr flex w-full items-center justify-center">
         <span className="text-t7-rg text-gray-200">계정이 없으신가요?</span>

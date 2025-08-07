@@ -12,10 +12,20 @@ import { GoogleLoginButtonProps } from './GoogleLoginButton.types';
  */
 const GoogleLoginButton = ({
   className,
-  onClick,
+  // onClick,
   buttonText,
   ...props
 }: GoogleLoginButtonProps) => {
+  const onClick = () => {
+    const REDIRECT_URI = process.env.NEXT_PUBLIC_GOOGLE_OAUTH_API_URL;
+    if (!REDIRECT_URI) {
+      console.error('Google OAuth URL is not defined in environment variables.');
+      alert('CHECK DOTENV FILE, NO OAUTH REDIRECT URI');
+      return;
+    }
+
+    window.location.href = REDIRECT_URI;
+  };
   return (
     <button
       className={clsx(

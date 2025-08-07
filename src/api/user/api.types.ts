@@ -19,7 +19,7 @@ export interface RefreshAccessTokenRequestDto {
 }
 
 export interface RefreshAccessTokenResponseDto {
-  userId: number;
+  userId: string;
   accessToken: string;
   refreshToken: string;
 }
@@ -31,7 +31,7 @@ export interface LoginRequestDto {
 }
 
 export interface LoginResponseDto {
-  userid: number;
+  userid: string;
   accessToken: string;
   refreshToken: string;
 }
@@ -43,7 +43,7 @@ export interface PatchUserInfoRequestDto {
 }
 
 export interface UserInfoResponseDto {
-  id: bigint;
+  id: string;
   email: string;
   imageUrl: string | null;
   name: string;
@@ -62,7 +62,7 @@ export interface SearchUserRequestDto {
  * Generic에 배열로 전달하세요.
  */
 export interface SearchUserResponseDto {
-  id: number;
+  id: string;
   email: string;
   imageUrl: string | null;
   name: string;

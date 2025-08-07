@@ -13,3 +13,17 @@ export interface fetchRecentDocumentsResquestDto {
 export interface fetchRecentDocumentsResponseDto {
   documents: Document[];
 }
+
+export interface CalendarDocument extends Document {
+  createdAt: string;
+}
+
+export interface fetchCalendarResquestDto {
+  workspaceId: number;
+  start: Date;
+  end: Date;
+}
+
+export interface fetchCalendarResponseDto {
+  documentList: CalendarDocument[];
+}

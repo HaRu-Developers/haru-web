@@ -4,6 +4,8 @@ import { BaseResponseDto } from '@common/types/api.common.types';
 
 import { AUTH_API_ENDPOINTS } from '@apis/user/constants/api-end-point.constants';
 import {
+  CheckEmailDuplicationRequestDto,
+  CheckEmailDuplicationResponseDto,
   LoginRequestDto,
   LoginResponseDto,
   RefreshAccessTokenRequestDto,
@@ -23,6 +25,18 @@ export const signup = async ({ email, password, name, marketingAgreed }: SignupR
   });
 
   return response;
+};
+
+export const checkEmailDuplication = async ({ email }: CheckEmailDuplicationRequestDto) => {
+  const response = await defaultApi<BaseResponseDto<CheckEmailDuplicationResponseDto>>(
+    AUTH_API_ENDPOINTS.CHECK_EMAIL_DUPLICATION,
+    {
+      method: 'POST',
+      body: JSON.stringify({ email }),
+    },
+  );
+
+  return response.result.emailStatus;
 };
 
 /**

@@ -7,6 +7,15 @@ export interface SignupRequestDto {
 }
 // signup response는 빈 객체임
 
+// email duplication check
+export interface CheckEmailDuplicationRequestDto {
+  email: string;
+}
+
+export interface CheckEmailDuplicationResponseDto {
+  emailStatus: 'AVAILABLE' | 'UNAVAILABLE';
+}
+
 // refresh token
 /**
  * Refresh Token 요청 DTO

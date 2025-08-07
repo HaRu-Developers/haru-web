@@ -2,7 +2,7 @@ import { FileType } from '@common/types/file-type.enum';
 
 export const ROUTES = {
   ONBOARDING: '/onboarding',
-  MAIN: (workspaceId: number) => `/${workspaceId}`,
+  MAIN: (workspaceId?: number) => `/${workspaceId ?? ''}`,
   AI_MEETING_MANAGER: (workspaceId: number) => `/${workspaceId}/ai-meeting-manager`,
   SNS_EVENT_ASSISTANT: (workspaceId: number) => `/${workspaceId}/sns-event-assistant`,
   TEAM_MOOD_TRACKER: (workspaceId: number) => `/${workspaceId}/team-mood-tracker`,
@@ -17,5 +17,12 @@ export const ROUTES = {
     };
 
     return `${routeMapper[documentType](workspaceId)}/${documentId}`;
+  },
+
+  AUTH: {
+    LOGIN: '/auth/login',
+    REGISTER: '/auth/register',
+    LOGOUT: '/auth/logout',
+    GOOGLE_OAUTH: 'auth/login/google/callback',
   },
 } as const;

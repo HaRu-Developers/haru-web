@@ -12,6 +12,8 @@ import RegisterButton from '@common/components/buttons/48px/RegisterButton/Regis
 import InputOnboarding from '@common/components/inputs/InputOnboarding/InputOnboarding.client';
 import { OnboardingType } from '@common/components/inputs/InputOnboarding/InputOnboarding.types';
 
+import { useRegister } from '@apis/user/hooks/mutations/useRegister';
+
 const RegisterPage = () => {
   const [email, setEmail] = useState<string>('');
   const [name, setName] = useState<string>('');
@@ -60,6 +62,19 @@ const RegisterPage = () => {
     termsAgreeState.serviceTerms &&
     termsAgreeState.privacyPolicy;
 
+  const { mutate: register } = useRegister();
+
+  const handleRegister = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    register({
+      email,
+      name,
+      password,
+      marketingAgreed: termsAgreeState.marketingConsent,
+    });
+  };
+
   return (
     <div className="w-414pxr flex flex-col items-center justify-center">
       {/* 인사말 컨테이너 */}
@@ -77,7 +92,7 @@ const RegisterPage = () => {
         <div className="bg-stroke-200 h-px flex-grow" />
       </div>
       {/* 폼 : 이메일, 이름, 비밀번호, 비밀번호 확인 */}
-      <form className="gap-y-26pxr flex flex-col">
+      <form className="gap-y-26pxr flex flex-col" onSubmit={handleRegister}>
         <InputOnboarding
           title="이매일 주소"
           inputValue={email}

@@ -119,3 +119,24 @@ export interface GetViewReportResponseDto extends BaseMoodTrackerResponseDto {
   /** AI가 생성한 분석 리포트 본문 */
   report: string;
 }
+
+/**
+ * TeamMoodTrackerPageProps는 Next.js 동적 라우팅에서
+ * [moodTrackerHashedId] 파라미터를 받는 페이지 컴포넌트의 props 타입입니다.
+ *
+ * @description
+ * Next.js App Router의 스트리밍(Streaming) 및 점진적 렌더링(Progressive Rendering)
+ * 기능으로 인해 `params`는 `Promise`일 수 있습니다.
+ *
+ * 이는 상위 `layout`이 `params` 데이터가 완전히 준비될 때까지 기다리지 않고
+ * 먼저 렌더링을 시작하도록 하여 초기 UI 표시 속도를 향상시키는 최적화 전략입니다.
+ *
+ * 따라서 이 `params`를 사용하는 `async` 서버 컴포넌트에서는
+ * `await params`를 통해 값을 비동기적으로 처리해야 합니다.
+ *
+ * @property params - 라우트 파라미터 객체. 스트리밍 환경에서는 Promise일 수 있습니다.
+ * @property params.moodTrackerHashedId - 팀 무드 트래커의 해시된 ID (string)
+ */
+export interface TeamMoodTrackerPageProps {
+  params: { moodTrackerHashedId: string } | Promise<{ moodTrackerHashedId: string }>;
+}

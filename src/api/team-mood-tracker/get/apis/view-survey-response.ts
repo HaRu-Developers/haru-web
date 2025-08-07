@@ -8,9 +8,7 @@ import {
 } from '@/api/team-mood-tracker/apis.types';
 import { MOOD_TRACKER_API_ENDPOINTS } from '@/api/team-mood-tracker/end-point.constants';
 
-export const viewSurveyResponse = async ({
-  moodTrackerHashedId,
-}: GetViewSurveyRequestDto): Promise<BaseResponseDto<GetViewSurveyResponseDto>> => {
+export const viewSurveyResponse = async ({ moodTrackerHashedId }: GetViewSurveyRequestDto) => {
   const response = await defaultApi<BaseResponseDto<GetViewSurveyResponseDto>>(
     MOOD_TRACKER_API_ENDPOINTS.RESPONSES(moodTrackerHashedId),
     {

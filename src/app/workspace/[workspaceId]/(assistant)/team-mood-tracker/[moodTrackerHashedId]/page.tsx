@@ -1,196 +1,40 @@
-'use client';
+import { HydrationBoundary } from '@tanstack/react-query';
 
-import { useState } from 'react';
+import queryKeys from '@common/constants/query-key.constants';
 
-import { useParams, useRouter, useSearchParams } from 'next/navigation';
+import { getDehydratedState } from '@common/utils/dehydrate';
 
-import { GnbSection } from '@common/types/gnbs.types';
+import { TeamMoodTrackerPageProps } from '@/api/team-mood-tracker/apis.types';
+import { viewReportResponse } from '@/api/team-mood-tracker/get/apis/view-report-response';
+import { viewSurveyResponse } from '@/api/team-mood-tracker/get/apis/view-survey-response';
 
-import FileCreatedInfo from '@common/components/FileCreatedInfo/FileCreatedInfo.client';
-import GnbTop from '@common/components/gnbs/GnbTop/GnbTop.client';
-import InputFileTitle from '@common/components/inputs/InputFileTitle/InputFileTitle.client';
-import { InputFileTitleMode } from '@common/components/inputs/InputFileTitle/InputFileTitle.types';
+import TeamMoodTrackerDetailPage from '../../../../../../features/team-mood-tracker/components/TeamMoodTrackerDetailPage/TeamMoodTrackerDetailPage.client';
 
-import { TeamMoodTrackerToastType } from '@features/team-mood-tracker/types/TeamMoodTrackerToastStore.types';
+const TeamMoodTrackerPage = async ({ params }: TeamMoodTrackerPageProps) => {
+  // await를 사용해 params Promise가 resolve 되기를 기다립니다.
+  const { moodTrackerHashedId } = await params;
 
-import { filterSafeResponseList } from '@features/team-mood-tracker/utils/safe-response-list.utils';
-
-import { useTeamMoodToastActions } from '@features/team-mood-tracker/hooks/stores/useTeamMoodTrackerToastStore';
-
-import TeamMoodAnswerChartSection from '@features/team-mood-tracker/components/TeamMoodAnswerChartSection/TeamMoodAnswerChartSection.client';
-import TeamMoodReportContentSection from '@features/team-mood-tracker/components/TeamMoodReportContentSection/TeamMoodReportContentSection.client';
-import TeamMoodReportNoneContentSection from '@features/team-mood-tracker/components/TeamMoodReportNoneContentSection/TeamMoodReportNoneContentSection.server';
-import TeamMoodToast from '@features/team-mood-tracker/components/TeamMoodToast/TeamMoodToast.client';
-import TeamMoodTrackerPageSkeleton from '@features/team-mood-tracker/components/TeamMoodTrackerSkeleton/TeamMoodTrackerSkeleton';
-import TeamMoodReportTab from '@features/team-mood-tracker/components/tabs/TeamMoodReportTab/TeamMoodReportTab.client';
-import { TeamMoodReportTabType } from '@features/team-mood-tracker/components/tabs/TeamMoodReportTab/TeamMoodReportTab.types';
-
-import { useViewReportResponse } from '@/api/team-mood-tracker/get/queries/useViewReportResponse';
-import { useViewSurveyResponse } from '@/api/team-mood-tracker/get/queries/useViewSurveyResponse';
-import { useModifyMoodTrackerTitleMutation } from '@/api/team-mood-tracker/post/mutations/useModifyTitleMutation';
-
-const TeamMoodTrackerDetailPage = () => {
-  const searchParams = useSearchParams();
-  const params = useParams<{
-    workspaceId: string;
-    moodTrackerHashedId: string;
-  }>();
-
-  const router = useRouter();
-
-  const workspaceId = params.workspaceId;
-  const moodTrackerHashedId = params.moodTrackerHashedId;
-
-  const { showCopyToast } = useTeamMoodToastActions();
-
-  // 제목 수정을 위한 상태 추가
-  const [isEditingTitle, setIsEditingTitle] = useState(false);
-
-  const currentTab =
-    (searchParams.get('moodTab') as TeamMoodReportTabType) ??
-    TeamMoodReportTabType.TEAM_MOOD_REPORT;
-
-  const { data: surveyResponse, isLoading: isSurveyLoading } =
-    useViewSurveyResponse(moodTrackerHashedId);
-  const { data: reportResponse, isLoading: isReportLoading } =
-    useViewReportResponse(moodTrackerHashedId);
-
-  const { mutate: modifyTitle } = useModifyMoodTrackerTitleMutation();
-
-  const isLoading = isSurveyLoading || isReportLoading;
-  const optimisticData = surveyResponse;
-  const safeResponseList = filterSafeResponseList(surveyResponse?.responseList);
-
-  const handleCopyClick = async () => {
-    const reportContent = reportResponse?.report;
-
-    if (!reportContent || reportContent.trim() === '') {
-      showCopyToast({ type: TeamMoodTrackerToastType.COPY_EMPTY });
-      return;
-    }
-
-    try {
-      await navigator.clipboard.writeText(reportContent);
-      showCopyToast({ type: TeamMoodTrackerToastType.COPY_SUCCESS });
-    } catch (err) {
-      console.error('클립보드 복사 실패:', err);
-      showCopyToast({ type: TeamMoodTrackerToastType.COPY_EMPTY });
-    }
-  };
-
-  const handleDownloadClick = () => {
-    router.push(`/workspace/${workspaceId}/team-mood-tracker/${moodTrackerHashedId}/download`);
-  };
-
-  const handleTitleSave = (newTitle: string) => {
-    // 제목이 비어있거나 기존과 같다면 저장 로직을 실행하지 않음
-    if (!newTitle.trim() || !optimisticData || newTitle === optimisticData.title) {
-      setIsEditingTitle(false);
-      return;
-    }
-
-    // 1. API 요청을 시작합니다. (성공/실패 처리는 훅이 담당)
-    modifyTitle({
-      moodTrackerHashedId,
-      title: newTitle,
-    });
-
-    // 2. API 응답과 상관없이 즉시 수정 모드를 종료합니다.
-    setIsEditingTitle(false);
-  };
-
-  // 제목 수정 취소 핸들러
-  const handleTitleCancel = () => {
-    setIsEditingTitle(false);
-  };
-
-  if (isLoading) {
-    return <TeamMoodTrackerPageSkeleton />;
-  }
-
-  if (
-    (currentTab === TeamMoodReportTabType.ANSWER_SUMMARY && !surveyResponse) ||
-    (currentTab === TeamMoodReportTabType.TEAM_MOOD_REPORT && !reportResponse)
-    // || (currentTab === TeamMoodReportTabType.SURVEY_LIST && !surveyData)
-  ) {
-    return <div>데이터를 불러올 수 없습니다.</div>;
-  }
-
-  if (!optimisticData) return null;
+  // getDehydratedState에서 dehydratedState 속성만 추출합니다.
+  const { dehydratedState } = await getDehydratedState({
+    prefetch: async (qc) => {
+      await Promise.all([
+        qc.prefetchQuery({
+          ...queryKeys.moodTracker.detail(moodTrackerHashedId),
+          queryFn: () => viewSurveyResponse({ moodTrackerHashedId }),
+        }),
+        qc.prefetchQuery({
+          ...queryKeys.moodTracker.report(moodTrackerHashedId),
+          queryFn: () => viewReportResponse({ moodTrackerHashedId }),
+        }),
+      ]);
+    },
+  });
 
   return (
-    <>
-      <div className="relative flex flex-col">
-        <GnbTop section={GnbSection.CUSTOM} title={optimisticData.title} />
-        <div className="top-100pxr absolute right-0 left-0 z-100 flex justify-center">
-          <TeamMoodToast />
-        </div>
-        <div className="mt-24pxr mb-10pxr w-668pxr mx-auto flex-col">
-          <div className="mb-14pxr">
-            {isEditingTitle ? (
-              <InputFileTitle
-                value={optimisticData.title}
-                mode={InputFileTitleMode.EDITABLE}
-                onSave={handleTitleSave}
-                onCancel={handleTitleCancel}
-              />
-            ) : (
-              <div
-                // InputFileTitle과 동일한 스타일을 적용하여 이질감을 없앱니다.
-                className="w-676pxr h-36pxr rounded-4pxr text-t1-sb flex cursor-pointer items-center bg-white py-0.5 text-black"
-                onClick={() => setIsEditingTitle(true)}
-              >
-                {optimisticData.title}
-              </div>
-            )}
-          </div>
-          <div className="text-cap2-md">
-            <FileCreatedInfo
-              name={optimisticData.creatorName}
-              userId={optimisticData.creatorId}
-              dateTime={optimisticData.updatedAt}
-            />
-          </div>
-        </div>
-        <div className="border-stroke-200 mb-14pxr w-full border-b border-solid bg-white">
-          <div className="w-668pxr mx-auto">
-            <TeamMoodReportTab
-              current={currentTab}
-              counts={{
-                [TeamMoodReportTabType.TEAM_MOOD_REPORT]: 0,
-                [TeamMoodReportTabType.ANSWER_SUMMARY]: optimisticData.respondentsNum,
-                [TeamMoodReportTabType.SURVEY_LIST]: 0,
-              }}
-              handleCopyClick={handleCopyClick}
-              handleDownloadClick={handleDownloadClick}
-            />
-          </div>
-        </div>
-
-        {currentTab === TeamMoodReportTabType.TEAM_MOOD_REPORT &&
-          (reportResponse?.report && reportResponse?.report.trim() !== '' ? (
-            <TeamMoodReportContentSection
-              suggestionList={reportResponse.suggestionList}
-              report={reportResponse.report}
-            />
-          ) : (
-            <TeamMoodReportNoneContentSection />
-          ))}
-
-        {currentTab === TeamMoodReportTabType.ANSWER_SUMMARY && surveyResponse && (
-          <TeamMoodAnswerChartSection responses={safeResponseList} />
-        )}
-
-        {currentTab === TeamMoodReportTabType.SURVEY_LIST && (
-          <div className="w-668pxr mx-auto">
-            <div className="text-t1-md mt-230pxr flex items-center justify-center text-center">
-              경운님, 이쪽에 구현해주시면 됩니다.
-            </div>
-          </div>
-        )}
-      </div>
-    </>
+    <HydrationBoundary state={dehydratedState}>
+      <TeamMoodTrackerDetailPage />
+    </HydrationBoundary>
   );
 };
 
-export default TeamMoodTrackerDetailPage;
+export default TeamMoodTrackerPage;

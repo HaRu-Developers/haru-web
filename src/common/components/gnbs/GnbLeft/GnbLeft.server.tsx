@@ -7,6 +7,7 @@ import { HaruLogoIconsState } from '@icons/logos/HaruLogoIcons/HaruLogoIcons.typ
 
 import fetchMyWorkspaces from '@api/workspace/get/apis/fetchMyWorkspaces';
 import fetchRecentDocuments from '@api/workspace/get/apis/fetchRecentDocuments';
+import fetchWorkspaceDetail from '@api/workspace/get/apis/fetchWorkspaceDetail';
 
 import { GnbLeftNavItems } from '@common/constants/gnbs.constants';
 import queryKeys from '@common/constants/query-key.constants';
@@ -31,6 +32,10 @@ const GnbLeft = async ({ workspaceId }: GnbLeftProps) => {
     const result = await getDehydratedState({
       prefetch: async (qc) => {
         await qc.prefetchQuery({
+          queryKey: queryKeys.workspaces.detail(workspaceId).queryKey,
+          queryFn: () => fetchWorkspaceDetail({ workspaceId }),
+        });
+        await qc.prefetchQuery({
           queryKey: queryKeys.workspaces.myWorkspaces.queryKey,
           queryFn: fetchMyWorkspaces,
         });
@@ -51,20 +56,16 @@ const GnbLeft = async ({ workspaceId }: GnbLeftProps) => {
       />
       <HydrationBoundary state={dehydratedState}>
         <WorkSpaceProfile workspaceId={workspaceId} />
-      </HydrationBoundary>
-      <div className="gap-16pxr flex flex-col">
-        <div className="rounded-10pxr flex flex-col items-start gap-2 self-stretch">
-          {GnbLeftNavItems.map((item) => (
-            <NavItem key={item} item={item} workspaceId={workspaceId} />
-          ))}
+        <div className="gap-16pxr flex flex-col">
+          <div className="rounded-10pxr flex flex-col items-start gap-2 self-stretch">
+            {GnbLeftNavItems.map((item) => (
+              <NavItem key={item} item={item} workspaceId={workspaceId} />
+            ))}
+          </div>
+          <div className="bg-stroke-200 h-1pxr w-full shrink-0"></div>
         </div>
-        <div className="bg-stroke-200 h-1pxr w-full shrink-0"></div>
-      </div>
-      {workspaceId && (
-        <HydrationBoundary state={dehydratedState}>
-          <RecentDocumentsSection workspaceId={workspaceId} />
-        </HydrationBoundary>
-      )}
+        {workspaceId != null && <RecentDocumentsSection workspaceId={workspaceId} />}
+      </HydrationBoundary>
     </div>
   );
 };

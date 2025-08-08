@@ -2,9 +2,14 @@
 
 import { useEffect, useState } from 'react';
 
+import useDebounce from '@common/hooks/useDebounce';
+
 import RegisterButton from '@common/components/buttons/48px/RegisterButton/RegisterButton.client';
 import InputOnboarding from '@common/components/inputs/InputOnboarding/InputOnboarding.client';
-import { OnboardingType } from '@common/components/inputs/InputOnboarding/InputOnboarding.types';
+import {
+  OnboardingState,
+  OnboardingType,
+} from '@common/components/inputs/InputOnboarding/InputOnboarding.types';
 
 import { useCheckEmailDuplication } from '@apis/user/hooks/mutations/useCheckEmailDuplication';
 import { useRegister } from '@apis/user/hooks/mutations/useRegister';
@@ -14,6 +19,8 @@ import { TermsAgreeState } from '../TermsAgreeCheckbox/TermsAgreeCheckbox.types'
 
 const RegisterForm = () => {
   const [email, setEmail] = useState<string>('');
+  const debouncedEmail = useDebounce(email, 300); // 이메일 입력에 대한 디바운스 적용
+
   const [name, setName] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
@@ -53,19 +60,27 @@ const RegisterForm = () => {
     termsAgreeState.privacyPolicy;
 
   useEffect(() => {
-    if (email) {
-      checkEmailDuplication({ email });
+    if (debouncedEmail) {
+      checkEmailDuplication({ email: debouncedEmail });
     }
-  }, [email]);
+  }, [debouncedEmail]);
 
   return (
-    <form className="gap-y-26pxr flex flex-col" onSubmit={handleRegister}>
+    <form className="gap-y-20pxr flex flex-col" onSubmit={handleRegister}>
+      {/* <div> */}
+      {/* TODO: 기획 단 UX 라이팅에 따라 변경 필요 */}
       <InputOnboarding
-        title="이매일 주소"
+        title="이메일 주소"
         inputValue={email}
         placeholder="이메일 주소를 입력해 주세요"
         onChange={setEmail}
+        state={isAvailableEmail === false ? OnboardingState.ERROR : undefined}
+        message={isAvailableEmail === false ? '이미 사용 중인 계정입니다.' : undefined}
       />
+      {/* {isAvailableEmail === false && (
+          <span className="mt-6pxr text-cap1-rg text-system-red">이미 사용 중인 계정입니다.</span>
+        )} */}
+      {/* </div> */}
       <InputOnboarding
         title="이름"
         inputValue={name}

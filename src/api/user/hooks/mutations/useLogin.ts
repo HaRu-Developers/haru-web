@@ -23,7 +23,7 @@ export const useLogin = () => {
       setAccessToken(data.accessToken);
       setRefreshToken(data.refreshToken);
 
-      router.push(ROUTES.MAIN());
+      router.push(ROUTES.WORKSPACE_MAIN());
     },
 
     onError: (err) => {

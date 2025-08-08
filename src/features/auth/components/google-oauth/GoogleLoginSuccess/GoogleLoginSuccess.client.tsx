@@ -24,7 +24,7 @@ const GoogleLoginSuccess = ({ accessToken, refreshToken }: GoogleLoginSuccessPro
     setAccessToken(accessToken);
     setRefreshToken(refreshToken);
 
-    router.push(ROUTES.MAIN());
+    router.push(ROUTES.WORKSPACE_MAIN());
   }, []);
 
   return null;

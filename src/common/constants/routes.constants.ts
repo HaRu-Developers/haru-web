@@ -1,16 +1,32 @@
 import { FileType } from '@common/types/file-type.enum';
 
+/**
+ * BE측에서 string으로 변환하여 주는 Bigint (JAVA long type) 에 대응하는 타입입니다.
+ *
+ * string으로의 이관이 완전히 끝나면 string만 남기도록 합니다.
+ *
+ * (TS는 덕타입이라 오류 발생하지 않습니다)
+ */
+type BigintString = string | number | bigint;
+
 export const ROUTES = {
   ONBOARDING: '/onboarding',
-  MAIN: (workspaceId?: number) => `/${workspaceId ?? ''}`,
-  AI_MEETING_MANAGER: (workspaceId: number) => `/${workspaceId}/ai-meeting-manager`,
-  SNS_EVENT_ASSISTANT: (workspaceId: number) => `/${workspaceId}/sns-event-assistant`,
-  TEAM_MOOD_TRACKER: (workspaceId: number) => `/${workspaceId}/team-mood-tracker`,
-  CALENDAR: (workspaceId: number) => `/${workspaceId}/calendar`,
+  ROOT: '/',
+
+  WORKSPACE_MAIN: (workspaceId?: BigintString) => `/workspace/${workspaceId ?? ''}`,
+  AI_MEETING_MANAGER: (workspaceId: BigintString) => `/workspace/${workspaceId}/ai-meeting-manager`,
+  SNS_EVENT_ASSISTANT: (workspaceId: BigintString) =>
+    `/workspace/${workspaceId}/sns-event-assistant`,
+  TEAM_MOOD_TRACKER: (workspaceId: BigintString) => `/workspace/${workspaceId}/team-mood-tracker`,
+  CALENDAR: (workspaceId: BigintString) => `/workspace/${workspaceId}/calendar`,
 
   // 파일 조회
-  BUILD_DOCUMENT_ROUTE: (workspaceId: number, documentType: FileType, documentId: number) => {
-    const routeMapper: Record<FileType, (workspaceId: number) => string> = {
+  BUILD_DOCUMENT_ROUTE: (
+    workspaceId: BigintString,
+    documentType: FileType,
+    documentId: BigintString,
+  ) => {
+    const routeMapper: Record<FileType, (workspaceId: BigintString) => string> = {
       [FileType.AI_MEETING_MANAGER]: ROUTES.AI_MEETING_MANAGER,
       [FileType.SNS_EVENT_ASSISTANT]: ROUTES.SNS_EVENT_ASSISTANT,
       [FileType.TEAM_MOOD_TRACKER]: ROUTES.TEAM_MOOD_TRACKER,

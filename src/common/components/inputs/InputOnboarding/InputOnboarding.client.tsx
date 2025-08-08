@@ -28,12 +28,15 @@ const InputOnboarding = ({
   state = OnboardingState.DEFAULT,
 }: InputOnboardingProps) => {
   const [isShowing, setIsShowing] = useState<boolean>(type === OnboardingType.SHOW);
+
   const handleShow = () => {
     setIsShowing((prev) => !prev);
   };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange(e.target.value);
   };
+
   return (
     <div className="text-b3-rg inline-flex flex-col items-start gap-1.5">
       <span>{title}</span>

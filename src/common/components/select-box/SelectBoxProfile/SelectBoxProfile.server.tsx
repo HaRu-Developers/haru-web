@@ -9,7 +9,7 @@ import WorkSpaceItem from './WorkSpaceItem/WorkSpaceItem.client';
 
 // 임시 데이터
 const profile = {
-  userId: 1,
+  userId: '1',
   imagePath: null,
   name: '기쁨',
   email: 'tngh9509@gmail.com',

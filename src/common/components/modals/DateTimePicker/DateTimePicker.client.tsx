@@ -132,7 +132,7 @@ const DateTimePicker = ({
             <p className={clsx('text-b3-rg', selectedDateTime ? 'text-black' : 'text-gray-400')}>
               {extractDate(selectedDateTime) || '마감일을 선택해 주세요.'}
             </p>
-            <IndividualIcons state={IndividualIconsState.CALENDAR} />
+            <IndividualIcons state={IndividualIconsState.CALENDAR_SIZE_18} />
           </button>
           {datePickerVisible && (
             <div className="left-0pxr top-0pxr absolute z-10">

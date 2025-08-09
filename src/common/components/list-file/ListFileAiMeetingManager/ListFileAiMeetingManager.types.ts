@@ -1,4 +1,5 @@
 export interface ListFileAiMeetingManagerProps {
+  workspaceId: string;
   meetingId: string;
   title: string;
   updatedAt: string;

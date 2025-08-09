@@ -27,8 +27,6 @@ const useCreateNewMeetingMinutes = (workspaceId: string) => {
     onError: (error) => {
       console.error('[회의록 생성 실패]', error);
     },
-
-    // throwOnError: true, // 다음 렌더에서 mutation.error 채워짐
   });
 };
 

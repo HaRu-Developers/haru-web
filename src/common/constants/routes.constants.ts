@@ -3,9 +3,13 @@ import { FileType } from '@common/types/file-type.enum';
 export const ROUTES = {
   ONBOARDING: '/onboarding',
   MAIN: (workspaceId: number) => `/workspace/${workspaceId}`,
+  // ai meeting manager 관련
   AI_MEETING_MANAGER: (workspaceId: number) => `/workspace/${workspaceId}/ai-meeting-manager`,
   AI_MEETING: (workspaceId: string, meetingId: string) =>
     `/workspace/${workspaceId}/ai-meeting-manager/${meetingId}/meeting`,
+  AI_MEETING_MINUTES: (workspaceId: string, meetingId: string) =>
+    `/workspace/${workspaceId}/ai-meeting-manager/${meetingId}/minutes`,
+  // sns event assistant 관련
   SNS_EVENT_ASSISTANT: (workspaceId: number) => `//workspace/${workspaceId}/sns-event-assistant`,
   TEAM_MOOD_TRACKER: (workspaceId: number) => `/workspace/${workspaceId}/team-mood-tracker`,
   CALENDAR: (workspaceId: number) => `/workspace/${workspaceId}/calendar`,

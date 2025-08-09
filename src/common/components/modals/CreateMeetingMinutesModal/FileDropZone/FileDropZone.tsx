@@ -77,7 +77,7 @@ const FileDropzone = ({ onFileChange, initialFile = null }: FileDropzoneProps) =
       onDragLeave={handleDrag}
       onDrop={handleDrop}
       className={clsx(
-        'w-534pxr h-166pxr rounded-12pxr gap-y-8pxr flex flex-col items-center justify-center bg-[#F8F8FA]',
+        'w-534pxr h-166pxr rounded-12pxr gap-y-8pxr flex cursor-pointer flex-col items-center justify-center bg-[#F8F8FA]',
         dragActive && 'border-2 border-blue-500 bg-blue-50',
       )}
     >

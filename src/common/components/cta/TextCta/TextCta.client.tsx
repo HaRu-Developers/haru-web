@@ -1,5 +1,7 @@
 'use client';
 
+import clsx from 'clsx';
+
 import PlusIcons from '@icons/PlusIcons/PlusIcons';
 import { PlusIconsState } from '@icons/PlusIcons/PlusIcons.types';
 
@@ -22,12 +24,15 @@ const textCtaConfig: Record<FileType, TextCtaConfig> = {
   },
 };
 
-const TextCta = ({ type, onClick }: TextCtaProps) => {
+const TextCta = ({ type, onClick, disabled = false }: TextCtaProps) => {
   const { iconState, color } = textCtaConfig[type];
 
   return (
     <div
-      className="border-stroke-100 flex h-48 w-61 cursor-pointer flex-col items-center justify-center rounded-2xl border-[1.5px] border-dashed bg-white hover:bg-gray-600"
+      className={clsx(
+        'border-stroke-100 flex h-48 w-61 cursor-pointer flex-col items-center justify-center rounded-2xl border-[1.5px] border-dashed bg-white hover:bg-gray-600',
+        disabled ? 'cursor-not-allowed' : '',
+      )}
       onClick={onClick}
     >
       <PlusIcons state={iconState} />

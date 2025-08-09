@@ -5,7 +5,7 @@ import { SearchParamsType } from '@common/types/routes.types';
 import { getCtaDescription, getListTitle } from '@common/utils/assistant-mapping.utils';
 import parseEnum from '@common/utils/parse-enum.utils';
 
-import TextCtaWrapper from '@common/components/cta/TextCtaWrapper/TextCtaWrapper.client';
+import TextCtaWrapper from '@common/components/cta/TextCtaWrapper/TextCtaWrapper.server';
 import GnbTop from '@common/components/gnbs/GnbTop/GnbTop.client';
 import ListHeader from '@common/components/list-file/ListHeader/ListHeader.server';
 

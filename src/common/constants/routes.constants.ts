@@ -4,7 +4,8 @@ export const ROUTES = {
   ONBOARDING: '/onboarding',
   MAIN: (workspaceId: number) => `/workspace/${workspaceId}`,
   AI_MEETING_MANAGER: (workspaceId: number) => `/workspace/${workspaceId}/ai-meeting-manager`,
-  AI_MEETING: 'meeting',
+  AI_MEETING: (workspaceId: string, meetingId: string) =>
+    `/workspace/${workspaceId}/ai-meeting-manager/${meetingId}/meeting`,
   SNS_EVENT_ASSISTANT: (workspaceId: number) => `//workspace/${workspaceId}/sns-event-assistant`,
   TEAM_MOOD_TRACKER: (workspaceId: number) => `/workspace/${workspaceId}/team-mood-tracker`,
   CALENDAR: (workspaceId: number) => `/workspace/${workspaceId}/calendar`,

@@ -1,3 +1,5 @@
+'use client';
+
 import { FeaturedFileIconsState } from '@icons/FeaturedFileIcons/FeaturedFileIcons.types';
 
 import BaseListFile from '../BaseListFile/BaseListFile.client';

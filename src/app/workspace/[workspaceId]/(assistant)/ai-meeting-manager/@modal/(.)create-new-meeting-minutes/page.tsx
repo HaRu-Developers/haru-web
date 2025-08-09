@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 
 import { ROUTES } from '@common/constants/routes.constants';
 
@@ -9,11 +9,14 @@ import CreateMeetingMinutesModal from '@/common/components/modals/CreateMeetingM
 
 const CreateNewMeetingMinutesModalPage = () => {
   const router = useRouter();
+  const { workspaceId } = useParams<{ workspaceId: string }>();
+
   return (
     <ModalLayout>
       <CreateMeetingMinutesModal
+        workspaceId={workspaceId}
         onClose={() => router.back()}
-        onNextStep={() => router.push(ROUTES.AI_MEETING)}
+        onNextStep={(meetingId) => router.replace(ROUTES.AI_MEETING(workspaceId, meetingId))} // replace를 쓰면 히스토리에 모달 경로가 남지 않음
       />
     </ModalLayout>
   );

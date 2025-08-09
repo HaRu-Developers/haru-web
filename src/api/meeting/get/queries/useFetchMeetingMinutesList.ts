@@ -1,3 +1,7 @@
+'use client';
+
+import { L } from 'vitest/dist/chunks/reporters.d.BFLkQcL6.js';
+
 import { ApiErrorBody } from '@common/types/api.common.types';
 
 import queryKeys from '@common/constants/query-key.constants';
@@ -14,7 +18,7 @@ import fetchMeetingMinutesList from '../apis/fetchMeetingMinutesList';
  */
 const useFetchMeetingMinutesList = (workspaceId: string) => {
   return useAfterQuery<
-    { result: { meetingMinutesList: MeetingMinutesInfo[] } }, // TData
+    { result: MeetingMinutesInfo[] }, // TData
     ApiError<ApiErrorBody>, // TError
     MeetingMinutesInfo[] // TExtra
   >({
@@ -22,7 +26,7 @@ const useFetchMeetingMinutesList = (workspaceId: string) => {
     queryFn: () => fetchMeetingMinutesList({ workspaceId }),
     enabled: !!workspaceId,
     retry: false,
-    extra: (queryResult) => queryResult.data?.result.meetingMinutesList ?? [],
+    extra: (queryResult) => (queryResult.data?.result ?? []) as MeetingMinutesInfo[],
   });
 };
 

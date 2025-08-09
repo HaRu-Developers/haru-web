@@ -2,6 +2,9 @@
 
 import { useState } from 'react';
 
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+
 import clsx from 'clsx';
 
 import CheckboxIcons from '@icons/CheckboxIcons/CheckboxIcons';
@@ -32,16 +35,9 @@ const BaseListFile = ({
 
   const showCheckbox = isSelectable && (isCheckMode || isHovered);
 
-  // a 태그 중첩 방지를 위해 최상위는 div, 클릭 시 라우팅은 onClick 핸들러로 처리
-  const handleClick = () => {
-    if (href) {
-      window.location.href = href; // 또는 router.push(href)
-    }
-  };
-
   return (
-    <div
-      onClick={handleClick}
+    <Link
+      href={href}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className={clsx(
@@ -53,11 +49,9 @@ const BaseListFile = ({
         className,
       )}
     >
-      <div className="flex items-center">
+      <div className="gap-x-10pxr flex items-center">
         <div
-          className={clsx('mr-2.5 flex h-9 w-9 flex-shrink-0 items-center', {
-            'cursor-pointer': isSelectable,
-          })}
+          className="flex h-9 w-9 flex-shrink-0 items-center"
           onClick={isSelectable ? handleToggle : undefined}
         >
           {showCheckbox ? (
@@ -78,7 +72,7 @@ const BaseListFile = ({
       </div>
 
       {rightContent && !isCheckMode && <div className="flex items-center">{rightContent}</div>}
-    </div>
+    </Link>
   );
 };
 

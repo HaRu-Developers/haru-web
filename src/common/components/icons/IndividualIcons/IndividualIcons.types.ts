@@ -3,6 +3,7 @@ export enum IndividualIconsState {
   WARNING = 'WARNING',
   UNDER_ARROW = 'UNDER_ARROW',
   SEARCH = 'SEARCH',
+  SEARCH_SIZE_20 = 'SEARCH_SIZE_20',
   CALENDAR = 'CALENDAR',
   UPLOAD = 'UPLOAD',
   GROUP = 'GROUP',

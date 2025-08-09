@@ -12,11 +12,22 @@ import InputSearchBox from '@common/components/inputs/InputSearchBox/InputSearch
 
 import { GnbTopProps } from './GnbTop.types';
 
+const SEARCH_PATH_MAP: Partial<Record<GnbSection, string>> & { default: string } = {
+  [GnbSection.AI_MEETING_MANAGER]: 'ai-meeting-manager/search',
+  [GnbSection.SNS_EVENT_ASSISTANT]: 'sns-event-assistant/search',
+  [GnbSection.TEAM_MOOD_TRACKER]: 'team-mood-tracker/search',
+  [GnbSection.MAIN]: 'search',
+  [GnbSection.CALENDAR]: 'calendar/search',
+  default: 'search', // 기본 경로
+};
+
 const GnbTop = ({ section, title, current }: GnbTopProps) => {
   const pathname = usePathname() ?? '';
   const params = useParams<{ workspaceId?: string }>();
 
-  const searchPath = params.workspaceId ? `/workspace/${params.workspaceId}/search` : '#'; // 추후 상수화
+  const searchPath = params.workspaceId
+    ? `/workspace/${params.workspaceId}/${SEARCH_PATH_MAP[section] ?? SEARCH_PATH_MAP.default}`
+    : '#';
 
   const config =
     section === GnbSection.CUSTOM ? sectionConfigs[section](title ?? '') : sectionConfigs[section];

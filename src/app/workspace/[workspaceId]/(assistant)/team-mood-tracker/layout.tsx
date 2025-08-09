@@ -9,14 +9,21 @@ export const metadata: Metadata = {
 
 const TeamMoodTrackerRootLayout = async ({
   children,
+  modal,
   params,
 }: Readonly<{
   children: React.ReactNode;
+  modal: React.ReactNode;
   params: Promise<{ workspaceId?: string }>;
 }>) => {
   const workspaceId = (await params).workspaceId;
 
-  return <GnbLeftLayout workspaceId={workspaceId}>{children}</GnbLeftLayout>;
+  return (
+    <GnbLeftLayout workspaceId={workspaceId}>
+      {children}
+      {modal}
+    </GnbLeftLayout>
+  );
 };
 
 export default TeamMoodTrackerRootLayout;

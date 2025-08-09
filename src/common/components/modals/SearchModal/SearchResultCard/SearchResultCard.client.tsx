@@ -1,3 +1,5 @@
+'use client';
+
 import FeaturedFileIcons from '@icons/FeaturedFileIcons/FeaturedFileIcons';
 import { FeaturedFileIconsState } from '@icons/FeaturedFileIcons/FeaturedFileIcons.types';
 
@@ -5,7 +7,7 @@ import { FileType } from '@common/types/file-type.enum';
 
 import { SearchResultCardProps } from './SearchResultCard.types';
 
-const SearchResultCard = ({ fileType, title, lastOpened }: SearchResultCardProps) => {
+const SearchResultCard = ({ fileType, title, lastOpened, onClick }: SearchResultCardProps) => {
   const iconByFileType = (fileType: FileType) => {
     switch (fileType) {
       case FileType.AI_MEETING_MANAGER:
@@ -19,19 +21,19 @@ const SearchResultCard = ({ fileType, title, lastOpened }: SearchResultCardProps
     }
   };
 
-  const formatLastOpened = (date: Date) => {
+  const formatLastOpened = (dateString: string) => {
+    const date = new Date(dateString);
     const now = new Date();
-    const isToday =
-      date.getFullYear() === now.getFullYear() &&
-      date.getMonth() === now.getMonth() &&
-      date.getDate() === now.getDate();
 
-    const yesterday = new Date(now);
-    yesterday.setDate(now.getDate() - 1);
-    const isYesterday =
-      date.getFullYear() === yesterday.getFullYear() &&
-      date.getMonth() === yesterday.getMonth() &&
-      date.getDate() === yesterday.getDate();
+    // 날짜 부분만 비교하기 위해 시간 정보를 0으로 설정
+    const dateOnly = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    const nowOnly = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+    const yesterdayOnly = new Date(nowOnly);
+    yesterdayOnly.setDate(nowOnly.getDate() - 1);
+
+    const isToday = dateOnly.getTime() === nowOnly.getTime();
+    const isYesterday = dateOnly.getTime() === yesterdayOnly.getTime();
 
     if (isToday) {
       const hours = date.getHours();
@@ -50,9 +52,12 @@ const SearchResultCard = ({ fileType, title, lastOpened }: SearchResultCardProps
   };
 
   return (
-    <div className="px-10pxr gap-x-8pxr h-40pxr rounded-100pxr flex w-full flex-shrink-0 flex-row items-center bg-white hover:bg-gray-600">
+    <div
+      onClick={onClick}
+      className="px-10pxr gap-x-8pxr h-40pxr rounded-8pxr flex w-full flex-shrink-0 flex-row items-center bg-white hover:bg-gray-600"
+    >
       {iconByFileType(fileType)}
-      <span className="ml-8pxr text-b3-md flex-grow text-black">{title} </span>
+      <span className="text-t5-sb flex-grow text-black">{title} </span>
       <span className="text-cap2-rg text-gray-400">{formatLastOpened(lastOpened)}</span>
     </div>
   );

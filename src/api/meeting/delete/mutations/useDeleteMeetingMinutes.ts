@@ -2,6 +2,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import queryKeys from '@common/constants/query-key.constants';
 
+import { ApiError } from '@common/errors/ApiError';
+
 import { meetingIdRequestDto } from '../../api.types';
 import deleteMeetingMinutes from '../apis/deleteMeetingMinutes';
 
@@ -20,10 +22,6 @@ const useDeleteMeetingMinutes = (workspaceId: string) => {
     onSuccess: async () => {
       // 회의록 리스트 다시 호출
       await queryClient.invalidateQueries({ queryKey: listKey });
-    },
-
-    onError: (error) => {
-      console.error('[회의록 삭제 실패]', error);
     },
   });
 };

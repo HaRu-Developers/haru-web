@@ -13,7 +13,15 @@ import { SkipForNowButtonType } from '@common/components/buttons/diverse-size/Sk
 
 import { DeleteModalProps, DeleteModalType } from './DeleteModal.types';
 
-const DeleteModal = ({ modalType, onAbort, onProceed }: DeleteModalProps) => {
+const DeleteModal = ({
+  modalType,
+  onAbort,
+  onProceed,
+  cancelBtnDisabled,
+  deleteBtnDisabled,
+  loading,
+  loadingText,
+}: DeleteModalProps) => {
   const modalConfig = {
     [DeleteModalType.DELETE_REPORT]: {
       main: '정말 이 리포트를 삭제하시겠습니까?',
@@ -24,8 +32,21 @@ const DeleteModal = ({ modalType, onAbort, onProceed }: DeleteModalProps) => {
     [DeleteModalType.DELETE_MEETING_MINUTES]: {
       main: '정말 이 회의록을 삭제하시겠습니까?',
       sub: '삭제된 회의록은 시스템에서 완전히 제거되며, 이후 복원할 수 없습니다. 삭제 전 내용을 꼭 확인해 주세요.',
-      abortButton: <CancelButton onClick={onAbort} buttonType={CancelButtonType.SIZE_38} />,
-      proceedButton: <DeleteButton onClick={onProceed} />,
+      abortButton: (
+        <CancelButton
+          onClick={onAbort}
+          buttonType={CancelButtonType.SIZE_38}
+          disabled={cancelBtnDisabled}
+        />
+      ),
+      proceedButton: (
+        <DeleteButton
+          onClick={onProceed}
+          disabled={deleteBtnDisabled}
+          loading={loading}
+          loadingText={loadingText}
+        />
+      ),
     },
     [DeleteModalType.DELETE_EVENT]: {
       main: '정말 이 이벤트를 삭제하시겠습니까?',

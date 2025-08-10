@@ -1,18 +1,17 @@
-import ConfirmDeleteMeetingMinutesModalPage from '../../@modal/(.)confirm-delete/page';
-import AiMeetingAssistantDefaultPage from '../../page';
+import { redirect } from 'next/navigation';
 
-// 새로고침이나 직접 접근 시에도 CreateNewMeetingMinutesModalPage 재활용
-const CreateNewMeetingStansalonePage = async ({
+import { ROUTES } from '@common/constants/routes.constants';
+
+/**
+ * 새로 고침시 메인으로 리다이렉트 해 모달 제거
+ */
+const ConfirmDeleteStandalonePage = async ({
   params,
 }: {
   params: Promise<{ workspaceId: string }>;
 }) => {
-  return (
-    <>
-      <AiMeetingAssistantDefaultPage params={params} />
-      <ConfirmDeleteMeetingMinutesModalPage />
-    </>
-  );
+  const { workspaceId } = await params;
+  redirect(ROUTES.AI_MEETING_MANAGER.BASE(workspaceId));
 };
 
-export default CreateNewMeetingStansalonePage;
+export default ConfirmDeleteStandalonePage;

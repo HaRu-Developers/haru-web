@@ -3,6 +3,7 @@ import * as Sentry from '@sentry/nextjs';
 type ApiErrorType = 'server-error' | 'network-error' | 'unknown-error';
 interface ApiErrorContext {
   url?: string;
+  method?: string;
   status?: number;
   requestBody?: unknown;
   responseHeaders?: HeadersInit;

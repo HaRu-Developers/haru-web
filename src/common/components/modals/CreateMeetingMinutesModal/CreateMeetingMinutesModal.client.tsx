@@ -2,12 +2,8 @@
 
 import { useState } from 'react';
 
-import { useRouter } from 'next/navigation';
-
 import CrossIcons from '@icons/CrossIcons/CrossIcons';
 import { CrossIconsState } from '@icons/CrossIcons/CrossIcons.types';
-
-import { ROUTES } from '@common/constants/routes.constants';
 
 import NextStepButton from '@common/components/buttons/30px/NextStepButton/NextStepButton.client';
 import InputFieldModal from '@common/components/inputs/modals/InputFieldModal/InputFieldModal.client';
@@ -32,8 +28,6 @@ const CreateMeetingMinutesModal = ({
 }: CreateMeetingMinutesModalProps) => {
   const [meetingTitle, setMeetingTitle] = useState<string>('');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-
-  const router = useRouter();
 
   // api 호출 완료 후 페이지 이동할 거여서 mutateAsync 사용
   const {

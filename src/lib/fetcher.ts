@@ -25,41 +25,69 @@ const handleResponse = async (res: Response) => {
   return res.json();
 };
 
-// 비정상 응답 처리 함수
-const handleResponseError = async (res: Response, url: string, requestBodyRaw: unknown) => {
-  const contentType = res.headers.get('content-type');
-  let requestBody: string;
-  const responseBodyText = await res.text();
-  let responseBody: ApiErrorBody = {
-    isSuccess: false,
-    code: 'UNKNOWN',
-    message: `❌ API error ${res.status}`,
-  };
+// 어떤 에러를 Sentry로 보낼지 정책
+export const shouldReportToSentry = (status: number, code?: string) => {
+  // 서버오류/네트워크 오류만 전송, 비즈니스 4xx는 제외
+  if (status >= 500 || status === 0) return true;
 
-  // 직렬화 불가 값 처리
+  // 특정 4xx 코드는 무시
+  // const ignoreCodes = new Set(['LASTOPENED4001']);
+  // if (ignoreCodes.has(code)) return false;
+
+  return false;
+};
+
+// 비정상 응답 처리 함수
+const handleResponseError = async (
+  res: Response,
+  url: string,
+  requestBodyRaw: unknown,
+  method?: string,
+) => {
+  const contentType = res.headers.get('content-type');
+  const rawText = await res.text();
+
+  // requestBody 직렬화 (로깅용)
+  let requestBody = '';
   try {
     requestBody =
       typeof requestBodyRaw === 'string' ? requestBodyRaw : JSON.stringify(requestBodyRaw);
   } catch {
+    // 직렬화 불가 값 처리
     requestBody = '[Non-serializable body]';
   }
 
-  // JSON인 경우에만 파싱 시도
+  // JSON만 파싱
+  let responseBody: ApiErrorBody = {
+    isSuccess: false,
+    code: 'UNKNOWN',
+    message: `API error ${res.status}`,
+  };
   if (contentType?.includes('application/json')) {
     try {
-      responseBody = JSON.parse(responseBodyText) as ApiErrorBody;
-    } catch (_error) {
+      responseBody = JSON.parse(rawText) as ApiErrorBody;
+    } catch {
       // 파싱 실패시 문자열 유지
     }
   }
 
-  const error = new ApiError(res.status, responseBody);
+  // 공통 에러 객체 생성
+  const error = new ApiError({
+    status: res.status,
+    message: responseBody.message,
+    code: responseBody.code,
+    body: responseBody,
+    rawText,
+    url,
+    method,
+  });
 
-  if (res.status >= 500) {
+  if (shouldReportToSentry(res.status, responseBody.code)) {
     captureApiError(
       error,
       {
         url,
+        method,
         status: res.status,
         requestBody,
         responseHeaders: Object.fromEntries(res.headers.entries()),
@@ -146,7 +174,7 @@ export const createFetcher =
         return handleResponse(res);
       }
       // 응답 에러시
-      return handleResponseError(res, url, mergedOptions.body);
+      return handleResponseError(res, url, mergedOptions.body, mergedOptions.method);
     } catch (error) {
       // 네트워크 관련 오류 Sentry에 전송
       // - fetch 자체가 실패한 경우 (인터넷 연결 끊김, DNS 오류, CORS 등)

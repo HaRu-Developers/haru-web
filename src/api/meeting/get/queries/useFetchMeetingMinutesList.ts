@@ -27,6 +27,7 @@ const useFetchMeetingMinutesList = (workspaceId: string) => {
     enabled: !!workspaceId,
     retry: false,
     extra: (queryResult) => (queryResult.data?.result ?? []) as MeetingMinutesInfo[],
+    throwOnError: true,
   });
 };
 

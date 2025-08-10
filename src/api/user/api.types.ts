@@ -10,4 +10,4 @@ export interface fetchUpdateUserResquestDto {
   password: string;
 }
 
-export interface fetchUserResponseDto extends User {}
+export type fetchUserResponseDto = User;

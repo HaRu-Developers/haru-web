@@ -13,10 +13,13 @@ import ListFileSnsEventAssistantLinkWrapper from '@features/sns-event-assistant/
 import ListFileSnsEventAssistantWrapper from '@features/sns-event-assistant/components/list-file-wrapper/ListFileSnsEventAssistantWrapper/ListFileSnsEventAssistantWrapper.client';
 
 const SnsEventAssistantDefaultPage = async ({
+  params,
   searchParams,
 }: {
+  params: Promise<{ workspaceId: string }>;
   searchParams: Promise<SearchParamsType>;
 }) => {
+  const { workspaceId } = await params;
   const { snsGnbTab } = await searchParams;
   const formattedSnsGnbTabTab = parseEnum(snsGnbTab, SnsGnbTabType, SnsGnbTabType.ALL_EVENTS);
 
@@ -28,7 +31,7 @@ const SnsEventAssistantDefaultPage = async ({
           <>
             {/* cta 부분 */}
             {getCtaDescription(FileType.SNS_EVENT_ASSISTANT)}
-            <TextCtaWrapper fileType={FileType.SNS_EVENT_ASSISTANT} />
+            <TextCtaWrapper fileType={FileType.SNS_EVENT_ASSISTANT} workspaceId={workspaceId} />
             {/* 리스트 부분 */}
             {getListTitle(FileType.SNS_EVENT_ASSISTANT)}
             <ListHeader fileType={FileType.SNS_EVENT_ASSISTANT} />

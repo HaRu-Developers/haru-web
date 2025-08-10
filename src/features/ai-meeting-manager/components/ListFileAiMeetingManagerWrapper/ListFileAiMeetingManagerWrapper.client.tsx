@@ -3,12 +3,20 @@
 import ListFileAiMeetingManager from '@common/components/list-file/ListFileAiMeetingManager/ListFileAiMeetingManager.client';
 import ListFileAiMeetingManagerSkeleton from '@common/components/list-file/ListFileAiMeetingManager/ListFileAiMeetingManagerSkeleton.server';
 
+import {
+  useListActions,
+  useListInfo,
+} from '@features/ai-meeting-manager/hooks/stores/useListStore';
+
 import useFetchMeetingMinutesList from '@/api/meeting/get/queries/useFetchMeetingMinutesList';
 
 import { ListFileAiMeetingManagerWrapperProps } from './ListFileAiMeetingManagerWrapper.types';
 
 const ListFileAiMeetingManagerWrapper = ({ workspaceId }: ListFileAiMeetingManagerWrapperProps) => {
   const { isFetching, extra: meetingMinutesList } = useFetchMeetingMinutesList(workspaceId);
+  const { isAnyChecked, checkedIds } = useListInfo();
+  const { toggleChecked } = useListActions();
+
   const hasMeetingMinutes = (meetingMinutesList?.length ?? 0) > 0;
 
   return (
@@ -29,9 +37,9 @@ const ListFileAiMeetingManagerWrapper = ({ workspaceId }: ListFileAiMeetingManag
             meetingId={m.meetingId}
             title={m.title}
             updatedAt={m.updatedAt}
-            isCheckMode={false}
-            isChecked={false}
-            onCheckToggle={() => {}}
+            isCheckMode={isAnyChecked}
+            isChecked={checkedIds.has(m.meetingId)}
+            onCheckToggle={toggleChecked}
           />
         ))}
     </>

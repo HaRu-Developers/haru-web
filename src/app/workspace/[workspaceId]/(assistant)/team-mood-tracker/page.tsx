@@ -9,14 +9,20 @@ import ListHeader from '@common/components/list-file/ListHeader/ListHeader.serve
 
 import ListFileTeamMoodTrakerWrapper from '@features/team-mood-tracker/componets/ListFileTeamMoodTrackerWrapper/ListFileTeamMoodTrackerWrapper.client';
 
-const TeamMoodTrackerDefaultPage = () => {
+const TeamMoodTrackerDefaultPage = async ({
+  params,
+}: {
+  params: Promise<{ workspaceId: string }>;
+}) => {
+  const { workspaceId } = await params;
+
   return (
     <section>
       <GnbTop section={GnbSection.TEAM_MOOD_TRACKER} />
       <div className="assistant-wrapper">
         {/* cta 부분 */}
         {getCtaDescription(FileType.TEAM_MOOD_TRACKER)}
-        <TextCtaWrapper fileType={FileType.TEAM_MOOD_TRACKER} />
+        <TextCtaWrapper fileType={FileType.TEAM_MOOD_TRACKER} workspaceId={workspaceId} />
         {/* 리스트 부분 */}
         {getListTitle(FileType.TEAM_MOOD_TRACKER)}
         <ListHeader fileType={FileType.TEAM_MOOD_TRACKER} />

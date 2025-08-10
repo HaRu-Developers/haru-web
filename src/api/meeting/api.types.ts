@@ -1,5 +1,6 @@
 import { FileType } from '@common/types/file-type.enum';
 
+// ========== 공통 요청 ==========
 /**
  * 워크스페이스 ID를 포함하는 요청 DTO
  *
@@ -9,7 +10,16 @@ export interface WorkspaceIdRequestDto {
   workspaceId: string;
 }
 
-// 회의록 생성
+/**
+ * meeting ID를 포함하는 요청 DTO
+ *
+ * @property {string} meetingId - meeting 고유 ID
+ */
+export interface meetingIdRequestDto {
+  meetingId: string;
+}
+
+// ========== 회의록 생성 ===========
 /**
  * 회의록 생성 요청의 상세 정보
  *
@@ -43,7 +53,7 @@ export interface CreateMeetingMinutesResponseDto {
   title: string;
 }
 
-// 회의록 리스트
+// ========== 회의록 리스트 ==========
 /**
  * 회의록 정보
  *
@@ -60,8 +70,16 @@ export interface MeetingMinutesInfo {
 }
 
 /**
- * 회의록 리스트 응답 DTO
+ * 회의록 리스트 응답 내용
  *
  * @property {MeetingMinutesInfo[]} meetingMinutesList - 회의록 리스트
  */
-export type MeetingMinutesListResponseDto = MeetingMinutesInfo[];
+export type MeetingMinutesListResponse = MeetingMinutesInfo[];
+
+// ========== 회의록 삭제 ==========
+/**
+ * 회의록 삭제 응답
+ *
+ * @property {MeetingMinutesInfo[]} meetingMinutesList - 회의록 리스트
+ */
+export type DeleteMeetingMinutesResponse = string;

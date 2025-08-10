@@ -16,7 +16,9 @@ const CreateNewMeetingMinutesModalPage = () => {
       <CreateMeetingMinutesModal
         workspaceId={workspaceId}
         onClose={() => router.back()}
-        onNextStep={(meetingId) => router.replace(ROUTES.AI_MEETING(workspaceId, meetingId))} // replace를 쓰면 히스토리에 모달 경로가 남지 않음
+        onNextStep={(meetingId) =>
+          router.replace(ROUTES.AI_MEETING_MANAGER.MEETING(workspaceId, meetingId))
+        } // replace를 쓰면 히스토리에 모달 경로가 남지 않음
       />
     </ModalLayout>
   );

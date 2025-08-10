@@ -1,3 +1,3 @@
 export interface GnbLeftProps {
-  workspaceId: number | null;
+  workspaceId: string | null;
 }

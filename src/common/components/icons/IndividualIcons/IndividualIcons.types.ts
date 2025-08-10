@@ -8,4 +8,5 @@ export enum IndividualIconsState {
   UPLOAD = 'UPLOAD',
   GROUP = 'GROUP',
   EMAIL = 'EMAIL',
+  TRASH_OUTLINE = 'TRASH_OUTLINE',
 }

@@ -50,7 +50,7 @@ const DeleteModal = ({ modalType, onAbort, onProceed }: DeleteModalProps) => {
   const currentConfig = modalConfig[modalType];
 
   return (
-    <div className="w-398pxr h-250pxr rounded-12pxr shadow-modal flex flex-col items-center justify-center">
+    <div className="w-398pxr h-250pxr rounded-12pxr shadow-modal flex flex-col items-center justify-center bg-white">
       <IndividualIcons state={IndividualIconsState.WARNING} />
       <div className="gap-y-6pxr mt-13pxr w-317pxr flex flex-col items-center justify-center text-center">
         <p className="text-t3-bd text-black">{currentConfig.main}</p>

@@ -1,4 +1,4 @@
-import CreateNewMeetingMinutesModalPage from '../../@modal/(.)create-new-meeting-minutes/page';
+import CreateNewMeetingMinutesModalPage from '../../@modal/(.)create/page';
 import AiMeetingAssistantDefaultPage from '../../page';
 
 // 새로고침이나 직접 접근 시에도 CreateNewMeetingMinutesModalPage 재활용

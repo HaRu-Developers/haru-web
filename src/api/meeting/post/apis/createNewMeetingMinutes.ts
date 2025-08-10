@@ -11,6 +11,10 @@ import { CreateMeetingMinutesRequestDto, CreateMeetingMinutesResponseDto } from 
  * multipart/form-data로 파일(agendaFile)과 JSON(request)을 함께 업로드합니다.
  *
  * @param {CreateMeetingMinutesRequestDto} params - 업로드 파일과 생성 요청 본문
+ * @param {File} params.agendaFile - 회의 안건지 파알
+ * @param {string} params.request - 회의록 생성 요청의 상세 정보
+ * @param {string} params.request.workspaceId - 회의가 속하는 워크스페이스 ID
+ * @param {string} params.request.title - 회의록 제목
  */
 export const createNewMeetingMinutes = async ({
   agendaFile,

@@ -3,7 +3,6 @@
 import { useState } from 'react';
 
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
 import clsx from 'clsx';
 
@@ -30,6 +29,7 @@ const BaseListFile = ({
 
   const handleToggle = (e: React.MouseEvent) => {
     e.preventDefault();
+    e.stopPropagation();
     onCheckToggle?.(id);
   };
 
@@ -41,7 +41,7 @@ const BaseListFile = ({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className={clsx(
-        'flex w-full items-center justify-between py-4 transition-colors',
+        'h-73pxr flex w-full items-center justify-between transition-colors',
         {
           'bg-gray-600': isChecked,
           'hover:bg-gray-600': !isChecked,
@@ -51,7 +51,11 @@ const BaseListFile = ({
     >
       <div className="gap-x-10pxr flex items-center">
         <div
-          className="flex h-9 w-9 flex-shrink-0 items-center"
+          className={clsx(
+            'rounded-6pxr h-36pxr w-36pxr flex flex-shrink-0 items-center justify-center',
+            // 선택 가능, 선택 안됐고, 호버 안됐을 때 배경 흰색으로
+            isSelectable && isCheckMode && !isChecked && !isHovered ? 'bg-white' : 'bg-gray-600',
+          )}
           onClick={isSelectable ? handleToggle : undefined}
         >
           {showCheckbox ? (

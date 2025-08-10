@@ -1,18 +1,18 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { useParams } from 'next/navigation';
 
 import HaruLogoIcons from '@icons/logos/HaruLogoIcons/HaruLogoIcons';
 import { HaruLogoIconsState } from '@icons/logos/HaruLogoIcons/HaruLogoIcons.types';
 
-import { TermsModalType } from '@common/components/modals/terms/TermsModal.types';
+import { ROUTES } from '@common/constants/routes.constants';
 
 const Footer = () => {
-  const pathname = usePathname();
+  const { workspaceId } = useParams<{ workspaceId?: string }>();
 
-  const termsOfServiceModalHref = `${pathname}/terms?type=${TermsModalType.TERMS_OF_SERVICE}`;
-  const privacyPolicyModalHref = `${pathname}/terms?type=${TermsModalType.PRIVACY_POLICY}`;
+  const termsOfServiceModalHref = `${ROUTES.MAIN.MODAL.TERMS_OF_SERVICE(workspaceId)}`;
+  const privacyPolicyModalHref = `${ROUTES.MAIN.MODAL.PRIVACY_POLICY(workspaceId)}`;
 
   return (
     <div className="h-299pxr gap-120pxr px-114pxr w-full items-start bg-gray-100 py-16">

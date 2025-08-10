@@ -38,7 +38,7 @@ const AiMeetingManagerDefaultPage = async ({
       <div className="assistant-wrapper">
         {/* cta 부분 */}
         {getCtaDescription(FileType.AI_MEETING_MANAGER)}
-        <TextCtaWrapper fileType={FileType.AI_MEETING_MANAGER} />
+        <TextCtaWrapper fileType={FileType.AI_MEETING_MANAGER} workspaceId={workspaceId} />
         {/* 리스트 부분 */}
         {getListTitle(FileType.AI_MEETING_MANAGER)}
         <ListHeader fileType={FileType.AI_MEETING_MANAGER} />

@@ -1,69 +1,68 @@
 'use client';
 
-import { useState } from 'react';
+import { useCallback, useEffect } from 'react';
+
+import { useRouter } from 'next/navigation';
+
+import { ToastType } from '@common/types/toast.types';
+
+import { useToastActions } from '@common/hooks/stores/useToastStore';
+import { useUserActions, useUserInfo } from '@common/hooks/stores/useUserStore';
 
 import ChangePasswordButton from '@common/components/buttons/30px/ChangePasswordButton/ChangePasswordButton.client';
 import { ChangePasswordButtonState } from '@common/components/buttons/30px/ChangePasswordButton/ChangePasswordButton.types';
 import SocialConnectButton from '@common/components/buttons/30px/SocialConnectButton/SocialConnectButton.client';
 import SaveButton from '@common/components/buttons/38px/SaveButton/SaveButton.client';
 
-import useModalStore from '@common/stores/modal-store';
+import useEditUserDetail from '@/api/user/patch/mutations/useEditUserDetail';
 
-import { updateUser } from '@features/profile/apis/patch/update-user';
-
-import ChangePasswordModal from '../../ChangePasswordModal/ChangePasswordModal.client';
 import CommonText from '../../CommonText/CommonText.server';
 import { CommonTextType } from '../../CommonText/CommonText.types';
+import { ProfileSettingMenuProps } from './ProfileSettingMenu.types';
 
-interface ProfileSettingMenuProps {
-  name: string;
-  email: string;
-  instagramAccount?: string;
-  onChange?: (name: string) => void;
-}
-
-const ProfileSettingMenu = ({
-  name,
-  email,
-  instagramAccount,
-  onChange,
-}: ProfileSettingMenuProps) => {
-  const [password, setPassword] = useState<string>('');
-  const { openModal } = useModalStore();
-
+const ProfileSettingMenu = ({ workspaceId, email, instagramAccount }: ProfileSettingMenuProps) => {
+  const { name, password } = useUserInfo();
+  const { setName } = useUserActions();
+  const { addToast } = useToastActions();
+  const router = useRouter();
   const handlePasswordModal = () => {
-    openModal(
-      ChangePasswordModal,
-      {
-        onSubmit: handleChangePassword,
-        onClose: () => alert('비밀번호 변경 창이 닫혔습니다.'),
-        onNextStep: () => alert('다음 단계로 이동합니다.'),
-      },
-      {
-        overlayClickToClose: true,
-      },
-    );
-  };
-
-  const handleChangePassword = (newPassword: string) => {
-    if (newPassword.length === 0) {
-      alert('비밀번호를 입력해주세요.');
-      return;
+    if (workspaceId) {
+      router.push(`/workspace/${workspaceId}/settings/change-password`);
+    } else {
+      router.push(`/workspace/settings/change-password`);
     }
-    setPassword(newPassword);
-    alert('비밀번호가 변경되었습니다.');
   };
-
-  const handleSave = async () => {
-    if (password.length === 0) {
-      alert('비밀번호를 입력해주세요.');
-      return;
+  const { mutate: editUserDetail } = useEditUserDetail();
+  const handleSave = useCallback(() => {
+    console.log(name, password);
+    if (name && password) {
+      editUserDetail(
+        { name, password },
+        {
+          onSuccess: (data) => {
+            addToast({
+              text: `사용자 정보가 성공적으로 수정되었습니다.`,
+              type: [ToastType.SUCCESS][Date.now() % 3],
+              duration: 2000,
+            });
+          },
+          onError: (error) => {
+            addToast({
+              text: `사용자 정보 수정에 실패했습니다: ${error.message}`,
+              type: [ToastType.ERROR][Date.now() % 3],
+              duration: 2000,
+            });
+          },
+        },
+      );
+    } else {
+      addToast({
+        text: '이름과 비밀번호를 모두 입력해주세요.',
+        type: [ToastType.INFO][Date.now() % 3],
+        duration: 2000,
+      });
     }
-    const response = await updateUser({ name, password });
-    console.log(response.result);
-    alert('프로필이 저장되었습니다.');
-  };
-
+  }, [editUserDetail, name, password]);
   return (
     <div className="px-35pxr py-24pxr gap-y-24pxr flex w-full flex-col">
       <CommonText type={CommonTextType.T4_BD_BLACK} text="프로필 설정" />
@@ -77,7 +76,7 @@ const ProfileSettingMenu = ({
             <CommonText type={CommonTextType.CAP1_RG_GRAY_200} text="이름" />
             <input
               value={name}
-              onChange={(event) => onChange?.(event.target.value)}
+              onChange={(event) => setName(event.target.value)}
               className="border-stroke-200 rounded-4pxr px-10pxr text-b3-rg py-7pxr flex w-full items-start justify-start border text-black"
             />
           </div>

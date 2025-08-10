@@ -57,9 +57,11 @@ const workspaces = [
 const SelectBoxProfile = ({
   isOpen,
   setIsOpen,
+  onSettingClick,
 }: {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  onSettingClick?: () => void;
 }) => {
   if (!isOpen) return null;
 
@@ -91,7 +93,10 @@ const SelectBoxProfile = ({
                   <p className="text-cap2-rg text-gray-400">{profile.email}</p>
                 </div>
               </div>
-              <HeaderButtons />
+              <HeaderButtons
+                onSettingClick={onSettingClick}
+                onAddMemberClick={() => console.log('멤버 추가 클릭')}
+              />
             </div>
 
             <div className="bg-stroke-200 h-px w-full"></div>
@@ -113,7 +118,10 @@ const SelectBoxProfile = ({
 
           <div className="bg-stroke-200 h-1pxr w-full"></div>
 
-          <FooterButtons />
+          <FooterButtons
+            onSettingClick={onSettingClick}
+            onLogoutClick={() => console.log('로그아웃 클릭')}
+          />
         </div>
       </div>
     </ModalPortal>

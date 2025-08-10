@@ -44,7 +44,7 @@ const GnbLeft = async ({ workspaceId }: GnbLeftProps) => {
         className="w-99pxr h-24pxr mb-8pxr mt-5pxr ml-5pxr"
       />
       <div className="gap-16pxr flex flex-col">
-        <WorkSpaceProfile />
+        <WorkSpaceProfile workspaceId={workspaceId} />
         <div className="rounded-10pxr flex flex-col items-start gap-2 self-stretch">
           {GnbLeftNavItems.map((item) => (
             <NavItem key={item} item={item} workspaceId={workspaceId} />

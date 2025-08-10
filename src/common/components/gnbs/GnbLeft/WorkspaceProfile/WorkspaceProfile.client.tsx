@@ -2,19 +2,31 @@
 
 import { useState } from 'react';
 
+import { useRouter } from 'next/navigation';
+
 import ArrowIcons from '@icons/ArrowIcons/ArrowIcons';
 import { ArrowIconsState } from '@icons/ArrowIcons/ArrowIcons.types';
 
 import WorkspaceProfileImage from '@common/components/images/WorkspaceProfileImage/WorkspaceProfileImage.client';
 import SelectBoxProfile from '@common/components/select-box/SelectBoxProfile/SelectBoxProfile.server';
 
-const WorkSpaceProfile = () => {
+import { WorkspaceProfileProps } from './WorkspaceProfile.types';
+
+const WorkSpaceProfile = ({ workspaceId }: WorkspaceProfileProps) => {
+  const router = useRouter();
   const [isOpenSelectBoxProfile, setIsOpenSelectBoxProfile] = useState(false);
 
   const handleClick = () => {
     setIsOpenSelectBoxProfile(!isOpenSelectBoxProfile);
   };
 
+  const handleSettingClick = () => {
+    if (workspaceId) {
+      router.push(`/workspace/${workspaceId}/settings`);
+    } else {
+      router.push(`/workspace/settings`);
+    }
+  };
   // 임시 데이터
   const workspace = {
     workspaceId: '1n',
@@ -43,7 +55,11 @@ const WorkSpaceProfile = () => {
         </div>
       </button>
       {isOpenSelectBoxProfile && (
-        <SelectBoxProfile isOpen={isOpenSelectBoxProfile} setIsOpen={setIsOpenSelectBoxProfile} />
+        <SelectBoxProfile
+          isOpen={isOpenSelectBoxProfile}
+          setIsOpen={setIsOpenSelectBoxProfile}
+          onSettingClick={handleSettingClick}
+        />
       )}
     </div>
   );

@@ -3,41 +3,20 @@
 import ProfileDropdownIcons from '@icons/ProfileDropdownIcons/ProfileDropdownIcons';
 import { ProfileDropdownIconsState } from '@icons/ProfileDropdownIcons/ProfileDropdownIcons.types';
 
-import ProfileSelectModal from '@common/components/modals/ProfileSelectModal/ProfileSelectModal.client';
+import { HeaderButtonsProps } from './HeaderButtons.types';
 
-import useModalStore from '@common/stores/modal-store';
-
-const HeaderButtons = () => {
-  const { openModal } = useModalStore();
-  const handleWorkSpaceSetting = () => {
-    openModal(
-      ProfileSelectModal,
-      {
-        onClose: () => console.log('프로필 설정 창이 닫혔습니다.'),
-        onNextStep: () => console.log('다음 단계로 이동합니다.'),
-      },
-      {
-        overlayClickToClose: true,
-        zIndex: 1000,
-      },
-    );
-  };
-
-  const handleAddMember = () => {
-    console.log('팀원 추가 버튼 클릭');
-  };
-
+const HeaderButtons = ({ onSettingClick, onAddMemberClick }: HeaderButtonsProps) => {
   return (
     <div className="gap-6pxr flex">
       <button
-        onClick={handleWorkSpaceSetting}
+        onClick={onSettingClick}
         className="border-stroke-200 gap-3pxr rounded-7pxr flex h-7 cursor-pointer items-center justify-center border border-solid bg-white px-2 py-1.5"
       >
         <ProfileDropdownIcons state={ProfileDropdownIconsState.SETTING} />
         <span className="text-cap1-md text-gray-300">워크스페이스 설정</span>
       </button>
       <button
-        onClick={handleAddMember}
+        onClick={onAddMemberClick}
         className="border-stroke-200 gap-3pxr rounded-7pxr flex h-7 cursor-pointer items-center justify-center border border-solid bg-white px-2 py-1.5"
       >
         <ProfileDropdownIcons state={ProfileDropdownIconsState.ADD_PROFILE} />

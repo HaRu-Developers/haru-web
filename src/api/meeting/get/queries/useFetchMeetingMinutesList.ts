@@ -1,7 +1,5 @@
 'use client';
 
-import { L } from 'vitest/dist/chunks/reporters.d.BFLkQcL6.js';
-
 import { ApiErrorBody } from '@common/types/api.common.types';
 
 import queryKeys from '@common/constants/query-key.constants';

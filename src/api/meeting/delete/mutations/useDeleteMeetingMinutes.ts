@@ -2,8 +2,6 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import queryKeys from '@common/constants/query-key.constants';
 
-import { ApiError } from '@common/errors/ApiError';
-
 import { meetingIdRequestDto } from '../../api.types';
 import deleteMeetingMinutes from '../apis/deleteMeetingMinutes';
 

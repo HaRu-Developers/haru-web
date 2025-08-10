@@ -15,12 +15,12 @@ import { logApiError } from '@common/errors/api-error.utils';
 function makeQueryClient() {
   return new QueryClient({
     queryCache: new QueryCache({
-      onError: (error, query) => {
+      onError: (error) => {
         logApiError(error, { scope: 'react-query: query' });
       },
     }),
     mutationCache: new MutationCache({
-      onError: (error, _vars, _ctx, mutation) => {
+      onError: (error) => {
         logApiError(error, { scope: 'react-query: mutation' });
       },
     }),

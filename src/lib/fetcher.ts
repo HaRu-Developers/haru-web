@@ -26,7 +26,7 @@ const handleResponse = async (res: Response) => {
 };
 
 // 어떤 에러를 Sentry로 보낼지 정책
-export const shouldReportToSentry = (status: number, code?: string) => {
+export const shouldReportToSentry = (status: number) => {
   // 서버오류/네트워크 오류만 전송, 비즈니스 4xx는 제외
   if (status >= 500 || status === 0) return true;
 
@@ -82,7 +82,7 @@ const handleResponseError = async (
     method,
   });
 
-  if (shouldReportToSentry(res.status, responseBody.code)) {
+  if (shouldReportToSentry(res.status)) {
     captureApiError(
       error,
       {

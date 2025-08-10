@@ -8,7 +8,7 @@ import { ImageSize } from '@common/components/images/types/images.common.types';
 
 interface TeammateCardProps {
   name: string;
-  userId: bigint;
+  userId: number;
   email: string;
   onClose: () => void;
 }
@@ -16,7 +16,7 @@ interface TeammateCardProps {
 const TeammateCard = ({ name, userId, email, onClose }: TeammateCardProps) => {
   return (
     <div className="rounded-7pxr gap-x-8pxr px-9pxr py-6pxr flex flex-row items-center justify-center bg-gray-600">
-      <DefaultProfileImage name={name} userId={String(userId)} size={ImageSize.SMALL} />
+      <DefaultProfileImage name={name} userId={userId} size={ImageSize.SMALL} />
       <div className="ml-8pxr flex w-full flex-col items-start justify-center">
         <p className="text-cap1-rg text-black">{name} </p>
         <p className="text-cap2-rg text-gray-300">{email}</p>

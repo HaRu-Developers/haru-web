@@ -34,14 +34,14 @@ type Story = StoryObj<typeof DefaultProfileImage>;
 export const Default: Story = {
   args: {
     name: '홍길동',
-    userId: '1n',
+    userId: 1,
   },
 };
 
 export const Small: Story = {
   args: {
     name: '김작은',
-    userId: '2n',
+    userId: 2,
     size: ImageSize.SMALL,
   },
 };
@@ -49,7 +49,7 @@ export const Small: Story = {
 export const WithCustomColor: Story = {
   args: {
     name: '김커스텀',
-    userId: '1n',
+    userId: 1,
     color: '#FFD700',
   },
 };
@@ -57,13 +57,13 @@ export const WithCustomColor: Story = {
 export const DifferentUsers: Story = {
   render: () => (
     <div className="flex gap-2">
-      <DefaultProfileImage name="유저A" userId="1n" />
-      <DefaultProfileImage name="유저B" userId="2n" />
-      <DefaultProfileImage name="유저C" userId="3n" />
-      <DefaultProfileImage name="유저A" userId="4n" />
-      <DefaultProfileImage name="유저B" userId="5n" />
-      <DefaultProfileImage name="유저C" userId="6n" />
-      <DefaultProfileImage name="유저C" userId="7n" />
+      <DefaultProfileImage name="유저A" userId={1} />
+      <DefaultProfileImage name="유저B" userId={2} />
+      <DefaultProfileImage name="유저C" userId={3} />
+      <DefaultProfileImage name="유저A" userId={4} />
+      <DefaultProfileImage name="유저B" userId={5} />
+      <DefaultProfileImage name="유저C" userId={6} />
+      <DefaultProfileImage name="유저C" userId={7} />
     </div>
   ),
 };

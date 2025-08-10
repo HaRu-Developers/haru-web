@@ -33,13 +33,13 @@ export const GnbLeftNavItems: GnbLeftSection[] = [
 ];
 
 // 각 섹션에 대응하는 라우팅 경로
-export const GnbSectionPaths: Record<GnbLeftSection, string> = {
-  [GnbSection.MAIN]: ROUTES.MAIN,
-  [GnbSection.AI_MEETING_MANAGER]: ROUTES.AI_MEETING_MANAGER,
-  [GnbSection.SNS_EVENT_ASSISTANT]: ROUTES.SNS_EVENT_ASSISTANT,
-  [GnbSection.TEAM_MOOD_TRACKER]: ROUTES.TEAM_MOOD_TRACKER,
-  [GnbSection.CALENDAR]: ROUTES.CALENDAR,
-};
+export const GnbSectionPaths = (workspaceId: number) => ({
+  [GnbSection.MAIN]: ROUTES.MAIN(workspaceId),
+  [GnbSection.AI_MEETING_MANAGER]: ROUTES.AI_MEETING_MANAGER(workspaceId),
+  [GnbSection.SNS_EVENT_ASSISTANT]: ROUTES.SNS_EVENT_ASSISTANT(workspaceId),
+  [GnbSection.TEAM_MOOD_TRACKER]: ROUTES.TEAM_MOOD_TRACKER(workspaceId),
+  [GnbSection.CALENDAR]: ROUTES.CALENDAR(workspaceId),
+});
 
 // 아이콘 매핑용 state
 export const GnbLeftNavItemIconState: Record<GnbLeftSection, LeftGnbIconsState> = {

@@ -1,69 +1,62 @@
+import { notFound } from 'next/navigation';
+
+import { HydrationBoundary } from '@tanstack/react-query';
+
 import HaruLogoIcons from '@icons/logos/HaruLogoIcons/HaruLogoIcons';
 import { HaruLogoIconsState } from '@icons/logos/HaruLogoIcons/HaruLogoIcons.types';
 
-import { FileType } from '@common/types/file-type.enum';
-
 import { GnbLeftNavItems } from '@common/constants/gnbs.constants';
 
+import { getDehydratedState } from '@common/utils/dehydrate';
+
+import { fetchRecentDocuments } from '@/api/workspace/get/apis/fetchRecentDocuments';
+
+import { GnbLeftProps } from './GnbLeft.types';
 import NavItem from './NavItem/NavItem.client';
-import RecentDocumentItem from './RecentDocumentItem/RecentDocumentItem.server';
+import RecentDocumentsSection from './RecentDocumentsSection/RecentDocumentsSection.server';
 import WorkSpaceProfile from './WorkspaceProfile/WorkspaceProfile.client';
 
-const GnbLeft = () => {
-  // 임시 데이터
-  const recentDocuments = [
-    {
-      documentId: '1n',
-      title: 'UMC 8기 운영진 회의',
-      documentType: FileType,
-      lastOpened: '2025-07-15T16:00:00+09:00',
-    },
-    {
-      documentId: '2n',
-      title: 'Team-Haru 22차 전사회의',
-      documentType: FileType,
-      lastOpened: '2025-07-15T16:00:00+09:00',
-    },
-    {
-      documentId: '3n',
-      title: 'Team-Haru 22차 전사회의',
-      documentType: FileType,
-      lastOpened: '2025-07-15T16:00:00+09:00',
-    },
-    {
-      documentId: '4n',
-      title: 'Team-Haru 22차 전사회의',
-      documentType: FileType,
-      lastOpened: '2025-07-15T16:00:00+09:00',
-    },
-    {
-      documentId: '5n',
-      title: 'Team-Haru 22차 전사회의',
-      documentType: FileType,
-      lastOpened: '2025-07-15T16:00:00+09:00',
-    },
-  ];
+const GnbLeft = async ({ workspaceId }: GnbLeftProps) => {
+  // NaN이면 not-found.tsx로 이동
+  if (Number.isNaN(workspaceId)) {
+    notFound();
+  }
+
+  // Server Component에서 prefetch 실행
+  // workspaceId가 있을 때만 prefetch
+  let dehydratedState = undefined;
+  if (workspaceId !== null) {
+    const result = await getDehydratedState({
+      prefetch: async (qc) => {
+        await qc.prefetchQuery({
+          queryKey: ['recentDocuments', workspaceId],
+          queryFn: () => fetchRecentDocuments({ workspaceId }),
+        });
+      },
+    });
+    dehydratedState = result.dehydratedState;
+  }
 
   return (
     <div className="border-stroke-200 p-16pxr flex w-60 shrink-0 flex-col border-r border-solid">
-      <HaruLogoIcons state={HaruLogoIconsState.MIXED} className="mb-8pxr mt-5pxr ml-5pxr" />
+      <HaruLogoIcons
+        state={HaruLogoIconsState.MIXED}
+        className="w-99pxr h-24pxr mb-8pxr mt-5pxr ml-5pxr"
+      />
       <div className="gap-16pxr flex flex-col">
         <WorkSpaceProfile />
         <div className="rounded-10pxr flex flex-col items-start gap-2 self-stretch">
           {GnbLeftNavItems.map((item) => (
-            <NavItem key={item} item={item} />
+            <NavItem key={item} item={item} workspaceId={workspaceId} />
           ))}
         </div>
         <div className="bg-stroke-200 h-1pxr w-full shrink-0"></div>
       </div>
-      <h4 className="text-cap1-md mt-12pxr mb-6pxr ml-12pxr cursor-default text-gray-400">
-        recent
-      </h4>
-      <div className="w-210pxr flex flex-col items-start gap-1">
-        {recentDocuments.map((doc) => (
-          <RecentDocumentItem key={doc.documentId} documentId={doc.documentId} title={doc.title} />
-        ))}
-      </div>
+      {workspaceId && (
+        <HydrationBoundary state={dehydratedState}>
+          <RecentDocumentsSection workspaceId={workspaceId} />
+        </HydrationBoundary>
+      )}
     </div>
   );
 };

@@ -9,7 +9,7 @@ import ListHeader from '@common/components/list-file/ListHeader/ListHeader.serve
 
 import ListFileAiMeetingManagerWrapper from '@features/ai-meeting-manager/components/ListFileAiMeetingManagerWrapper/ListFileAiMeetingManagerWrapper.types';
 
-const AiMeetingAssistantDefaultPage = () => {
+const AiMeetingManagerDefaultPage = () => {
   return (
     <section>
       <GnbTop section={GnbSection.AI_MEETING_MANAGER} />
@@ -26,4 +26,4 @@ const AiMeetingAssistantDefaultPage = () => {
   );
 };
 
-export default AiMeetingAssistantDefaultPage;
+export default AiMeetingManagerDefaultPage;

@@ -2,12 +2,12 @@ import { defaultApi } from '@lib/fetcher';
 
 import { BaseResponseDto } from '@common/types/api.common.types';
 
-import { fetchRecentDocumentsResponseDto, fetchRecentDocumentsResquestDto } from '../../api.types';
-import { WORKSPACE_API_ENDPOINTS } from '../../end-point.constants';
+import { WORKSPACE_API_END_POINTS } from '../../api-end-point.constants';
+import { FetchRecentDocumentsResponseDto, WorkspaceIdRequestDto } from '../../api.types';
 
-export const fetchRecentDocuments = async ({ workspaceId }: fetchRecentDocumentsResquestDto) => {
-  const response = await defaultApi<BaseResponseDto<fetchRecentDocumentsResponseDto>>(
-    WORKSPACE_API_ENDPOINTS.RECENT_DOCUMENTS(workspaceId),
+const fetchRecentDocuments = async ({ workspaceId }: WorkspaceIdRequestDto) => {
+  const response = await defaultApi<BaseResponseDto<FetchRecentDocumentsResponseDto>>(
+    WORKSPACE_API_END_POINTS.RECENT_DOCUMENTS(workspaceId),
     {
       method: 'GET',
       auth: true,
@@ -16,3 +16,5 @@ export const fetchRecentDocuments = async ({ workspaceId }: fetchRecentDocuments
 
   return response;
 };
+
+export default fetchRecentDocuments;

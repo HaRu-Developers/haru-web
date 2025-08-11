@@ -3,7 +3,8 @@ import GnbLeft from '@common/components/gnbs/GnbLeft/GnbLeft.server';
 import { GnbLeftLayoutProps } from './GnbLeftLayout.types';
 
 const GnbLeftLayout = ({ children, workspaceId }: Readonly<GnbLeftLayoutProps>) => {
-  const formattedWorkspaceId = workspaceId ? Number(workspaceId) : null;
+  const formattedWorkspaceId = workspaceId ? workspaceId : null;
+
   return (
     <div className="flex flex-1">
       <GnbLeft workspaceId={formattedWorkspaceId} />

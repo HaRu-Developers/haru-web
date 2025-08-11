@@ -1,14 +1,12 @@
-'use client';
-
 import Link from 'next/link';
+
+import { WorkspaceSummary } from '@api/workspace/api.types';
 
 import { ROUTES } from '@common/constants/routes.constants';
 
 import WorkspaceProfileImage from '@common/components/images/WorkspaceProfileImage/WorkspaceProfileImage.client';
 
-import { WorkSpaceItemProps } from './WorkSpaceItem.types';
-
-const SelectBoxProfileItem = ({ workspaceId, imagePath, title, isOwner }: WorkSpaceItemProps) => {
+const WorkspaceItem = ({ workspaceId, imageUrl, title, isOwner }: WorkspaceSummary) => {
   return (
     <Link
       href={ROUTES.MAIN(workspaceId)}
@@ -16,7 +14,7 @@ const SelectBoxProfileItem = ({ workspaceId, imagePath, title, isOwner }: WorkSp
     >
       <span className="gap-6pxr flex items-center">
         <WorkspaceProfileImage
-          src={imagePath}
+          src={imageUrl}
           title={title}
           className="w-18pxr h-18pxr text-cap2-rg"
           border
@@ -28,4 +26,4 @@ const SelectBoxProfileItem = ({ workspaceId, imagePath, title, isOwner }: WorkSp
   );
 };
 
-export default SelectBoxProfileItem;
+export default WorkspaceItem;

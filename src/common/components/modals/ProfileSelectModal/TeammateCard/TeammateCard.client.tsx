@@ -8,7 +8,7 @@ import { ImageSize } from '@common/components/images/types/images.common.types';
 
 interface TeammateCardProps {
   name: string;
-  userId: number;
+  userId: string;
   email: string;
   onClose: () => void;
 }

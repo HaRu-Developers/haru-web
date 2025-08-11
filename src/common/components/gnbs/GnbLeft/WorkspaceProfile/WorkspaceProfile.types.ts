@@ -1,3 +1,3 @@
 export interface WorkspaceProfileProps {
-  workspaceId: number | null;
+  workspaceId: string | null;
 }

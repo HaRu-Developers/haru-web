@@ -7,11 +7,14 @@ import ProfileSelectModal from '@common/components/modals/ProfileSelectModal/Pro
 
 const SettingModalPage = () => {
   const params = useParams<{ workspaceId?: string }>();
-  const workspaceId = params.workspaceId ?? null;
+  const workspaceId = params.workspaceId;
+  if (!workspaceId) {
+    return <div>워크스페이스 ID가 없습니다.</div>;
+  }
   return (
     <ModalLayout>
       <ProfileSelectModal
-        workspaceId={Number(workspaceId)}
+        workspaceId={workspaceId}
         onClose={() => history.back()}
         onNextStep={() => console.log('Next step triggered')}
       />

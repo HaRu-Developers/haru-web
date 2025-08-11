@@ -1,5 +1,5 @@
 export interface ProfileSettingMenuProps {
-  workspaceId: number | null;
+  workspaceId: string;
   email: string;
   instagramAccount?: string;
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useRouter } from 'next/navigation';
 
@@ -8,6 +8,8 @@ import useFetchWorkspaceDetail from '@api/workspace/get/queries/useFetchWorkspac
 
 import ArrowIcons from '@icons/ArrowIcons/ArrowIcons';
 import { ArrowIconsState } from '@icons/ArrowIcons/ArrowIcons.types';
+
+import { useWorkspaceActions, useWorkspaceInfo } from '@common/hooks/stores/useWorkspcaeStore';
 
 import WorkspaceProfileImage from '@common/components/images/WorkspaceProfileImage/WorkspaceProfileImage.client';
 import SelectBoxProfile from '@common/components/select-box/SelectBoxProfile/SelectBoxProfile.client';
@@ -18,11 +20,13 @@ import WorkspaceProfileSkeleton from './WorkspaceProfileSkeleton.server';
 const WorkSpaceProfile = ({ workspaceId }: WorkspaceProfileProps) => {
   const router = useRouter();
   const { isFetching, extra: workspaceDetail } = useFetchWorkspaceDetail(workspaceId || '');
+  const { title, imageUrl } = useWorkspaceInfo();
+  const { setTitle, setImageUrl, setMembers } = useWorkspaceActions();
   const [isOpenSelectBoxProfile, setIsOpenSelectBoxProfile] = useState(false);
 
   // workspaceId 존재 여부 + 데이터 유효성 체크 (제목 있는지로)
   const hasWorkspaceId = !!workspaceId;
-  const hasValidWorkspace = !!workspaceDetail?.title;
+  const hasValidWorkspace = !!title;
 
   const handleClick = () => {
     setIsOpenSelectBoxProfile((prev) => !prev);
@@ -35,6 +39,14 @@ const WorkSpaceProfile = ({ workspaceId }: WorkspaceProfileProps) => {
       router.push(`/workspace/settings`);
     }
   };
+
+  useEffect(() => {
+    if (workspaceDetail) {
+      setTitle(workspaceDetail.title);
+      setImageUrl(workspaceDetail.imageUrl);
+      setMembers(workspaceDetail.members);
+    }
+  }, [workspaceDetail, setTitle, setImageUrl, setMembers]);
 
   if (!hasWorkspaceId) {
     return (
@@ -64,12 +76,12 @@ const WorkSpaceProfile = ({ workspaceId }: WorkspaceProfileProps) => {
             <div className="flex items-center justify-between self-stretch">
               <div className="flex items-center gap-2">
                 <WorkspaceProfileImage
-                  src={workspaceDetail.imageUrl}
-                  title={workspaceDetail.title}
+                  src={imageUrl || null}
+                  title={title}
                   className="w-20pxr h-20pxr text-cap2-rg"
                   border
                 />
-                <p className="text-t6-sb text-black">{workspaceDetail.title}</p>
+                <p className="text-t6-sb text-black">{title}</p>
               </div>
               <ArrowIcons state={ArrowIconsState.DOWN} />
             </div>

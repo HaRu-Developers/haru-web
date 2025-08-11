@@ -21,6 +21,14 @@ export interface WorkspaceIdRequestDto {
 }
 
 /**
+ * 워크스페이스 수정 요청 DTO
+ */
+export interface UpdateWorkspaceRequestDto extends WorkspaceIdRequestDto {
+  title: string; // 워크스페이스 제목
+  image?: File; // 워크스페이스 대표 이미지 (파일 업로드용)
+}
+
+/**
  * 워크스페이스 상세 정보
  *
  * @extends BaseWorkspace
@@ -80,3 +88,8 @@ export type FetchWorkspaceDetailResponseDto = WorkspaceDetail;
  * @typedef {WorkspaceSummary[]} FetchMyWorkspacesResponseDto
  */
 export type FetchMyWorkspacesResponseDto = WorkspaceSummary[];
+
+/**
+ * 워크스페이스 수정 응답 DTO
+ */
+export type UpdateWorkspaceResponseDto = WorkspaceDetail;

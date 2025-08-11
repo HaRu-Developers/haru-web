@@ -1,5 +1,7 @@
 import { HydrationBoundary } from '@tanstack/react-query';
 
+import fetchMeetingMinutesList from '@api/meeting/get/apis/fetchMeetingMinutesList';
+
 import { FileType } from '@common/types/file-type.enum';
 import { GnbSection } from '@common/types/gnbs.types';
 
@@ -13,8 +15,6 @@ import GnbTop from '@common/components/gnbs/GnbTop/GnbTop.client';
 import ListHeader from '@common/components/list-file/ListHeader/ListHeader.server';
 
 import ListFileAiMeetingManagerWrapper from '@features/ai-meeting-manager/components/ListFileAiMeetingManagerWrapper/ListFileAiMeetingManagerWrapper.client';
-
-import fetchMeetingMinutesList from '@/api/meeting/get/apis/fetchMeetingMinutesList';
 
 const AiMeetingManagerDefaultPage = async ({
   params,

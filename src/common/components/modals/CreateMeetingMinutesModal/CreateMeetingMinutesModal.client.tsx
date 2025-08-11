@@ -5,10 +5,10 @@ import { useState } from 'react';
 import CrossIcons from '@icons/CrossIcons/CrossIcons';
 import { CrossIconsState } from '@icons/CrossIcons/CrossIcons.types';
 
+import useCreateNewMeetingMinutes from '@api/meeting/post/mutations/useCreateNewMeetingMinutes';
+
 import NextStepButton from '@common/components/buttons/30px/NextStepButton/NextStepButton.client';
 import InputFieldModal from '@common/components/inputs/modals/InputFieldModal/InputFieldModal.client';
-
-import useCreateNewMeetingMinutes from '@/api/meeting/post/mutations/useCreateNewMeetingMinutes';
 
 import { CreateMeetingMinutesModalProps } from './CreateMeetingMinutesModal.types';
 import FileDropzone from './FileDropZone/FileDropZone';

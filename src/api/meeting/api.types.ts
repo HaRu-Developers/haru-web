@@ -83,3 +83,27 @@ export type MeetingMinutesListResponse = MeetingMinutesInfo[];
  * @property {MeetingMinutesInfo[]} meetingMinutesList - 회의록 리스트
  */
 export type DeleteMeetingMinutesResponse = string;
+
+// ========== 회의록 단일 조회 ==========
+/**
+ * 회의록 디테일 응답 DTO
+ *
+ * @property {string} userId       - 회의록 생성자 ID
+ * @property {string} email        - 생성자 이메일
+ * @property {string} userName     - 생성자 이름
+ * @property {string} workspaceId  - 소속 워크스페이스 ID
+ * @property {string} title        - 회의록 제목
+ * @property {string} proceeding   - 회의 진행 내용
+ * @property {string} updatedAt    - 마지막 수정 시각
+ */
+export interface MeetingMinutesDetail {
+  userId: string;
+  email: string;
+  userName: string;
+  workspaceId: string;
+  title: string;
+  proceeding: string;
+  updatedAt: string;
+}
+
+export type FetchMeetingMinutesDetailResponseDto = MeetingMinutesDetail;

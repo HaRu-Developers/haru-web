@@ -1,5 +1,7 @@
 'use client';
 
+import useFetchMeetingMinutesList from '@api/meeting/get/queries/useFetchMeetingMinutesList';
+
 import ListFileAiMeetingManager from '@common/components/list-file/ListFileAiMeetingManager/ListFileAiMeetingManager.client';
 import ListFileAiMeetingManagerSkeleton from '@common/components/list-file/ListFileAiMeetingManager/ListFileAiMeetingManagerSkeleton.server';
 
@@ -7,8 +9,6 @@ import {
   useListActions,
   useListInfo,
 } from '@features/ai-meeting-manager/hooks/stores/useListStore';
-
-import useFetchMeetingMinutesList from '@/api/meeting/get/queries/useFetchMeetingMinutesList';
 
 import { ListFileAiMeetingManagerWrapperProps } from './ListFileAiMeetingManagerWrapper.types';
 

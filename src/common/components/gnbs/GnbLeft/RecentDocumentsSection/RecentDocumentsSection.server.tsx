@@ -1,6 +1,6 @@
 'use client';
 
-import useFetchRecentDocuments from '@/api/workspace/get/queries/useFetchRecentDocuments';
+import useFetchRecentDocuments from '@api/workspace/get/queries/useFetchRecentDocuments';
 
 import RecentDocumentItem from '../RecentDocumentItem/RecentDocumentItem.server';
 import RecentDocumentItemSkeleton from '../RecentDocumentItem/RecentDocumentItemSkeleton.server';

@@ -10,7 +10,7 @@ import { ImageSize } from '@common/components/images/types/images.common.types';
 
 import { FileCreatedInfoProps } from './FileCreatedInfo.types';
 
-const FileCreatedInfo = ({ name, userId, dateTime }: FileCreatedInfoProps) => {
+const FileCreatedInfo = ({ name, userId, dateTime, isLoading = false }: FileCreatedInfoProps) => {
   /**
    * dateTime(ISO 형식 문자열)이 존재할 경우, 원하는 형식으로 가공합니다.
    * 예: "2025년 8월 6일, 1:03 AM"
@@ -20,10 +20,19 @@ const FileCreatedInfo = ({ name, userId, dateTime }: FileCreatedInfoProps) => {
 
   return (
     <div className="text-cap2-md gap-5pxr py-2pxr flex text-gray-400">
-      <DefaultProfileImage name={name} userId={userId} size={ImageSize.SMALL} />
-      <span className="mr-11pxr">{name}</span>
-      <IndividualIcons state={IndividualIconsState.CALENDAR_SIZE_16} />
-      <span>{formattedDateTime}</span>
+      {isLoading ? (
+        <>
+          <div className="" />
+          <div className="" />
+        </>
+      ) : (
+        <>
+          <DefaultProfileImage name={name} userId={userId} size={ImageSize.SMALL} />
+          <span className="mr-11pxr">{name}</span>
+          <IndividualIcons state={IndividualIconsState.CALENDAR_SIZE_16} />
+          <span>{formattedDateTime}</span>
+        </>
+      )}
     </div>
   );
 };

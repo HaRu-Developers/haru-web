@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description: 'HaRu의 첫 번째 기능인 AI 회의 진행 매니저의 회의 진행 페이지입니다.',
 };
 
-const AiMeetingLayout = ({
+const AiMeetingProceedingLayout = ({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -13,4 +13,4 @@ const AiMeetingLayout = ({
   return <>{children}</>;
 };
 
-export default AiMeetingLayout;
+export default AiMeetingProceedingLayout;

@@ -1,5 +1,13 @@
-const AiMeetingPage = () => {
-  return <section>ai 회의</section>;
+import MeetingHeader from '@features/ai-meeting-manager/components/MeetingHeader/MeetingHeader.client';
+import RightPanel from '@features/ai-meeting-manager/components/panels/RightPanel/RightPanel.client';
+
+const AiMeetingProceedingPage = () => {
+  return (
+    <div className="flex">
+      <MeetingHeader />
+      <RightPanel />
+    </div>
+  );
 };
 
-export default AiMeetingPage;
+export default AiMeetingProceedingPage;

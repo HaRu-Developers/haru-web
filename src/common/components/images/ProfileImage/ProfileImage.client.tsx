@@ -9,6 +9,7 @@ import clsx from 'clsx';
 import DefaultProfileImage from '@common/components/images/DefaultProfileImage/DefaultProfileImage.client';
 
 import { ImageSize } from '../types/images.common.types';
+import { sizeClass } from './ProfileImage.constants';
 import { ProfileImageProps } from './ProfileImage.types';
 
 const ProfileImage = ({ src, userId, name, size = ImageSize.SMALL }: ProfileImageProps) => {
@@ -18,10 +19,8 @@ const ProfileImage = ({ src, userId, name, size = ImageSize.SMALL }: ProfileImag
     return <DefaultProfileImage userId={userId} name={name} size={size} />;
   }
 
-  const sizeClass = size === ImageSize.SMALL ? 'h-7 w-7 ' : 'h-10 w-10';
-
   return (
-    <div className={clsx('relative', sizeClass)}>
+    <div className={clsx('relative', sizeClass[size])}>
       <Image
         src={src}
         alt="프로필 이미지"

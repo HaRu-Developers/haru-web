@@ -5,11 +5,11 @@ import { HydrationBoundary } from '@tanstack/react-query';
 import HaruLogoIcons from '@icons/logos/HaruLogoIcons/HaruLogoIcons';
 import { HaruLogoIconsState } from '@icons/logos/HaruLogoIcons/HaruLogoIcons.types';
 
+import { fetchRecentDocuments } from '@api/workspace/get/apis/fetchRecentDocuments';
+
 import { GnbLeftNavItems } from '@common/constants/gnbs.constants';
 
 import { getDehydratedState } from '@common/utils/dehydrate';
-
-import { fetchRecentDocuments } from '@/api/workspace/get/apis/fetchRecentDocuments';
 
 import { GnbLeftProps } from './GnbLeft.types';
 import NavItem from './NavItem/NavItem.client';

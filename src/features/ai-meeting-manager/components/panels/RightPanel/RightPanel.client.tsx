@@ -10,7 +10,7 @@ import { RightTabLabels } from './RightPanel.constants';
 import { RightTabType } from './RightPanel.types';
 
 const RightPanel = () => {
-  const hasMeetingLog = true; // 실제로는 서버에서 가져오기
+  const hasMeetingLog = true; // TODO: 실제로는 서버에서 가져오기
   const label = hasMeetingLog
     ? RightTabLabels[RightTabType.AI_QUESTIONS]
     : RightTabLabels[RightTabType.AI_RECOMMENDATIONS];

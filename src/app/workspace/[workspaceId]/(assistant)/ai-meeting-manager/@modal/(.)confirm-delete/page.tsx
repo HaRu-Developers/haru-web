@@ -4,6 +4,8 @@ import { useState } from 'react';
 
 import { useParams, useRouter } from 'next/navigation';
 
+import useDeleteMeetingMinutes from '@api/meeting/delete/mutations/useDeleteMeetingMinutes';
+
 import { logApiError } from '@common/errors/api-error.utils';
 
 import { DeleteModalType } from '@common/components/modals/DeleteModal/DeleteModal.types';
@@ -13,7 +15,6 @@ import {
   useListInfo,
 } from '@features/ai-meeting-manager/hooks/stores/useListStore';
 
-import useDeleteMeetingMinutes from '@/api/meeting/delete/mutations/useDeleteMeetingMinutes';
 import ModalLayout from '@/common/components/layouts/ModalLayout/ModalLayout.client';
 import DeleteModal from '@/common/components/modals/DeleteModal/DeleteModal.client';
 

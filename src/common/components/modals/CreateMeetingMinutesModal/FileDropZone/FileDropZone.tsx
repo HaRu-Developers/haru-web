@@ -27,7 +27,7 @@ const FileDropzone = ({ onFileChange, initialFile = null }: FileDropzoneProps) =
   // 사이즈, 타입 검사해 에러 메시지 설정
   const setTypeOrSizeError = (f: File) => {
     if (!acceptedTypes.includes(f.type)) {
-      setErrorMessage('PDF 또는 Word(doc/docx) 파일만 업로드할 수 있습니다.');
+      setErrorMessage('PDF 파일만 업로드할 수 있습니다.');
       return true;
     }
     if (f.size > maxSize) {
@@ -128,7 +128,7 @@ const FileDropzone = ({ onFileChange, initialFile = null }: FileDropzoneProps) =
           </button>
         </div>
       )}
-      {errorMessage && <p className="text-b1-rg text-system-red mt-8pxr">{errorMessage}</p>}
+      {errorMessage && <p className="text-b3-rg text-system-red mt-8pxr">{errorMessage}</p>}
     </div>
   );
 };

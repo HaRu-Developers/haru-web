@@ -42,7 +42,7 @@ const DefaultProfileImage = ({
   // 일반 로그인시 한 글자 추출
   const initial = name.slice(0, 1);
   // 같은 사용자면 같은 색상을 가지게
-  const colorIndex = hashCode(userId) % PROFILE_COLORS.length;
+  const colorIndex = hashCode(name) % PROFILE_COLORS.length;
   const backgroundColor = color ?? PROFILE_COLORS[colorIndex];
 
   return (

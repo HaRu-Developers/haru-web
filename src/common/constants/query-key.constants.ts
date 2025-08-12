@@ -5,6 +5,7 @@ const queryKeys = createQueryKeyStore({
   workspaces: {
     // 매개변수가 없는 키는 null로 정의합니다.
     all: null,
+    myWorkspaces: null,
     // 매개변수가 있는 키는 함수로 정의합니다.
     detail: (workspaceId: string) => [workspaceId],
     members: (workspaceId: string) => [workspaceId, 'members'],
@@ -21,6 +22,14 @@ const queryKeys = createQueryKeyStore({
     all: null,
     detail: (moodTrackerHashedId: string) => [moodTrackerHashedId],
     report: (moodTrackerHashedId: string) => [moodTrackerHashedId, 'report'],
+  },
+
+  user: {
+    // 매개변수가 없는 키는 null로 정의합니다.
+    all: null,
+    // 매개변수가 있는 키는 함수로 정의합니다.
+    detail: () => ['user', 'detail'],
+    edit: () => ['user', 'edit'],
   },
 });
 

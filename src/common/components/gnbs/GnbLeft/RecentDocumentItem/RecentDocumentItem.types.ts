@@ -1,8 +1,5 @@
-import { FileType } from '@common/types/file-type.enum';
+import { Document } from '@api/workspace/api.types';
 
-export interface RecentDocumentItemProps {
-  workspaceId: string | null;
-  documentType: FileType;
-  documentId: string;
-  title: string;
+export interface RecentDocumentItemProps extends Document {
+  workspaceId: string;
 }

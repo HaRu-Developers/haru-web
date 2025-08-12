@@ -15,7 +15,7 @@ const ProfileImage = ({ src, userId, name, size = ImageSize.MEDIUM }: ProfileIma
   const [hasError, setHasError] = useState(false);
 
   if (!src || hasError) {
-    return <DefaultProfileImage userId={userId} name={name} size={size} />;
+    return <DefaultProfileImage name={name} size={size} />;
   }
 
   const sizeClassMap: Record<ImageSize, string> = {

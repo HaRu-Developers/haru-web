@@ -1,7 +1,13 @@
-import { useState } from 'react';
+'use client';
+
+import { useEffect, useState } from 'react';
 
 import CrossIcons from '@icons/CrossIcons/CrossIcons';
 import { CrossIconsState } from '@icons/CrossIcons/CrossIcons.types';
+
+import { useUserActions } from '@common/hooks/stores/useUserStore';
+
+import useFetchUserDetail from '@/api/user/get/queries/useFetchUserDetail';
 
 import CommonText from '../CommonText/CommonText.server';
 import { CommonTextType } from '../CommonText/CommonText.types';
@@ -10,22 +16,30 @@ import { ProfileSelectModalMenuButton } from './ProfileSelectModalMenuButton/Pro
 import ProfileSettingMenu from './ProfileSettingMenu/ProfileSettingMenu.client';
 import WorkspaceSettingsMenu from './WorkspaceSettingsMenu/WorkspaceSettingsMenu.client';
 
-const ProfileSelectModal = ({ onClose, onNextStep }: ProfileSelectModalProps) => {
+const ProfileSelectModal = ({ workspaceId, onClose, onNextStep }: ProfileSelectModalProps) => {
   const [selectedMenu, setSelectedMenu] = useState<ProfileSelectModalMenuState>(
     ProfileSelectModalMenuState.WORKSPACE_SETTING,
   );
+  const { setName } = useUserActions(); // 지금은 설정이지만 gnb 자체에서 해도 될 듯
 
+  const { extra: user } = useFetchUserDetail();
+
+  useEffect(() => {
+    if (user && user.name) {
+      setName(user.name);
+    }
+  }, [user, setName]);
   // 메뉴별 렌더 함수 (switch-case 또는 객체 맵핑)
   const renderMenuContent = () => {
     switch (selectedMenu) {
       case ProfileSelectModalMenuState.WORKSPACE_SETTING:
-        return <WorkspaceSettingsMenu imageUrl={null} title="MOCK_WORKSPACE" />;
+        return <WorkspaceSettingsMenu workspaceId={workspaceId} />;
       case ProfileSelectModalMenuState.PROFILE_SETTING:
         return (
           <ProfileSettingMenu
-            name="황지원"
-            email="thejeewon@gmail.com"
-            instagramAccount="thejeewon"
+            workspaceId={workspaceId}
+            email={user?.email || ''}
+            instagramAccount="thejeewon" // 임시
           />
         );
       default:
@@ -42,7 +56,7 @@ const ProfileSelectModal = ({ onClose, onNextStep }: ProfileSelectModalProps) =>
   };
 
   return (
-    <div className="rounded-16pxr w-800pxr shadow-modal flex flex-col items-center justify-center">
+    <div className="rounded-16pxr w-800pxr shadow-modal flex flex-col items-center justify-center bg-white">
       {/* 상단 설정 */}
       <div className="px-24pxr pt-24pxr pb-10pxr border-stroke-200 h-66pxr flex w-full items-center justify-between border-b-1">
         <CommonText type={CommonTextType.T3_BD_BLACK} text="설정" />

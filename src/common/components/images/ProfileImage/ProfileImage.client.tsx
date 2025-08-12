@@ -15,7 +15,7 @@ const ProfileImage = ({ src, userId, name, size = ImageSize.SMALL }: ProfileImag
   const [hasError, setHasError] = useState(false);
 
   if (!src || hasError) {
-    return <DefaultProfileImage userId={userId} name={name} size={size} />;
+    return <DefaultProfileImage name={name} size={size} />;
   }
 
   const sizeClass = size === ImageSize.SMALL ? 'h-7 w-7 ' : 'h-10 w-10';

@@ -5,13 +5,13 @@ export interface CreateWorkspaceRequestDto {
 }
 
 export interface InviteMembersRequestDto {
-  workspaceId: number;
+  workspaceId: string;
   emails: string[];
 }
 
 // Response DTO
 export interface CreateWorkspaceResponseDto {
-  workspaceId: number;
+  workspaceId: string;
   name: string;
   imageUrl: string;
 }

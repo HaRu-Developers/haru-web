@@ -7,11 +7,12 @@ import { ApiErrorBody } from '@common/types/api.common.types';
 import { API_ERROR_CODES } from '@common/constants/api-error-codes.constants';
 import queryKeys from '@common/constants/query-key.constants';
 
-import { useAfterQuery } from '@common/hooks/queries/useAfterQuery';
-
 import { ApiError } from '@common/errors/ApiError';
 
-import { CalendarDocument } from '../../api.types';
+import { useAfterQuery } from '@common/hooks/queries/useAfterQuery';
+
+import { DocumentList } from '@common/components/etc/calendar/types/calendar.common.types';
+
 import { fetchCalendar } from '../apis/fetchCalendar';
 
 /**
@@ -26,9 +27,9 @@ const useFetchCalendar = (workspaceId: number, start: Date, end: Date) => {
 
   // Hydrate된 데이터가 있어 추가 네트워크 요청 없이 바로 캐시 데이터 사용
   return useAfterQuery<
-    { result: { documentList: CalendarDocument[] } }, // TData
+    { result: { documentList: DocumentList[] } }, // TData
     ApiError<ApiErrorBody>, // TError
-    CalendarDocument[] // TExtra
+    DocumentList[] // TExtra
   >({
     queryKey: queryKeys.workspaces.calendar(workspaceId, start, end).queryKey,
     queryFn: () => {

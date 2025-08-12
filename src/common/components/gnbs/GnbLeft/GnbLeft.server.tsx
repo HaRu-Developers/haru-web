@@ -5,20 +5,35 @@ import { HydrationBoundary } from '@tanstack/react-query';
 import HaruLogoIcons from '@icons/logos/HaruLogoIcons/HaruLogoIcons';
 import { HaruLogoIconsState } from '@icons/logos/HaruLogoIcons/HaruLogoIcons.types';
 
+import fetchMyWorkspaces from '@api/workspace/get/apis/fetchMyWorkspaces';
+import fetchRecentDocuments from '@api/workspace/get/apis/fetchRecentDocuments';
+import fetchWorkspaceDetail from '@api/workspace/get/apis/fetchWorkspaceDetail';
+
 import { GnbLeftNavItems } from '@common/constants/gnbs.constants';
+import queryKeys from '@common/constants/query-key.constants';
 
 import { getDehydratedState } from '@common/utils/dehydrate';
-
-import { fetchRecentDocuments } from '@/api/workspace/get/apis/fetchRecentDocuments';
 
 import { GnbLeftProps } from './GnbLeft.types';
 import NavItem from './NavItem/NavItem.client';
 import RecentDocumentsSection from './RecentDocumentsSection/RecentDocumentsSection.server';
 import WorkSpaceProfile from './WorkspaceProfile/WorkspaceProfile.client';
 
+/**
+ * isNumberString 함수
+ * 문자열이 숫자로만 이루어져 있는지 확인합니다.
+ * @param str - 확인할 문자열
+ * @returns {boolean} - 문자열이 숫자로만 이루어져 있으면 true,
+ */
+const isNumericString = (str: string | null) => {
+  if (str === null) return false;
+  return /^-?\d+$/.test(str);
+};
+
 const GnbLeft = async ({ workspaceId }: GnbLeftProps) => {
   // NaN이면 not-found.tsx로 이동
-  if (Number.isNaN(workspaceId)) {
+  // 의도하지 않은 동작이라면 추후 변동 바랍니다 @duwlsssss
+  if (!isNumericString(workspaceId)) {
     notFound();
   }
 
@@ -29,7 +44,15 @@ const GnbLeft = async ({ workspaceId }: GnbLeftProps) => {
     const result = await getDehydratedState({
       prefetch: async (qc) => {
         await qc.prefetchQuery({
-          queryKey: ['recentDocuments', workspaceId],
+          queryKey: queryKeys.workspaces.detail(workspaceId).queryKey,
+          queryFn: () => fetchWorkspaceDetail({ workspaceId }),
+        });
+        await qc.prefetchQuery({
+          queryKey: queryKeys.workspaces.myWorkspaces.queryKey,
+          queryFn: fetchMyWorkspaces,
+        });
+        await qc.prefetchQuery({
+          queryKey: queryKeys.workspaces.recentDocuments(workspaceId).queryKey,
           queryFn: () => fetchRecentDocuments({ workspaceId }),
         });
       },
@@ -43,20 +66,18 @@ const GnbLeft = async ({ workspaceId }: GnbLeftProps) => {
         state={HaruLogoIconsState.MIXED}
         className="w-99pxr h-24pxr mb-8pxr mt-5pxr ml-5pxr"
       />
-      <div className="gap-16pxr flex flex-col">
-        <WorkSpaceProfile />
-        <div className="rounded-10pxr flex flex-col items-start gap-2 self-stretch">
-          {GnbLeftNavItems.map((item) => (
-            <NavItem key={item} item={item} workspaceId={workspaceId} />
-          ))}
+      <HydrationBoundary state={dehydratedState}>
+        <WorkSpaceProfile workspaceId={workspaceId} />
+        <div className="gap-16pxr flex flex-col">
+          <div className="rounded-10pxr flex flex-col items-start gap-2 self-stretch">
+            {GnbLeftNavItems.map((item) => (
+              <NavItem key={item} item={item} workspaceId={workspaceId} />
+            ))}
+          </div>
+          <div className="bg-stroke-200 h-1pxr w-full shrink-0"></div>
         </div>
-        <div className="bg-stroke-200 h-1pxr w-full shrink-0"></div>
-      </div>
-      {workspaceId && (
-        <HydrationBoundary state={dehydratedState}>
-          <RecentDocumentsSection workspaceId={workspaceId} />
-        </HydrationBoundary>
-      )}
+        {workspaceId != null && <RecentDocumentsSection workspaceId={workspaceId} />}
+      </HydrationBoundary>
     </div>
   );
 };

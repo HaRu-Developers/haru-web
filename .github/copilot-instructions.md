@@ -57,7 +57,7 @@ Your primary goal is to ensure all code aligns with the project's established co
 
 ### Copilot Code Review Rules
 
-All code review comments must follow the Pn priority system defined below. Each comment must begin with a Pn label (e.g., `[P3]`).
+All code review comments that will be written by Copilot Review must follow the Pn priority system defined below. Each comment must begin with a Pn label (e.g., `[P3]`).
 
 #### Pn Level Selection Criteria
 

@@ -16,5 +16,5 @@ export default meta;
 type Story = StoryObj<typeof GnbLeft>;
 
 export const Default: Story = {
-  render: () => <GnbLeft />,
+  render: () => <GnbLeft workspaceId={1} />,
 };

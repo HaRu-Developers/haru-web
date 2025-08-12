@@ -9,10 +9,12 @@ import { SkipForNowButtonType } from '@common/components/buttons/diverse-size/Sk
 
 import { OnboardingToastType } from '@features/on-boarding/types/OnboardingToast.types';
 
+import { API_ENDPOINTS } from '@features/on-boarding/constants/end-point.constants';
+
 import {
   useInstagramConnection,
   useOnboardingActions,
-  useOnboardingState,
+  useOnboardingWorkspaceId,
 } from '@features/on-boarding/hooks/stores/useOnBoardingStore';
 import { useOnboardingToastActions } from '@features/on-boarding/hooks/stores/useOnboardingToastStore';
 
@@ -25,9 +27,7 @@ const OnBoardingInstaStep = () => {
   const isConnected = useInstagramConnection();
   const { setInstagramConnected } = useOnboardingActions();
 
-  const { name, emails, image } = useOnboardingState();
-
-  const workspaceId = 1; // 임시
+  const workspaceId = useOnboardingWorkspaceId();
 
   const handleConnectInstagram = () => {
     // 실제 연동 로직 연결 - 추후
@@ -39,13 +39,12 @@ const OnBoardingInstaStep = () => {
     });
   };
 
-  const handleCreateWorkSpace = () => {
-    console.log('워크스페이스 생성');
-
-    console.log('🔥 상태값 확인용');
-    console.log('name:', name);
-    console.log('emails:', emails);
-    console.log('image:', image);
+  const handleStart = () => {
+    if (workspaceId) {
+      router.push(API_ENDPOINTS.WORKSPACE_DETAIL(workspaceId));
+    } else {
+      console.log('워크스페이스 정보가 없습니다. 온보딩을 다시 진행해주세요.');
+    }
   };
 
   return (
@@ -62,7 +61,7 @@ const OnBoardingInstaStep = () => {
       <div className="gap-8pxr flex">
         <SkipForNowButton buttonType={SkipForNowButtonType.SIZE_48} />
 
-        <StartButton onClick={handleCreateWorkSpace} disabled={!isConnected} />
+        <StartButton onClick={handleStart} disabled={!isConnected} />
       </div>
     </div>
   );

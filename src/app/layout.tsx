@@ -7,6 +7,8 @@ import '@styles/globals.css';
 
 import Toaster from '@common/components/toast/Toaster/Toaster.client';
 
+import QueryClientProviders from './query-client-providers';
+
 const pretendard = localFont({
   src: '../assets/fonts/pretendard/PretendardVariable.woff2',
   variable: '--font-pretendard',
@@ -32,9 +34,11 @@ const RootLayout = ({
           pretendard.variable,
         )}
       >
-        {children}
-        <div id="modal" />
-        <Toaster />
+        <QueryClientProviders>
+          {children}
+          <Toaster />
+          <div id="modal" />
+        </QueryClientProviders>
       </body>
     </html>
   );

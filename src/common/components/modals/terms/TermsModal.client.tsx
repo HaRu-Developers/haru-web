@@ -1,7 +1,11 @@
+'use client';
+
 import clsx from 'clsx';
 
 import CrossIcons from '@icons/CrossIcons/CrossIcons';
 import { CrossIconsState } from '@icons/CrossIcons/CrossIcons.types';
+
+import MarkdownContent from '@common/components/MarkdownContent/MarkdownContent.server';
 
 import CommonText from '../CommonText/CommonText.server';
 import { CommonTextType } from '../CommonText/CommonText.types';
@@ -13,7 +17,7 @@ const TermsModal = ({ onClose, terms }: TermsModalProps) => {
   return (
     <div
       className={clsx(
-        'w-1020pxr px-50pxr pt-42pxr rounded-16pxr shadow-modal relative flex flex-col items-center justify-center',
+        'w-1020pxr px-50pxr pt-42pxr rounded-16pxr shadow-modal relative flex flex-col items-center justify-center bg-white',
         {
           'h-760pxr': terms.title !== '마케팅정보수신',
           'h-519pxr': terms.title === '마케팅정보수신',
@@ -28,12 +32,15 @@ const TermsModal = ({ onClose, terms }: TermsModalProps) => {
         </button>
       </div>
 
+      {/* 구분선 */}
+      <div className="bg-stroke-100 my-16pxr h-1 w-full"></div>
+
       {/* 약관 내용 */}
       <div className="mt-16pxr scrollbar-component w-full flex-grow overflow-y-auto">
         {/* TODO: 임시로 padding bottom을 통해서 blur 효과 탈출 ..
          scrollbar도 끝까지 가있고, blur 당하는게 보기 싫은 관계로 해결 필요 */}
         <div className="text-b3-rg scrollbar-component h-full w-full overflow-y-auto pb-16 whitespace-pre-line text-black">
-          {terms.content}
+          <MarkdownContent content={terms.content} />
         </div>
       </div>
       {/* 하단 blur 효과 */}

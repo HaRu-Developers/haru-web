@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 
+import QueryClientProviders from '../query-client-providers';
+
 export const metadata: Metadata = {
   title: '온보딩 워크스페이스 생성하기 페이지',
   description:

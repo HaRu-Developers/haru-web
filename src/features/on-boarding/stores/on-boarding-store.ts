@@ -8,11 +8,13 @@ interface OnboardingStoreState {
   step: OnboardingStep;
   name: string;
   image: File | null;
+  workspaceId: number | null;
   emails: string[];
   isInstagramConnected: boolean;
   actions: {
     setName: (name: string) => void;
     setImage: (file: File) => void;
+    setWorkspaceId: (id: number) => void;
     addEmail: (email: string) => void;
     removeEmail: (index: number) => void;
     setEmails: (emails: string[]) => void;
@@ -29,6 +31,7 @@ const useOnboardingStore = create<OnboardingStoreState>()(
       step: OnboardingStep.NAME,
       name: '',
       image: null,
+      workspaceId: null,
       emails: [],
       isInstagramConnected: false,
 
@@ -40,6 +43,10 @@ const useOnboardingStore = create<OnboardingStoreState>()(
         setImage: (file) =>
           set((state) => {
             state.image = file;
+          }),
+        setWorkspaceId: (id) =>
+          set((state) => {
+            state.workspaceId = id;
           }),
         addEmail: (email) =>
           set((state) => {

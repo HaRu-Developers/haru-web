@@ -33,7 +33,7 @@ const LoginForm = () => {
       </div>
       <form className="gap-y-26pxr flex flex-col" onSubmit={handleLogin}>
         <InputOnboarding
-          title="이매일 주소"
+          title="이메일 주소"
           inputValue={email}
           placeholder="이메일 주소를 입력해주세요"
           onChange={setEmail}

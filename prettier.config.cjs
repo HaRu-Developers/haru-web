@@ -51,6 +51,10 @@ module.exports = {
     // 라이브러리 관련
     '^@lib/(.*)$',
 
+    // api 관련
+    '^@api/(.*)$',
+    '^@apis/(.*)$',
+
     // 공통 모듈
     '^@common/types/(.*)$',
     '^@common/constants/(.*)$',
@@ -73,9 +77,6 @@ module.exports = {
     '^@features/.*/apis/(.*)$',
     '^@features/.*/components/(.*)$',
     '^@features/(.*)$', // 나머지 도메인 루트
-
-    // API 모듈
-    '^@apis/(.*)$',
 
     // 기타 src 하위 경로
     '^@/(.*)$',

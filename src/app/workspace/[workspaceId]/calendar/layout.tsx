@@ -1,5 +1,8 @@
 import type { Metadata } from 'next';
 
+import { GnbSection } from '@common/types/gnbs.types';
+
+import GnbTop from '@common/components/gnbs/GnbTop/GnbTop.client';
 import GnbLeftLayout from '@common/components/layouts/GnbLeftLayout/GnbLeftLayout.server';
 
 export const metadata: Metadata = {
@@ -16,7 +19,12 @@ const CalendarLayout = async ({
 }>) => {
   const workspaceId = (await params).workspaceId;
 
-  return <GnbLeftLayout workspaceId={workspaceId}>{children}</GnbLeftLayout>;
+  return (
+    <GnbLeftLayout workspaceId={workspaceId}>
+      <GnbTop section={GnbSection.CALENDAR} />
+      {children}
+    </GnbLeftLayout>
+  );
 };
 
 export default CalendarLayout;

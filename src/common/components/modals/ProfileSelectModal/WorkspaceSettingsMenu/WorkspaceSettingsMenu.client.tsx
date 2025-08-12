@@ -1,48 +1,63 @@
 'use client';
 
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
+
+import useEditWorkspaceDetail from '@api/workspace/patch/mutations/useEditWorkspaceDetail';
+
+import { ToastType } from '@common/types/toast.types';
+
+import { useToastActions } from '@common/hooks/stores/useToastStore';
+import { useWorkspaceActions, useWorkspaceInfo } from '@common/hooks/stores/useWorkspcaeStore';
 
 import ChangableWorkspaceImage from '@common/components/ChangableWorkspaceImage/ChangableWorkspaceImage.client';
 import AddWorkspaceButton from '@common/components/buttons/30px/AddWorkspaceButton/AddWorkspaceButton.client';
 import SaveButton from '@common/components/buttons/38px/SaveButton/SaveButton.client';
-import WorkspaceProfileImage from '@common/components/images/WorkspaceProfileImage/WorkspaceProfileImage.client';
 import InputInviteMember from '@common/components/inputs/input-invite-member/InputInviteMember/InputInviteMember.client';
 
 import CommonText from '../../CommonText/CommonText.server';
 import { CommonTextType } from '../../CommonText/CommonText.types';
 import TeammateCard from '../TeammateCard/TeammateCard.client';
-import { Teammate, WorkspaceSettingsMenuProps } from './WorkspaceSettingsMenu.types';
-
-const mockTeammates: Teammate[] = [
-  {
-    name: '홍길동',
-    userId: 1,
-    email: 'honggildong@example.com',
-  },
-  {
-    name: '김철수',
-    userId: 2,
-    email: 'kimchulsoo@example.com',
-  },
-  {
-    name: '이영희',
-    userId: 3,
-    email: 'leeyounghee@example.com',
-  },
-];
+import { WorkspaceSettingsMenuProps } from './WorkspaceSettingsMenu.types';
 
 /**
  * 설정 - 워크스페이스 세팅 설정
- *
+ * 수정 api 응답 받을 때 도메인없이 와서 bucket 변수 임시로 해놓았습니다..
  */
-const WorkspaceSettingsMenu = ({
-  imageUrl,
-  title,
-  teammateList = mockTeammates,
-}: WorkspaceSettingsMenuProps) => {
+const WorkspaceSettingsMenu = ({ workspaceId }: WorkspaceSettingsMenuProps) => {
   // 내부적으로 처리 되서 반환 됩니다.
   const [value, setValue] = useState<string>('');
   const [emails, setEmails] = useState<string[]>([]);
+  const [image, setImage] = useState<File>(); // 워크스페이스 프로필 이미지 변경 시 사용
+  const { title: workspaceTitle, imageUrl, members } = useWorkspaceInfo();
+  const { mutate: editWorkspaceDetail } = useEditWorkspaceDetail();
+  const [title, setTitle] = useState<string>(workspaceTitle || ''); // 워크스페이스 수정하고 바로 반영하지 않기 위해 사용
+  const { addToast } = useToastActions();
+  const { setTitle: setWorkspaceTitle, setImageUrl } = useWorkspaceActions();
+  const bucket = 'https://haru-it-bucket.s3.ap-northeast-2.amazonaws.com';
+  const handleSave = useCallback(() => {
+    // 서버에 프로필 수정 요청 api
+    editWorkspaceDetail(
+      { title, image, workspaceId },
+      {
+        onSuccess: (data) => {
+          setImageUrl(`${bucket}${data.result.imageUrl}`);
+          setWorkspaceTitle(data.result.title);
+          addToast({
+            text: `워크스페이스가 성공적으로 수정되었습니다.`,
+            type: [ToastType.SUCCESS][Date.now() % 3],
+            duration: 2000,
+          });
+        },
+        onError: (error) => {
+          addToast({
+            text: `워크스페이스 수정에 실패했습니다: ${error.message}`,
+            type: [ToastType.ERROR][Date.now() % 3],
+            duration: 2000,
+          });
+        },
+      },
+    );
+  }, [editWorkspaceDetail, title, image]);
 
   const handleValueChange = (value: string) => {
     // 입력 되는 값 반환 합니다.
@@ -77,20 +92,21 @@ const WorkspaceSettingsMenu = ({
         <div className="gap-y-8pxr flex flex-col">
           <CommonText type={CommonTextType.CAP1_RG_GRAY_300} text="워크스페이스 대표 사진" />
           <ChangableWorkspaceImage
-            title={title}
+            title={workspaceTitle}
             initialPreview={imageUrl}
-            onFileChange={(file) => {
-              console.log('바뀐 워크스페이스 프로필 이미지 주소: ', file);
-            }}
+            onFileChange={(file) => setImage(file)}
           />
         </div>
 
         {/* 워크스페이스 정보 섹션 - 워크스페이스 명*/}
         <div className="gap-y-8pxr flex flex-col">
           <CommonText type={CommonTextType.CAP1_RG_GRAY_300} text="워크스페이스 명" />
-          <div className="py-7pxr px-10pxr text-b3-rg rounded-4pxr border-stroke-200 border text-black">
-            {title ?? 'No Workspace Name'} {/* Fallback text if no name is provided */}
-          </div>
+          <input
+            type="text"
+            value={title ?? 'No Workspace Name'}
+            className="py-7pxr px-10pxr text-b3-rg rounded-4pxr border-stroke-200 border text-black"
+            onChange={(e) => setTitle(e.target.value)}
+          />
         </div>
       </div>
       {/* 워크스페이스 추가 섹션 */}
@@ -123,16 +139,18 @@ const WorkspaceSettingsMenu = ({
 
         {/* 팀원 목록 */}
         <div className="gap-y-8pxr mt-16pxr flex flex-col">
-          <CommonText type={CommonTextType.CAP1_RG_GRAY_200} text={`${title} 워크스페이스 팀원`} />
+          <CommonText
+            type={CommonTextType.CAP1_RG_GRAY_200}
+            text={`${workspaceTitle} 워크스페이스 팀원`}
+          />
 
           {/* 팀원 카드 컴포넌트 */}
           <div className="gap-8pxr flex flex-row flex-wrap">
-            {teammateList.length > 0 ? (
-              teammateList.map((teammate, idx) => (
+            {members.length > 0 ? (
+              members.map((teammate, idx) => (
                 <TeammateCard
                   key={idx}
                   name={teammate.name}
-                  userId={teammate.userId}
                   email={teammate.email}
                   onClose={() => {}} // TODO: API 연동 필요
                 />
@@ -145,7 +163,7 @@ const WorkspaceSettingsMenu = ({
       </div>
 
       {/* 저장하기 버튼 */}
-      <SaveButton className="my-26pxr" />
+      <SaveButton className="my-26pxr" onClick={handleSave} />
     </div>
   );
 };

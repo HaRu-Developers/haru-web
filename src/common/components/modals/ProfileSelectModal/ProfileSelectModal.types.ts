@@ -9,6 +9,7 @@ export interface ProfileSelectModalMenu {
 }
 
 export interface ProfileSelectModalProps {
+  workspaceId: string;
   onClose: () => void;
   onNextStep: () => void;
 }

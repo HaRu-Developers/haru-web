@@ -23,6 +23,7 @@
       "@styles/*": ["styles/*"],
       "@assets/*": ["assets/*"],
       "@lib/*": ["lib/*"],
+      "@api/*": ["api/*"],
       "@icons/*": ["common/components/icons/*"],
       "@svgs/*": ["assets/svgs/*"],
       "@common/types/*": ["common/types/*"],

@@ -6,17 +6,13 @@ import { CrossIconsState } from '@icons/CrossIcons/CrossIcons.types';
 import DefaultProfileImage from '@common/components/images/DefaultProfileImage/DefaultProfileImage.client';
 import { ImageSize } from '@common/components/images/types/images.common.types';
 
-interface TeammateCardProps {
-  name: string;
-  userId: string;
-  email: string;
-  onClose: () => void;
-}
+import { TeammateCardProps } from './TeammateCard.types';
 
-const TeammateCard = ({ name, userId, email, onClose }: TeammateCardProps) => {
+const TeammateCard = ({ name, email, onClose }: TeammateCardProps) => {
   return (
     <div className="rounded-7pxr gap-x-8pxr px-9pxr py-6pxr flex flex-row items-center justify-center bg-gray-600">
-      <DefaultProfileImage name={name} userId={userId} size={ImageSize.SMALL} />
+      {/** userId 반드시 다시 추가할 것 */}
+      <DefaultProfileImage name={name} size={ImageSize.SMALL} />
       <div className="ml-8pxr flex w-full flex-col items-start justify-center">
         <p className="text-cap1-rg text-black">{name} </p>
         <p className="text-cap2-rg text-gray-300">{email}</p>

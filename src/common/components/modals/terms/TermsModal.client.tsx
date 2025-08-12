@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import CrossIcons from '@icons/CrossIcons/CrossIcons';
 import { CrossIconsState } from '@icons/CrossIcons/CrossIcons.types';
 
-import MarkdownContent from '@common/components/MarkdownContent/MarkdownContent.server';
+import MarkdownContentForModal from '@common/components/mark-down-content/MarkdownContentForModal/MarkdownContentForTeamMoodTracker.server';
 
 import CommonText from '../CommonText/CommonText.server';
 import { CommonTextType } from '../CommonText/CommonText.types';
@@ -40,7 +40,7 @@ const TermsModal = ({ onClose, terms }: TermsModalProps) => {
         {/* TODO: 임시로 padding bottom을 통해서 blur 효과 탈출 ..
          scrollbar도 끝까지 가있고, blur 당하는게 보기 싫은 관계로 해결 필요 */}
         <div className="text-b3-rg scrollbar-component h-full w-full overflow-y-auto pb-16 whitespace-pre-line text-black">
-          <MarkdownContent content={terms.content} />
+          <MarkdownContentForModal content={terms.content} />
         </div>
       </div>
       {/* 하단 blur 효과 */}

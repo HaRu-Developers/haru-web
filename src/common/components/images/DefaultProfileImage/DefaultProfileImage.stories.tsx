@@ -14,7 +14,7 @@ const meta: Meta<typeof DefaultProfileImage> = {
     },
     userId: {
       control: 'text',
-      defaultValue: '1n',
+      defaultValue: 1,
     },
     color: {
       control: 'color',

@@ -7,7 +7,7 @@ import {
   CreateWorkspaceResponseDto,
 } from '@features/on-boarding/types/apis.types';
 
-import { API_ENDPOINTS } from '@features/on-boarding/constants/end-point.constants';
+import { ON_BOARDING_API_ENDPOINTS } from '@features/on-boarding/constants/end-point.constants';
 
 export const createWorkspace = async ({
   name,
@@ -28,10 +28,11 @@ export const createWorkspace = async ({
   }
 
   const response = await defaultApi<BaseResponseDto<CreateWorkspaceResponseDto>>(
-    API_ENDPOINTS.WORKSPACES,
+    ON_BOARDING_API_ENDPOINTS.WORKSPACES,
     {
       method: 'POST',
       body: formData,
+      auth: true,
       headers: {},
     },
   );

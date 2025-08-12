@@ -1,5 +1,7 @@
 import { FileType } from '@common/types/file-type.enum';
 
+import { DocumentList } from '@common/components/etc/calendar/types/calendar.common.types';
+
 /**
  * 워크스페이스의 기본 정보 구조
  *
@@ -18,6 +20,14 @@ export interface BaseWorkspace {
  */
 export interface WorkspaceIdRequestDto {
   workspaceId: string;
+}
+
+/**
+ * 워크스페이스 수정 요청 DTO
+ */
+export interface UpdateWorkspaceRequestDto extends WorkspaceIdRequestDto {
+  title: string; // 워크스페이스 제목
+  image?: File; // 워크스페이스 대표 이미지 (파일 업로드용)
 }
 
 /**
@@ -79,4 +89,20 @@ export type FetchWorkspaceDetailResponseDto = WorkspaceDetail;
  *
  * @typedef {WorkspaceSummary[]} FetchMyWorkspacesResponseDto
  */
+
 export type FetchMyWorkspacesResponseDto = WorkspaceSummary[];
+
+/**
+ * 워크스페이스 수정 응답 DTO
+ */
+export type UpdateWorkspaceResponseDto = WorkspaceDetail;
+
+export interface fetchCalendarResquestDto {
+  workspaceId: number;
+  start: Date;
+  end: Date;
+}
+
+export interface fetchCalendarResponseDto {
+  documentList: DocumentList[];
+}

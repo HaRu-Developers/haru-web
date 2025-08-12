@@ -12,13 +12,13 @@ import { AudioBarIconsState } from './AudioBarIcons.types';
 const AudioBarIcons = ({ state, className }: IconsCommonProps<AudioBarIconsState>) => {
   switch (state) {
     case AudioBarIconsState.START_RECORDING:
-      return <StartRecordingIcon className={clsx('h-[20px] w-[20px]', className)} />;
+      return <StartRecordingIcon className={clsx('h-20pxr w-20pxr', className)} />;
     case AudioBarIconsState.STOP_RECORDING:
-      return <EndRecordingIcon className={clsx('h-[14px] w-[14px]', className)} />;
+      return <EndRecordingIcon className={clsx('h-14pxr w-14pxr', className)} />;
     case AudioBarIconsState.PAUSE:
-      return <PauseIcon className={clsx('h-[18px] w-[18px]', className)} />;
+      return <PauseIcon className={clsx('h-18pxr w-18pxr', className)} />;
     case AudioBarIconsState.PLAY:
-      return <PlayIcon className={clsx('h-[18px] w-[18px]', className)} />;
+      return <PlayIcon className={clsx('h-18pxr w-18pxr', className)} />;
     default:
       return null;
   }

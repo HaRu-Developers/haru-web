@@ -3,18 +3,24 @@
 import FeaturedFileIcons from '@icons/FeaturedFileIcons/FeaturedFileIcons';
 import { FeaturedFileIconsState } from '@icons/FeaturedFileIcons/FeaturedFileIcons.types';
 
-import { DocumentType } from '../types/calender.common.types';
+import { FileType } from '@common/types/file-type.enum';
+
 import { DocumentFileProps } from './DocumentFile.types';
 
+/*
+ * 문서 파일 컴포넌트
+ * 각 문서 파일을 보여주는 컴포넌트
+ * 클릭 시 onClick 이벤트를 발생시킴
+ */
 const DocumentFile = ({ file, onClick }: DocumentFileProps) => {
   const documentIconMap = {
-    [DocumentType.AI_MEETING_MANAGER]: FeaturedFileIconsState.SIZE_16_AI_MANAGER_FILE,
-    [DocumentType.SNS_EVENT_ASSISTANT]: FeaturedFileIconsState.SIZE_16_SNS_ASSISTANT_FILE,
-    [DocumentType.TEAM_MOOD_TRACKER]: FeaturedFileIconsState.SIZE_16_TEAM_MOOD_FILE,
+    [FileType.AI_MEETING_MANAGER]: FeaturedFileIconsState.SIZE_16_AI_MANAGER_FILE,
+    [FileType.SNS_EVENT_ASSISTANT]: FeaturedFileIconsState.SIZE_16_SNS_ASSISTANT_FILE,
+    [FileType.TEAM_MOOD_TRACKER]: FeaturedFileIconsState.SIZE_16_TEAM_MOOD_FILE,
   };
-  const iconState = documentIconMap[file.type];
+  const iconState = documentIconMap[file.documentType];
   const handleClick = () => {
-    onClick?.(file.id);
+    onClick?.(file.documentId);
   };
   return (
     <div

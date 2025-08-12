@@ -17,6 +17,8 @@ import { LOCAL_STORAGE_KEYS, LocalStorageValue } from '../constants/local-storag
  * @example
  * const [value, setValue] = useLocalStorage<number>('count', 0);
  * setValue(5);
+ *
+ * @deprecated useAuthStore 도입으로 더 이상 사용하지 않습니다.
  */
 const useLocalStorage = <T>(key: LocalStorageValue, initialValue: T) => {
   // window 객체는 server 환경에서는 undefined

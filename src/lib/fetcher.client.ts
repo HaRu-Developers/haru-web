@@ -1,6 +1,6 @@
 'use client';
 
-import { getAccessToken } from '@apis/user/hooks/useLocalStorage';
+import { useAccessToken } from '@features/auth/hooks/useAuthStore';
 
 import { createFetcher } from './fetcher';
 
@@ -10,7 +10,7 @@ import { createFetcher } from './fetcher';
 export const protectedApi = createFetcher({
   fetchOptions: { cache: 'no-store' },
   headers: (() => {
-    const accessToken = getAccessToken();
+    const accessToken = useAccessToken();
     const envToken = process.env.NEXT_PUBLIC_ACCESS_TOKEN;
 
     // 빈 문자열이 아닌 토큰이 있을 때만 Authorization 헤더 설정

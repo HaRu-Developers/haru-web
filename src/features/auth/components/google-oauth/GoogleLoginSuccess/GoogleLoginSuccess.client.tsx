@@ -6,8 +6,11 @@ import { useRouter } from 'next/navigation';
 
 import { ROUTES } from '@common/constants/routes.constants';
 
-import { LOCAL_STORAGE_KEYS } from '@apis/user/constants/local-storage-key.constants';
-import useLocalStorage from '@apis/user/hooks/useLocalStorage';
+import { useAuthStoreActions } from '@features/auth/hooks/useAuthStore';
+
+// import { LOCAL_STORAGE_KEYS } from '@apis/user/constants/local-storage-key.constants';
+
+// import useLocalStorage from '@apis/user/hooks/useLocalStorage';
 
 interface GoogleLoginSuccessProps {
   accessToken: string;
@@ -15,8 +18,9 @@ interface GoogleLoginSuccessProps {
 }
 
 const GoogleLoginSuccess = ({ accessToken, refreshToken }: GoogleLoginSuccessProps) => {
-  const [, setAccessToken] = useLocalStorage(LOCAL_STORAGE_KEYS.ACCESS_TOKEN, '');
-  const [, setRefreshToken] = useLocalStorage(LOCAL_STORAGE_KEYS.REFRESH_TOKEN, '');
+  // const [, setAccessToken] = useLocalStorage(LOCAL_STORAGE_KEYS.ACCESS_TOKEN, '');
+  // const [, setRefreshToken] = useLocalStorage(LOCAL_STORAGE_KEYS.REFRESH_TOKEN, '');
+  const { setAccessToken, setRefreshToken } = useAuthStoreActions();
 
   const router = useRouter();
 

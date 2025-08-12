@@ -20,8 +20,6 @@ import { NavItemProps } from './NavItem.types';
 const NavItem = ({ item, workspaceId }: NavItemProps) => {
   const pathname = usePathname();
 
-  if (!workspaceId) return null;
-
   const route = GnbSectionPaths(workspaceId)[item];
   const isCurrent = item === GnbSection.MAIN ? pathname === route : pathname.startsWith(route);
 

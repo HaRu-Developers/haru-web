@@ -1,20 +1,10 @@
-'use client';
-
-import { useState } from 'react';
-
 import Image from 'next/image';
 
 import Image404 from '@assets/images/404/image.png';
 
-import CreateWorkspaceButton from '@common/components/buttons/38px/CreateWorkspaceButton/CreateWorkSpaceButton.client';
+import CreateWorkspaceButtonWrapper from './CreateWorkspaceButtonWrapper.client';
 
-/**
- * 소속 워크스페이스가 없을 때 페이지
- */
-const MainWithoutWorkspacePage = () => {
-  // 임시 로딩 상태 (실제 프로젝트에서는 API fetch 기준으로 변경)
-  const [isLoading, setIsLoading] = useState(false);
-
+const WithoutWorkspaceSection = () => {
   return (
     <div className="flex flex-col items-center">
       <div className="mb-292pxr flex flex-col">
@@ -25,11 +15,11 @@ const MainWithoutWorkspacePage = () => {
           </div>
           <div className="text-t3-sb mb-8pxr">아직 소속된 워크스페이스가 없어요!</div>
           <div className="mb-18pxr text-b2-rg text-center whitespace-pre-line text-gray-200">{`워크스페이스에 참여하고\n회의 진행, 이벤트 운영, 팀 분위기 설문 등\nHaRu의 다양한 기능을 이용해 보세요!`}</div>
-          <CreateWorkspaceButton onClick={() => console.log()} />
+          <CreateWorkspaceButtonWrapper />
         </div>
       </div>
     </div>
   );
 };
 
-export default MainWithoutWorkspacePage;
+export default WithoutWorkspaceSection;

@@ -1,21 +1,68 @@
 'use client';
 
+import { useCallback, useEffect } from 'react';
+
+import { useRouter } from 'next/navigation';
+
+import { ToastType } from '@common/types/toast.types';
+
+import { useToastActions } from '@common/hooks/stores/useToastStore';
+import { useUserActions, useUserInfo } from '@common/hooks/stores/useUserStore';
+
 import ChangePasswordButton from '@common/components/buttons/30px/ChangePasswordButton/ChangePasswordButton.client';
 import { ChangePasswordButtonState } from '@common/components/buttons/30px/ChangePasswordButton/ChangePasswordButton.types';
 import SocialConnectButton from '@common/components/buttons/30px/SocialConnectButton/SocialConnectButton.client';
 import SaveButton from '@common/components/buttons/38px/SaveButton/SaveButton.client';
 
+import useEditUserDetail from '@/api/user/patch/mutations/useEditUserDetail';
+
 import CommonText from '../../CommonText/CommonText.server';
 import { CommonTextType } from '../../CommonText/CommonText.types';
-import { ConnectInstagramAccount } from '../../DeleteModal/DeleteModal.stories';
+import { ProfileSettingMenuProps } from './ProfileSettingMenu.types';
 
-interface ProfileSettingMenuProps {
-  name: string;
-  email: string;
-  instagramAccount?: string;
-}
-
-const ProfileSettingMenu = ({ name, email, instagramAccount }: ProfileSettingMenuProps) => {
+const ProfileSettingMenu = ({ workspaceId, email, instagramAccount }: ProfileSettingMenuProps) => {
+  const { name, password } = useUserInfo();
+  const { setName } = useUserActions();
+  const { addToast } = useToastActions();
+  const router = useRouter();
+  const handlePasswordModal = () => {
+    if (workspaceId) {
+      router.push(`/workspace/${workspaceId}/settings/change-password`);
+    } else {
+      router.push(`/workspace/settings/change-password`);
+    }
+  };
+  const { mutate: editUserDetail } = useEditUserDetail();
+  const handleSave = useCallback(() => {
+    console.log(name, password);
+    if (name && password) {
+      editUserDetail(
+        { name, password },
+        {
+          onSuccess: (data) => {
+            addToast({
+              text: `사용자 정보가 성공적으로 수정되었습니다.`,
+              type: [ToastType.SUCCESS][Date.now() % 3],
+              duration: 2000,
+            });
+          },
+          onError: (error) => {
+            addToast({
+              text: `사용자 정보 수정에 실패했습니다: ${error.message}`,
+              type: [ToastType.ERROR][Date.now() % 3],
+              duration: 2000,
+            });
+          },
+        },
+      );
+    } else {
+      addToast({
+        text: '이름과 비밀번호를 모두 입력해주세요.',
+        type: [ToastType.INFO][Date.now() % 3],
+        duration: 2000,
+      });
+    }
+  }, [editUserDetail, name, password]);
   return (
     <div className="px-35pxr py-24pxr gap-y-24pxr flex w-full flex-col">
       <CommonText type={CommonTextType.T4_BD_BLACK} text="프로필 설정" />
@@ -27,9 +74,11 @@ const ProfileSettingMenu = ({ name, email, instagramAccount }: ProfileSettingMen
           {/* 이름 */}
           <div className="gap-y-8pxr flex w-full flex-col items-start justify-center">
             <CommonText type={CommonTextType.CAP1_RG_GRAY_200} text="이름" />
-            <span className="border-stroke-200 rounded-4pxr px-10pxr text-b3-rg py-7pxr flex w-full items-start justify-start border text-black">
-              {name}
-            </span>
+            <input
+              value={name}
+              onChange={(event) => setName(event.target.value)}
+              className="border-stroke-200 rounded-4pxr px-10pxr text-b3-rg py-7pxr flex w-full items-start justify-start border text-black"
+            />
           </div>
 
           {/* 이메일 주소 */}
@@ -44,7 +93,7 @@ const ProfileSettingMenu = ({ name, email, instagramAccount }: ProfileSettingMen
           <div className="gap-y-8pxr flex flex-col">
             <CommonText type={CommonTextType.CAP1_RG_GRAY_200} text="비밀번호" />
             <ChangePasswordButton
-              onClick={() => {}}
+              onClick={handlePasswordModal}
               state={ChangePasswordButtonState.COLOR_WHITE}
             />
           </div>
@@ -76,7 +125,7 @@ const ProfileSettingMenu = ({ name, email, instagramAccount }: ProfileSettingMen
         )}
       </div>
       {/* 저장하기 버튼 */}
-      <SaveButton onClick={() => {}} className="my-40pxr" />
+      <SaveButton onClick={handleSave} className="my-40pxr" />
     </div>
   );
 };

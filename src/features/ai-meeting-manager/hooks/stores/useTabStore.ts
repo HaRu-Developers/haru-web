@@ -1,6 +1,6 @@
 import { useShallow } from 'zustand/shallow';
 
-import tabStoreState from '@features/ai-meeting-manager/stores/tabStore';
+import tabStoreState from '@features/ai-meeting-manager/stores/tab-store';
 
 export const useTabInfo = () =>
   tabStoreState(

@@ -1,48 +1,54 @@
 import { Meta, StoryObj } from '@storybook/nextjs';
 
-import CalenderSlice from '@common/components/etc/calender/CalenderSlice/CalenderSlice.client';
+import { FileType } from '@common/types/file-type.enum';
 
-import { DocumentType } from '../types/calender.common.types';
+import CalendarSlice from '@common/components/etc/calendar/CalendarSlice/CalendarSlice.client';
 
-const meta: Meta<typeof CalenderSlice> = {
-  title: 'Components/Etc/Calender/CalenderSlice',
-  component: CalenderSlice,
+const meta: Meta<typeof CalendarSlice> = {
+  title: 'Components/Etc/Calendar/CalendarSlice',
+  component: CalendarSlice,
   tags: ['autodocs'],
 };
 
 export default meta;
-type Story = StoryObj<typeof CalenderSlice>;
+type Story = StoryObj<typeof CalendarSlice>;
 
 const files = [
   {
-    id: 1,
-    title: '회의록 - 2025년 6월 24일',
-    type: DocumentType.AI_MEETING_MANAGER,
+    documentId: 1,
+    title: 'FileType - 2025년 6월 24일',
+    documentType: FileType.AI_MEETING_MANAGER,
+    createdAt: '2025-06-24T00:00:00Z',
   },
   {
-    id: 2,
+    documentId: 2,
     title: 'SNS 이벤트 초안 - 2025년 7월 8일',
-    type: DocumentType.SNS_EVENT_ASSISTANT,
+    documentType: FileType.SNS_EVENT_ASSISTANT,
+    createdAt: '2025-07-08T00:00:00Z',
   },
   {
-    id: 3,
+    documentId: 3,
     title: '팀 분위기 보고서 Q1 - 2025년 7월 8일',
-    type: DocumentType.TEAM_MOOD_TRACKER,
+    documentType: FileType.TEAM_MOOD_TRACKER,
+    createdAt: '2025-07-08T00:00:00Z',
   },
   {
-    id: 4,
+    documentId: 4,
     title: '회의록 - 2025년 6월 24일',
-    type: DocumentType.AI_MEETING_MANAGER,
+    documentType: FileType.AI_MEETING_MANAGER,
+    createdAt: '2025-06-24T00:00:00Z',
   },
   {
-    id: 5,
+    documentId: 5,
     title: 'SNS 이벤트 초안 - 2025년 7월 8일',
-    type: DocumentType.SNS_EVENT_ASSISTANT,
+    documentType: FileType.SNS_EVENT_ASSISTANT,
+    createdAt: '2025-07-08T00:00:00Z',
   },
   {
-    id: 6,
+    documentId: 6,
     title: '팀 분위기 보고서 Q1 - 2025년 7월 8일',
-    type: DocumentType.TEAM_MOOD_TRACKER,
+    documentType: FileType.TEAM_MOOD_TRACKER,
+    createdAt: '2025-07-08T00:00:00Z',
   },
 ];
 

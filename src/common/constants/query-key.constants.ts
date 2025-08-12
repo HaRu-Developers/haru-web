@@ -9,6 +9,12 @@ const queryKeys = createQueryKeyStore({
     detail: (workspaceId: string) => [workspaceId],
     members: (workspaceId: string) => [workspaceId, 'members'],
     recentDocuments: (workspaceId: string) => [workspaceId, 'recentDocuments'],
+    calendar: (workspaceId: number, start: Date, end: Date) => [
+      workspaceId,
+      'calendar',
+      start,
+      end,
+    ],
   },
 
   moodTracker: {

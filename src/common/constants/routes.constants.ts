@@ -39,6 +39,6 @@ export const ROUTES = {
     LOGIN: '/auth/login',
     REGISTER: '/auth/register',
     LOGOUT: '/auth/logout',
-    GOOGLE_OAUTH: 'auth/login/google/callback',
+    GOOGLE_OAUTH: '/auth/login/google/callback',
   },
 } as const;

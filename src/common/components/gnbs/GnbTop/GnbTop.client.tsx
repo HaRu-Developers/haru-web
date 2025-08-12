@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { useParams, usePathname } from 'next/navigation';
 
 import { GnbSection, SnsGnbTabType } from '@common/types/gnbs.types';
 
@@ -12,8 +12,22 @@ import InputSearchBox from '@common/components/inputs/InputSearchBox/InputSearch
 
 import { GnbTopProps } from './GnbTop.types';
 
+const SEARCH_PATH_MAP: Partial<Record<GnbSection, string>> & { default: string } = {
+  [GnbSection.AI_MEETING_MANAGER]: 'ai-meeting-manager/search',
+  [GnbSection.SNS_EVENT_ASSISTANT]: 'sns-event-assistant/search',
+  [GnbSection.TEAM_MOOD_TRACKER]: 'team-mood-tracker/search',
+  [GnbSection.MAIN]: 'search',
+  [GnbSection.CALENDAR]: 'calendar/search',
+  default: 'search', // 기본 경로
+};
+
 const GnbTop = ({ section, title, current, isSnsEventAssistantWithoutWorkspace }: GnbTopProps) => {
   const pathname = usePathname() ?? '';
+  const params = useParams<{ workspaceId?: string }>();
+
+  const searchPath = params.workspaceId
+    ? `/workspace/${params.workspaceId}/${SEARCH_PATH_MAP[section] ?? SEARCH_PATH_MAP.default}`
+    : '#';
 
   const config =
     section === GnbSection.CUSTOM ? sectionConfigs[section](title ?? '') : sectionConfigs[section];
@@ -25,8 +39,8 @@ const GnbTop = ({ section, title, current, isSnsEventAssistantWithoutWorkspace }
     <div className="flex w-full flex-col items-start">
       {/* 상단 제목 */}
       <div className="border-b-stroke-200 h-60pxr py-13pxr flex items-center justify-between self-stretch border-b border-solid bg-white px-6">
-        <p className="text-t5-sb text-black">{config.title}</p>
-        {!isCustomSection && <InputSearchBox />}
+        <p className="text-t3-sb text-black">{config.title}</p>
+        {!isCustomSection && <InputSearchBox searchHref={searchPath} />}
       </div>
       {!isCustomSection && (
         // 하단 탭 or 단순 옵션

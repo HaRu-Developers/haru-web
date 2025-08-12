@@ -5,7 +5,7 @@ import { useAccessToken } from '@features/auth/hooks/useAuthStore';
 import { createFetcher } from './fetcher';
 
 /**
- * headers에 Authorization을 자동으로 포합합니다.
+ * headers에 Authorization을 자동으로 포함 합니다.
  */
 export const protectedApi = createFetcher({
   fetchOptions: { cache: 'no-store' },

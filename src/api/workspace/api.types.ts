@@ -68,6 +68,14 @@ export interface Document {
   documentType: FileType;
 }
 
+export interface fetchRecentDocumentsResquestDto {
+  workspaceId: string;
+}
+
+export interface fetchRecentDocumentsResponseDto {
+  documents: Document[];
+}
+
 /**
  * 최근 문서 목록 응답 DTO
  *
@@ -82,6 +90,7 @@ export interface FetchRecentDocumentsResponseDto {
  *
  * @typedef {WorkspaceDetail[]} FetchWorkspaceResponseDto
  */
+
 export type FetchWorkspaceDetailResponseDto = WorkspaceDetail;
 
 /**
@@ -89,6 +98,7 @@ export type FetchWorkspaceDetailResponseDto = WorkspaceDetail;
  *
  * @typedef {WorkspaceSummary[]} FetchMyWorkspacesResponseDto
  */
+
 export type FetchMyWorkspacesResponseDto = WorkspaceSummary[];
 
 /**

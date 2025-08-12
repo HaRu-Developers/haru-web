@@ -11,14 +11,20 @@ import DefaultProfileImage from '@common/components/images/DefaultProfileImage/D
 import { ImageSize } from '../types/images.common.types';
 import { ProfileImageProps } from './ProfileImage.types';
 
-const ProfileImage = ({ src, userId, name, size = ImageSize.SMALL }: ProfileImageProps) => {
+const ProfileImage = ({ src, userId, name, size = ImageSize.MEDIUM }: ProfileImageProps) => {
   const [hasError, setHasError] = useState(false);
 
   if (!src || hasError) {
     return <DefaultProfileImage name={name} size={size} />;
   }
 
-  const sizeClass = size === ImageSize.SMALL ? 'h-7 w-7 ' : 'h-10 w-10';
+  const sizeClassMap: Record<ImageSize, string> = {
+    [ImageSize.SMALL]: 'text-cap2-rg h-4 w-4',
+    [ImageSize.MEDIUM]: 'text-cap2-rg h-7 w-7',
+    [ImageSize.LARGE]: 'text-b2-rg h-10 w-10',
+  };
+
+  const sizeClass = sizeClassMap[size] ?? sizeClassMap[ImageSize.MEDIUM];
 
   return (
     <div className={clsx('relative', sizeClass)}>

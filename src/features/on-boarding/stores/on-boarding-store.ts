@@ -14,7 +14,7 @@ interface OnboardingStoreState {
   actions: {
     setName: (name: string) => void;
     setImage: (file: File) => void;
-    setWorkspaceId: (id: string) => void;
+    setWorkspaceId: (workspaceId: string) => void;
     addEmail: (email: string) => void;
     removeEmail: (index: number) => void;
     setEmails: (emails: string[]) => void;

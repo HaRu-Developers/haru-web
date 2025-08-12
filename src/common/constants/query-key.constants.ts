@@ -17,6 +17,13 @@ const queryKeys = createQueryKeyStore({
       end,
     ],
   },
+
+  moodTracker: {
+    all: null,
+    detail: (moodTrackerHashedId: string) => [moodTrackerHashedId],
+    report: (moodTrackerHashedId: string) => [moodTrackerHashedId, 'report'],
+  },
+
   user: {
     // 매개변수가 없는 키는 null로 정의합니다.
     all: null,
@@ -24,10 +31,6 @@ const queryKeys = createQueryKeyStore({
     detail: () => ['user', 'detail'],
     edit: () => ['user', 'edit'],
   },
-  // 다른 도메인 추가 가능 - 이후 자신에게 맞는 도메인 이름으로 추가해서 사용 하시면 됩니다.
-  // snsEventAssisant: {
-  //   all: null,
-  // },
 });
 
 export default queryKeys;

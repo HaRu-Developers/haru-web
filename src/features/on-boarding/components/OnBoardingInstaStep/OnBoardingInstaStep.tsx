@@ -9,7 +9,7 @@ import { SkipForNowButtonType } from '@common/components/buttons/diverse-size/Sk
 
 import { OnboardingToastType } from '@features/on-boarding/types/OnboardingToast.types';
 
-import { API_ENDPOINTS } from '@features/on-boarding/constants/end-point.constants';
+import { ON_BOARDING_API_ENDPOINTS } from '@features/on-boarding/constants/end-point.constants';
 
 import {
   useInstagramConnection,
@@ -41,7 +41,7 @@ const OnBoardingInstaStep = () => {
 
   const handleStart = () => {
     if (workspaceId) {
-      router.push(API_ENDPOINTS.WORKSPACE_DETAIL(workspaceId));
+      router.push(ON_BOARDING_API_ENDPOINTS.WORKSPACE_DETAIL(workspaceId));
     } else {
       console.log('워크스페이스 정보가 없습니다. 온보딩을 다시 진행해주세요.');
     }

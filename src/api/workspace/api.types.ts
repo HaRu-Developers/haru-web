@@ -89,6 +89,7 @@ export type FetchWorkspaceDetailResponseDto = WorkspaceDetail;
  *
  * @typedef {WorkspaceSummary[]} FetchMyWorkspacesResponseDto
  */
+
 export type FetchMyWorkspacesResponseDto = WorkspaceSummary[];
 
 /**

@@ -28,6 +28,7 @@ export const createWorkspace = async ({ name, image }: CreateWorkspaceRequestDto
     {
       method: 'POST',
       body: formData,
+      auth: true,
       headers: {},
     },
   );

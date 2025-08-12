@@ -24,6 +24,7 @@
       "@assets/*": ["assets/*"],
       "@lib/*": ["lib/*"],
       "@api/*": ["api/*"],
+      "@apis/*": ["api/*"],
       "@icons/*": ["common/components/icons/*"],
       "@svgs/*": ["assets/svgs/*"],
       "@common/types/*": ["common/types/*"],
@@ -38,7 +39,6 @@
       "@common/*": ["common/*"],
       "@buttons/*": ["common/components/buttons/*"],
       "@features/*": ["features/*"],
-      "@apis/*": ["api/*"],
       "@/*": ["*"]
     }
   },

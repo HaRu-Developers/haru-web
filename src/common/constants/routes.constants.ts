@@ -7,7 +7,7 @@ import { FileType } from '@common/types/file-type.enum';
  *
  * (TS는 덕타입이라 오류 발생하지 않습니다)
  */
-type BigintString = string | number | bigint;
+export type BigintString = string | number | bigint | null;
 
 export const ROUTES = {
   ONBOARDING: '/onboarding',

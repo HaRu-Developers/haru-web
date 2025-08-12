@@ -8,7 +8,7 @@ import {
   SnsGnbTabType,
 } from '@common/types/gnbs.types';
 
-import { ROUTES } from './routes.constants';
+import { BigintString, ROUTES } from './routes.constants';
 
 // 공통 GNB 섹션 라벨
 export const GnbSectionLabels: Record<GnbSection, string> = {
@@ -33,7 +33,7 @@ export const GnbLeftNavItems: GnbLeftSection[] = [
 ];
 
 // 각 섹션에 대응하는 라우팅 경로
-export const GnbSectionPaths = (workspaceId: number) => ({
+export const GnbSectionPaths = (workspaceId: BigintString) => ({
   [GnbSection.MAIN]: ROUTES.WORKSPACE_MAIN(workspaceId),
   [GnbSection.AI_MEETING_MANAGER]: ROUTES.AI_MEETING_MANAGER(workspaceId),
   [GnbSection.SNS_EVENT_ASSISTANT]: ROUTES.SNS_EVENT_ASSISTANT(workspaceId),

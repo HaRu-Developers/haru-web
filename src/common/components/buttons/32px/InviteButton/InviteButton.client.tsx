@@ -21,7 +21,7 @@ const InviteButton = ({ className, onClick, disabled, isPending, ...props }: Inv
       disabled={disabled || isPending}
       {...props}
     >
-      {isPending ? '초대중' : '초대'}
+      초대
     </button>
   );
 };

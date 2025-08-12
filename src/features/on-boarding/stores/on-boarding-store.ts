@@ -11,6 +11,7 @@ interface OnboardingStoreState {
   workspaceId: string | null;
   emails: string[];
   isInstagramConnected: boolean;
+  instagramAccountName: string;
   actions: {
     setName: (name: string) => void;
     setImage: (file: File) => void;
@@ -19,6 +20,7 @@ interface OnboardingStoreState {
     removeEmail: (index: number) => void;
     setEmails: (emails: string[]) => void;
     setInstagramConnected: (connected: boolean) => void;
+    setInstagramAccountName: (instagramAccountName: string) => void;
     nextStep: () => void;
     prevStep: () => void;
     reset: () => void;
@@ -35,7 +37,7 @@ const useOnboardingStore = create<OnboardingStoreState>()(
         workspaceId: null,
         emails: [],
         isInstagramConnected: false,
-
+        instagramAccountName: '',
         actions: {
           setName: (name) =>
             set((state) => {
@@ -63,6 +65,10 @@ const useOnboardingStore = create<OnboardingStoreState>()(
             set((state) => {
               state.emails = emails;
             }),
+          setInstagramAccountName: (instagramAccountName) =>
+            set((state) => {
+              state.instagramAccountName = instagramAccountName;
+            }),
           setInstagramConnected: (connected) =>
             set((state) => {
               state.isInstagramConnected = connected;
@@ -86,6 +92,7 @@ const useOnboardingStore = create<OnboardingStoreState>()(
               state.image = null;
               state.emails = [];
               state.isInstagramConnected = false;
+              state.instagramAccountName = '';
             }),
         },
       })),
@@ -99,6 +106,7 @@ const useOnboardingStore = create<OnboardingStoreState>()(
         workspaceId: state.workspaceId,
         emails: state.emails,
         isInstagramConnected: state.isInstagramConnected,
+        instagramAccountName: state.instagramAccountName,
       }),
     },
   ),

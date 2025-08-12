@@ -20,7 +20,7 @@ const OnBoardingCallBackClient = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const workspaceId = useOnboardingWorkspaceId(); // Zustand에서 workspaceId 가져오기
-  const { setInstagramConnected } = useOnboardingActions();
+  const { setInstagramConnected, setInstagramAccountName } = useOnboardingActions();
   const { showOnboardingToast } = useOnboardingToastActions();
 
   const { mutate: linkInstagram } = useLinkInstagramMutation();
@@ -48,6 +48,7 @@ const OnBoardingCallBackClient = () => {
         onSuccess: (data) => {
           // 1. 연동 성공 상태 업데이트
           setInstagramConnected(true);
+          setInstagramAccountName(data.instagramAccountName);
           // 2. 성공 토스트 띄우기
           showOnboardingToast({
             type: OnboardingToastType.SUCCESS_SNS_ACCOUNT,

@@ -56,11 +56,6 @@ const OnBoardingCallBackClient = () => {
           // 3. 온보딩 페이지로 복귀
           router.push(ROUTES.ONBOARDING);
         },
-        onError: (error) => {
-          console.error('인스타그램 연동 실패:', error);
-          // TODO: 실패 토스트 띄우기
-          router.push(ROUTES.ONBOARDING);
-        },
       },
     );
   }, [

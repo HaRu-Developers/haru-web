@@ -10,17 +10,18 @@ import { ButtonsCommonProps } from '../../types/buttons.common.types';
 /**
  * '녹음 종료' 버튼
  */
-const StopRecordingButton = ({ onClick, ...props }: ButtonsCommonProps) => {
+const StopRecordingButton = ({ className, onClick, ...props }: ButtonsCommonProps) => {
   return (
     <button
       className={clsx(
-        'text-bt3-sb inline-flex h-[32px] w-[85px] items-center justify-center gap-x-[4px] rounded-[100px] bg-gray-600 px-[10px] py-[9px] text-gray-300',
+        'h-32pxr w-85pxr gap-x-4pxr rounded-100pxr px-10pxr py-9pxr inline-flex items-center justify-center bg-gray-600 text-gray-300',
+        className,
       )}
       onClick={onClick}
       {...props}
     >
       <AudioBarIcons state={AudioBarIconsState.STOP_RECORDING} />
-      <p>녹음 종료</p>
+      <p className="text-bt3-sb whitespace-nowrap">녹음 종료</p>
     </button>
   );
 };

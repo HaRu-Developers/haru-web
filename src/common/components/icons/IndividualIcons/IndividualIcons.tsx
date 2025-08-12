@@ -23,6 +23,8 @@ const IndividualIcons = ({ state, className }: IconsCommonProps<IndividualIconsS
       return <UnderArrowIcon className={clsx('h-20pxr w-20pxr', className)} />;
     case IndividualIconsState.SEARCH:
       return <SearchIcon className={clsx('h-18pxr w-18pxr', className)} />;
+    case IndividualIconsState.SEARCH_SIZE_20:
+      return <SearchIcon className={clsx('h-20pxr w-20pxr', className)} />;
     case IndividualIconsState.CALENDAR_SIZE_16:
       return <CalendarIcon className={clsx('h-16pxr w-16pxr', className)} />;
     case IndividualIconsState.CALENDAR_SIZE_18:

@@ -57,13 +57,13 @@ export const WithCustomColor: Story = {
 export const DifferentUsers: Story = {
   render: () => (
     <div className="flex gap-2">
-      <DefaultProfileImage name="유저A" userId={'1'} />
-      <DefaultProfileImage name="유저B" userId={'2'} />
-      <DefaultProfileImage name="유저C" userId={'3'} />
-      <DefaultProfileImage name="유저A" userId={'4'} />
-      <DefaultProfileImage name="유저B" userId={'5'} />
-      <DefaultProfileImage name="유저C" userId={'6'} />
-      <DefaultProfileImage name="유저C" userId={'7'} />
+      <DefaultProfileImage name="유저A" userId="1" />
+      <DefaultProfileImage name="유저B" userId="2" />
+      <DefaultProfileImage name="유저C" userId="3" />
+      <DefaultProfileImage name="유저A" userId="4" />
+      <DefaultProfileImage name="유저B" userId="5" />
+      <DefaultProfileImage name="유저C" userId="6" />
+      <DefaultProfileImage name="유저C" userId="7" />
     </div>
   ),
 };

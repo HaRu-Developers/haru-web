@@ -10,6 +10,7 @@ const queryKeys = createQueryKeyStore({
     detail: (workspaceId: string) => [workspaceId],
     members: (workspaceId: string) => [workspaceId, 'members'],
     recentDocuments: (workspaceId: string) => [workspaceId, 'recentDocuments'],
+    search: (workspaceId: string, title: string) => [workspaceId, 'search', title],
     calendar: (workspaceId: number, start: Date, end: Date) => [
       workspaceId,
       'calendar',

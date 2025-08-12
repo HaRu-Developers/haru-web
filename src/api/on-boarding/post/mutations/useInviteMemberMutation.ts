@@ -2,9 +2,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import queryKeys from '@common/constants/query-key.constants';
 
-import { InviteMembersRequestDto } from '@features/on-boarding/types/apis.types';
-
-import { inviteMembers } from '@features/on-boarding/apis/post/invite-member';
+import { InviteMembersRequestDto } from '@/api/on-boarding/apis.types';
+import { inviteMembers } from '@/api/on-boarding/post/apis/invite-member';
 
 /**
  * 워크스페이스에 멤버를 초대하기 위한 커스텀 Mutation 훅

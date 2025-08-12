@@ -2,17 +2,13 @@ import { defaultApi } from '@lib/fetcher';
 
 import { BaseResponseDto } from '@common/types/api.common.types';
 
+import { WORKSPACES_ON_BOARDING_API_ENDPOINTS } from '@/api/on-boarding/api-end-point.constants';
 import {
   CreateWorkspaceRequestDto,
   CreateWorkspaceResponseDto,
-} from '@features/on-boarding/types/apis.types';
+} from '@/api/on-boarding/apis.types';
 
-import { ON_BOARDING_API_ENDPOINTS } from '@features/on-boarding/constants/end-point.constants';
-
-export const createWorkspace = async ({
-  name,
-  image,
-}: CreateWorkspaceRequestDto): Promise<BaseResponseDto<CreateWorkspaceResponseDto>> => {
+export const createWorkspace = async ({ name, image }: CreateWorkspaceRequestDto) => {
   const formData = new FormData();
 
   formData.append('request', JSON.stringify({ title: name }));
@@ -28,7 +24,7 @@ export const createWorkspace = async ({
   }
 
   const response = await defaultApi<BaseResponseDto<CreateWorkspaceResponseDto>>(
-    ON_BOARDING_API_ENDPOINTS.WORKSPACES,
+    WORKSPACES_ON_BOARDING_API_ENDPOINTS.WORKSPACES,
     {
       method: 'POST',
       body: formData,

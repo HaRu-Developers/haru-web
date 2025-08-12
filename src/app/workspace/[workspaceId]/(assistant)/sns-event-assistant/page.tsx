@@ -3,7 +3,7 @@ import { GnbSection, SnsGnbTabType } from '@common/types/gnbs.types';
 import { SearchParamsType } from '@common/types/routes.types';
 
 import { getCtaDescription, getListTitle } from '@common/utils/assistant-mapping.utils';
-import parseEnum from '@common/utils/parse-enum.utils';
+import parseEnumOr404 from '@common/utils/parse-enum-or-404.utils';
 
 import TextCtaWrapper from '@common/components/cta/TextCtaWrapper/TextCtaWrapper.client';
 import GnbTop from '@common/components/gnbs/GnbTop/GnbTop.client';
@@ -18,13 +18,14 @@ const SnsEventAssistantDefaultPage = async ({
   searchParams: Promise<SearchParamsType>;
 }) => {
   const { snsGnbTab } = await searchParams;
-  const formattedSnsGnbTabTab = parseEnum(snsGnbTab, SnsGnbTabType, SnsGnbTabType.ALL_EVENTS);
+
+  const formattedSnsGnbTab = parseEnumOr404(snsGnbTab, SnsGnbTabType, SnsGnbTabType.ALL_EVENTS);
 
   return (
     <section>
-      <GnbTop section={GnbSection.SNS_EVENT_ASSISTANT} current={formattedSnsGnbTabTab} />
+      <GnbTop section={GnbSection.SNS_EVENT_ASSISTANT} current={formattedSnsGnbTab} />
       <div className="assistant-wrapper">
-        {formattedSnsGnbTabTab === SnsGnbTabType.ALL_EVENTS ? (
+        {formattedSnsGnbTab === SnsGnbTabType.ALL_EVENTS ? (
           <>
             {/* cta 부분 */}
             {getCtaDescription(FileType.SNS_EVENT_ASSISTANT)}

@@ -38,7 +38,7 @@ const ImageCta = ({ type, onClick }: ImageCtaProps) => {
 
   return (
     <div
-      className="border-stroke-100 py-28pxr flex h-56 w-82.5 flex-col items-center justify-center rounded-2xl border-[1.5px] border-dashed bg-white text-center hover:bg-gray-600"
+      className="border-stroke-100 py-28pxr flex h-56 w-82.5 cursor-pointer flex-col items-center justify-center rounded-2xl border-[1.5px] border-dashed bg-white text-center hover:bg-gray-600"
       onClick={onClick}
     >
       <h3 className="text-t4-bd mb-10pxr text-black">{config.title}</h3>

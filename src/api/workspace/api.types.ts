@@ -68,12 +68,27 @@ export interface Document {
   documentType: FileType;
 }
 
-export interface fetchRecentDocumentsResquestDto {
-  workspaceId: string;
+// API 응답의 result.documents 배열에 들어갈 각 문서의 타입
+export interface SearchedDocument {
+  documentId: string;
+  title: string;
+  documentType: FileType;
+  lastOpened: string;
 }
 
-export interface fetchRecentDocumentsResponseDto {
-  documents: Document[];
+// RequestDto
+export interface SearchDocumentsRequestDto {
+  workspaceId: string;
+  title: string;
+}
+
+export interface fetchRecentDocumentsResquestDto {
+  workspaceId: number;
+}
+
+// ResponseDto
+export interface SearchDocumentsResponseDto {
+  documents: SearchedDocument[];
 }
 
 /**
@@ -90,7 +105,6 @@ export interface FetchRecentDocumentsResponseDto {
  *
  * @typedef {WorkspaceDetail[]} FetchWorkspaceResponseDto
  */
-
 export type FetchWorkspaceDetailResponseDto = WorkspaceDetail;
 
 /**

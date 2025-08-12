@@ -4,9 +4,10 @@ import ChangableWorkspaceImage from '@common/components/ChangableWorkspaceImage/
 import MoveToNextButton from '@common/components/buttons/48px/MoveToNextButton/MoveToNextButton.client';
 import { MoveToNextButtonWidth } from '@common/components/buttons/48px/MoveToNextButton/MoveToNextButton.types';
 
-import { useCreateWorkspaceMutation } from '@features/on-boarding/hooks/mutations/useCreateWorkspaceMutation';
 import { useOnboardingActions } from '@features/on-boarding/hooks/stores/useOnBoardingStore';
 import { useOnboardingState } from '@features/on-boarding/hooks/stores/useOnBoardingStore';
+
+import { useCreateWorkspaceMutation } from '@/api/on-boarding/post/mutations/useCreateWorkspaceMutation';
 
 const OnBoardingImageStep = () => {
   const { setImage, nextStep, setWorkspaceId } = useOnboardingActions();

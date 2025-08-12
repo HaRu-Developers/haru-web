@@ -10,6 +10,12 @@ const queryKeys = createQueryKeyStore({
     detail: (workspaceId: string) => [workspaceId],
     members: (workspaceId: string) => [workspaceId, 'members'],
     recentDocuments: (workspaceId: string) => [workspaceId, 'recentDocuments'],
+    calendar: (workspaceId: number, start: Date, end: Date) => [
+      workspaceId,
+      'calendar',
+      start,
+      end,
+    ],
   },
   user: {
     // 매개변수가 없는 키는 null로 정의합니다.

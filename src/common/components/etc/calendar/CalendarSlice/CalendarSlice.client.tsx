@@ -3,9 +3,13 @@
 import clsx from 'clsx';
 
 import DocumentFile from '../DocumentFile/DocumentFile.client';
-import { CalendarSliceProps } from './Calender.types';
+import { CalendarSliceProps } from './CalendarSlice.types';
 
-const CalenderSlice = ({
+/*
+ * 캘린더 슬라이스 컴포넌트
+ * 각 날짜에 해당하는 문서들을 보여주는 컴포넌트
+ */
+const CalendarSlice = ({
   date,
   files,
   isVisible,
@@ -57,4 +61,4 @@ const CalenderSlice = ({
   );
 };
 
-export default CalenderSlice;
+export default CalendarSlice;

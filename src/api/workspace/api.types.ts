@@ -1,3 +1,4 @@
+import { DocumentList } from '@common/components/etc/calendar/types/calendar.common.types';
 import { FileType } from '@common/types/file-type.enum';
 
 /**
@@ -93,3 +94,15 @@ export type FetchMyWorkspacesResponseDto = WorkspaceSummary[];
  * 워크스페이스 수정 응답 DTO
  */
 export type UpdateWorkspaceResponseDto = WorkspaceDetail;
+
+
+
+export interface fetchCalendarResquestDto {
+  workspaceId: number;
+  start: Date;
+  end: Date;
+}
+
+export interface fetchCalendarResponseDto {
+  documentList: DocumentList[];
+}

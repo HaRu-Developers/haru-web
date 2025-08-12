@@ -8,9 +8,9 @@ import { ROUTES } from '@common/constants/routes.constants';
 
 import { useAuthStoreActions } from '@features/auth/hooks/useAuthStore';
 
-// import { LOCAL_STORAGE_KEYS } from '@apis/user/constants/local-storage-key.constants';
+// import { LOCAL_STORAGE_KEYS } from '@api/user/constants/local-storage-key.constants';
 
-// import useLocalStorage from '@apis/user/hooks/useLocalStorage';
+// import useLocalStorage from '@api/user/hooks/useLocalStorage';
 
 interface GoogleLoginSuccessProps {
   accessToken: string;

@@ -53,7 +53,6 @@ module.exports = {
 
     // api 관련
     '^@api/(.*)$',
-    '^@apis/(.*)$',
 
     // 공통 모듈
     '^@common/types/(.*)$',

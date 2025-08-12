@@ -2,11 +2,11 @@
 
 import { useState } from 'react';
 
+import { useLogin } from '@api/user/hooks/mutations/useLogin';
+
 import LoginButton from '@common/components/buttons/48px/LoginButton/LoginButton.client';
 import InputOnboarding from '@common/components/inputs/InputOnboarding/InputOnboarding.client';
 import { OnboardingType } from '@common/components/inputs/InputOnboarding/InputOnboarding.types';
-
-import { useLogin } from '@apis/user/hooks/mutations/useLogin';
 
 const LoginForm = () => {
   const [email, setEmail] = useState<string>('');

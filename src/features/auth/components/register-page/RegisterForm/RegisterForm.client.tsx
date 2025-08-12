@@ -2,6 +2,9 @@
 
 import { useEffect, useState } from 'react';
 
+import { useCheckEmailDuplication } from '@api/user/hooks/mutations/useCheckEmailDuplication';
+import { useRegister } from '@api/user/hooks/mutations/useRegister';
+
 import useDebounce from '@common/hooks/useDebounce';
 
 import RegisterButton from '@common/components/buttons/48px/RegisterButton/RegisterButton.client';
@@ -10,9 +13,6 @@ import {
   OnboardingState,
   OnboardingType,
 } from '@common/components/inputs/InputOnboarding/InputOnboarding.types';
-
-import { useCheckEmailDuplication } from '@apis/user/hooks/mutations/useCheckEmailDuplication';
-import { useRegister } from '@apis/user/hooks/mutations/useRegister';
 
 import TermsAgreeCheckbox from '../TermsAgreeCheckbox/TermsAgreeCheckbox.client';
 import { TermsAgreeState } from '../TermsAgreeCheckbox/TermsAgreeCheckbox.types';

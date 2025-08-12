@@ -4,13 +4,13 @@ import { useRouter } from 'next/navigation';
 
 import { useMutation } from '@tanstack/react-query';
 
+import { login } from '@api/user/apis/post/login-register-refresh';
+
 import { ROUTES } from '@common/constants/routes.constants';
 
 import { useAuthStoreActions } from '@features/auth/hooks/useAuthStore';
 
-import { login } from '@apis/user/apis/post/login-register-refresh';
-
-// import { LOCAL_STORAGE_KEYS } from '@apis/user/constants/local-storage-key.constants';
+// import { LOCAL_STORAGE_KEYS } from '@api/user/constants/local-storage-key.constants';
 //
 // import useLocalStorage from '../useLocalStorage';
 

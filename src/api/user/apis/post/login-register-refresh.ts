@@ -1,8 +1,6 @@
 import { defaultApi } from '@lib/fetcher';
 
-import { BaseResponseDto } from '@common/types/api.common.types';
-
-import { AUTH_API_ENDPOINTS } from '@apis/user/constants/api-end-point.constants';
+import { AUTH_API_ENDPOINTS } from '@api/user/constants/api-end-point.constants';
 import {
   CheckEmailDuplicationRequestDto,
   CheckEmailDuplicationResponseDto,
@@ -11,7 +9,9 @@ import {
   RefreshAccessTokenRequestDto,
   RefreshAccessTokenResponseDto,
   SignupRequestDto,
-} from '@apis/user/types/api.types';
+} from '@api/user/types/api.types';
+
+import { BaseResponseDto } from '@common/types/api.common.types';
 
 export const signup = async ({ email, password, name, marketingAgreed }: SignupRequestDto) => {
   const response = await defaultApi<BaseResponseDto<object>>(AUTH_API_ENDPOINTS.SIGN_UP, {

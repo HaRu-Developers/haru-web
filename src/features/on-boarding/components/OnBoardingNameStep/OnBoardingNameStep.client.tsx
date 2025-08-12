@@ -26,7 +26,7 @@ const OnBoardingNameStep = () => {
   return (
     <div className="flex flex-col">
       <div>
-        <p className="text-t2-bd whitespace-pre-line">{`${user.name}님, 좋은 HaRu에요!\n 우선, 워크스페이스의 이름을 정해주세요.`}</p>
+        <p className="text-t2-bd whitespace-pre-line">{`${user.name} 님, 좋은 HaRu에요!\n 우선, 워크스페이스의 이름을 정해주세요.`}</p>
       </div>
       <div className="text-b2-rg mt-6pxr mb-44pxr text-gray-200">
         워크스페이스를 생성하고 팀원을 초대해 협업할 수 있어요.

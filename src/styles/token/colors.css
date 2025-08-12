@@ -27,6 +27,15 @@
   /* 기능별 */
   --color-file-icon: #89a4bb;
   --color-audio-bar: #007aff;
+  --color-secondary-ai-meeting: #f8792a;
+  --color-secondary-event: #faa700;
+  --color-secondary-mood-tracker: #0a85d1;
+  --color-secondary-calendar: #ea4e43;
+
+  /* 섹션 백그라운드 */
+  --color-secondary-ai-meeting-bg: #f8792a08;
+  --color-secondary-event-bg: #faa70008;
+  --color-secondary-mood-tracker-bg: #0a85d108;
 
   /* 선 색상 */
   --color-stroke-100: #d8dadc;
@@ -37,6 +46,9 @@
 
   /* 배경 딤 */
   --color-background-dimmed: rgba(0, 0, 0, 0.6);
+
+  /* 랜딩 */
+  --color-landing-bg: #fffdf9;
 
   /* 그라디언트 */
   --primary-gradient: linear-gradient(90deg, rgba(230, 87, 135, 0.7), #e65787);

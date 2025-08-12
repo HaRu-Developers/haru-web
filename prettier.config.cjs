@@ -43,13 +43,15 @@ module.exports = {
     // 정적 자산
     '^@icons/(.*)$',
     '^@assets/(.*)$',
-    
+
     // svg 컴포넌트
     '^@svgs/(.*)$',
 
     // 라이브러리 관련
     '^@lib/(.*)$',
 
+    // api 관련
+    '^@api/(.*)$',
 
     // 공통 모듈
     '^@common/types/(.*)$',
@@ -92,7 +94,7 @@ module.exports = {
 
   // pnpm install --save-dev prettier @prettier/plugin-xml
   // npx prettier --write "src/assets/**/*.svg"
-  // pnpm remove @prettier/plugin-xml  
+  // pnpm remove @prettier/plugin-xml
 
   // plugins: ['@trivago/prettier-plugin-sort-imports', 'prettier-plugin-tailwindcss', '@prettier/plugin-xml'],
   plugins: ['@trivago/prettier-plugin-sort-imports', 'prettier-plugin-tailwindcss'],

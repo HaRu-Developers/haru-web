@@ -39,4 +39,15 @@
       0px 1px 6px 0px rgba(0, 0, 0, 0.06),
       0px 2px 1px 0px rgba(0, 0, 0, 0.04);
   }
+
+  .shadow-landing-page-banner {
+    box-shadow:
+      0 0 0 1px rgba(84, 72, 49, 0.08),
+      0 4px 12px -1px rgba(0, 0, 0, 0.1),
+      0 3px 24px -8px rgba(0, 0, 0, 0.2);
+  }
+
+  .shadow-function-image {
+    box-shadow: 0 -3px 14px 0 rgba(0, 0, 0, 0.06);
+  }
 }

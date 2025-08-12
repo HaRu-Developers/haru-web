@@ -1,3 +1,3 @@
 export interface RecentDocumentsSectionProps {
-  workspaceId: number;
+  workspaceId: string;
 }

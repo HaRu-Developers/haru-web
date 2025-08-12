@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { checkEmailDuplication, login } from '@api/user/apis/post/login-register-refresh';
+import { checkEmailDuplication } from '@api/user/apis/post/login-register-refresh';
 
 interface UseCheckEmailDuplicationProps {
   onAvailable: () => void;

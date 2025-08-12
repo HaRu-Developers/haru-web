@@ -207,7 +207,7 @@ export const defaultApi = createFetcher({ fetchOptions: { cache: 'no-store' } })
 
 /**
  * axios의 withCredentials를 사용한 것과 동일한 효과를 가진 fetcher입니다.
- * @deprecated  HaRu BE에는 header를 통한 인증만 있기에 사실 상 필요는 없습니다.
+ * @deprecated  HaRu BE에는 header를 통한 인증만 있기에 사실상 필요는 없습니다.
  */
 export const withCredentialsApi = createFetcher({
   fetchOptions: { cache: 'no-store', credentials: 'include' },

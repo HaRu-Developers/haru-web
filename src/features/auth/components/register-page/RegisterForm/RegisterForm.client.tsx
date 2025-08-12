@@ -50,12 +50,20 @@ const RegisterForm = () => {
     });
   };
 
+  /**
+   * 회원가입 가능 여부를 판단하는 로직
+   *
+   * 이메일, 이름, 비밀번호, 비밀번호 확인이 모두 입력되어 있고,
+   * 비밀번호와 비밀번호 확인이 일치하며,
+   * 서비스 이용 약관과 개인정보 처리 방침에 동의한 경우에만 회원가입 버튼이 활성화됩니다.
+   */
   const isRegisterAvailable =
     email &&
     isAvailableEmail &&
     name &&
     password &&
     confirmPassword &&
+    password === confirmPassword &&
     termsAgreeState.serviceTerms &&
     termsAgreeState.privacyPolicy;
 

@@ -1,7 +1,8 @@
 import { notFound } from 'next/navigation';
 
-import { UpdateWorkspaceResponseDto } from '@api/workspace/api.types';
 import { useMutation } from '@tanstack/react-query';
+
+import { UpdateWorkspaceResponseDto } from '@api/workspace/api.types';
 
 import { ApiErrorBody } from '@common/types/api.common.types';
 

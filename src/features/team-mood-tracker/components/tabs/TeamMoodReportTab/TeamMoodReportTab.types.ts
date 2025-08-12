@@ -1,6 +1,9 @@
 export interface TeamMoodReportTabProps {
   current: TeamMoodReportTabType;
   counts: Partial<Record<TeamMoodReportTabType, number>>;
+  handleCopyClick?: () => void;
+  handleDownloadClick?: () => void;
+  handleFileClick?: () => void;
 }
 
 export enum TeamMoodReportTabType {

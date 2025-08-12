@@ -2,8 +2,8 @@ import { defaultApi } from '@lib/fetcher';
 
 import { BaseResponseDto } from '@common/types/api.common.types';
 
-import { fetchCalendarResponseDto, fetchCalendarResquestDto } from '../../api.types';
 import { WORKSPACE_API_END_POINTS } from '../../api-end-point.constants';
+import { fetchCalendarResponseDto, fetchCalendarResquestDto } from '../../api.types';
 
 export const fetchCalendar = async ({ workspaceId, start, end }: fetchCalendarResquestDto) => {
   const params = new URLSearchParams();

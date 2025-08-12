@@ -4,10 +4,10 @@ import { useEffect, useState } from 'react';
 
 import { useRouter } from 'next/navigation';
 
-import useFetchWorkspaceDetail from '@api/workspace/get/queries/useFetchWorkspaceDetail';
-
 import ArrowIcons from '@icons/ArrowIcons/ArrowIcons';
 import { ArrowIconsState } from '@icons/ArrowIcons/ArrowIcons.types';
+
+import useFetchWorkspaceDetail from '@api/workspace/get/queries/useFetchWorkspaceDetail';
 
 import { useWorkspaceActions, useWorkspaceInfo } from '@common/hooks/stores/useWorkspcaeStore';
 

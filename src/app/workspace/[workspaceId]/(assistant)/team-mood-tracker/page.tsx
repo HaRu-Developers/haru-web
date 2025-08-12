@@ -7,7 +7,7 @@ import TextCtaWrapper from '@common/components/cta/TextCtaWrapper/TextCtaWrapper
 import GnbTop from '@common/components/gnbs/GnbTop/GnbTop.client';
 import ListHeader from '@common/components/list-file/ListHeader/ListHeader.server';
 
-import ListFileTeamMoodTrakerWrapper from '@features/team-mood-tracker/componets/ListFileTeamMoodTrackerWrapper/ListFileTeamMoodTrackerWrapper.client';
+import ListFileTeamMoodTrakerWrapper from '@features/team-mood-tracker/components/ListFileTeamMoodTrackerWrapper/ListFileTeamMoodTrackerWrapper.client';
 
 const TeamMoodTrackerDefaultPage = () => {
   return (

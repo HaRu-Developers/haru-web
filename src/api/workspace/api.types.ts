@@ -1,5 +1,6 @@
-import { DocumentList } from '@common/components/etc/calendar/types/calendar.common.types';
 import { FileType } from '@common/types/file-type.enum';
+
+import { DocumentList } from '@common/components/etc/calendar/types/calendar.common.types';
 
 /**
  * 워크스페이스의 기본 정보 구조
@@ -67,6 +68,14 @@ export interface Document {
   documentType: FileType;
 }
 
+export interface fetchRecentDocumentsResquestDto {
+  workspaceId: string;
+}
+
+export interface fetchRecentDocumentsResponseDto {
+  documents: Document[];
+}
+
 /**
  * 최근 문서 목록 응답 DTO
  *
@@ -81,6 +90,7 @@ export interface FetchRecentDocumentsResponseDto {
  *
  * @typedef {WorkspaceDetail[]} FetchWorkspaceResponseDto
  */
+
 export type FetchWorkspaceDetailResponseDto = WorkspaceDetail;
 
 /**
@@ -88,14 +98,13 @@ export type FetchWorkspaceDetailResponseDto = WorkspaceDetail;
  *
  * @typedef {WorkspaceSummary[]} FetchMyWorkspacesResponseDto
  */
+
 export type FetchMyWorkspacesResponseDto = WorkspaceSummary[];
 
 /**
  * 워크스페이스 수정 응답 DTO
  */
 export type UpdateWorkspaceResponseDto = WorkspaceDetail;
-
-
 
 export interface fetchCalendarResquestDto {
   workspaceId: number;

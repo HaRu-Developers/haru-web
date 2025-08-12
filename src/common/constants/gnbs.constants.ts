@@ -8,7 +8,7 @@ import {
   SnsGnbTabType,
 } from '@common/types/gnbs.types';
 
-import { ROUTES } from './routes.constants';
+import { BigintString, ROUTES } from './routes.constants';
 
 // 공통 GNB 섹션 라벨
 export const GnbSectionLabels: Record<GnbSection, string> = {
@@ -32,21 +32,13 @@ export const GnbLeftNavItems: GnbLeftSection[] = [
   GnbSection.CALENDAR,
 ];
 
-/**
- * @description 각 섹션에 대응하는 라우팅 경로
- */
-export const GnbSectionPaths = (workspaceId: string | null) => ({
-  [GnbSection.MAIN]: workspaceId ? ROUTES.MAIN(workspaceId) : ROUTES.MAIN_WITHOUT_WS_ID,
-  [GnbSection.AI_MEETING_MANAGER]: workspaceId
-    ? ROUTES.AI_MEETING_MANAGER(workspaceId)
-    : ROUTES.AI_MEETING_MANAGER_WITHOUT_WS_ID,
-  [GnbSection.SNS_EVENT_ASSISTANT]: workspaceId
-    ? ROUTES.SNS_EVENT_ASSISTANT(workspaceId)
-    : ROUTES.SNS_EVENT_ASSISTAN_WITHOUT_WS_ID,
-  [GnbSection.TEAM_MOOD_TRACKER]: workspaceId
-    ? ROUTES.TEAM_MOOD_TRACKER(workspaceId)
-    : ROUTES.TEAM_MOOD_TRACKER_WITHOUT_WS_ID,
-  [GnbSection.CALENDAR]: workspaceId ? ROUTES.CALENDAR(workspaceId) : ROUTES.CALENDAR_WITHOUT_WS_ID,
+// 각 섹션에 대응하는 라우팅 경로
+export const GnbSectionPaths = (workspaceId: BigintString) => ({
+  [GnbSection.MAIN]: ROUTES.WORKSPACE_MAIN(workspaceId),
+  [GnbSection.AI_MEETING_MANAGER]: ROUTES.AI_MEETING_MANAGER(workspaceId),
+  [GnbSection.SNS_EVENT_ASSISTANT]: ROUTES.SNS_EVENT_ASSISTANT(workspaceId),
+  [GnbSection.TEAM_MOOD_TRACKER]: ROUTES.TEAM_MOOD_TRACKER(workspaceId),
+  [GnbSection.CALENDAR]: ROUTES.CALENDAR(workspaceId),
 });
 
 // 아이콘 매핑용 state

@@ -1,26 +1,44 @@
 import { FileType } from '@common/types/file-type.enum';
 
+/**
+ * BE측에서 string으로 변환하여 주는 Bigint (JAVA long type) 에 대응하는 타입입니다.
+ *
+ * string으로의 이관이 완전히 끝나면 string만 남기도록 합니다.
+ *
+ * (TS는 덕타입이라 오류 발생하지 않습니다)
+ */
+export type BigintString = string | number | bigint | null;
+
 export const ROUTES = {
   ONBOARDING: '/onboarding',
-  MAIN_WITHOUT_WS_ID: `/workspace`,
-  AI_MEETING_MANAGER_WITHOUT_WS_ID: `/workspace/ai-meeting-manager`,
-  SNS_EVENT_ASSISTAN_WITHOUT_WS_ID: `/workspace/sns-event-assistant`,
-  TEAM_MOOD_TRACKER_WITHOUT_WS_ID: `/workspace/team-mood-tracker`,
-  CALENDAR_WITHOUT_WS_ID: `/workspace/calendar`,
-  MAIN: (workspaceId: string) => `/workspace/${workspaceId}`,
-  AI_MEETING_MANAGER: (workspaceId: string) => `/workspace/${workspaceId}/ai-meeting-manager`,
-  SNS_EVENT_ASSISTANT: (workspaceId: string) => `/workspace/${workspaceId}/sns-event-assistant`,
-  TEAM_MOOD_TRACKER: (workspaceId: string) => `/workspace/${workspaceId}/team-mood-tracker`,
-  CALENDAR: (workspaceId: string) => `/workspace/${workspaceId}/calendar`,
+  ROOT: '/',
+
+  WORKSPACE_MAIN: (workspaceId?: BigintString) => `/workspace/${workspaceId ?? ''}`,
+  AI_MEETING_MANAGER: (workspaceId: BigintString) => `/workspace/${workspaceId}/ai-meeting-manager`,
+  SNS_EVENT_ASSISTANT: (workspaceId: BigintString) =>
+    `/workspace/${workspaceId}/sns-event-assistant`,
+  TEAM_MOOD_TRACKER: (workspaceId: BigintString) => `/workspace/${workspaceId}/team-mood-tracker`,
+  CALENDAR: (workspaceId: BigintString) => `/workspace/${workspaceId}/calendar`,
 
   // 파일 조회
-  BUILD_DOCUMENT_ROUTE: (workspaceId: string, documentType: FileType, documentId: string) => {
-    const routeMapper: Record<FileType, (workspaceId: string) => string> = {
+  BUILD_DOCUMENT_ROUTE: (
+    workspaceId: BigintString,
+    documentType: FileType,
+    documentId: BigintString,
+  ) => {
+    const routeMapper: Record<FileType, (workspaceId: BigintString) => string> = {
       [FileType.AI_MEETING_MANAGER]: ROUTES.AI_MEETING_MANAGER,
       [FileType.SNS_EVENT_ASSISTANT]: ROUTES.SNS_EVENT_ASSISTANT,
       [FileType.TEAM_MOOD_TRACKER]: ROUTES.TEAM_MOOD_TRACKER,
     };
 
     return `${routeMapper[documentType](workspaceId)}/${documentId}`;
+  },
+
+  AUTH: {
+    LOGIN: '/auth/login',
+    REGISTER: '/auth/register',
+    LOGOUT: '/auth/logout',
+    GOOGLE_OAUTH: '/auth/login/google/callback',
   },
 } as const;

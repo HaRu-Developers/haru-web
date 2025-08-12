@@ -37,6 +37,7 @@
     letter-spacing: -0.02em;
   }
   /* 제목 */
+
   .text-t1-sb {
     font-size: var(--text-28pxr);
     line-height: 130%;
@@ -111,6 +112,13 @@
     font-size: var(--text-15pxr);
     line-height: 130%;
     font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  .text-t7-rg {
+    font-size: var(--text-14pxr);
+    line-height: 130%;
+    font-weight: 400;
     letter-spacing: -0.02em;
   }
 
@@ -212,5 +220,19 @@
     line-height: 100%;
     font-weight: 600;
     letter-spacing: -0.02em;
+  }
+
+  .text-register-page-terms-agree {
+    font-size: var(--text-13pxr);
+    line-height: 100%;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  .text-login-register-page-greetings {
+    font-size: var(--text-30pxr);
+    line-height: 130%;
+    font-weight: 700;
+    letter-spacing: -0;
   }
 }

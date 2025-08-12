@@ -1,4 +1,4 @@
-import ModalPortal from '@common/components/ModalPortal/ModalPortal.server';
+import ModalPortal from '@common/components/ModalPortal/ModalPortal.client';
 import ProfileImage from '@common/components/images/ProfileImage/ProfileImage.client';
 import { ImageSize } from '@common/components/images/types/images.common.types';
 
@@ -9,7 +9,7 @@ import WorkSpaceItem from './WorkSpaceItem/WorkSpaceItem.client';
 
 // 임시 데이터
 const profile = {
-  userId: '1n',
+  userId: 1,
   imagePath: null,
   name: '기쁨',
   email: 'tngh9509@gmail.com',
@@ -17,37 +17,37 @@ const profile = {
 
 const workspaces = [
   {
-    workspaceId: '1n',
+    workspaceId: 1,
     imagePath: '/assets/images/profileImage.jpg',
     title: 'UMC 8기 운영진 회의',
     isOwner: true,
   },
   {
-    workspaceId: '2n',
+    workspaceId: 2,
     imagePath: '/assets/images/profileImage.jpg',
     title: 'Team-Haru 22차 전사회의',
     isOwner: false,
   },
   {
-    workspaceId: '3n',
+    workspaceId: 3,
     imagePath: '/assets/images/profileImage.jpg',
     title: '멋쟁이사자처럼 11기',
     isOwner: false,
   },
   {
-    workspaceId: '4n',
+    workspaceId: 4,
     imagePath: '/assets/images/profileImage.jpg',
     title: '구름톤 유니브 8기',
     isOwner: false,
   },
   {
-    workspaceId: '5n',
+    workspaceId: 5,
     imagePath: '/assets/images/profileImage.jpg',
     title: '구름톤 유니브 7기',
     isOwner: true,
   },
   {
-    workspaceId: '6n',
+    workspaceId: 6,
     imagePath: '/assets/images/profileImage.jpg',
     title: '구름톤 유니브 6기',
     isOwner: false,

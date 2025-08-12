@@ -3,7 +3,6 @@ import ReactMarkdown from 'react-markdown';
 import { MarkdownContentProps } from './MarkdownContent.types';
 
 const MarkdownContent = ({ content }: MarkdownContentProps) => {
-  console.log(content);
   return (
     <ReactMarkdown
       components={{

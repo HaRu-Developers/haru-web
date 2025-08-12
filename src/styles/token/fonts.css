@@ -136,14 +136,21 @@
     letter-spacing: -0.02em;
   }
 
-  .text-b3-md {
+  .text-b3-rg {
+    font-size: var(--text-14pxr);
+    line-height: 160%;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+
+  .text-b4-md {
     font-size: var(--text-14pxr);
     line-height: 160%;
     font-weight: 500;
     letter-spacing: -0.02em;
   }
 
-  .text-b3-rg {
+  .text-b5-rg {
     font-size: var(--text-14pxr);
     line-height: 160%;
     font-weight: 400;

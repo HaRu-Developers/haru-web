@@ -4,6 +4,11 @@ import { useState } from 'react';
 
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
 
+import { TEAM_MOOD_TRACKER_PAGE_ROUTES } from '@api/team-mood-tracker/end-point.constants';
+import { useViewReportResponse } from '@api/team-mood-tracker/get/queries/useViewReportResponse';
+import { useViewSurveyResponse } from '@api/team-mood-tracker/get/queries/useViewSurveyResponse';
+import { useModifyMoodTrackerTitleMutation } from '@api/team-mood-tracker/post/mutations/useModifyTitleMutation';
+
 import { GnbSection } from '@common/types/gnbs.types';
 
 import FileCreatedInfo from '@common/components/FileCreatedInfo/FileCreatedInfo.client';
@@ -17,18 +22,13 @@ import { filterSafeResponseList } from '@features/team-mood-tracker/utils/safe-r
 
 import { useTeamMoodToastActions } from '@features/team-mood-tracker/hooks/stores/useTeamMoodTrackerToastStore';
 
-import TeamMoodAnswerChartSection from '@features/team-mood-tracker/components/TeamMoodAnswerChartSection/TeamMoodAnswerChartSection.client';
-import TeamMoodReportContentSection from '@features/team-mood-tracker/components/TeamMoodReportContentSection/TeamMoodReportContentSection.client';
-import TeamMoodReportNoneContentSection from '@features/team-mood-tracker/components/TeamMoodReportNoneContentSection/TeamMoodReportNoneContentSection.server';
-import TeamMoodToast from '@features/team-mood-tracker/components/TeamMoodToast/TeamMoodToast.client';
-import TeamMoodTrackerPageSkeleton from '@features/team-mood-tracker/components/TeamMoodTrackerSkeleton/TeamMoodTrackerSkeleton';
+import TeamMoodAnswerChartSection from '@features/team-mood-tracker/components/mood-reports/answer-section/TeamMoodAnswerChartSection/TeamMoodAnswerChartSection.client';
+import TeamMoodReportContentSection from '@features/team-mood-tracker/components/mood-reports/report-section/TeamMoodReportContentSection/TeamMoodReportContentSection.client';
+import TeamMoodReportNoneContentSection from '@features/team-mood-tracker/components/mood-reports/report-section/TeamMoodReportNoneContentSection/TeamMoodReportNoneContentSection.server';
+import TeamMoodTrackerPageSkeleton from '@features/team-mood-tracker/components/skeletons/TeamMoodTrackerSkeleton/TeamMoodTrackerSkeleton';
 import TeamMoodReportTab from '@features/team-mood-tracker/components/tabs/TeamMoodReportTab/TeamMoodReportTab.client';
 import { TeamMoodReportTabType } from '@features/team-mood-tracker/components/tabs/TeamMoodReportTab/TeamMoodReportTab.types';
-
-import { TEAM_MOOD_TRACKER_PAGE_ROUTES } from '@/api/team-mood-tracker/end-point.constants';
-import { useViewReportResponse } from '@/api/team-mood-tracker/get/queries/useViewReportResponse';
-import { useViewSurveyResponse } from '@/api/team-mood-tracker/get/queries/useViewSurveyResponse';
-import { useModifyMoodTrackerTitleMutation } from '@/api/team-mood-tracker/post/mutations/useModifyTitleMutation';
+import TeamMoodToast from '@features/team-mood-tracker/components/toasts/TeamMoodToast/TeamMoodToast.client';
 
 const TeamMoodTrackerDetailPage = () => {
   const searchParams = useSearchParams();

@@ -33,7 +33,7 @@ const InputSurvey = ({
     { state: Type.CHOICE, label: '객관식 질문' },
     { state: Type.CHECKBOX, label: '체크박스' },
     { state: Type.SUBJECT, label: '주관식 질문' },
-  ] as Option[];
+  ];
   const handleSelectBoxClick = (value: string) => {
     const selectValue = value as Type;
     onTypeChange?.(selectValue);

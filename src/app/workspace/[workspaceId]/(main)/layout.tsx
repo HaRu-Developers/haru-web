@@ -1,3 +1,5 @@
+import React from 'react';
+
 import type { Metadata } from 'next';
 
 import FooterLayout from '@common/components/layouts/FooterLayout.server';
@@ -11,11 +13,11 @@ export const metadata: Metadata = {
 
 const MainWithWorkspaceLayout = async ({
   children,
-  modal,
+  teamMoodTrackerGeneralModal,
   params,
 }: Readonly<{
   children: React.ReactNode;
-  modal: React.ReactNode;
+  teamMoodTrackerGeneralModal: React.ReactNode;
   params: Promise<{ workspaceId?: string }>;
 }>) => {
   const workspaceId = (await params).workspaceId;
@@ -23,7 +25,7 @@ const MainWithWorkspaceLayout = async ({
   return (
     <FooterLayout>
       <GnbLeftLayout workspaceId={workspaceId}>{children}</GnbLeftLayout>
-      {modal}
+      {teamMoodTrackerGeneralModal}
     </FooterLayout>
   );
 };

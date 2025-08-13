@@ -24,14 +24,14 @@ const GnbTop = ({ section, title, current, isLoading = false }: GnbTopProps) => 
   return (
     <div className="flex w-full flex-col items-start">
       {/* 상단 제목 */}
-      {isLoading ? (
-        <div className="w-150pxr h-22pxr animate-bg-pulse rounded-4pxr" />
-      ) : (
-        <div className="border-b-stroke-200 h-60pxr py-13pxr flex items-center justify-between self-stretch border-b border-solid bg-white px-6">
+      <div className="border-b-stroke-200 py-13pxr flex h-[var(--gnb-top-height)] items-center justify-between self-stretch border-b border-solid bg-white px-6">
+        {isLoading ? (
+          <div className="w-150pxr h-30pxr animate-bg-pulse rounded-4pxr" />
+        ) : (
           <p className="text-t3-sb text-black">{config.title}</p>
-          {!isCustomSection && <InputSearchBox />}
-        </div>
-      )}
+        )}
+        {!isCustomSection && <InputSearchBox />}
+      </div>
       {!isCustomSection && (
         // 하단 탭 or 단순 옵션
         <div className="border-b-stroke-200 py-13pxr flex h-14 items-center gap-2.5 self-stretch border-b border-solid bg-white px-6">

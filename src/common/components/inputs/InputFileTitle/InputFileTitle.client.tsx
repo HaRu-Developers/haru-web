@@ -14,6 +14,8 @@ const InputFileTitle = ({
   value,
   onSave,
   onCancel,
+  noPadding = false,
+  isLoading = false,
 }: InputFileTitleProps) => {
   const [inputValue, setInputValue] = useState<string>(value);
 
@@ -33,7 +35,13 @@ const InputFileTitle = ({
   const handleBlur = () => {
     onSave?.(inputValue);
   };
-  return (
+
+  // 가로 padding
+  const px = noPadding ? 'px-0' : 'px-2';
+
+  return isLoading ? (
+    <div className="w-676pxr h-36pxr animate-bg-pulse rounded-6pxr" />
+  ) : (
     <input
       type="text"
       value={inputValue}
@@ -41,10 +49,9 @@ const InputFileTitle = ({
       onKeyDown={handleKeyDown}
       onBlur={handleBlur}
       className={clsx(
-        'w-676pxr h-36pxr rounded-4pxr text-t1-sb flex items-center bg-white px-2 py-0.5 text-black outline-none focus:outline-none',
-        {
-          'border-stroke-100 border': mode === InputFileTitleMode.EDITABLE,
-        },
+        'rounded-4pxr text-t1-sb flex items-center bg-white py-0.5 text-black outline-none focus:outline-none',
+        px,
+        { 'border-stroke-100 border': mode === InputFileTitleMode.EDITABLE },
       )}
       readOnly={mode !== InputFileTitleMode.EDITABLE}
       autoFocus

@@ -39,7 +39,7 @@ export const ROUTES = {
     },
   },
   //  ===== sns event assistant 관련 =====
-  SNS_EVENT_ASSISTANT: (workspaceId: string) => `//workspace/${workspaceId}/sns-event-assistant`,
+  SNS_EVENT_ASSISTANT: (workspaceId: string) => `/workspace/${workspaceId}/sns-event-assistant`,
   //  ===== team mood tracker 관련 =====
   TEAM_MOOD_TRACKER: (workspaceId: string) => `/workspace/${workspaceId}/team-mood-tracker`,
   //  ===== calendar =====

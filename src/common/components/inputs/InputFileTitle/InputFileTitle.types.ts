@@ -9,4 +9,6 @@ export interface InputFileTitleProps {
   value: string;
   onSave?: (newValue: string) => void;
   onCancel?: () => void;
+  noPadding?: boolean;
+  isLoading?: boolean;
 }

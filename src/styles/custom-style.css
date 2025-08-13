@@ -1,8 +1,16 @@
 @import 'tailwindcss';
 
+:root {
+  --gnb-top-height: var(--spacing-60pxr);
+  --tab-height: var(--spacing-56pxr);
+
+  /* ai-meeting-manager */
+  --meeting-header-height: var(--spacing-104pxr);
+}
+
 @layer utilities {
   .assistant-wrapper {
-    padding-left: 85px;
-    padding-right: 85px;
+    padding-left: var(--spacing-85pxr);
+    padding-right: var(--spacing-85pxr);
   }
 }

@@ -36,7 +36,7 @@ const AiMeetingLayout = async ({
   return (
     <HydrationBoundary state={dehydratedState}>
       <GnbTopTitle meetingId={meetingId} title={title} />
-      {children}
+      <main className="h-[calc(100%-var(--gnb-top-height))]">{children}</main>
     </HydrationBoundary>
   );
 };

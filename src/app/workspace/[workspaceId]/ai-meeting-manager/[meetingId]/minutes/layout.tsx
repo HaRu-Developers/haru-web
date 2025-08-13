@@ -12,12 +12,7 @@ const AiMeetingMinutesLayout = ({
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
-  return (
-    <>
-      <MeetingHeader />
-      {children}
-    </>
-  );
+  return <>{children}</>;
 };
 
 export default AiMeetingMinutesLayout;

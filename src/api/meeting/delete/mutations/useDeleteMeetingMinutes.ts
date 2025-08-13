@@ -1,6 +1,13 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
+import { ToastType } from '@common/types/toast.types';
+
 import queryKeys from '@common/constants/query-key.constants';
+
+import { ApiError } from '@common/errors/ApiError';
+import { handleMeetingError } from '@common/errors/meeting-error.utils';
+
+import { useToastActions } from '@common/hooks/stores/useToastStore';
 
 import { meetingIdRequestDto } from '../../api.types';
 import deleteMeetingMinutes from '../apis/deleteMeetingMinutes';
@@ -12,14 +19,21 @@ import deleteMeetingMinutes from '../apis/deleteMeetingMinutes';
  */
 const useDeleteMeetingMinutes = (workspaceId: string) => {
   const queryClient = useQueryClient();
+  const { addToast } = useToastActions();
+
   const listKey = queryKeys.meetings.meetingMinutesList(workspaceId).queryKey;
 
   return useMutation({
-    mutationFn: (meetingId: meetingIdRequestDto) => deleteMeetingMinutes(meetingId),
+    mutationFn: (data: meetingIdRequestDto) => deleteMeetingMinutes(data),
 
     onSuccess: async () => {
       // 회의록 리스트 다시 호출
       await queryClient.invalidateQueries({ queryKey: listKey });
+      addToast({ text: '회의록이 삭제되었습니다.', type: ToastType.SUCCESS });
+    },
+
+    onError: (error: ApiError) => {
+      handleMeetingError(error, { addToast });
     },
   });
 };

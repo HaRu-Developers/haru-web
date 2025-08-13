@@ -19,6 +19,12 @@ const RecentDocumentItem = ({
 
   if (!href) return null;
 
+  // const detailKey = queryKeys.meetings.meetingMinutesDetail(meetingId).queryKey;
+
+  //     await qc.invalidateQueries({
+  //       queryKey: detailKey,
+  //     });
+
   return (
     <Link
       href={href}

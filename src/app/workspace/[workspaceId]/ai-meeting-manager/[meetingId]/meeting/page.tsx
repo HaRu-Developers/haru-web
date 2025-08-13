@@ -1,7 +1,7 @@
 import { AiMeetingPageType } from '@features/ai-meeting-manager/types/page-type.types';
 
 import MeetingHeader from '@features/ai-meeting-manager/components/MeetingHeader/MeetingHeader.client';
-import UtterancePanel from '@features/ai-meeting-manager/components/UtterancePanel/UtterancePanel.server';
+import UtterancePanel from '@features/ai-meeting-manager/components/panels/LeftPanel/UtterancePanel/UtterancePanel.server';
 import RightPanel from '@features/ai-meeting-manager/components/panels/RightPanel/RightPanel.client';
 
 const AiMeetingProceedingPage = () => {

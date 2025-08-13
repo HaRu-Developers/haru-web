@@ -1,3 +1,3 @@
-export interface MeetingHeaderProps {
+export interface ProceedingPanelProps {
   editingScopeRef?: React.RefObject<HTMLDivElement>;
 }

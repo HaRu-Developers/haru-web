@@ -26,12 +26,10 @@ const LeftTab = ({ current }: LeftTabProps) => {
   const { setEditing } = useTabActions();
 
   const handleEditClick = () => {
-    console.log('수정 클릭');
     setEditing(true);
   };
 
   const handleEditDoneClick = () => {
-    console.log('수정 완료 클릭');
     setEditing(false);
   };
 

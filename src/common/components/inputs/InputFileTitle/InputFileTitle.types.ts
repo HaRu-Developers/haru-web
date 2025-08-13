@@ -11,4 +11,5 @@ export interface InputFileTitleProps {
   onCancel?: () => void;
   noPadding?: boolean;
   isLoading?: boolean;
+  editingScopeRef?: React.RefObject<HTMLDivElement>;
 }

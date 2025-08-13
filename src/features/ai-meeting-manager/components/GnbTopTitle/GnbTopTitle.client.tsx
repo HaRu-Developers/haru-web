@@ -2,6 +2,8 @@
 
 import { useIsFetching } from '@tanstack/react-query';
 
+import useFetchMeetingMinutesDetail from '@api/meeting/get/queries/useFetchMeetingMinutesDetail';
+
 import { GnbSection } from '@common/types/gnbs.types';
 
 import queryKeys from '@common/constants/query-key.constants';
@@ -10,10 +12,12 @@ import GnbTop from '@common/components/gnbs/GnbTop/GnbTop.client';
 
 import { GnbTopTitleProps } from './GnbTopTitle.types';
 
-const GnbTopTitle = ({ meetingId, title }: GnbTopTitleProps) => {
-  // 전역 React Query 캐시에서, 이 queryKey가 "가져오는 중"인 쿼리의 개수를 반환
-  const isFetching =
-    useIsFetching({ queryKey: queryKeys.meetings.meetingMinutesDetail(meetingId).queryKey }) > 0;
+const GnbTopTitle = ({ meetingId, title: ssrTitle }: GnbTopTitleProps) => {
+  const { extra: meetingMinutesDetail, isFetching } = useFetchMeetingMinutesDetail(meetingId);
+
+  // SSR로 받은 ssrTitle을 초기 fallback으로 쓰고,
+  // 클라에서 같은 queryKey를 구독해서 이후 갱신을 반영함
+  const title = meetingMinutesDetail?.title ?? ssrTitle ?? '';
 
   return <GnbTop section={GnbSection.CUSTOM} title={title} isLoading={isFetching} />;
 };

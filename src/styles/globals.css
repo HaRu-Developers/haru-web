@@ -6,6 +6,7 @@
 @import './token/shadows.css';
 @import './token/break-point.css';
 @import './token/define-pxr.css';
+@import './token/markdown.css';
 @import './custom-style.css';
 @import './animation.css';
 

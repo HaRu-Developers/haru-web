@@ -1,4 +1,4 @@
-import { FileType } from '@common/types/file-type.enum';
+import { BaseResponseDto } from '@common/types/api.common.types';
 
 // ========== 공통 요청 ==========
 /**
@@ -9,6 +9,12 @@ import { FileType } from '@common/types/file-type.enum';
 export interface WorkspaceIdRequestDto {
   workspaceId: string;
 }
+
+// ========== 공통 응답 ==========
+/**
+ * 회의록 title, proceeding 수정 응답
+ */
+export type EditMeetingMinutesResponse = string;
 
 /**
  * meeting ID를 포함하는 요청 DTO
@@ -107,3 +113,43 @@ export interface MeetingMinutesDetail {
 }
 
 export type FetchMeetingMinutesDetailResponseDto = MeetingMinutesDetail;
+
+// ========== 회의록 title 수정 ==========
+/**
+ * 회의록 title 수정 요청 DTO
+ *
+ * @property {string} title    - 제목 수정 내용
+ */
+export interface EditMeetingMinutesTitleRequestDto {
+  title: string;
+}
+
+/**
+ * 회의록 title 수정 요청 api 함수 params
+ *
+ * @property {string} meetingId
+ * @property {string} title
+ */
+export interface EditMeetingMinutesTitleParams extends EditMeetingMinutesTitleRequestDto {
+  meetingId: string;
+}
+
+// ========== 회의록 proceeding 수정 ==========
+/**
+ * 회의록 proceeding 수정 요청 DTO
+ *
+ * @property {string} proceeding    - 진행 내용 수정 내용
+ */
+export interface EditMeetingMinutesProceedingRequestDto {
+  proceeding: string;
+}
+
+/**
+ * 회의록 proceeding 수정 요청 api 함수 params
+ *
+ * @property {string} meetingId
+ * @property {string} proceeding
+ */
+export interface EditMeetingMinutesProceedingParams extends EditMeetingMinutesProceedingRequestDto {
+  meetingId: string;
+}

@@ -1,6 +1,13 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
+import { ToastType } from '@common/types/toast.types';
+
 import queryKeys from '@common/constants/query-key.constants';
+
+import { ApiError } from '@common/errors/ApiError';
+import { handleMeetingError } from '@common/errors/meeting-error.utils';
+
+import { useToastActions } from '@common/hooks/stores/useToastStore';
 
 import { CreateMeetingMinutesRequestDto } from '../../api.types';
 import createNewMeetingMinutes from '../apis/createNewMeetingMinutes';
@@ -13,6 +20,7 @@ import createNewMeetingMinutes from '../apis/createNewMeetingMinutes';
 const useCreateNewMeetingMinutes = (workspaceId: string) => {
   const queryClient = useQueryClient();
   const listKey = queryKeys.meetings.meetingMinutesList(workspaceId).queryKey;
+  const { addToast } = useToastActions();
 
   return useMutation({
     mutationFn: (meetingData: CreateMeetingMinutesRequestDto) =>
@@ -21,6 +29,10 @@ const useCreateNewMeetingMinutes = (workspaceId: string) => {
     onSuccess: async () => {
       // 회의록 리스트 다시 호출
       await queryClient.invalidateQueries({ queryKey: listKey });
+      addToast({ text: '회의록이 생성되었습니다.', type: ToastType.SUCCESS });
+    },
+    onError: (error: ApiError) => {
+      handleMeetingError(error, { addToast });
     },
   });
 };

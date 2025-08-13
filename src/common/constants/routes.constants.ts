@@ -1,5 +1,6 @@
 import { FileType } from '@common/types/file-type.enum';
 
+// TODO : BE와 협의 끝나면 제거하여야 함
 /**
  * BE측에서 string으로 변환하여 주는 Bigint (JAVA long type) 에 대응하는 타입입니다.
  *
@@ -17,7 +18,11 @@ export const ROUTES = {
   AI_MEETING_MANAGER: (workspaceId: BigintString) => `/workspace/${workspaceId}/ai-meeting-manager`,
   SNS_EVENT_ASSISTANT: (workspaceId: BigintString) =>
     `/workspace/${workspaceId}/sns-event-assistant`,
-  TEAM_MOOD_TRACKER: (workspaceId: BigintString) => `/workspace/${workspaceId}/team-mood-tracker`,
+  TEAM_MOOD_TRACKER: {
+    MAIN: (workspaceId: BigintString) => `/workspace/${workspaceId}/team-mood-tracker`,
+    CREATE_SURVEY: (workspaceId: BigintString) =>
+      `/workspace/${workspaceId}/team-mood-tracker/survey/create`,
+  },
   CALENDAR: (workspaceId: BigintString) => `/workspace/${workspaceId}/calendar`,
 
   // 파일 조회
@@ -29,7 +34,7 @@ export const ROUTES = {
     const routeMapper: Record<FileType, (workspaceId: BigintString) => string> = {
       [FileType.AI_MEETING_MANAGER]: ROUTES.AI_MEETING_MANAGER,
       [FileType.SNS_EVENT_ASSISTANT]: ROUTES.SNS_EVENT_ASSISTANT,
-      [FileType.TEAM_MOOD_TRACKER]: ROUTES.TEAM_MOOD_TRACKER,
+      [FileType.TEAM_MOOD_TRACKER]: ROUTES.TEAM_MOOD_TRACKER.MAIN,
     };
 
     return `${routeMapper[documentType](workspaceId)}/${documentId}`;
@@ -40,5 +45,16 @@ export const ROUTES = {
     REGISTER: '/auth/register',
     LOGOUT: '/auth/logout',
     GOOGLE_OAUTH: '/auth/login/google/callback',
+  },
+
+  MODAL: {
+    AI_MEETING_MANAGER: {},
+    SNS_EVENT_ASSISTANT: {},
+    TEAM_MOOD_TRACKER: {
+      CREATE_SURVEY: (workspaceId: BigintString) =>
+        `/workspace/${workspaceId}/team-mood-tracker/create-new-survey`,
+      REQUEST_SURVEY_CREATION: (workspaceId: BigintString) =>
+        `/workspace/${workspaceId}/team-mood-tracker/request-survey-creation`,
+    },
   },
 } as const;

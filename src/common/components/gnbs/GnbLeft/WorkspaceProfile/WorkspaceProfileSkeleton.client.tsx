@@ -1,3 +1,5 @@
+'use client';
+
 const WorkspaceProfileSkeleton = () => {
   return (
     <div className="h-46pxr px-7pxr py-5pxr flex w-full">

@@ -1,3 +1,5 @@
+'use client';
+
 import clsx from 'clsx';
 
 import { CommonTextProps, CommonTextType } from './CommonText.types';

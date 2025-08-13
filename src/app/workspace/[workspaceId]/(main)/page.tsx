@@ -8,9 +8,9 @@ import Image404 from '@assets/images/404/image.png';
 
 import CreateWorkspaceButton from '@common/components/buttons/38px/CreateWorkspaceButton/CreateWorkSpaceButton.client';
 import ImageCta from '@common/components/cta/ImageCta/ImageCta.client';
-import ImageCtaSkeleton from '@common/components/cta/ImageCta/ImageCtaSkeleton';
+import ImageCtaSkeleton from '@common/components/cta/ImageCta/ImageCtaSkeleton.client';
 import BoxedFile from '@common/components/etc/BoxedFile/BoxedFile.client';
-import BoxedFileSkeleton from '@common/components/etc/BoxedFile/BoxedFileSkelton';
+import BoxedFileSkeleton from '@common/components/etc/BoxedFile/BoxedFileSkelton.client';
 
 import { ctaItems, dummyFiles } from '@features/on-boarding/mocks/dummy-files';
 
@@ -18,6 +18,7 @@ const MainWithWorkspacePage = () => {
   // 임시 로딩 상태 (실제 프로젝트에서는 API fetch 기준으로 변경)
   const [isLoading, setIsLoading] = useState(false);
   const hasworkSpace = true;
+
   return hasworkSpace ? (
     <div className="flex flex-col items-center">
       <div className="mb-74pxr flex flex-col">

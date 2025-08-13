@@ -9,7 +9,7 @@ import { useUserActions } from '@common/hooks/stores/useUserStore';
 
 import useFetchUserDetail from '@/api/user/get/queries/useFetchUserDetail';
 
-import CommonText from '../CommonText/CommonText.server';
+import CommonText from '../CommonText/CommonText.client';
 import { CommonTextType } from '../CommonText/CommonText.types';
 import { ProfileSelectModalMenuState, ProfileSelectModalProps } from './ProfileSelectModal.types';
 import { ProfileSelectModalMenuButton } from './ProfileSelectModalMenuButton/ProfileSelectModalMenuButton.client';

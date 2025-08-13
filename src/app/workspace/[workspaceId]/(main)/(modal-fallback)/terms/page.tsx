@@ -1,16 +1,28 @@
 import { Suspense } from 'react';
 
+import { SearchParamsType } from '@common/types/routes.types';
+
+import MainWithoutWorkspaceLayout from '@/app/workspace/(without-workspace)/(main)/layout';
+import MainWithoutWorkspacePage from '@/app/workspace/(without-workspace)/(main)/page';
+
 import TermsModalPage from '../../@modal/(.)terms/page';
-import MainWithWorkspacePage from '../../page';
 
 // 새로고침이나 직접 접근 시에도 TermsModalPage를 재활용
-const TermsStandalonePage = () => {
+const TermsStandalonePage = ({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ workspaceId?: string }>;
+  searchParams: Promise<SearchParamsType>;
+}) => {
   return (
     <>
       <Suspense fallback={<div>로딩중...</div>}>
-        <TermsModalPage />
+        <TermsModalPage searchParams={searchParams} />
       </Suspense>
-      <MainWithWorkspacePage />
+      <MainWithoutWorkspaceLayout params={params}>
+        <MainWithoutWorkspacePage />
+      </MainWithoutWorkspaceLayout>
     </>
   );
 };

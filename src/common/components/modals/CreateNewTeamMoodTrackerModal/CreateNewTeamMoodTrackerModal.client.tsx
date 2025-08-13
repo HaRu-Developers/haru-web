@@ -9,7 +9,7 @@ import TextBoxFieldModal from '@common/components/inputs/modals/TextBoxFieldModa
 import SelectBoxOption from '@common/components/select-box/SelectBoxOption/SelectBoxOption.client';
 import { Option } from '@common/components/select-box/SelectBoxOption/SelectBoxOption.types';
 
-import CommonText from '../CommonText/CommonText.server';
+import CommonText from '../CommonText/CommonText.client';
 import { CommonTextType } from '../CommonText/CommonText.types';
 import DateTimePicker from '../DateTimePicker/DateTimePicker.client';
 

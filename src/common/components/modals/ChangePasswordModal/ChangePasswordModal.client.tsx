@@ -14,7 +14,7 @@ import ChangePasswordButton from '@common/components/buttons/30px/ChangePassword
 import { ChangePasswordButtonState } from '@common/components/buttons/30px/ChangePasswordButton/ChangePasswordButton.types';
 import InputFieldModal from '@common/components/inputs/modals/InputFieldModal/InputFieldModal.client';
 
-import CommonText from '../CommonText/CommonText.server';
+import CommonText from '../CommonText/CommonText.client';
 import { CommonTextType } from '../CommonText/CommonText.types';
 import { ChangePasswordModalProps } from './ChangePasswordModal.types';
 

@@ -44,7 +44,7 @@ const CreateNewTeamMoodTrackerModal = ({
   };
 
   return (
-    <div className="p-24pxr rounded-16pxr w-582pxr shadow-modal flex flex-col items-center justify-center">
+    <div className="p-24pxr rounded-16pxr w-582pxr shadow-modal flex flex-col items-center justify-center bg-white">
       {/* 모달 제목 + 닫기 버튼 */}
       <div className="h-32pxr flex w-full items-center justify-between">
         <CommonText type={CommonTextType.T3_BD_BLACK} text="새로운 팀 분위기 설문" />

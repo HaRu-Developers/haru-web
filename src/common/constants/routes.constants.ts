@@ -1,5 +1,7 @@
 import { FileType } from '@common/types/file-type.enum';
 
+import { CreateNewTeamMoodTrackerModalOnNextStepProps } from '@features/team-mood-tracker/components/modals/CreateNewTeamMoodTrackerModal/CreateNewTeamMoodTrackerModal.types';
+
 // TODO : BE와 협의 끝나면 제거하여야 함
 /**
  * BE측에서 string으로 변환하여 주는 Bigint (JAVA long type) 에 대응하는 타입입니다.
@@ -20,8 +22,11 @@ export const ROUTES = {
     `/workspace/${workspaceId}/sns-event-assistant`,
   TEAM_MOOD_TRACKER: {
     MAIN: (workspaceId: BigintString) => `/workspace/${workspaceId}/team-mood-tracker`,
-    CREATE_SURVEY: (workspaceId: BigintString) =>
-      `/workspace/${workspaceId}/team-mood-tracker/survey/create`,
+    CREATE_SURVEY: (
+      workspaceId: BigintString,
+      data: CreateNewTeamMoodTrackerModalOnNextStepProps,
+    ) =>
+      `/workspace/${workspaceId}/team-mood-tracker/survey/create?title=${data.title}&description=${data.description}&dueDate=${data.dueDate}&visibility=${data.visibility}`,
   },
   CALENDAR: (workspaceId: BigintString) => `/workspace/${workspaceId}/calendar`,
 

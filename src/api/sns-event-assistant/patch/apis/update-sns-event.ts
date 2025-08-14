@@ -1,0 +1,18 @@
+import { defaultApi } from '@lib/fetcher';
+
+import { BaseResponseDto } from '@common/types/api.common.types';
+
+import { WORKSPACES_SNS_EVENT_ASSISTANT_API_END_POINTS } from '../../api-end-point.constants';
+import { UpdateSnsEventAssistantRequestDto } from '../../api.types';
+
+export const UpdateSnsEvent = async ({ snsEventId }: UpdateSnsEventAssistantRequestDto) => {
+  const response = await defaultApi<BaseResponseDto<{}>>(
+    WORKSPACES_SNS_EVENT_ASSISTANT_API_END_POINTS.SNS_EVENT_ASSISTANT_EDIT(snsEventId),
+    {
+      method: 'PATCH',
+      auth: true,
+    },
+  );
+
+  return response;
+};

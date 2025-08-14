@@ -10,7 +10,7 @@ import GnbTop from '@common/components/gnbs/GnbTop/GnbTop.client';
 import ListHeader from '@common/components/list-file/ListHeader/ListHeader.server';
 
 import ListFileSnsEventAssistantLinkWrapper from '@features/sns-event-assistant/components/list-file-wrapper/ListFileSnsEventAssistantLinkWrapper/ListFileSnsEventAssistantLinkWrapper.client';
-import ListFileSnsEventAssistantWrapper from '@features/sns-event-assistant/components/list-file-wrapper/ListFileSnsEventAssistantWrapper/ListFileSnsEventAssistantWrapper.client';
+import ListFileSnsEventAssistantListWrapper from '@features/sns-event-assistant/components/list-file-wrapper/ListFileSnsEventAssistantListWrapper/ListFileSnsEventAssistantListWrapper.client';
 
 const SnsEventAssistantDefaultPage = async ({
   searchParams,
@@ -20,7 +20,6 @@ const SnsEventAssistantDefaultPage = async ({
   const { snsGnbTab } = await searchParams;
 
   const formattedSnsGnbTab = parseEnumOr404(snsGnbTab, SnsGnbTabType, SnsGnbTabType.ALL_EVENTS);
-
   return (
     <section>
       <GnbTop section={GnbSection.SNS_EVENT_ASSISTANT} current={formattedSnsGnbTab} />
@@ -32,8 +31,7 @@ const SnsEventAssistantDefaultPage = async ({
             <TextCtaWrapper fileType={FileType.SNS_EVENT_ASSISTANT} />
             {/* 리스트 부분 */}
             {getListTitle(FileType.SNS_EVENT_ASSISTANT)}
-            <ListHeader fileType={FileType.SNS_EVENT_ASSISTANT} />
-            <ListFileSnsEventAssistantWrapper />
+            <ListFileSnsEventAssistantListWrapper />
           </>
         ) : (
           <>

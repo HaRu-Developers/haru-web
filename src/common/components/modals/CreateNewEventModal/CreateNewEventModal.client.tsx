@@ -14,8 +14,6 @@ import ToggleButton from '@common/components/buttons/22px/ToggleButton/ToggleBut
 import NextStepButton from '@common/components/buttons/30px/NextStepButton/NextStepButton.client';
 import InputChips from '@common/components/inputs/InputChips/InputChips.client';
 import InputFieldModal from '@common/components/inputs/modals/InputFieldModal/InputFieldModal.client';
-import { useCreateEventConditions } from '@common/components/modals/CreateNewEventModal/useCreateEventConditions';
-import SelectBoxTag from '@common/components/select-box/SelectBoxTag/SelectBoxTag.client';
 
 import CommonText from '../CommonText/CommonText.server';
 import { CommonTextType } from '../CommonText/CommonText.types';
@@ -26,7 +24,7 @@ import { CreateNewEventModalProps } from './CreateNewEventModal.types';
  * 새로운 이벤트를 생성할 때 사용하는 모달입니다.
  */
 const CreateNewEventModal = ({ onClose, onNextStep }: CreateNewEventModalProps) => {
-  const { newTitle, newSnsEventLink, friendTag, isFollowed, isLiked, keyword, period } =
+  const { newTitle, newSnsEventLink, friendTag, winnerCount, keyword, period } =
     useSnsEventAssistantInfo();
   const {
     setNewTitle,
@@ -34,10 +32,9 @@ const CreateNewEventModal = ({ onClose, onNextStep }: CreateNewEventModalProps) 
     changeKeyword,
     setFriendTagRequirement,
     setPeriod,
-    toggleFollow,
+    setWinnerCount,
     toggleFriendTag,
     toggleKeyword,
-    toggleLike,
     togglePeriod,
   } = useSnsEventAssistantActions();
 
@@ -49,6 +46,18 @@ const CreateNewEventModal = ({ onClose, onNextStep }: CreateNewEventModalProps) 
     }
   }, [temporaryDate]);
 
+  /**
+   * 당첨 인원 수 변경 핸들러
+   */
+  const handleRequiredWinnerCountChange = (value: string) => {
+    const numberValue = parseInt(value, 10);
+    if (!isNaN(numberValue)) {
+      // 숫자가 입력된 경우
+      setWinnerCount(numberValue);
+    } else if (value === '') {
+      setWinnerCount(null);
+    }
+  };
   /**
    * 친구 태그 수 변경 핸들러
    */
@@ -62,6 +71,19 @@ const CreateNewEventModal = ({ onClose, onNextStep }: CreateNewEventModalProps) 
     }
   };
 
+  /**
+   *
+   */
+  const isNextDisabled = () => {
+    return (
+      !newTitle ||
+      !newSnsEventLink ||
+      (period.isActive && !temporaryDate) ||
+      (friendTag.isActive && friendTag.requiredFriendTag === null) ||
+      (keyword.isActive && keyword.keyword.length === 0) ||
+      winnerCount === null
+    );
+  };
   return (
     <div className="p-24pxr rounded-16pxr w-582pxr shadow-modal flex flex-col items-center justify-center bg-white">
       {/* 모달 제목 + 닫기 버튼 */}
@@ -91,22 +113,25 @@ const CreateNewEventModal = ({ onClose, onNextStep }: CreateNewEventModalProps) 
       {/* 이벤트 조건 설정 */}
       <div className="mt-25pxr gap-y-12pxr flex w-full flex-col items-start justify-center">
         <CommonText type={CommonTextType.T5_SB_BLACK} text="이벤트 당첨 조건" />
-        {/* 기본 참여 조건 선택 */}
+        {/* 당첨 인원*/}
         <div className="mt-12pxr flex w-full flex-col items-start justify-center">
-          <CommonText type={CommonTextType.T6_SB_BLACK} text="기본 참여 조건 선택" />
+          <CommonText type={CommonTextType.T6_SB_BLACK} text="당첨 인원" />
           <CommonText
             type={CommonTextType.CAP1_RG_GRAY_300}
-            text="아래 항목 중 선택한 조건을 만족한 참여자만 수집해 드려요."
+            text="입력한 인원 수만큼 공정하게 추첨해 드려요."
             className="mt-3pxr"
           />
-          <div className="gap-x-8pxr mt-8pxr flex flex-row">
-            <SelectBoxTag label="좋아요 여부" onClick={toggleLike} isSelected={isLiked} />
-            <SelectBoxTag label="팔로우 여부" onClick={toggleFollow} isSelected={isFollowed} />
+          <div className="gap-x-8pxr mt-8pxr flex w-full flex-row">
+            <InputFieldModal
+              placeholder="수를 입력해 주세요."
+              value={winnerCount?.toString() ?? ''}
+              onChange={handleRequiredWinnerCountChange}
+            />
           </div>
         </div>
 
         {/* 참여 기간 */}
-        <div className="mt-12pxr relative flex w-full flex-col items-start justify-center">
+        <div className="relative flex w-full flex-col items-start justify-center">
           <ToggleButton
             className="absolute top-0 right-0"
             state={period.isActive}
@@ -130,7 +155,7 @@ const CreateNewEventModal = ({ onClose, onNextStep }: CreateNewEventModalProps) 
           )}
         </div>
         {/* 특정 키워드 포함 여부 */}
-        <div className="mt-12pxr relative flex w-full flex-col items-start justify-center">
+        <div className="relative flex w-full flex-col items-start justify-center">
           <ToggleButton
             className="absolute top-0 right-0"
             state={keyword.isActive}
@@ -159,7 +184,7 @@ const CreateNewEventModal = ({ onClose, onNextStep }: CreateNewEventModalProps) 
           )}
         </div>
         {/* 친구 태그 여부 */}
-        <div className="mt-12pxr relative flex w-full flex-col items-start justify-center">
+        <div className="relative flex w-full flex-col items-start justify-center">
           <ToggleButton
             className="absolute top-0 right-0"
             state={friendTag.isActive}
@@ -184,7 +209,7 @@ const CreateNewEventModal = ({ onClose, onNextStep }: CreateNewEventModalProps) 
       </div>
 
       <div className="mt-16pxr flex w-full items-center justify-end">
-        <NextStepButton onClick={onNextStep} disabled={false} />
+        <NextStepButton onClick={onNextStep} disabled={isNextDisabled()} />
       </div>
     </div>
   );

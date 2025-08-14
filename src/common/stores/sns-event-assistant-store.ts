@@ -5,8 +5,7 @@ import { immer } from 'zustand/middleware/immer';
 import { EventConditions } from '@common/components/modals/CreateNewEventModal/CreateNewEventModal.types';
 
 const DEFAULT_CONDITIONS: EventConditions = {
-  isLiked: false,
-  isFollowed: false,
+  winnerCount: null,
   period: {
     isActive: false,
     endDate: null,
@@ -29,8 +28,7 @@ export interface SnsEventAssistantStoreState {
     setNewTitle: (title: string) => void;
     setNewSnsEventLink: (link: string) => void;
     setConditions: (conditions: EventConditions) => void;
-    toggleLike: () => void;
-    toggleFollow: () => void;
+    setWinnerCount: (count: number | null) => void;
     togglePeriod: () => void;
     toggleKeyword: () => void;
     toggleFriendTag: () => void;
@@ -65,14 +63,9 @@ const snsEventAssistantStore = create<SnsEventAssistantStoreState>()(
             state.conditions = newConditions;
           });
         },
-        toggleLike: () => {
+        setWinnerCount: (count) => {
           set((state) => {
-            state.conditions.isLiked = !state.conditions.isLiked;
-          });
-        },
-        toggleFollow: () => {
-          set((state) => {
-            state.conditions.isFollowed = !state.conditions.isFollowed;
+            state.conditions.winnerCount = count;
           });
         },
         togglePeriod: () => {

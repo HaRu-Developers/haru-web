@@ -33,7 +33,7 @@ export const getListTitle = (type: ExtendedFileType) => {
     case FileType.TEAM_MOOD_TRACKER:
       return <BoldText text={'내 팀 분위기 리포트'} className={'mt-56pxr mb-16pxr'} />;
     case SNS_EVENT_ASSISTANT_LINK:
-      return <BoldText text={'SNS 링크 관리'} className={'mt-36pxr mb-16pxr'} />;
+      return <BoldText text={'SNS 링크 관리'} className={'mt-36pxr'} />;
     default:
       return null;
   }

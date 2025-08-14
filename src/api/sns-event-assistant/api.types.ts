@@ -13,11 +13,11 @@ export interface WorkspaceId {
 export interface SnsEventAssistantCondition {
   winnerCount: number;
   isPeriod: boolean;
-  period: Date;
+  period: Date | null;
   isKeyword: boolean;
-  keyword: string;
+  keyword: string | null;
   isTaged: boolean;
-  tageCount: number;
+  tageCount: number | null;
 }
 
 export interface PeopleList {

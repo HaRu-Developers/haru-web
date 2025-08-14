@@ -14,6 +14,7 @@ const InputFileTitle = ({
   value,
   onSave,
   onCancel,
+  onMode,
 }: InputFileTitleProps) => {
   const [inputValue, setInputValue] = useState<string>(value);
 
@@ -24,6 +25,7 @@ const InputFileTitle = ({
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       onSave?.(inputValue);
+      onMode?.(InputFileTitleMode.DEFAULT);
     } else if (e.key === 'Escape') {
       setInputValue(value);
       onCancel?.();
@@ -32,6 +34,7 @@ const InputFileTitle = ({
 
   const handleBlur = () => {
     onSave?.(inputValue);
+    onMode?.(InputFileTitleMode.DEFAULT);
   };
   return (
     <input
@@ -46,6 +49,7 @@ const InputFileTitle = ({
           'border-stroke-100 border': mode === InputFileTitleMode.EDITABLE,
         },
       )}
+      onClick={() => onMode?.(InputFileTitleMode.EDITABLE)}
       readOnly={mode !== InputFileTitleMode.EDITABLE}
       autoFocus
     />

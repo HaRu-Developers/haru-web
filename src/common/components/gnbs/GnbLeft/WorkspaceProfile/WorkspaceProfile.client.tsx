@@ -41,12 +41,12 @@ const WorkSpaceProfile = ({ workspaceId }: WorkspaceProfileProps) => {
   };
 
   useEffect(() => {
-    if (workspaceDetail && hasWorkspaceId) {
+    if (workspaceDetail && hasWorkspaceId && workspaceDetail?.title !== title) {
       setTitle(workspaceDetail.title);
       setImageUrl(workspaceDetail.imageUrl);
       setMembers(workspaceDetail.members);
     }
-  }, [workspaceDetail]);
+  }, [workspaceDetail, hasWorkspaceId, title, setTitle, setImageUrl, setMembers]);
 
   if (!hasWorkspaceId) {
     return (

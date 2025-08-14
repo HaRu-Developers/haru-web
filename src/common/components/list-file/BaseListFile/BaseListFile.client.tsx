@@ -26,6 +26,7 @@ const BaseListFile = ({
   const [isHovered, setIsHovered] = useState(false);
 
   const handleToggle = (e: React.MouseEvent) => {
+    e.stopPropagation();
     e.preventDefault();
     onCheckToggle?.(id);
   };
@@ -34,8 +35,10 @@ const BaseListFile = ({
 
   // a 태그 중첩 방지를 위해 최상위는 div, 클릭 시 라우팅은 onClick 핸들러로 처리
   const handleClick = () => {
-    if (href) {
+    if (href && !isCheckMode) {
       window.location.href = href; // 또는 router.push(href)
+    } else {
+      onCheckToggle?.(id);
     }
   };
 

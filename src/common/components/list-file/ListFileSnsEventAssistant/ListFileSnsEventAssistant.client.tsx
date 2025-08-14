@@ -1,5 +1,7 @@
 'use client';
 
+import { useParams } from 'next/navigation';
+
 import { FeaturedFileIconsState } from '@icons/FeaturedFileIcons/FeaturedFileIcons.types';
 
 import BaseListFile from '../BaseListFile/BaseListFile.client';
@@ -16,6 +18,7 @@ const ListFileSnsEventAssistant = ({
   isChecked,
   onCheckToggle,
 }: ListFileSnsEventAssistantProps) => {
+  const { workspaceId } = useParams<{ workspaceId: string }>();
   const rightContent = (
     <div className="gap-30pxr pr-32pxr flex items-center">
       <div className="w-90pxr flex items-center justify-center">
@@ -31,8 +34,8 @@ const ListFileSnsEventAssistant = ({
     <BaseListFile
       id={snsEventId}
       title={title}
-      subtitle={updatedAt}
-      href={`/meeting/${snsEventId}`}
+      subtitle={updatedAt.toString()}
+      href={`/workspace/${workspaceId}/sns-event-assistant/${snsEventId}`}
       fileIconState={FeaturedFileIconsState.SIZE_24_SNS_ASSISTANT_FILE}
       isCheckMode={isCheckMode}
       isChecked={isChecked}

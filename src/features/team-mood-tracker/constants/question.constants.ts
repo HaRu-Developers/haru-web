@@ -1,4 +1,4 @@
-export enum SurveyQuestionType {
+export enum TeamMoodTrackerSurveyQuestionType {
   MULTIPLE_CHOICE = 'MULTIPLE_CHOICE',
   CHECKBOX_CHOICE = 'CHECKBOX_CHOICE',
   SUBJECTIVE = 'SUBJECTIVE',

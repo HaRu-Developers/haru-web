@@ -1,4 +1,4 @@
-import { SurveyQuestionType } from '@features/team-mood-tracker/constants/question.constants';
+import { TeamMoodTrackerSurveyQuestionType } from '@features/team-mood-tracker/constants/question.constants';
 
 import { SurveyQuestion } from '@/api/team-mood-tracker/apis.types';
 
@@ -17,11 +17,11 @@ export const filterSafeResponseList = (
 
   return responseList.filter((response) => {
     switch (response.type) {
-      case SurveyQuestionType.MULTIPLE_CHOICE:
-        return Array.isArray(response.mulipleChoiceResponseList);
-      case SurveyQuestionType.CHECKBOX_CHOICE:
+      case TeamMoodTrackerSurveyQuestionType.MULTIPLE_CHOICE:
+        return Array.isArray(response.multipleChoiceResponseList);
+      case TeamMoodTrackerSurveyQuestionType.CHECKBOX_CHOICE:
         return Array.isArray(response.checkboxChoiceResponseList);
-      case SurveyQuestionType.SUBJECTIVE:
+      case TeamMoodTrackerSurveyQuestionType.SUBJECTIVE:
         return Array.isArray(response.subjectiveResponseList);
       default:
         return false;

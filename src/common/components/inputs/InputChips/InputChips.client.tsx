@@ -95,7 +95,7 @@ const InputChips = ({
         onFocus={handleFocus}
         onBlur={handleBlur}
         onKeyDown={handleInputKeyDown}
-        className={clsx('min-w-20 flex-shrink-0 bg-transparent outline-none')}
+        className={clsx('w-full min-w-20 flex-shrink-0 bg-transparent outline-none')}
       />
     </div>
   );

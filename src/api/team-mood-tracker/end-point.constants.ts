@@ -2,6 +2,7 @@ export const MOOD_TRACKER_API_ENDPOINTS = {
   REPORTS: (moodTrackerHashedId: string) => `/mood-trackers/${moodTrackerHashedId}/reports`,
   RESPONSES: (moodTrackerHashedId: string) => `/mood-trackers/${moodTrackerHashedId}/responses`,
   MODIFY_TITLE: (moodTrackerHashedId: string) => `/mood-trackers/${moodTrackerHashedId}`,
+  DOWNLOAD_LINK: (moodTrackerHashedId: string) => `/mood-trackers/${moodTrackerHashedId}/download`,
 } as const;
 
 export const TEAM_MOOD_TRACKER_PAGE_ROUTES = {

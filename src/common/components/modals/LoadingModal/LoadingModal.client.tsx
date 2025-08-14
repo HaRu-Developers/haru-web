@@ -25,7 +25,7 @@ const LoadingModal = ({ onClose, modalType }: LoadingModalProps) => {
   };
 
   return (
-    <div className="w-396pxr h-240pxr rounded-16pxr shadow-modal relative flex flex-col items-center justify-center">
+    <div className="w-396pxr h-240pxr rounded-16pxr shadow-modal relative flex flex-col items-center justify-center bg-white">
       <button onClick={onClose} className="top-22pxr right-20pxr absolute">
         <CrossIcons state={CrossIconsState.SIZE_20_GRAY_200} />
       </button>

@@ -56,6 +56,8 @@ const CreateNewTeamMoodTrackerModal = ({
     });
   };
 
+  const isNextStepDisabled = !surveyTitle || !selectedDateTime || !surveyDescription;
+
   return (
     <div className="p-24pxr rounded-16pxr w-582pxr shadow-modal flex flex-col items-center justify-center bg-white">
       {/* 모달 제목 + 닫기 버튼 */}
@@ -109,7 +111,7 @@ const CreateNewTeamMoodTrackerModal = ({
       </div>
       {/* 다음 단계로 버튼 */}
       <div className="mt-16pxr flex w-full items-center justify-end">
-        <NextStepButton onClick={handleOnNext} disabled={true} />
+        <NextStepButton onClick={handleOnNext} disabled={isNextStepDisabled} />
       </div>
     </div>
   );

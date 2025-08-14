@@ -32,15 +32,15 @@ import TeamMoodToast from '@features/team-mood-tracker/components/toasts/TeamMoo
 
 const TeamMoodTrackerDetailPage = () => {
   const searchParams = useSearchParams();
+
   const params = useParams<{
     workspaceId: string;
     moodTrackerHashedId: string;
   }>();
-
-  const router = useRouter();
-
   const workspaceId = params.workspaceId;
   const moodTrackerHashedId = params.moodTrackerHashedId;
+
+  const router = useRouter();
 
   const { showCopyToast } = useTeamMoodToastActions();
 
@@ -123,10 +123,13 @@ const TeamMoodTrackerDetailPage = () => {
   return (
     <>
       <div className="relative flex flex-col">
+        {/*상단 GNB*/}
         <GnbTop section={GnbSection.CUSTOM} title={optimisticData.title} />
+        {/*토스트 영역 */}
         <div className="top-100pxr absolute right-0 left-0 z-100 flex justify-center">
           <TeamMoodToast />
         </div>
+        {/*MAIN CONTENT*/}
         <div className="mt-24pxr mb-10pxr w-668pxr mx-auto flex-col">
           <div className="mb-14pxr">
             {isEditingTitle ? (

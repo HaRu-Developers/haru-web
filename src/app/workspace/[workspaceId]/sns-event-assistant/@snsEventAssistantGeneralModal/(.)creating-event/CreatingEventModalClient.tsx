@@ -16,10 +16,6 @@ import ModalLayout from '@/common/components/layouts/ModalLayout/ModalLayout.cli
 const CreatingEventModalClient = () => {
   const router = useRouter();
   const { workspaceId } = useParams<{ workspaceId: string }>();
-  if (!workspaceId) {
-    console.error('workspaceId가 없습니다.');
-    return null;
-  }
 
   const { newTitle, newSnsEventLink, friendTag, winnerCount, keyword, period } =
     useSnsEventAssistantInfo();
@@ -47,7 +43,7 @@ const CreatingEventModalClient = () => {
         },
       },
     );
-  }, []);
+  }, [mutate, workspaceId, newTitle, newSnsEventLink, condition, router]);
 
   const handleClose = () => {
     router.back();

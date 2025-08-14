@@ -6,7 +6,7 @@ import { WORKSPACES_SNS_EVENT_ASSISTANT_API_END_POINTS } from '../../api-end-poi
 import { DeleteSnsEventAssistantRequestDto } from '../../api.types';
 
 export const DeleteSnsEvent = async ({ snsEventId }: DeleteSnsEventAssistantRequestDto) => {
-  const response = await defaultApi<BaseResponseDto<{}>>(
+  const response = await defaultApi<BaseResponseDto<unknown>>(
     WORKSPACES_SNS_EVENT_ASSISTANT_API_END_POINTS.SNS_EVENT_ASSISTANT_DELETE(snsEventId),
     {
       method: 'DELETE',

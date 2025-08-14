@@ -14,7 +14,7 @@ import { UpdateSnsEvent } from '../apis/update-sns-event';
 
 const useUpdateSnsEventMutation = () => {
   return useMutation<
-    { result: {} }, // TData
+    unknown, // TData
     ApiError<ApiErrorBody>, // TError
     UpdateSnsEventAssistantRequestDto // TMutateVariables
   >({

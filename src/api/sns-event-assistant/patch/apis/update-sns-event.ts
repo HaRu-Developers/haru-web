@@ -6,7 +6,7 @@ import { WORKSPACES_SNS_EVENT_ASSISTANT_API_END_POINTS } from '../../api-end-poi
 import { UpdateSnsEventAssistantRequestDto } from '../../api.types';
 
 export const UpdateSnsEvent = async ({ snsEventId }: UpdateSnsEventAssistantRequestDto) => {
-  const response = await defaultApi<BaseResponseDto<{}>>(
+  const response = await defaultApi<BaseResponseDto<unknown>>(
     WORKSPACES_SNS_EVENT_ASSISTANT_API_END_POINTS.SNS_EVENT_ASSISTANT_EDIT(snsEventId),
     {
       method: 'PATCH',

@@ -14,7 +14,7 @@ import { DeleteSnsEvent } from '../apis/delete-sns-event';
 
 const useDeleteSnsEventMutation = () => {
   return useMutation<
-    { result: {} }, // TData
+    unknown, // TData
     ApiError<ApiErrorBody>, // TError
     DeleteSnsEventAssistantRequestDto // TMutateVariables
   >({

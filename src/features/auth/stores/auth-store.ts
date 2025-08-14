@@ -15,9 +15,11 @@ interface AuthStoreState {
   user: User | null;
   actions: {
     setUser: (user: User | null) => void;
+    setUserId: (userId: string) => void;
     setAccessToken: (accessToken: string) => void;
     setRefreshToken: (refreshToken: string) => void;
     setWorkspaceIdList: (workspaceIdList: string[]) => void;
+    clearTokens: () => void;
   };
 }
 
@@ -30,6 +32,14 @@ const useAuthStore = create<AuthStoreState>()(
           setUser: (user) =>
             set((state) => {
               state.user = user;
+            }),
+          setUserId: (userId) =>
+            set((state) => {
+              if (state.user) {
+                state.user.id = userId;
+              } else {
+                state.user = { id: userId };
+              }
             }),
           setAccessToken: (accessToken) =>
             set((state) => {
@@ -56,6 +66,14 @@ const useAuthStore = create<AuthStoreState>()(
                 throw new Error('ERROR: USER NOT SET IN AUTH STORE');
               }
             }),
+          clearTokens: () => {
+            set((state) => {
+              if (state.user) {
+                state.user.accessToken = undefined;
+                state.user.refreshToken = undefined;
+              }
+            });
+          },
         },
       })),
       {

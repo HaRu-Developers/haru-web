@@ -9,13 +9,15 @@ import clsx from 'clsx';
 import FeaturedFileIcons from '@icons/FeaturedFileIcons/FeaturedFileIcons';
 import { FeaturedFileIconsState } from '@icons/FeaturedFileIcons/FeaturedFileIcons.types';
 
-import { BoxedFileProps, DocumentType } from './BoxedFile.types';
+import { FileType } from '@common/types/file-type.enum';
+
+import { BoxedFileProps } from './BoxedFile.types';
 
 const BoxedFile = ({ title, lastOpened, thumbnailUrl, documentType, onClick }: BoxedFileProps) => {
   const documentIconMap = {
-    [DocumentType.AI_MEETING_MANAGER]: FeaturedFileIconsState.SIZE_24_AI_MANAGER_FILE,
-    [DocumentType.SNS_EVENT_ASSISTANT]: FeaturedFileIconsState.SIZE_24_SNS_ASSISTANT_FILE,
-    [DocumentType.TEAM_MOOD_TRACKER]: FeaturedFileIconsState.SIZE_24_TEAM_MOOD_FILE,
+    [FileType.AI_MEETING_MANAGER]: FeaturedFileIconsState.SIZE_24_AI_MANAGER_FILE,
+    [FileType.SNS_EVENT_ASSISTANT]: FeaturedFileIconsState.SIZE_24_SNS_ASSISTANT_FILE,
+    [FileType.TEAM_MOOD_TRACKER]: FeaturedFileIconsState.SIZE_24_TEAM_MOOD_FILE,
   };
   const iconState = documentIconMap[documentType];
   const iconClass = 'absolute top-13pxr left-14pxr h-6 w-6';

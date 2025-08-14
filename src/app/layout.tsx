@@ -37,9 +37,10 @@ const RootLayout = ({
         )}
       >
         <QueryClientProviders>
+          <div id="modal" />
           {children}
+          {globalModal}
           <Toaster />
-          <div id="modal">{globalModal}</div>
         </QueryClientProviders>
       </body>
     </html>

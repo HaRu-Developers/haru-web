@@ -1,5 +1,7 @@
 import { createQueryKeyStore } from '@lukemorales/query-key-factory';
 
+import { DownloadFormat } from '@api/team-mood-tracker/apis.types';
+
 // 도메인(기능)별로 키를 그룹화합니다.
 const queryKeys = createQueryKeyStore({
   workspaces: {
@@ -11,6 +13,7 @@ const queryKeys = createQueryKeyStore({
     members: (workspaceId: string) => [workspaceId, 'members'],
     recentDocuments: (workspaceId: string) => [workspaceId, 'recentDocuments'],
     search: (workspaceId: string, title: string) => [workspaceId, 'search', title],
+    recentBoxedFiles: (workspaceId: string) => [workspaceId, 'recentBoxedFiles'],
     calendar: (workspaceId: number, start: Date, end: Date) => [
       workspaceId,
       'calendar',
@@ -23,6 +26,11 @@ const queryKeys = createQueryKeyStore({
     all: null,
     detail: (moodTrackerHashedId: string) => [moodTrackerHashedId],
     report: (moodTrackerHashedId: string) => [moodTrackerHashedId, 'report'],
+    downloadLink: (moodTrackerHashedId: string, format: DownloadFormat) => [
+      moodTrackerHashedId,
+      'download',
+      format,
+    ],
   },
 
   user: {

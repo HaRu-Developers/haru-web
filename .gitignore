@@ -267,3 +267,10 @@ $RECYCLE.BIN/
 *storybook.log
 storybook-static
 certificates
+
+# Playwright
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/

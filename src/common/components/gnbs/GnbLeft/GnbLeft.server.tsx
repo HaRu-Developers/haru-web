@@ -1,15 +1,15 @@
 import { notFound } from 'next/navigation';
 
-import { HydrationBoundary } from '@tanstack/react-query';
+import { type DehydratedState, HydrationBoundary } from '@tanstack/react-query';
 
 import HaruLogoIcons from '@icons/logos/HaruLogoIcons/HaruLogoIcons';
 import { HaruLogoIconsState } from '@icons/logos/HaruLogoIcons/HaruLogoIcons.types';
 
+import { fetchUserDetail } from '@api/user/get/apis/fetchUserDetail';
 import fetchMyWorkspaces from '@api/workspace/get/apis/fetchMyWorkspaces';
 import fetchRecentDocuments from '@api/workspace/get/apis/fetchRecentDocuments';
 import fetchWorkspaceDetail from '@api/workspace/get/apis/fetchWorkspaceDetail';
 
-import { API_ERROR_CODES } from '@common/constants/api-error-codes.constants';
 import { GnbLeftNavItems } from '@common/constants/gnbs.constants';
 import queryKeys from '@common/constants/query-key.constants';
 
@@ -29,7 +29,7 @@ import WorkSpaceProfile from './WorkspaceProfile/WorkspaceProfile.client';
  * @returns {boolean} - 문자열이 숫자로만 이루어져 있으면 true,
  */
 const isNumericString = (str: string | null) => {
-  if (str === null) return false;
+  if (str === null) return true;
   return /^-?\d+$/.test(str);
 };
 
@@ -42,7 +42,7 @@ const GnbLeft = async ({ workspaceId }: GnbLeftProps) => {
 
   // Server Component에서 prefetch 실행
   // workspaceId가 있을 때만 prefetch
-  let dehydratedState: unknown;
+  let dehydratedState: DehydratedState | undefined;
 
   if (workspaceId != null) {
     try {
@@ -56,6 +56,10 @@ const GnbLeft = async ({ workspaceId }: GnbLeftProps) => {
 
           // 통과했다면 나머지는 병렬 프리패치
           await Promise.all([
+            qc.prefetchQuery({
+              queryKey: queryKeys.user.detail().queryKey,
+              queryFn: fetchUserDetail,
+            }),
             qc.prefetchQuery({
               queryKey: queryKeys.workspaces.myWorkspaces.queryKey,
               queryFn: fetchMyWorkspaces,

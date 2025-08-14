@@ -9,6 +9,13 @@ const dirname =
 // More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({
   test: {
+    // E2E/Playwright 스펙은 아예 제외
+    exclude: [
+      'tests/e2e/**',
+      '**/*.pw.spec.ts',
+      'node_modules/**',
+      '.next/**',
+    ],
     projects: [
       {
         extends: true,

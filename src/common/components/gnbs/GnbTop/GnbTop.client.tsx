@@ -35,6 +35,7 @@ const GnbTop = ({
     ? `/workspace/${params.workspaceId}/${SEARCH_PATH_MAP[section] ?? SEARCH_PATH_MAP.default}`
     : '#';
 
+  const hasWorkspace = !!params.workspaceId;
   const config =
     section === GnbSection.CUSTOM ? sectionConfigs[section](title ?? '') : sectionConfigs[section];
 
@@ -48,9 +49,9 @@ const GnbTop = ({
         {isLoading ? (
           <div className="w-150pxr h-30pxr animate-bg-pulse rounded-4pxr" />
         ) : (
-          <p className="text-t3-sb text-black">{config.title}</p>
+          <h1 className="text-t3-sb text-black">{config.title}</h1>
         )}
-        {!isCustomSection && <InputSearchBox searchHref={searchPath} />}
+        {!isCustomSection && hasWorkspace && <InputSearchBox searchHref={searchPath} />}
       </div>
       {!isCustomSection && (
         // 하단 탭 or 단순 옵션

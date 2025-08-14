@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 
-import TeamMoodTrackerDefaultPage from '../../../page';
 import TeamMoodTrackerSearchModal from '../../@modal/(.)search/page';
+import TeamMoodTrackerDefaultPage from '../../page';
 
 const TeamMoodTrackerSearchStandalonePage = async ({
   params,

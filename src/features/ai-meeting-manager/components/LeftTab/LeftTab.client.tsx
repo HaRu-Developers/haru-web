@@ -59,7 +59,7 @@ const LeftTab = ({ current }: LeftTabProps) => {
 
       {/* 버튼 영역 */}
       <div className="gap-12pxr inline-flex items-center">
-        {current === LeftTabType.MEETING_SUMMARY &&
+        {current === LeftTabType.MEETING_PROCEEDING &&
           (isEditing ? (
             <EditCompleteButton onClick={handleEditDoneClick} />
           ) : (

@@ -14,6 +14,7 @@ const InputFileTitle = ({
   value,
   onSave,
   onCancel,
+  onRequestEdit,
   noPadding = false,
   isLoading = false,
   editingScopeRef,
@@ -56,6 +57,13 @@ const InputFileTitle = ({
     }
   };
 
+  // 읽기모드에서 클릭시 편집 요청
+  const handleClickReadOnly = () => {
+    if (mode !== InputFileTitleMode.EDITABLE) {
+      onRequestEdit?.();
+    }
+  };
+
   // 가로 padding
   const px = noPadding ? 'px-0' : 'px-2';
 
@@ -63,18 +71,20 @@ const InputFileTitle = ({
     <div className="w-676pxr h-36pxr animate-bg-pulse rounded-6pxr" />
   ) : (
     <input
+      aria-label="파일 제목"
       type="text"
       value={inputValue}
       onChange={(e) => setInputValue(e.target.value)}
       onKeyDown={handleKeyDown}
       onBlur={handleBlur}
+      onClick={handleClickReadOnly}
       className={clsx(
         'w-676pxr h-36pxr rounded-4pxr text-t1-sb flex items-center bg-white py-0.5 text-black outline-none focus:outline-none',
         px,
         { 'border-stroke-100 border': mode === InputFileTitleMode.EDITABLE },
       )}
       readOnly={mode !== InputFileTitleMode.EDITABLE}
-      autoFocus
+      autoFocus={mode === InputFileTitleMode.EDITABLE}
     />
   );
 };

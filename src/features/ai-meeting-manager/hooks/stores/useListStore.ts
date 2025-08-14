@@ -1,9 +1,9 @@
 import { useShallow } from 'zustand/shallow';
 
-import listStoreState from '@features/ai-meeting-manager/stores/listStore';
+import listStore from '@features/ai-meeting-manager/stores/list-store';
 
 export const useListInfo = () =>
-  listStoreState(
+  listStore(
     useShallow((state) => ({
       isCheckMode: state.isCheckMode,
       checkedIds: state.checkedIds,
@@ -11,4 +11,4 @@ export const useListInfo = () =>
     })),
   );
 
-export const useListActions = () => listStoreState((state) => state.actions);
+export const useListActions = () => listStore((state) => state.actions);

@@ -30,7 +30,7 @@ const RootLayout = ({
     <html lang="ko">
       <body
         className={clsx(
-          'scrollbar-page flex min-h-screen flex-col overflow-y-hidden',
+          'scrollbar-page flex min-h-screen flex-col overflow-y-scroll',
           pretendard.variable,
         )}
       >

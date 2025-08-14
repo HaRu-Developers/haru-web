@@ -1,7 +1,5 @@
 'use client';
 
-import clsx from 'clsx';
-
 import PlusIcons from '@icons/PlusIcons/PlusIcons';
 import { PlusIconsState } from '@icons/PlusIcons/PlusIcons.types';
 
@@ -28,16 +26,15 @@ const TextCta = ({ type, onClick, disabled = false }: TextCtaProps) => {
   const { iconState, color } = textCtaConfig[type];
 
   return (
-    <div
-      className={clsx(
-        'border-stroke-100 flex h-48 w-61 cursor-pointer flex-col items-center justify-center rounded-2xl border-[1.5px] border-dashed bg-white hover:bg-gray-600',
-        disabled ? 'cursor-not-allowed' : '',
-      )}
+    <button
+      aria-label={'Create New'}
+      className="border-stroke-100 flex h-48 w-61 flex-col items-center justify-center rounded-2xl border-[1.5px] border-dashed bg-white hover:bg-gray-600"
       onClick={onClick}
+      disabled={disabled}
     >
       <PlusIcons state={iconState} />
       <span className={`text-bt2-sb mt-1.5 ${color}`}>Create New</span>
-    </div>
+    </button>
   );
 };
 

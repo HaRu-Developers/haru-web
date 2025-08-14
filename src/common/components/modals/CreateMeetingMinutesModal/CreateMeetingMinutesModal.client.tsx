@@ -58,9 +58,17 @@ const CreateMeetingMinutesModal = ({
   const disabled = !meetingTitle || !selectedFile || isPending;
 
   return (
-    <div className="gap-y-16pxr p-24pxr rounded-16pxr w-582pxr h-408pxr shadow-modal flex flex-col items-center justify-center bg-white">
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="create-mm-title"
+      data-testid="modal-create-meeting-minutes"
+      className="gap-y-16pxr p-24pxr rounded-16pxr w-582pxr h-408pxr shadow-modal flex flex-col items-center justify-center bg-white"
+    >
       <div className="w-534pxr h-32pxr flex items-center justify-between">
-        <p className="text-t3-bd text-black">새로운 회의록</p>
+        <h1 id="create-mm-title" className="text-t3-bd text-black">
+          새로운 회의록
+        </h1>
 
         <button className="mr-2pxr" onClick={onClose} aria-label="닫기">
           <CrossIcons state={CrossIconsState.SIZE_20_GRAY_200} />

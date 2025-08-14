@@ -18,6 +18,7 @@ interface AuthStoreState {
     setAccessToken: (accessToken: string) => void;
     setRefreshToken: (refreshToken: string) => void;
     setWorkspaceIdList: (workspaceIdList: string[]) => void;
+    clearAuth: () => void;
   };
 }
 
@@ -56,6 +57,12 @@ const useAuthStore = create<AuthStoreState>()(
                 throw new Error('ERROR: USER NOT SET IN AUTH STORE');
               }
             }),
+          clearAuth: () => {
+            set((state) => {
+              state.user = null;
+            });
+            localStorage.removeItem('auth-store');
+          },
         },
       })),
       {

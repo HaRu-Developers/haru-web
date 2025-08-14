@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useParams } from 'next/navigation';
+import { useParams, usePathname } from 'next/navigation';
 
 import HaruLogoIcons from '@icons/logos/HaruLogoIcons/HaruLogoIcons';
 import { HaruLogoIconsState } from '@icons/logos/HaruLogoIcons/HaruLogoIcons.types';
@@ -9,10 +9,17 @@ import { HaruLogoIconsState } from '@icons/logos/HaruLogoIcons/HaruLogoIcons.typ
 import { ROUTES } from '@common/constants/routes.constants';
 
 const Footer = () => {
+  const pathname = usePathname();
+
+  const isLandingPage = pathname.includes(ROUTES.LANDING.BASE);
   const { workspaceId } = useParams<{ workspaceId?: string }>();
 
-  const termsOfServiceModalHref = `${ROUTES.MAIN.MODAL.TERMS_OF_SERVICE(workspaceId)}`;
-  const privacyPolicyModalHref = `${ROUTES.MAIN.MODAL.PRIVACY_POLICY(workspaceId)}`;
+  const termsOfServiceModalHref = isLandingPage
+    ? `${ROUTES.LANDING.MODAL.TERMS_OF_SERVICE}`
+    : `${ROUTES.MAIN.MODAL.TERMS_OF_SERVICE(workspaceId)}`;
+  const privacyPolicyModalHref = isLandingPage
+    ? `${ROUTES.LANDING.MODAL.PRIVACY_POLICY}`
+    : `${ROUTES.MAIN.MODAL.PRIVACY_POLICY(workspaceId)}`;
 
   return (
     <div className="h-299pxr gap-120pxr px-114pxr w-full items-start bg-gray-100 py-16">

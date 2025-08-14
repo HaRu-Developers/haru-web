@@ -2,7 +2,7 @@
 
 import { useCallback } from 'react';
 
-import { useParams } from 'next/navigation';
+import { useParams, useSearchParams } from 'next/navigation';
 
 import useFetchMeetingMinutesDetail from '@api/meeting/get/queries/useFetchMeetingMinutesDetail';
 import useEditMeetingMinutesTitle from '@api/meeting/patch/queries/useEditMeetingMinutesTitle';
@@ -14,10 +14,15 @@ import { InputFileTitleMode } from '@common/components/inputs/InputFileTitle/Inp
 
 import { useTabActions, useTabInfo } from '@features/ai-meeting-manager/hooks/stores/useTabStore';
 
+import { LeftTabType } from '../LeftTab/LeftTab.types';
 import { MeetingHeaderProps } from './MeetingHeader.types';
 
 const MeetingHeader = ({ editingScopeRef }: MeetingHeaderProps) => {
   const { meetingId } = useParams<{ meetingId: string }>();
+  const searchParams = useSearchParams();
+  const leftTab = searchParams.get('leftTab');
+  const isVoiceLogTab = leftTab === LeftTabType.MEETING_VOICE_LOG;
+
   const { extra: meetingMinutesDetail, isFetching } = useFetchMeetingMinutesDetail(meetingId);
   const { mutate: editMeetingMinutesTitle, isPending } = useEditMeetingMinutesTitle(meetingId);
   const { isEditing } = useTabInfo();
@@ -47,6 +52,11 @@ const MeetingHeader = ({ editingScopeRef }: MeetingHeaderProps) => {
     setEditing(false);
   }, [setEditing]);
 
+  // 음성 기록 탭일때 제목 클릭시 수정모드
+  const handleRequestEdit = useCallback(() => {
+    if (isVoiceLogTab) setEditing(true);
+  }, [isVoiceLogTab, setEditing]);
+
   const isLoading = isFetching || isPending;
 
   return (
@@ -59,6 +69,7 @@ const MeetingHeader = ({ editingScopeRef }: MeetingHeaderProps) => {
         onCancel={handleCancel}
         onSave={handleSaveTitle}
         editingScopeRef={editingScopeRef}
+        onRequestEdit={handleRequestEdit}
       />
       <FileCreatedInfo
         isLoading={isLoading}

@@ -1,7 +1,13 @@
+'use client';
+
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import WaveSurfer from 'wavesurfer.js';
 import RecordPlugin from 'wavesurfer.js/dist/plugins/record.js';
+
+import { ToastType } from '@common/types/toast.types';
+
+import { useToastActions } from '@common/hooks/stores/useToastStore';
 
 import StartRecordingButton from '@common/components/buttons/32px/StartRecordingButton/StartRecordingButton.client';
 import StopRecordingButton from '@common/components/buttons/32px/StopRecordingButton/StopRecordingButton.client';
@@ -19,6 +25,8 @@ const GnbBottomRecorderBar = ({ onRecordEnd }: GnbBottomRecorderBarProps) => {
   const recorderPluginRef = useRef<RecordPlugin | null>(null);
   const recorderContainerRef = useRef<HTMLDivElement | null>(null);
 
+  const { addToast } = useToastActions();
+
   // 녹음 시작 전 최초 상태일 경우 구별을 위해 사용
   const [hasStartedRecording, setHasStartedRecording] = useState<boolean>(false);
   const [isRecording, setIsRecording] = useState<boolean>(false);
@@ -32,14 +40,17 @@ const GnbBottomRecorderBar = ({ onRecordEnd }: GnbBottomRecorderBarProps) => {
       return devices;
     } catch (error) {
       console.error('[ERR] Cannot get audio devices:', error);
-      alert('오디오 디바이스를 가져올 수 없습니다.');
+      addToast({
+        text: '오디오 디바이스를 가져올 수 없습니다.',
+        type: ToastType.ERROR,
+      });
       return [];
     }
   };
 
   const handleRecordResumePause = useCallback(() => {
     if (!recorderPluginRef.current) {
-      // console.error('Recorder plugin is not initialized.');
+      // console.error('[ERR] Recorder plugin is not initialized.');
       return;
     }
 
@@ -52,15 +63,15 @@ const GnbBottomRecorderBar = ({ onRecordEnd }: GnbBottomRecorderBarProps) => {
   }, []);
 
   const handleStartRecording = useCallback(async () => {
-    // initializeWavesurfer();
+    initializeWavesurfer();
 
     if (!recorderPluginRef.current) {
-      // console.error('Recorder plugin is not initialized.');
+      // console.error('[ERR] Recorder plugin is not initialized.');
       return;
     }
 
     const devices = await getAvailableDevices();
-    // console.log('Available devices:', devices);
+    console.log('[INFO] Available devices:', devices);
 
     recorderPluginRef.current.startRecording({ deviceId: devices[0]?.deviceId });
 
@@ -70,7 +81,7 @@ const GnbBottomRecorderBar = ({ onRecordEnd }: GnbBottomRecorderBarProps) => {
 
   const handleEndRecording = useCallback(() => {
     if (!recorderPluginRef.current) {
-      // console.error('Recorder plugin is not initialized.');
+      // console.error('[ERR] Recorder plugin is not initialized.');
       return;
     }
 
@@ -81,7 +92,7 @@ const GnbBottomRecorderBar = ({ onRecordEnd }: GnbBottomRecorderBarProps) => {
     // console.log('Initializing Wavesurfer...');
     // div container is required, assuring it.
     if (!recorderContainerRef.current) {
-      // console.error('Recorder container is not initialized.', recorderContainerRef);
+      // console.error('[ERR] Recorder plugin is not initialized.');
       return;
     }
     // if wavesurfer obj already exists, destroy it.

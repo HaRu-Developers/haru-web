@@ -22,6 +22,6 @@ type Story = StoryObj<typeof LeftTab>;
 
 export const Default: Story = {
   args: {
-    current: LeftTabType.MEETING_SUMMARY,
+    current: LeftTabType.MEETING_PROCEEDING,
   },
 };

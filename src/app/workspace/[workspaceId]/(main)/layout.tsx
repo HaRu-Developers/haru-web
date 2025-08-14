@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 
-import FooterLayout from '@common/components/layouts/FooterLayout.server';
+import { GnbSection } from '@common/types/gnbs.types';
+
+import GnbTop from '@common/components/gnbs/GnbTop/GnbTop.client';
 import GnbLeftLayout from '@common/components/layouts/GnbLeftLayout/GnbLeftLayout.server';
 
 export const metadata: Metadata = {
@@ -21,10 +23,13 @@ const MainWithWorkspaceLayout = async ({
   const workspaceId = (await params).workspaceId;
 
   return (
-    <FooterLayout>
-      <GnbLeftLayout workspaceId={workspaceId}>{children}</GnbLeftLayout>
+    <>
+      <GnbLeftLayout workspaceId={workspaceId}>
+        <GnbTop section={GnbSection.MAIN} />
+        {children}
+      </GnbLeftLayout>
       {modal}
-    </FooterLayout>
+    </>
   );
 };
 

@@ -7,7 +7,7 @@ import { LeftTabType } from '@features/ai-meeting-manager/components/LeftTab/Lef
 
 const AiMeetingMinutesPage = async ({ searchParams }: { searchParams: SearchParamsType }) => {
   const { leftTab } = await searchParams;
-  const formattedLeftTab = parseEnumOr404(leftTab, LeftTabType, LeftTabType.MEETING_SUMMARY);
+  const formattedLeftTab = parseEnumOr404(leftTab, LeftTabType, LeftTabType.MEETING_PROCEEDING);
   const isVoiceLogTab = leftTab === LeftTabType.MEETING_VOICE_LOG;
 
   return (

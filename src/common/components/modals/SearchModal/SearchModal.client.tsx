@@ -9,13 +9,15 @@ import clsx from 'clsx';
 import IndividualIcons from '@icons/IndividualIcons/IndividualIcons';
 import { IndividualIconsState } from '@icons/IndividualIcons/IndividualIcons.types';
 
+import { ROUTES } from '@common/constants/routes.constants';
+
 import useDebounce from '@common/hooks/useDebounce';
 
 import { SearchedDocument } from '@/api/workspace/api.types';
 import { useSearchDocumentsQuery } from '@/api/workspace/get/queries/useSearchDocumentQuery';
 
 import RecentSearchChip from './RecentSearchChip/RecentSearchChip.client';
-import { CONFIG, FILE_TYPE_PATHS, STORAGE_KEYS } from './SearchModal.types';
+import { CONFIG, STORAGE_KEYS } from './SearchModal.types';
 import SearchResultCard from './SearchResultCard/SearchResultCard.client';
 
 const SearchModal = () => {
@@ -62,15 +64,15 @@ const SearchModal = () => {
       localStorage.setItem(STORAGE_KEYS.RECENT_SEARCHES, JSON.stringify(newQueries));
     }
 
-    const pathSegment = FILE_TYPE_PATHS[document.documentType];
+    const pathGenerator = ROUTES.DETAIL_DOCUMENTS_DEFAULT[document.documentType];
 
-    if (!pathSegment) {
-      console.error('알 수 없는 문서 타입입니다:', document.documentType);
-      return;
-    }
-
-    if (pathSegment) {
-      router.push(`/workspace/${workspaceId}/${pathSegment}/${document.documentId}`);
+    if (pathGenerator && workspaceId) {
+      // 찾은 함수를 실행하여 경로와 쿼리 객체를 가져옵니다.
+      const routeInfo = pathGenerator(workspaceId, document.documentId);
+      // router.push에 객체를 직접 전달합니다.
+      router.push(routeInfo);
+    } else {
+      console.error('알 수 없는 문서 타입 또는 workspaceId가 없습니다:', document.documentType);
     }
   };
 

@@ -21,7 +21,10 @@ const SearchResultCard = ({ fileType, title, lastOpened, onClick }: SearchResult
     }
   };
 
-  const formatLastOpened = (dateString: string) => {
+  const formatLastOpened = (dateString: string | null) => {
+    if (!dateString) {
+      return '';
+    }
     const date = new Date(dateString);
     const now = new Date();
 

@@ -26,6 +26,7 @@ const BaseListFile = ({
   const [isHovered, setIsHovered] = useState(false);
 
   const handleToggle = (e: React.MouseEvent) => {
+    e.stopPropagation();
     e.preventDefault();
     onCheckToggle?.(id);
   };

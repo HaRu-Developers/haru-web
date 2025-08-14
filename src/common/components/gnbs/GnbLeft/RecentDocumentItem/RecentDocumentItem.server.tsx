@@ -13,8 +13,6 @@ const RecentDocumentItem = ({
   documentId,
   title,
 }: RecentDocumentItemProps) => {
-  if (!workspaceId) return null;
-
   const href = ROUTES.BUILD_DOCUMENT_ROUTE(workspaceId, documentType, documentId);
 
   if (!href) return null;

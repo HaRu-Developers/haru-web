@@ -12,7 +12,7 @@ import { ImageSize } from '../types/images.common.types';
 import { sizeClass } from './ProfileImage.constants';
 import { ProfileImageProps } from './ProfileImage.types';
 
-const ProfileImage = ({ src, userId, name, size = ImageSize.SMALL }: ProfileImageProps) => {
+const ProfileImage = ({ src, userId, name, size = ImageSize.MEDIUM }: ProfileImageProps) => {
   const [hasError, setHasError] = useState(false);
 
   if (!src || hasError) {

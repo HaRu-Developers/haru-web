@@ -17,7 +17,7 @@ const generateCss = (prefixes, sizes) => {
 
 const output = generateCss(
   prefixes,
-  Array.from({ length: 1024 }, (_, i) => i + 1),
+  Array.from({ length: 1440 }, (_, i) => i + 1),
 );
 const outputPath = path.join(__dirname, 'generated-css-vars.txt');
 

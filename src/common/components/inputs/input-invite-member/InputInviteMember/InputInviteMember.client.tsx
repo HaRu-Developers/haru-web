@@ -20,6 +20,7 @@ const InputInviteMember = ({
   placeholder,
   value = '',
   emails = [],
+  isInviting,
   onValueChange,
   onEmailsChange,
   onInvite,
@@ -110,6 +111,7 @@ const InputInviteMember = ({
             onClick={handleInvite}
             disabled={isDisabled}
             className={clsx({ 'cursor-default': isDisabled })}
+            isPending={isInviting}
           />
         </div>
         {value.trim() && <EmailTag value={value} onClick={handleAddEmail} />}

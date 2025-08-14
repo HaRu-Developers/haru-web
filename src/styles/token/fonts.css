@@ -5,43 +5,39 @@
 }
 
 @layer utilities {
-  /* 헤드라인 */
+  /* 랜딩 */
   .text-h1-bd {
     font-size: var(--text-64pxr);
     line-height: 130%;
     font-weight: 700;
     letter-spacing: -0.02em;
   }
-
   .text-h2-bd {
     font-size: var(--text-54pxr);
     line-height: 130%;
     font-weight: 700;
     letter-spacing: -0.02em;
   }
-
   .text-h3-bd {
     font-size: var(--text-44pxr);
     line-height: 130%;
     font-weight: 700;
     letter-spacing: -0.02em;
   }
-
   .text-h4-bd {
     font-size: var(--text-34pxr);
     line-height: 130%;
     font-weight: 700;
     letter-spacing: -0.02em;
   }
-
-  .text-h5-sd {
+  .text-h5-sb {
     font-size: var(--text-30pxr);
     line-height: 130%;
     font-weight: 600;
     letter-spacing: -0.02em;
   }
-
   /* 제목 */
+
   .text-t1-sb {
     font-size: var(--text-28pxr);
     line-height: 130%;
@@ -67,6 +63,13 @@
     font-size: var(--text-20pxr);
     line-height: 130%;
     font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .text-t4-rg {
+    font-size: var(--text-18pxr);
+    line-height: 130%;
+    font-weight: 400;
     letter-spacing: -0.02em;
   }
 
@@ -109,6 +112,13 @@
     font-size: var(--text-15pxr);
     line-height: 130%;
     font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  .text-t7-rg {
+    font-size: var(--text-14pxr);
+    line-height: 130%;
+    font-weight: 400;
     letter-spacing: -0.02em;
   }
 
@@ -210,5 +220,19 @@
     line-height: 100%;
     font-weight: 600;
     letter-spacing: -0.02em;
+  }
+
+  .text-register-page-terms-agree {
+    font-size: var(--text-13pxr);
+    line-height: 100%;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  .text-login-register-page-greetings {
+    font-size: var(--text-30pxr);
+    line-height: 130%;
+    font-weight: 700;
+    letter-spacing: -0;
   }
 }

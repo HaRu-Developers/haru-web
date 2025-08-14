@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { useParams, usePathname } from 'next/navigation';
 
 import { GnbSection, SnsGnbTabType } from '@common/types/gnbs.types';
 
@@ -12,13 +12,33 @@ import InputSearchBox from '@common/components/inputs/InputSearchBox/InputSearch
 
 import { GnbTopProps } from './GnbTop.types';
 
-const GnbTop = ({ section, title, current, isLoading = false }: GnbTopProps) => {
+const SEARCH_PATH_MAP: Partial<Record<GnbSection, string>> & { default: string } = {
+  [GnbSection.AI_MEETING_MANAGER]: 'ai-meeting-manager/search',
+  [GnbSection.SNS_EVENT_ASSISTANT]: 'sns-event-assistant/search',
+  [GnbSection.TEAM_MOOD_TRACKER]: 'team-mood-tracker/search',
+  [GnbSection.MAIN]: 'search',
+  [GnbSection.CALENDAR]: 'calendar/search',
+  default: 'search', // 기본 경로
+};
+
+const GnbTop = ({
+  section,
+  title,
+  current,
+  isSnsEventAssistantWithoutWorkspace,
+  isLoading = false,
+}: GnbTopProps) => {
   const pathname = usePathname() ?? '';
+  const params = useParams<{ workspaceId?: string }>();
+
+  const searchPath = params.workspaceId
+    ? `/workspace/${params.workspaceId}/${SEARCH_PATH_MAP[section] ?? SEARCH_PATH_MAP.default}`
+    : '#';
 
   const config =
     section === GnbSection.CUSTOM ? sectionConfigs[section](title ?? '') : sectionConfigs[section];
 
-  const isTabSection = section === GnbSection.SNS_EVENT_ASSISTANT;
+  const isSnsEventAssistant = section === GnbSection.SNS_EVENT_ASSISTANT;
   const isCustomSection = section === GnbSection.CUSTOM;
 
   return (
@@ -30,19 +50,37 @@ const GnbTop = ({ section, title, current, isLoading = false }: GnbTopProps) => 
         ) : (
           <p className="text-t3-sb text-black">{config.title}</p>
         )}
-        {!isCustomSection && <InputSearchBox />}
+        {!isCustomSection && <InputSearchBox searchHref={searchPath} />}
       </div>
       {!isCustomSection && (
         // 하단 탭 or 단순 옵션
         <div className="border-b-stroke-200 py-13pxr flex h-14 items-center gap-2.5 self-stretch border-b border-solid bg-white px-6">
-          {isTabSection
+          {isSnsEventAssistant
             ? (Object.keys(SnsGnbTabLabels) as SnsGnbTabType[]).map((tab) => {
                 const params = new URLSearchParams();
                 params.set('snsGnbTab', tab);
 
-                return (
-                  <Link key={tab} href={`${pathname}?${params.toString()}`}>
-                    <CategoryOption label={SnsGnbTabLabels[tab]} active={current === tab} />
+                const isActive = isSnsEventAssistantWithoutWorkspace
+                  ? tab === SnsGnbTabType.ALL_EVENTS // workspace 없으면 ALL_EVENTS만 active
+                  : current === tab; // 그 외엔 current 비교
+
+                // workspace 없는 경우 ALL_EVENTS만 활성화
+                const isDisabled =
+                  isSnsEventAssistantWithoutWorkspace && tab !== SnsGnbTabType.ALL_EVENTS;
+
+                const route = `${pathname}?${params.toString()}`;
+
+                return isSnsEventAssistantWithoutWorkspace ? (
+                  <div key={tab}>
+                    <CategoryOption
+                      label={SnsGnbTabLabels[tab]}
+                      active={isActive}
+                      disabled={isDisabled}
+                    />
+                  </div>
+                ) : (
+                  <Link key={tab} href={route}>
+                    <CategoryOption label={SnsGnbTabLabels[tab]} active={isActive} />
                   </Link>
                 );
               })

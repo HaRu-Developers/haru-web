@@ -1,0 +1,34 @@
+{
+  "Next.js Client Component": {
+    "prefix": "rfc",
+    "body": [
+      "'use client';",
+      "",
+      "const ${TM_DIRECTORY/^.+[\\\\/\\\\\\\\]+(.*)$/${1:/pascalcase}/} = () => {",
+      "  return (",
+      "    <div>",
+      "      <h1>${TM_DIRECTORY/^.+[\\\\/\\\\\\\\]+(.*)$/${1:/pascalcase}/}</h1>",
+      "    </div>",
+      "  );",
+      "};",
+      "",
+      "export default ${TM_DIRECTORY/^.+[\\\\/\\\\\\\\]+(.*)$/${1:/pascalcase}/};"
+    ],
+    "description": "React FC with folder name + file name PascalCase"
+  },
+  "Next.js Server Component": {
+    "prefix": "rfcs",
+    "body": [
+      "const ${TM_DIRECTORY/^.+[\\\\/\\\\\\\\]+(.*)$/${1:/pascalcase}/} = () => {",
+      "  return (",
+      "    <div>",
+      "      <h1>${TM_DIRECTORY/^.+[\\\\/\\\\\\\\]+(.*)$/${1:/pascalcase}/}</h1>",
+      "    </div>",
+      "  );",
+      "};",
+      "",
+      "export default ${TM_DIRECTORY/^.+[\\\\/\\\\\\\\]+(.*)$/${1:/pascalcase}/};"
+    ],
+    "description": "React FC with folder name + file name PascalCase"
+  }
+}

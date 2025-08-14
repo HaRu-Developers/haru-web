@@ -1,36 +1,340 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Issue 컨벤션을 지켜주세요
 
-## Getting Started
+---
 
-First, run the development server:
+## 기준에 맞게 Issue를 생성해주세요
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+Issue는 크고 작은 업무의 단위입니다.
+
+모두가 Issue의 제목만 보고도 어떠한 작업을 하는지 알 수 있도록, 스스로의 판단 하에 잘 나누어 주세요.
+
+Sub Issue를 적극적으로 활용해서 작업을 진행해주세요. 최종적으로, 가장 하위에 있는 Issue는 과도한 작업량을 포함해서는 안됩니다.
+
+## 규칙에 맞게 Title을 작성해주세요
+
+---
+
+### `[타입] 기능 요약` 의 형식을 지켜주세요.
+
+- ex. [Chore] 로그인 페이지 제작
+- 타입의 종류와 상황별 구분은 아래 [상황에 맞는 Tag를 붙여주세요](https://www.notion.so/Tag-229a5c8bf53781d384b8d8b4e22d4889?pvs=21)를 참고해주세요.
+
+## 상황에 맞는 Tag를 붙여주세요
+
+---
+
+### 1. **🛠️ Chore**
+
+개발 환경 설정, 의존성 설치 등 기능과 직접적인 관련이 없는 작업입니다.
+
+> ex) 패키지 업데이트, CI/CD 설정
+
+### 2. **✨ Feature**
+
+새로운 기능을 추가하는 작업입니다.
+
+> ex) 회원가입, 다크모드 등 사용자에게 **새롭게 제공되는 기능**
+
+### **3. 🐛 Fix / Bug**
+
+Fix와 Bug는 같은 Issue Template을 공유합니다. 작성 시에 태그는 1개만 유지해주세요.
+
+**구분**
+
+- Fix : 사용자가 동작했을 때 잘못된 동작을 정상 동작으로 변경
+- Bug : 예상치 못한 **문제 또는 오류 현상**을 발견한 경우
+
+### **4. 🧹 Refactor**
+
+코드 구조 개선 등 사용자 경험은 동일하지만, 내부 코드 구조 또는 품질을 개선하는 작업입니다.
+
+> ex) 컴포넌트 분리, 로직 최적화
+
+### **5. ✅ Test**
+
+테스트 코드를 작성하거나 수정하는 작업입니다.
+
+> ex) 유닛 테스트, 통합 테스트 추가
+
+### **6. 📝 Docs**
+
+문서화 관련 작업입니다.
+
+> ex) README, 코드 주석, API 문서 업데이트
+
+# PR 컨벤션을 지켜주세요
+
+---
+
+## 규칙에 맞게 Title을 작성해주세요
+
+---
+
+Issue와 동일하게 작성해주세요.
+
+PR 제목은, `develop` 브랜치에 merge할 때 commit message로 남게 되니 꼭! 유의해주세요.
+
+## D-day 라벨을 적용해주세요
+
+---
+
+- 코드 리뷰가 완료되어야 하는 시점을 `D-n` 라벨을 통해서 적용해야 합니다.
+- 스스로 중요도를 판단해서, `D-0` ~ `D-3` 내에서 정해주시면 됩니다.
+- label은 평일 (공휴일 제외) 14시에 스스로 업데이트 해주시면 됩니다.
+
+## Template 지켜서 작성해주세요
+
+---
+
+> PR Template에 맞게 생성해주세요.
+
+1. Related Issues
+2. 작업 내용
+3. 작업 결과 (선택)
+4. 리뷰 시 요청사항 (선택)
+
+## 작은 PR 규칙 을 지켜주세요
+
+Reviwer와 Reviewer 모두를 위해 PR은 적절한 규모를 유지해주세요.
+
+PR의 규모가 작아지면, 리뷰의 질도 상승하고 속도도 빨라집니다 😎
+
+## 리뷰할 때 지켜주세요
+
+---
+
+### 코드 리뷰 과정에서는 이런게 이루어져야 해요
+
+- 일관된 아키텍처를 유지하고 있는지
+- 다른 해결 방법에 대한 의견 제시
+- 버그가 발생할 수 있는 가능성 제시
+- 기술적인 지식, 노하우 공유
+- 히스토리 전달
+
+### 리뷰어를 설정해주세요
+
+팀원 모두를 Reviewer로 설정해주세요. (기본적으로 `CODEOWNERS` 파일에 의해 등록됩니다.)
+
+### Merge 기준을 지켜주세요
+
+- Reviewer 중 최소 2명이 approve 한 경우에는 누구나 merge 후 PR을 close 할 수 있습니다.
+- 반영되지 못한 comment의 경우, Issue를 생성해서 다시 해결해주세요. (P3 참고)
+- Approve에는 책임이 따릅니다.
+
+### 리뷰를 요청한 후에는
+
+- 평일 (공휴일 제외) 14시에 `D-n` 라벨을 교체해주세요.
+- `D-0`이 된 후에도 아무도 리뷰를 제공하지 않았을 경우에는, Discord에 리뷰를 요청해주세요.
+- 긴급한 수정 등 즉각적인 반영이 필요한 경우, `D-0` 라벨을 달고 Discord에 Review를 직접 요청해주세요.
+- `Request Changes` 리뷰에 의한 수정을 제외하고는 추가 커밋은 자제해주세요.
+- 혹시나 놓친 부분이 있어 수정이 필요한 경우, `Change to Draft`를 통해 명시해주세요.
+
+### [*Pn* 규칙](https://blog.banksalad.com/tech/banksalad-code-review-culture/#%EC%BB%A4%EB%AE%A4%EB%8B%88%EC%BC%80%EC%9D%B4%EC%85%98-%EB%B9%84%EC%9A%A9%EC%9D%84-%EC%A4%84%EC%9D%B4%EA%B8%B0-%EC%9C%84%ED%95%9C-pn-%EB%A3%B0)에 맞춰서 리뷰를 남겨주세요.
+
+| 레벨      | 의미                                | 뱅크 샐러드 설명                                                                                                                                                                                                                                                                                                          | 처리 기준            |
+| --------- | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
+| 🟥 **P1** | **꼭 반영해 주세요**                | 리뷰어는 PR의 내용이 서비스에 중대한 오류를 발생할 수 있는 가능성을 잠재하고 있는 등 중대한 코드 수정이 반드시 필요하다고 판단되는 경우, P1 태그를 통해 리뷰 요청자에게 수정을 요청합니다. 리뷰 요청자는 p1 태그에 대해 리뷰어의 요청을 반영하거나, 반영할 수 없는 합리적인 의견을 통해 리뷰어를 설득할 수 있어야 합니다. | 🔧 `Request Changes` |
+| 🟧 **P2** | **적극적으로 고려해 주세요**        | 작성자는 P2에 대해 수용하거나 만약 수용할 수 없는 상황이라면 적합한 의견을 들어 토론할 것을 권장합니다.                                                                                                                                                                                                                   | 🔧 `Request Changes` |
+| 🟨 **P3** | **웬만하면 반영해 주세요**          | 작성자는 P3에 대해 수용하거나 만약 수용할 수 없는 상황이라면 반영할 수 없는 이유를 들어 설명하거나 다음에 반영할 계획을 명시적으로(JIRA 티켓 등으로) 표현할 것을 권장합니다. Request changes 가 아닌 Comment 와 함께 사용됩니다.                                                                                          | 💬 `Comment`         |
+| 🟩 **P4** | **반영해도 좋고 넘어가도 좋습니다** | 작성자는 P4에 대해서는 아무런 의견을 달지 않고 무시해도 괜찮습니다. 해당 의견을 반영하는 게 좋을지 고민해 보는 정도면 충분합니다.                                                                                                                                                                                         | ✅ `Approve`         |
+| 🟦 **P5** | **그냥 사소한 의견입니다**          | 작성자는 P5에 대해 아무런 의견을 달지 않고 무시해도 괜찮습니다.                                                                                                                                                                                                                                                           | ✅ `Approve`         |
+
+### 리뷰를 끝내기 전에 다시 한 번 참고해주세요
+
+| **상태**                                         | **사용 조건**                                                        | **설명**                  | **후속 조치** |
+| ------------------------------------------------ | -------------------------------------------------------------------- | ------------------------- | ------------- |
+| ✅ **Approve**                                   | - 기능이 정상 동작함                                                 |
+| - 코드 스타일/구조 문제가 없음                   | - 병합해도 무방한 상태                                               |
+| - 사소한 개선 여지는 Comment로 별도 남길 수 있음 | 바로 Merge 가능. 필요 시 개선 의견은 Comment로 남김                  |
+| 🔴 **Request Changes**                           | - 명백한 문제, 논리 오류, 컨벤션 위반 등- 병합 전에 반드시 수정 필요 | - 병합을 막는 수준의 오류 |
+| - 리뷰어가 보기에 수정 없이 통과 불가            | 반드시 수정 후 다시 리뷰 요청. Merge 금지                            |
+| 🟡 **Comment**                                   | - 비차단 피드백- 제안, 질문, 개선 아이디어 등                        | - Merge를 막지 않음       |
+| - 반영 여부는 작성자 판단                        | 반영이 필요하다면 **Merge 후 별도 이슈 생성하여 관리**               |
+
+## 참고문헌
+
+---
+
+https://blog.banksalad.com/tech/banksalad-code-review-culture/
+
+# Commit Convention
+
+---
+
+## 규칙에 맞는 제목을 작성해주세요.
+
+---
+
+### **gitmoji 를 이용해서 생성해주세요.**
+
+- `emoji Tag: Description` 의 형식이 될거에요.
+  - ex. ✨ Feat: sample commit
+- 태그의 첫 글자는 대문자로 적어주세요. `feat` ❌ `Feat` ⭕
+
+| 이모지 | 이름 (`:gitmoji:`) | 태그       | 설명                                         |
+| ------ | ------------------ | ---------- | -------------------------------------------- |
+| ✨     | `:sparkles:`       | `feat`     | 새로운 기능 추가                             |
+| 🔨     | `:hammer:`         | `fix`      | 사용자에게 영향을 주는 기능 수정             |
+| ♻️     | `:recycle:`        | `refactor` | 리팩토링 (기능 변화 없이 코드 개선)          |
+| 🐛     | `:bug:`            | `bug`      | 버그 수정                                    |
+| 🚑️    | `:ambulance:`      | `hotfix`   | 긴급한 문제 수정                             |
+| 💄     | `:lipstick:`       | `UI`       | UI 변경, CSS 수정 등                         |
+| 🎨     | `:art:`            | `style`    | 코드 포맷팅, 세미콜론 등 코드 영향 없는 변경 |
+| 🔧     | `:wrench:`         | `config`   | 환경 설정, 빌드 설정 등 수정                 |
+| ✏️     | `:pencil2:`        | `typo`     | 오타, 문구 수정                              |
+| 📝     | `:memo:`           | `docs`     | 문서(README, 주석 등) 변경                   |
+| 💬     | `:speech_balloon:` | `comment`  | 주석 추가/제거 (TODO, NOTE 등)               |
+| 📦     | `:package:`        | `package`  | 라이브러리, 의존성 추가                      |
+| 🔥     | `:fire:`           | `remove`   | 불필요한 코드/파일 삭제                      |
+| ✅     | `:check:`          | `test`     | 테스트                                       |
+
+### 규칙에 맞는 본문을 작성해주세요.
+
+---
+
+- 한 줄 당 **72자 이내**로 작성해주세요. 여러 환경에서의 가독성을 위함이에요.
+- 본문의 총 길이에는 제한이 없어요.
+- **"무엇을, 왜" 변경했는지**를 반드시 포함해주세요.
+- 관련 이슈가 있다면 명시해주셔도 좋아요. (Footer)
+
+```
+✨ Feat: 사용자 프로필 페이지 추가
+
+- 새로운 유저 프로필 페이지 UI 구현
+- 유저 닉네임, 가입일, 최근 활동 표시
+- 추후 활동 그래프 추가 예정
+
+- Resolves #42
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+# 프로젝트 아키텍쳐를 지켜주세요
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 도식화된 상/하위 관계를 참고해주세요
 
-## Learn More
+- src
+  - app : App Router 용 폴더입니다.
+  - features : 도메인(기능)별로 사용하는 파일들을, 폴더명으로 구분해주세요.
+    - components : 컴포넌트들이 정의된 파일입니다.
+      - 각 폴더명은, 컴포넌트명과 일치하여야 합니다.
+      - 컴포넌트 내에서 사용하는 type 및 storybook 파일은 각 컴포넌트 폴더에 위치하여야 하며, 아래의 명명법을 준수하여야 합니다.
+        - storybook 파일은 `*.stories.tsx` 형식을 사용해주세요.
+        - type 파일은 `*.types.ts` 형식을 사용해주세요.
+          - type 파일 내에는 해당 컴포넌트에서 활용되는 type만 정의해주세요.
+          - 같은 도메인 내에서 3개 이상의 파일에서 공용되어야 하는 type의 경우, 도메인 내의 types 폴더 내에서 정의해주세요.
+            - 추후 안정성을 위해, 2개 파일에서만 공용되는 경우 분리하지 않습니다.
+              - 이 경우, 반드시 주석으로 공용되는 파일을 명시해주세요.
+            - OR ! 2개 이상일 경우, interface로 정의한 뒤 extends 하는 방법도 있습니다. 선택 바람.
+        - component 파일은 `PascalCaseFileName.tsx` 형식을 사용해주세요.
+    - hooks : React Hook 파일들을 모아놓는 폴더입니다.
+      - 파일명의 경우, `use`로 시작하는, React의 규칙을 따라주세요.
+      - hook 내에서 사용하는 type은, 별도의 파일에 정의해주세요.
+        - 파일명은 `useSampleHook.types.ts` 와 같이 지어주세요.
+      - React Query Function 같은 경우,
+    - apis : 해당 도메인에서 활용되는 api 호출 함수들이 있는 곳입니다.
+      - 하위에는 HTTP method에 따라서 폴더를 구분해주세요.
+      - 기능별로 파일을 묶어, 각 파일 내에 여러개의 API call 함수가 존재하도록 해주세요.
+      - 파일명은 kebab-case를 사용합니다.
+  - common : 공용으로 사용하는 파일들을 포함해주세요.
+    - components : 프로젝트 전반에서 사용되는 공용 컴포넌트를 포함해주세요.
+      - ExampleComponent : 컴포넌트를 정의하는 폴더의 경우, 컴포넌트명과 동일한 이름을 사용해주세요.
+    -
+  - assets : font 파일 등 공용으로 사용하는 데이터를 넣어주세요.
 
-To learn more about Next.js, take a look at the following resources:
+# 규칙을 지켜서 이름을 지어주세요
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 폴더명은 이렇게 지어주세요
 
-## Deploy on Vercel
+- app router 내의 폴더명은 Next.js의 규칙을 지켜주세요
+- components 폴더 하위의 컴포넌트의 구성요소를 포함하는 폴더의 경우, 컴포넌트명과 동일하게 폴더명을 작성해주세요.
+  - storybook 파일은 `*.stories.tsx` 형식을 사용해주세요.
+  - type 파일은 `*.types.ts` 형식을 사용해주세요.
+  - component 파일은 `PascalCaseFileName.tsx` 형식을 사용해주세요.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 파일명은 이렇게 지어주세요
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- React에서 정해진 규칙을 우선해서 적용해주세요.
+  - 컴포넌트 파일은 PascalCase를 사용해주세요.
+  - Hook 파일의 경우에는 camelCase를 사용해주세요.
+- 그 외 util 등 모든 파일은 kebab-case 를 사용해주세요.
+  - OS나 git 단에서 대소문자 인식 관련 혼용을 막기 위함입니다.
+- `*.js` 확장자를 사용하지 말아주세요.
+  - `*.cjs` 및 `*.mjs` 확장자를 반드시 구분해주세요.
+
+### 변수명은 이렇게 지어주세요
+
+- type/interface/enum은 PascalCase로 지어주세요.
+  - Props, Data, Params, Payload 등 접미어를 붙여, 의미를 명확하게 해주세요.
+  - **enum 자체의 명칭은 PascalCase이지만, 내부 값은 CAPITAL_SNAKE_CASE를 사용합니다.**
+- 전역으로 활용되는 매직 넘버(상수)는 모두 대문자로, CAPITAL_SNAKE_CASE로 지어주세요.
+  - 파일 내부에서 사용하는 지역 상수는 일반 변수명으로 취급합니다. (camelCase 활용)
+- 함수명 및 변수명은 (함수형 컴포넌트 제외) camelCase로 지어주세요.
+- 코드를 처음 보는 사람이라도 각자가 수행하는 역할을 알 수 있도록, **간결하고 명확하게 지어주세요**.
+- 줄임말은 허용하지 않습니다. (누구나 알아볼 수 있는 단축어만 사용해주세요. ex. Documentation → Docs)
+
+### 환경변수명은 이렇게 지어주세요
+
+- CAPITAL_SNAKE_CASE 로 작성해주세요.
+- 목적이나 서비스명 등을 접두어로 붙여서 충돌을 방지해주세요.
+- 환경변수 중 key, token, password 등 민감한 값은 접미어로 `*_SECRET` 등을 붙여 명시해주세요.
+- `NEXT_PUBLIC_` 으로 시작하는 환경변수는 클라이언트 측에서도 접근이 가능합니다. 유의해주세요.
+
+# 코딩 스타일을 지켜주세요
+
+---
+
+> Prettier/ESLint에 명시되어 있는 바를 우선시합니다.
+
+### ESLint 규칙
+
+- 검사 대상 : ts/tsx 파일만 lint에서 검사하도록 합니다.
+- Recommended Rule
+  - Next.js의 Core Web Vitals 규칙 및 Typescript 전용 규칙을 적용합니다.
+  - Storybook 권장 규칙을 적용합니다.
+  - ESLint 기본 권장 규칙 및 TypeScript ESLint 권장 규칙을 함께 적용합니다.
+  - Common JS 파일 (`*.cjs`) 에서는 require 구문 사용을 허용합니다.
+- React & JSX
+  - React, React Hooks 플러그인을 사용합니다.
+  - React version을 자동 감지합니다.
+  - JSX 파일 확장자는 `*.tsx` 만 허용합니다.
+  - React import 구문 필수 규칙을 비활성화합니다.
+  - props-types 검사를 비활성화 합니다. (TypeScript 사용 시 불필요합니다.)
+  - 함수형 컴포넌트는 반드시 **화살표 함수**로 작성합니다.
+
+### Prettier 규칙
+
+- **들여쓰기** : **space 2칸**을 사용합니다. (tab을 사용하지 않습니다.)
+- **항상 세미콜론을 사용**합니다.
+- **Quote 사용** 규칙
+  - JS/TS: `'` (Single Quote)
+  - JSX/HTML 속성: `"` (Double Quote)
+- **Trailing comma** 를 사용합니다. (객체 마지막에도 쉼표 사용)
+- print width : 한 줄에 **최대 100자** 까지 허용합니다.
+- bracket spacing : 객체 사용 시 중괄호 양쪽에 공백을 사용합니다.
+- arrowParens : 화살표 함수 사용 시, 매개변수에 괄호를 항상 사용합니다. (단일 매개변수일 때도 괄호 생략 불가능)
+- endOfLine : 운영체제에 맞추어 사용합니다.
+- import 순서를 정렬합니다. (플러그인 사용)
+  - 각 import 그룹 사이에는 빈 줄을 추가합니다.
+  - import specifier (중괄호 내) 는 알파벳 순서로 정렬합니다.
+  - 순서는 아래와 같습니다.
+    1. 프레임워크 (React, Next.js)
+    2. 외부 라이브러리
+    3. global style, static assets
+    4. `@` 로 정의된 공통 module들
+    5. 도메인 모듈 (`features/*`)
+    6. 기타 src 하위 경로
+    7. 상대경로 import
+- tailwindcss class 순서를 정렬합니다. (플러그인 사용)
+
+### 기타 규칙
+
+- type/interface 사용 구분
+  - interface를 우선하여 사용합니다.
+- props는 구조분해할당 하여 사용합니다.
+  - children 또한 명시적으로 선언하여 사용합니다.
+- `useRouter` 대신 `Link`를 사용합니다.

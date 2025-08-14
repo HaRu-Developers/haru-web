@@ -1,3 +1,5 @@
+import { notFound } from 'next/navigation';
+
 import { HydrationBoundary } from '@tanstack/react-query';
 
 import { FetchMeetingMinutesDetailResponseDto } from '@api/meeting/api.types';
@@ -6,6 +8,8 @@ import fetchMeetingMinutesDetail from '@api/meeting/get/apis/fetchMeetingMinutes
 import { BaseResponseDto } from '@common/types/api.common.types';
 
 import queryKeys from '@common/constants/query-key.constants';
+
+import { isMeetingNotFound } from '@common/errors/guards.utils';
 
 import { getDehydratedState } from '@common/utils/dehydrate';
 
@@ -22,16 +26,25 @@ const AiMeetingLayout = async ({
 
   // 서버에서 meeting detail을 ensureQueryData로 가져오며, 성공 시 캐시에 저장 + 이 컴포넌트에서 즉시 사용
   let title = '';
-
-  const { dehydratedState } = await getDehydratedState({
-    prefetch: async (qc) => {
-      const res = await qc.ensureQueryData<BaseResponseDto<FetchMeetingMinutesDetailResponseDto>>({
-        queryKey: queryKeys.meetings.meetingMinutesDetail(meetingId).queryKey,
-        queryFn: () => fetchMeetingMinutesDetail({ meetingId }),
-      });
-      title = res.result.title;
-    },
-  });
+  let dehydratedState: unknown;
+  try {
+    const result = await getDehydratedState({
+      prefetch: async (qc) => {
+        // 필수 데이터 보장 (없으면 throw → catch에서 notFound)
+        const res = await qc.ensureQueryData<BaseResponseDto<FetchMeetingMinutesDetailResponseDto>>(
+          {
+            queryKey: queryKeys.meetings.meetingMinutesDetail(meetingId).queryKey,
+            queryFn: () => fetchMeetingMinutesDetail({ meetingId }),
+          },
+        );
+        title = res.result.title;
+      },
+    });
+    dehydratedState = result.dehydratedState;
+  } catch (e) {
+    if (isMeetingNotFound(e)) notFound(); // 서버에서만 사용
+    throw e; // 다른 에러는 상위로 던짐
+  }
 
   return (
     <HydrationBoundary state={dehydratedState}>

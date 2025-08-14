@@ -20,7 +20,9 @@ interface CustomRequestInit extends RequestInit {
   auth?: boolean;
 }
 
-// 정상 응답 처리 함수
+/**
+ * 정상 응답 처리 함수
+ */
 const handleResponse = async (res: Response) => {
   return res.json();
 };
@@ -99,12 +101,24 @@ const handleResponseError = async (
   throw error;
 };
 
+/**
+ * Custom Fetcher 함수 구현입니다.
+ *
+ * 고차 함수 형태로, fetch 요청을 보내는 async 함수를 반환합니다.
+ *
+ * @returns API 요청을 보내는 함수
+ */
 export const createFetcher =
   ({
     baseURL = process.env.NEXT_PUBLIC_SERVER_API_BASE_URL,
     headers,
     fetchOptions,
   }: CreateFetcherOptions = {}) =>
+  /**
+   * createFetcher가 최종적으로 반환하는 fetcher 함수
+   * @param path - API Request 경로 입니다.
+   * @param options - fetch 함수에 전달되는 options
+   */
   async <T>(path: string, options?: CustomRequestInit): Promise<T> => {
     if (!baseURL) {
       throw new Error(
@@ -112,6 +126,7 @@ export const createFetcher =
       );
     }
 
+    // 안전한 URL 생성
     const url = joinURL(baseURL, path);
 
     // body가 FormData인지 확인합니다.
@@ -137,7 +152,8 @@ export const createFetcher =
 
     const requiresAuth = options?.auth !== false;
 
-    // 인증이 필요하고, 수동으로 설정된 Authorization 헤더가 없으며, 토큰이 존재할 때만 헤더를 추가합니다.
+    // TODO: PRODUCTION 환경에서는 삭제해야 합니다. by. @kyeoungwoon
+    // 1. 인증이 필요하고, 수동으로 설정된 Authorization 헤더가 없으며, 토큰이 존재할 때만 헤더를 추가합니다.
     if (
       requiresAuth &&
       !mergedHeaders.has('Authorization') &&
@@ -145,6 +161,9 @@ export const createFetcher =
     ) {
       mergedHeaders.set('Authorization', `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`);
     }
+
+    // TODO: axios 기준, withCredentials 옵션을 사용해야 합니다.
+    // localStorage나, cookie에 저장된 credentials를 loading 할 수 있도록 ..
 
     // 4. FormData 여부에 따라 Content-Type을 최종적으로 제어합니다.
     if (isFormData) {
@@ -159,6 +178,9 @@ export const createFetcher =
       }
     }
 
+    /**
+     * fetch API를 호출할 때 사용할 최종 옵션 객체를 생성합니다.
+     */
     const mergedOptions: RequestInit = {
       ...fetchOptions,
       ...options,
@@ -169,6 +191,7 @@ export const createFetcher =
       const res = await fetch(url, mergedOptions);
 
       // 응답 인터셉터
+
       // 응답 성공시
       if (res.ok) {
         return handleResponse(res);
@@ -177,6 +200,7 @@ export const createFetcher =
       return handleResponseError(res, url, mergedOptions.body, mergedOptions.method);
     } catch (error) {
       // 네트워크 관련 오류 Sentry에 전송
+
       // - fetch 자체가 실패한 경우 (인터넷 연결 끊김, DNS 오류, CORS 등)
       // - 연결 지연으로 인한 timeout
       if (
@@ -206,3 +230,12 @@ export const createFetcher =
   };
 
 export const defaultApi = createFetcher({ fetchOptions: { cache: 'no-store' } });
+
+/**
+ * axios의 withCredentials를 사용한 것과 동일한 효과를 가진 fetcher입니다.
+ * @deprecated  HaRu BE에는 header를 통한 인증만 있기에 사실상 필요는 없습니다.
+ */
+export const withCredentialsApi = createFetcher({
+  fetchOptions: { cache: 'no-store', credentials: 'include' },
+  headers: { Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}` },
+});

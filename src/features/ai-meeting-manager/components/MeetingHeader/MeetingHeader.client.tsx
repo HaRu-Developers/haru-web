@@ -65,7 +65,7 @@ const MeetingHeader = ({ editingScopeRef }: MeetingHeaderProps) => {
         name={userName}
         userId={userId}
         dateTime={updatedAt}
-        profileSize={ImageSize.XSMALL}
+        profileSize={ImageSize.SMALL}
       />
     </h2>
   );

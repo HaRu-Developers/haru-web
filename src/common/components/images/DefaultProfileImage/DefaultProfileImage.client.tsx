@@ -7,15 +7,31 @@ import { PROFILE_COLORS } from '@common/constants/profile.constants';
 import hashCode from '@common/utils/hash-code.utils';
 
 import { ImageSize } from '../types/images.common.types';
-import { sizeClass } from './DefaultProfileImage.constants';
+import { sizeClassMap } from './DefaultProfileImage.constants';
 import { DefaultProfileImageProps } from './DefaultProfileImage.types';
 
 const DefaultProfileImage = ({
   name,
   userId,
   color,
-  size = ImageSize.SMALL,
+  size = ImageSize.MEDIUM,
 }: DefaultProfileImageProps) => {
+  const sizeClass = sizeClassMap[size] ?? sizeClassMap[ImageSize.MEDIUM];
+
+  // name이 문자열이 아니거나 비어있으면, 에러를 발생시키는 대신 안전한 대체 UI를 렌더링합니다.
+  if (typeof name !== 'string' || !name) {
+    return (
+      <div
+        className={clsx(
+          `rounded-100pxr flex shrink-0 items-center justify-center bg-gray-300`, // 임의 회색 배경
+          sizeClass,
+        )}
+        role="img"
+        aria-label="사용자 프로필 이미지 로딩 중"
+      />
+    );
+  }
+
   // TODO: 한 글자만 추출
   // 구글 로그인시 lastName의 한 글자 추출
   // 일반 로그인시 한 글자 추출
@@ -30,7 +46,7 @@ const DefaultProfileImage = ({
     <div
       className={clsx(
         `rounded-100pxr px-3pxr flex shrink-0 cursor-default items-center justify-center gap-2.5 py-1.5 text-white`,
-        sizeClass[size],
+        sizeClass,
       )}
       style={{ background: backgroundColor }}
       role="img"

@@ -17,9 +17,7 @@ const NotFound = () => {
           <Image src={notFoundImage} alt="404 이미지" fill />
         </div>
         <div>
-          <h2 className="mb-14pxr text-primary h-52pr text-40pxr self-stretch leading-[130%] font-bold tracking-[-0.8px] not-italic">
-            404 ERROR
-          </h2>
+          <h2 className="mb-14pxr text-primary h-52pr text-h3-bd">404 ERROR</h2>
           <p className="mb-42pxr text-b1-rg text-gray-200">
             죄송합니다. 페이지를 찾을 수 없습니다. <br />
             존재하지 않는 주소를 입력하셨거나, <br />

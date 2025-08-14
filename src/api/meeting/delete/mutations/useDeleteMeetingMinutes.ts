@@ -4,9 +4,6 @@ import { ToastType } from '@common/types/toast.types';
 
 import queryKeys from '@common/constants/query-key.constants';
 
-import { ApiError } from '@common/errors/ApiError';
-import { handleMeetingError } from '@common/errors/meeting-error.utils';
-
 import { useToastActions } from '@common/hooks/stores/useToastStore';
 
 import { meetingIdRequestDto } from '../../api.types';
@@ -29,11 +26,12 @@ const useDeleteMeetingMinutes = (workspaceId: string) => {
     onSuccess: async () => {
       // 회의록 리스트 다시 호출
       await queryClient.invalidateQueries({ queryKey: listKey });
+      // 삭제 성공 토스트 표시
       addToast({ text: '회의록이 삭제되었습니다.', type: ToastType.SUCCESS });
     },
-
-    onError: (error: ApiError) => {
-      handleMeetingError(error, { addToast });
+    onError: (_err) => {
+      // 삭제 실패 토스트 표시
+      addToast({ text: '회의록 삭제를 실패했습니다.', type: ToastType.ERROR });
     },
   });
 };

@@ -5,7 +5,6 @@ import { ToastType } from '@common/types/toast.types';
 import queryKeys from '@common/constants/query-key.constants';
 
 import { ApiError } from '@common/errors/ApiError';
-import { handleMeetingError } from '@common/errors/meeting-error.utils';
 
 import { useToastActions } from '@common/hooks/stores/useToastStore';
 
@@ -31,8 +30,8 @@ const useCreateNewMeetingMinutes = (workspaceId: string) => {
       await queryClient.invalidateQueries({ queryKey: listKey });
       addToast({ text: '회의록이 생성되었습니다.', type: ToastType.SUCCESS });
     },
-    onError: (error: ApiError) => {
-      handleMeetingError(error, { addToast });
+    onError: (_err) => {
+      addToast({ text: '회의록이 생성을 실패했습니다.', type: ToastType.ERROR });
     },
   });
 };

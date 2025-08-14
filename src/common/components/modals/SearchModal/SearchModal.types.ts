@@ -1,10 +1,8 @@
-import { FileType } from '@common/types/file-type.enum';
+export const STORAGE_KEYS = {
+  RECENT_SEARCHES: 'recentSearches',
+} as const;
 
-// const mockRecentQueries: string[] = [];
-// TODO: 추후 api hook 측에 type 정의 필요
-
-export interface SearchResult {
-  fileType: FileType;
-  title: string;
-  lastOpened: Date;
-}
+export const CONFIG = {
+  MAX_RECENT_SEARCHES: 3,
+  SEARCH_DEBOUNCE_MS: 500,
+} as const;

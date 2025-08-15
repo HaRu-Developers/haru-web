@@ -6,4 +6,5 @@ export interface FileCreatedInfoProps {
   dateTime: string;
   profileSize?: ImageSize;
   isLoading?: boolean;
+  isDateTimeDeadline?: boolean;
 }

@@ -6,7 +6,8 @@ import { modalHrefByFileType } from './TextCtaWrapper.constants';
 import { TextCtaWrapperProps } from './TextCtaWrapper.types';
 
 const TextCtaWrapper = ({ fileType, workspaceId }: TextCtaWrapperProps) => {
-  const href = modalHrefByFileType(workspaceId)[fileType];
+  // TODO : optional 떄문에 발생하는 문제 해결 필요
+  const href = modalHrefByFileType(workspaceId ?? '')[fileType];
 
   return href ? (
     <Link href={href}>

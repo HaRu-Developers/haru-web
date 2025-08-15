@@ -36,6 +36,8 @@ interface AfterQueryOptions<TData, TError, TExtra = unknown>
   extra?: ExtraResult<TData, TError, TExtra>;
 }
 
+// TODO: add examples here
+
 /**
  * useAfterQuery
  *

@@ -9,7 +9,7 @@ import { ToggleButtonProps } from './ToggleButton.types';
  * - `onLabel`: 버튼이 켜졌을 때 표시되는 스크린리더용 텍스트 (기본값: 'On')
  * - `offLabel`: 버튼이 꺼졌을 때 표시되는 스크린리더용 텍스트 (기본값: 'Off')
  * - `initialState`: 버튼 초기 상태 (기본값: false)
- * - `onToggle`: 상태가 변경될 때 호출되는 콜백 함수 (상태를 인자로 받습니다)
+ * - `onToggle`: 상태가 변경될 때 호출되는 콜백 함수
  */
 const ToggleButton = ({
   onLabel = 'On',

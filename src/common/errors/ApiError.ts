@@ -18,6 +18,7 @@ export class ApiError<T extends ApiErrorBody = ApiErrorBody> extends Error {
     status: number;
     message: string;
     code?: string;
+    isSuccess?: boolean;
     body?: T;
     rawText?: string;
     url?: string;

@@ -44,14 +44,11 @@ const GnbTop = ({
 
   return (
     <div className="flex w-full flex-col items-start">
+      {/* TODO: 수신 변경사항 - 기훈이 ver로 병합했습니다 반드시 추후 확인하세요 */}
       {/* 상단 제목 */}
-      <div className="border-b-stroke-200 py-13pxr flex h-[var(--gnb-top-height)] items-center justify-between self-stretch border-b border-solid bg-white px-6">
-        {isLoading ? (
-          <div className="w-150pxr h-30pxr animate-bg-pulse rounded-4pxr" />
-        ) : (
-          <h1 className="text-t3-sb text-black">{config.title}</h1>
-        )}
-        {!isCustomSection && hasWorkspace && <InputSearchBox searchHref={searchPath} />}
+      <div className="border-b-stroke-200 h-60pxr py-13pxr flex items-center justify-between self-stretch border-b border-solid bg-white px-6">
+        <p className="text-t3-sb text-black">{config.title}</p>
+        {!isCustomSection && !!params.workspaceId && <InputSearchBox searchHref={searchPath} />}
       </div>
       {!isCustomSection && (
         // 하단 탭 or 단순 옵션

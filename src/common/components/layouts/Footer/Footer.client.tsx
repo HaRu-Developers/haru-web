@@ -1,25 +1,18 @@
 'use client';
 
 import Link from 'next/link';
-import { useParams, usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 import HaruLogoIcons from '@icons/logos/HaruLogoIcons/HaruLogoIcons';
 import { HaruLogoIconsState } from '@icons/logos/HaruLogoIcons/HaruLogoIcons.types';
 
-import { ROUTES } from '@common/constants/routes.constants';
+import { TermsType } from '@common/components/modals/terms/TermsModal.types';
 
 const Footer = () => {
   const pathname = usePathname();
-
-  const isLandingPage = pathname.includes(ROUTES.LANDING.BASE);
-  const { workspaceId } = useParams<{ workspaceId?: string }>();
-
-  const termsOfServiceModalHref = isLandingPage
-    ? `${ROUTES.LANDING.MODAL.TERMS_OF_SERVICE}`
-    : `${ROUTES.MAIN.MODAL.TERMS_OF_SERVICE(workspaceId)}`;
-  const privacyPolicyModalHref = isLandingPage
-    ? `${ROUTES.LANDING.MODAL.PRIVACY_POLICY}`
-    : `${ROUTES.MAIN.MODAL.PRIVACY_POLICY(workspaceId)}`;
+  // TODO: 병합 중에 임의로 결정했습니다, 추후 해결
+  const termsOfServiceModalHref = `${pathname}/terms?type=${TermsType.SERVICE}`;
+  const privacyPolicyModalHref = `${pathname}/terms?type=${TermsType.PRIVACY}`;
 
   return (
     <div className="h-299pxr gap-120pxr px-114pxr w-full items-start bg-gray-100 py-16">

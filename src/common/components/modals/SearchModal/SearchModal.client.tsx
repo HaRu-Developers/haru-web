@@ -64,19 +64,15 @@ const SearchModal = () => {
       localStorage.setItem(STORAGE_KEYS.RECENT_SEARCHES, JSON.stringify(newQueries));
     }
 
-    const path = ROUTES.BUILD_DOCUMENT_ROUTE(
-      workspaceId,
-      document.documentType,
-      document.documentId,
-    );
+    const pathGenerator = ROUTES.DETAIL_DOCUMENTS_DEFAULT[document.documentType];
 
-    if (!path) {
-      console.error('알 수 없는 문서 타입입니다:', document.documentType);
-      return;
-    }
-
-    if (path) {
-      router.push(path);
+    if (pathGenerator && workspaceId) {
+      // 찾은 함수를 실행하여 경로와 쿼리 객체를 가져옵니다.
+      const routeInfo = pathGenerator(workspaceId, document.documentId);
+      // router.push에 객체를 직접 전달합니다.
+      router.push(routeInfo);
+    } else {
+      console.error('알 수 없는 문서 타입 또는 workspaceId가 없습니다:', document.documentType);
     }
   };
 

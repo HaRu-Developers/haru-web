@@ -1,8 +1,8 @@
+import React from 'react';
+
 import type { Metadata } from 'next';
 
-import { GnbSection } from '@common/types/gnbs.types';
-
-import GnbTop from '@common/components/gnbs/GnbTop/GnbTop.client';
+import FooterLayout from '@common/components/layouts/FooterLayout.server';
 import GnbLeftLayout from '@common/components/layouts/GnbLeftLayout/GnbLeftLayout.server';
 
 export const metadata: Metadata = {
@@ -13,23 +13,20 @@ export const metadata: Metadata = {
 
 const MainWithWorkspaceLayout = async ({
   children,
-  modal,
+  teamMoodTrackerGeneralModal,
   params,
 }: Readonly<{
   children: React.ReactNode;
-  modal: React.ReactNode;
+  teamMoodTrackerGeneralModal: React.ReactNode;
   params: Promise<{ workspaceId?: string }>;
 }>) => {
   const workspaceId = (await params).workspaceId;
 
   return (
-    <>
-      <GnbLeftLayout workspaceId={workspaceId}>
-        <GnbTop section={GnbSection.MAIN} />
-        {children}
-      </GnbLeftLayout>
-      {modal}
-    </>
+    <FooterLayout>
+      <GnbLeftLayout workspaceId={workspaceId}>{children}</GnbLeftLayout>
+      {teamMoodTrackerGeneralModal}
+    </FooterLayout>
   );
 };
 

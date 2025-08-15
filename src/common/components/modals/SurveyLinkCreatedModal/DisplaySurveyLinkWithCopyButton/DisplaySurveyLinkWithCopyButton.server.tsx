@@ -8,16 +8,13 @@ import { useToastActions } from '@common/hooks/stores/useToastStore';
 import { DisplaySurveyLinkWithCopyButtonProps } from './DisplaySurveyLinkWithCopyButton.types';
 
 const DisplaySurveyLinkWithCopyButton = ({ surveyLink }: DisplaySurveyLinkWithCopyButtonProps) => {
-  // TODO: 임의로 토스트 구현해두었음.
-  // GPT 통한 자아실현 ,, 추후 hook 등으로 분리할 필요가 있어보입니다.
   const { addToast } = useToastActions();
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(surveyLink);
-    // showToast('설문 링크가 클립보드에 복사되었습니다!');
+  const handleCopy = async () => {
+    await navigator.clipboard.writeText(surveyLink);
     addToast({
-      text: `토스트 ${Date.now().toString()}`,
-      type: [ToastType.SUCCESS, ToastType.ERROR, ToastType.INFO][Date.now() % 3],
+      text: `설문 링크가 클립보드에 복사되었습니다!`,
+      type: ToastType.SUCCESS,
       duration: 3000, // 기본은 2000ms
     });
   };

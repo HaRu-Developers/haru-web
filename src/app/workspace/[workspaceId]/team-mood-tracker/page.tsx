@@ -9,12 +9,12 @@ import ListHeader from '@common/components/list-file/ListHeader/ListHeader.serve
 
 import ListFileTeamMoodTrakerWrapper from '@features/team-mood-tracker/components/ListFileTeamMoodTrackerWrapper/ListFileTeamMoodTrackerWrapper.client';
 
-const TeamMoodTrackerDefaultPage = async ({
-  params,
-}: {
-  params: Promise<{ workspaceId: string }>;
-}) => {
-  const { workspaceId } = await params;
+interface TeamMoodTrackerDefaultPageProps {
+  params?: Promise<{ workspaceId: string }>;
+}
+
+const TeamMoodTrackerDefaultPage = async ({ params }: TeamMoodTrackerDefaultPageProps) => {
+  const workspaceId = (await params)?.workspaceId;
 
   return (
     <section>
@@ -22,7 +22,8 @@ const TeamMoodTrackerDefaultPage = async ({
       <div className="assistant-wrapper">
         {/* cta 부분 */}
         {getCtaDescription(FileType.TEAM_MOOD_TRACKER)}
-        <TextCtaWrapper workspaceId={workspaceId} fileType={FileType.TEAM_MOOD_TRACKER} />
+        {/* TODO: 병합 중 임시 해결 */}
+        <TextCtaWrapper fileType={FileType.TEAM_MOOD_TRACKER} workspaceId={workspaceId ?? ''} />
         {/* 리스트 부분 */}
         {getListTitle(FileType.TEAM_MOOD_TRACKER)}
         <ListHeader fileType={FileType.TEAM_MOOD_TRACKER} />

@@ -12,7 +12,7 @@ import InputFieldModal from '@common/components/inputs/modals/InputFieldModal/In
 import { useCreateEventConditions } from '@common/components/modals/CreateNewEventModal/useCreateEventConditions';
 import SelectBoxTag from '@common/components/select-box/SelectBoxTag/SelectBoxTag.client';
 
-import CommonText from '../CommonText/CommonText.server';
+import CommonText from '../CommonText/CommonText.client';
 import { CommonTextType } from '../CommonText/CommonText.types';
 import DateTimePicker from '../DateTimePicker/DateTimePicker.client';
 import { CreateNewEventModalProps } from './CreateNewEventModal.types';

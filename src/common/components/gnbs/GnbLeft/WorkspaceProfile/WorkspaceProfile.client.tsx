@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { useRouter } from 'next/navigation';
 
@@ -17,7 +17,7 @@ import WorkspaceProfileImage from '@common/components/images/WorkspaceProfileIma
 import SelectBoxProfile from '@common/components/select-box/SelectBoxProfile/SelectBoxProfile.client';
 
 import { WorkspaceProfileProps } from './WorkspaceProfile.types';
-import WorkspaceProfileSkeleton from './WorkspaceProfileSkeleton.server';
+import WorkspaceProfileSkeleton from './WorkspaceProfileSkeleton.client';
 
 const WorkSpaceProfile = ({ workspaceId }: WorkspaceProfileProps) => {
   const router = useRouter();

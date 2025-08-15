@@ -16,14 +16,21 @@ const FileCreatedInfo = ({
   dateTime,
   profileSize = ImageSize.SMALL,
   isLoading = false,
+  isDateTimeDeadline,
 }: FileCreatedInfoProps) => {
   /**
    * dateTime(ISO 형식 문자열)이 존재할 경우, 원하는 형식으로 가공합니다.
    * 예: "2025년 8월 6일, 1:03 AM"
+   *
+   * (PM 요구사항) isDateTimeDeadline이 true인 경우, 마감 문구를 추가합니다.
    */
 
-  const formattedDateTime = dateTime ? format(new Date(dateTime), 'yyyy년 M월 d일, h:mm a') : null;
-
+  const formattedDateTime = dateTime
+    ? format(
+        new Date(dateTime),
+        isDateTimeDeadline ? 'yyyy년 M월 d일, h:mm a 마감' : 'yyyy년 M월 d일, h:mm a',
+      )
+    : '';
   const rawName = name ?? '';
   const displayName = rawName.trim() ? rawName : '작성자 없음';
   const displayDate = formattedDateTime ?? '날짜 없음';

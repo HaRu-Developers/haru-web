@@ -12,14 +12,14 @@ import { useAuthStoreActions } from '@features/auth/hooks/useAuthStore';
 const useLogout = () => {
   const qc = useQueryClient();
   const router = useRouter();
-  const { clearAuth } = useAuthStoreActions();
+  const { clearTokens } = useAuthStoreActions();
 
   return useMutation({
     mutationFn: logout,
     // 실패하더라도 클라이언트 토큰은 무조건 제거
     onSettled: async () => {
       // 토큰/유저 정보 삭제 (메모리 + 로컬스토리지)
-      clearAuth();
+      clearTokens();
 
       // 캐시 제거
       try {

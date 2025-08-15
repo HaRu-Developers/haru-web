@@ -1,33 +1,42 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
+
 import clsx from 'clsx';
 
 import CrossIcons from '@icons/CrossIcons/CrossIcons';
 import { CrossIconsState } from '@icons/CrossIcons/CrossIcons.types';
 
+import useFetchTermsDetail from '@api/term/get/queries/useFetchTermsDetail';
+
 import MarkdownContentForModal from '@common/components/mark-down-content/MarkdownContentForModal/MarkdownContentForTeamMoodTracker.server';
 
-import CommonText from '../CommonText/CommonText.server';
+import CommonText from '../CommonText/CommonText.client';
 import { CommonTextType } from '../CommonText/CommonText.types';
+import { TermsType } from './TermsModal.types';
 import { TermsModalProps } from './TermsModal.types';
+import TermsModalSkeleton from './TermsModalSkeleton.client';
 
-const TermsModal = ({ onClose, terms }: TermsModalProps) => {
-  // TODO: API 연결로 변경
+const TermsModal = ({ type }: TermsModalProps) => {
+  const router = useRouter();
 
-  return (
+  const { extra: termsDetail, isFetching } = useFetchTermsDetail(type);
+
+  if (!termsDetail) return null;
+
+  return isFetching ? (
+    <TermsModalSkeleton />
+  ) : (
     <div
       className={clsx(
         'w-1020pxr px-50pxr pt-42pxr rounded-16pxr shadow-modal relative flex flex-col items-center justify-center bg-white',
-        {
-          'h-760pxr': terms.title !== '마케팅정보수신',
-          'h-519pxr': terms.title === '마케팅정보수신',
-        },
+        termsDetail.type === TermsType.MARKETING ? 'h-519pxr' : 'h-760pxr',
       )}
     >
       {/* 모달 제목 + 닫기 버튼 */}
       <div className="h-32pxr flex w-full items-center justify-between">
-        <CommonText type={CommonTextType.T2_BD_BLACK} text={terms.title} />
-        <button className="mr-2pxr" onClick={onClose}>
+        <CommonText type={CommonTextType.T2_BD_BLACK} text={termsDetail.title} />
+        <button className="mr-2pxr" onClick={() => router.back()}>
           <CrossIcons state={CrossIconsState.SIZE_20_GRAY_200} />
         </button>
       </div>
@@ -38,9 +47,9 @@ const TermsModal = ({ onClose, terms }: TermsModalProps) => {
       {/* 약관 내용 */}
       <div className="mt-16pxr scrollbar-component w-full flex-grow overflow-y-auto">
         {/* TODO: 임시로 padding bottom을 통해서 blur 효과 탈출 ..
-         scrollbar도 끝까지 가있고, blur 당하는게 보기 싫은 관계로 해결 필요 */}
+           scrollbar도 끝까지 가있고, blur 당하는게 보기 싫은 관계로 해결 필요 */}
         <div className="text-b3-rg scrollbar-component h-full w-full overflow-y-auto pb-16 whitespace-pre-line text-black">
-          <MarkdownContentForModal content={terms.content} />
+          <MarkdownContentForModal content={termsDetail.content} />
         </div>
       </div>
       {/* 하단 blur 효과 */}

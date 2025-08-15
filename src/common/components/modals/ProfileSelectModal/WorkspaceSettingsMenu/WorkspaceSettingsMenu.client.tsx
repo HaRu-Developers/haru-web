@@ -14,7 +14,7 @@ import AddWorkspaceButton from '@common/components/buttons/30px/AddWorkspaceButt
 import SaveButton from '@common/components/buttons/38px/SaveButton/SaveButton.client';
 import InputInviteMember from '@common/components/inputs/input-invite-member/InputInviteMember/InputInviteMember.client';
 
-import CommonText from '../../CommonText/CommonText.server';
+import CommonText from '../../CommonText/CommonText.client';
 import { CommonTextType } from '../../CommonText/CommonText.types';
 import TeammateCard from '../TeammateCard/TeammateCard.client';
 import { WorkspaceSettingsMenuProps } from './WorkspaceSettingsMenu.types';

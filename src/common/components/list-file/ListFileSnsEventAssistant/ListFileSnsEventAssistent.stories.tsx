@@ -15,7 +15,7 @@ export const Default: Story = {
   args: {
     snsEventId: '1',
     title: '7월 인스타그램 SNS 이벤트',
-    updatedAt: '2025.07.09',
+    updatedAt: new Date('2025.07.09'),
     participantCount: 314,
     winnerCount: 10,
   },

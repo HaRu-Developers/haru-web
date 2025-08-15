@@ -18,6 +18,7 @@ const InputFileTitle = ({
   noPadding = false,
   isLoading = false,
   editingScopeRef,
+  onMode,
 }: InputFileTitleProps) => {
   const [inputValue, setInputValue] = useState<string>(value);
   const lastActionRef = useRef<'none' | 'enter' | 'escape'>('none');
@@ -31,6 +32,7 @@ const InputFileTitle = ({
 
     if (e.key === 'Enter') {
       onSave?.(inputValue);
+      onMode?.(InputFileTitleMode.DEFAULT);
       (e.currentTarget as HTMLInputElement).blur(); // 이어지는 blur는 가드로 무시
     } else if (e.key === 'Escape') {
       lastActionRef.current = 'escape';
@@ -40,21 +42,9 @@ const InputFileTitle = ({
     }
   };
 
-  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    // Enter/Esc 직후 발생하는 blur는 무시 (중복 방지)
-    if (lastActionRef.current !== 'none') {
-      lastActionRef.current = 'none';
-      return;
-    }
-
-    // 포커스가 같은 편집 스코프 안으로 이동하면 저장하지 않음
-    const next = e.relatedTarget as Node | null;
-    if (next && editingScopeRef?.current?.contains(next)) return;
-
-    // 편집 중일 때만 저장, 값이 변하지 않았으면 스킵
-    if (mode === InputFileTitleMode.EDITABLE && inputValue !== value) {
-      onSave?.(inputValue);
-    }
+  const handleBlur = () => {
+    onSave?.(inputValue);
+    onMode?.(InputFileTitleMode.DEFAULT);
   };
 
   // 읽기모드에서 클릭시 편집 요청

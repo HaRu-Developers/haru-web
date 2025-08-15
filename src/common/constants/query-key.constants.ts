@@ -35,6 +35,13 @@ const queryKeys = createQueryKeyStore({
     editProceeding: (meetingId: string) => ['meetingMinutes', 'editProceeding', meetingId],
   },
 
+  snsEventAssistant: {
+    all: null,
+    detail: (snsEventId: string) => [snsEventId],
+    list: (workspaceId: string) => [workspaceId, 'list'],
+    download: (snsEventId: string) => [snsEventId, 'list', 'download'],
+  },
+
   moodTracker: {
     all: null,
     detail: (moodTrackerHashedId: string) => [moodTrackerHashedId],

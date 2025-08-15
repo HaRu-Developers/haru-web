@@ -30,11 +30,19 @@ const BaseListFile = ({
   const handleToggle = (e: React.MouseEvent) => {
     e.stopPropagation();
     e.preventDefault();
-    e.stopPropagation();
     onCheckToggle?.(id);
   };
 
   const showCheckbox = isSelectable && (isCheckMode || isHovered);
+
+  // a 태그 중첩 방지를 위해 최상위는 div, 클릭 시 라우팅은 onClick 핸들러로 처리
+  const handleClick = () => {
+    if (href && !isCheckMode) {
+      window.location.href = href; // 또는 router.push(href)
+    } else {
+      onCheckToggle?.(id);
+    }
+  };
 
   return (
     <Link

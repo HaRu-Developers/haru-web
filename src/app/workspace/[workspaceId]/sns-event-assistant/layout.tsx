@@ -11,11 +11,11 @@ export const metadata: Metadata = {
 
 const SnsEventAssistantRootLayout = async ({
   children,
-  teamMoodTrackerGeneralModal,
+  snsEventAssistantGeneralModal,
   params,
 }: Readonly<{
   children: React.ReactNode;
-  teamMoodTrackerGeneralModal: React.ReactNode;
+  snsEventAssistantGeneralModal: React.ReactNode;
   params: Promise<{ workspaceId?: string }>;
 }>) => {
   const workspaceId = (await params).workspaceId;
@@ -23,7 +23,7 @@ const SnsEventAssistantRootLayout = async ({
   return (
     <GnbLeftLayout workspaceId={workspaceId}>
       {children}
-      {teamMoodTrackerGeneralModal}
+      {snsEventAssistantGeneralModal}
     </GnbLeftLayout>
   );
 };

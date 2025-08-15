@@ -1,3 +1,5 @@
+import React from 'react';
+
 export enum InputFileTitleMode {
   DEFAULT = 'DEFAULT',
   HOVER = 'HOVER',
@@ -13,4 +15,6 @@ export interface InputFileTitleProps {
   noPadding?: boolean;
   isLoading?: boolean;
   editingScopeRef?: React.RefObject<HTMLDivElement>;
+  onClick?: () => void;
+  onMode?: (mode: InputFileTitleMode) => void;
 }

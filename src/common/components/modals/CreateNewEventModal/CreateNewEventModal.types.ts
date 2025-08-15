@@ -20,8 +20,7 @@ export interface FriendTagCondition {
 }
 
 export interface EventConditions {
-  isLiked: boolean;
-  isFollowed: boolean;
+  winnerCount: number | null;
   period: PeriodCondition;
   keyword: KeywordCondition;
   friendTag: FriendTagCondition;

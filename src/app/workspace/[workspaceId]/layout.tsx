@@ -23,9 +23,7 @@ const InnerWorkspaceIdLayout = async ({
   const workspaceId = (await params).workspaceId;
   return (
     <>
-      <FooterLayout>
-        <GnbLeftLayout workspaceId={workspaceId}>{children}</GnbLeftLayout>
-      </FooterLayout>
+      <GnbLeftLayout workspaceId={workspaceId}>{children}</GnbLeftLayout>
       {innerWorkspaceIdModal}
     </>
   );

@@ -10,6 +10,7 @@ import { ButtonsCommonProps } from '../../types/buttons.common.types';
 const LoginButton = ({ className, disabled, onClick, ...props }: ButtonsCommonProps) => {
   return (
     <button
+      aria-label="일반 로그인 버튼"
       className={clsx(
         'text-bt1-sb inline-flex h-[48px] w-[414px] items-center justify-center rounded-[9px] px-[152px] py-[17px] text-white',
         !disabled ? 'bg-gray-100' : 'bg-gray-500',

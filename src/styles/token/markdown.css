@@ -1,0 +1,44 @@
+@layer components {
+  .md-proceeding {
+    counter-reset: section; /* h2 번호 초기화 */
+  }
+
+  /* ========== Title (h2) ========== */
+  .md-proceeding h2 {
+    @apply whitespace-pre-line;
+    /* 상하 padding 4.5px, 높이 33px - 길어질 수 있어 min-h 적용, 타이틀-바디 간격 3px, pl 8px 추가 */
+    @apply mb-[var(--spacing-3pxr)] min-h-[var(--spacing-33pxr)] pt-[var(--spacing-12pxr)] pb-[var(--spacing-4-5pxr)] pl-[var(--spacing-8pxr)];
+    /* 최대 너비 1096px, 넘치면 줄바꿈 */
+    @apply max-w-[var(--spacing-1096pxr)];
+    position: relative;
+  }
+
+  /* 숫자식 번호 렌더링 (1. 2. 3. …) */
+  .md-proceeding h2::before {
+    counter-increment: section;
+    content: counter(section) '.';
+    /* 인라인 흐름에 자연스럽게 들어가도록 */
+    display: inline-block;
+    margin-right: var(--spacing-10pxr);
+  }
+
+  /* ========== Body (li) ========== */
+  /* 불릿 리스트 컨테이너: 기본 마진 제거 + 불릿/들여쓰기 */
+  .md-proceeding ul {
+    @apply m-0 list-disc;
+    /* 불릿 기준 좌/우 padding: 20px / 14px */
+    @apply pr-[var(--spacing-14pxr)] pl-[var(--spacing-46pxr)];
+  }
+  /* 각 항목(li) 스타일 */
+  .md-proceeding li {
+    @apply whitespace-pre-line;
+    /* 상하 padding 2px, 높이 30px - 길어질 수 있어 min-h 적용*/
+    @apply min-h-[var(--spacing-30pxr)] py-[var(--spacing-2pxr)];
+    /* 최대 너비 628px + 각 Body 간 간격 3px */
+    @apply mb-[var(--spacing-3pxr)] max-w-[var(--spacing-628pxr)];
+  }
+  .md-proceeding li:last-child {
+    @apply pb-[var(--spacing-12pxr)];
+    margin-bottom: 0;
+  }
+}

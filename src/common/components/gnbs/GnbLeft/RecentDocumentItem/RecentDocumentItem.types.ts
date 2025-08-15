@@ -1,5 +1,5 @@
-import { Document } from '@api/workspace/api.types';
+import { ApiDocument } from '@api/workspace/api.types';
 
-export interface RecentDocumentItemProps extends Document {
+export interface RecentDocumentItemProps extends ApiDocument {
   workspaceId: string;
 }

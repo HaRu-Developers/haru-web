@@ -1,4 +1,4 @@
-import Footer from '@common/components/layouts/Footer/Footer.server';
+import Footer from '@common/components/layouts/Footer/Footer.client';
 
 const FooterLayout = ({
   children,

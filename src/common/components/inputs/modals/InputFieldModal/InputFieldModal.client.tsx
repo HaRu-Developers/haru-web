@@ -22,7 +22,7 @@ const InputFieldModal = ({
   className,
 }: InputFieldModalProps) => {
   return (
-    <div className={clsx('w-534pxr gap-y-8pxr flex flex-col justify-center', className)}>
+    <div className={clsx('gap-y-8pxr flex w-full flex-col justify-center', className)}>
       {title && <p className="text-cap1-rg h-16pxr text-left text-gray-200">{title}</p>}
       <input
         type={type ?? 'text'}

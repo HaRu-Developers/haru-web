@@ -22,17 +22,19 @@ const textCtaConfig: Record<FileType, TextCtaConfig> = {
   },
 };
 
-const TextCta = ({ type, onClick }: TextCtaProps) => {
+const TextCta = ({ type, onClick, disabled = false }: TextCtaProps) => {
   const { iconState, color } = textCtaConfig[type];
 
   return (
-    <div
-      className="border-stroke-100 flex h-48 w-61 cursor-pointer flex-col items-center justify-center rounded-2xl border-[1.5px] border-dashed bg-white hover:bg-gray-600"
+    <button
+      aria-label={'Create New'}
+      className="border-stroke-100 flex h-48 w-61 flex-col items-center justify-center rounded-2xl border-[1.5px] border-dashed bg-white hover:bg-gray-600"
       onClick={onClick}
+      disabled={disabled}
     >
       <PlusIcons state={iconState} />
       <span className={`text-bt2-sb mt-1.5 ${color}`}>Create New</span>
-    </div>
+    </button>
   );
 };
 

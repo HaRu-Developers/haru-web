@@ -1,12 +1,12 @@
 import { useShallow } from 'zustand/shallow';
 
-import tabStoreState from '@features/ai-meeting-manager/stores/tab-store';
+import tabStore from '@features/ai-meeting-manager/stores/tab-store';
 
 export const useTabInfo = () =>
-  tabStoreState(
+  tabStore(
     useShallow((state) => ({
       isEditing: state.isEditing,
     })),
   );
 
-export const useTabActions = () => tabStoreState((state) => state.actions);
+export const useTabActions = () => tabStore((state) => state.actions);

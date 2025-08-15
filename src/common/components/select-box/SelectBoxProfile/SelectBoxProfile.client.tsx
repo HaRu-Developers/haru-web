@@ -1,5 +1,7 @@
 'use client';
 
+import useFetchUserDetail from '@api/user/get/queries/useFetchUserDetail';
+
 import ModalPortal from '@common/components/ModalPortal/ModalPortal.client';
 import ProfileImage from '@common/components/images/ProfileImage/ProfileImage.client';
 import { ImageSize } from '@common/components/images/types/images.common.types';
@@ -8,14 +10,6 @@ import FooterButtons from './FooterButtons/FooterButtons.client';
 import HeaderButtons from './HeaderButtons/HeaderButtons.client';
 import MyWorkspaces from './MyWorkspaces/MyWorkspaces.server';
 import NewWorkspaceButton from './NewWorkspaceButton/NewWorkspaceButton.client';
-
-// 임시 데이터
-const profile = {
-  userId: '1',
-  imageUrl: null,
-  name: '기쁨',
-  email: 'tngh9509@gmail.com',
-};
 
 const SelectBoxProfile = ({
   isOpen,
@@ -26,6 +20,7 @@ const SelectBoxProfile = ({
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   onSettingClick?: () => void;
 }) => {
+  const { extra: userDetail, isFetching } = useFetchUserDetail({ enabled: isOpen });
   if (!isOpen) return null;
 
   return (
@@ -44,18 +39,22 @@ const SelectBoxProfile = ({
         >
           <div className="flex flex-col items-start gap-2.5 self-stretch">
             <div className="flex flex-col gap-4">
-              <div className="flex items-center gap-3.5">
-                <ProfileImage
-                  userId={profile.userId}
-                  src={profile.imageUrl}
-                  name={profile.name}
-                  size={ImageSize.LARGE}
-                />
-                <div>
-                  <p className="text-cap1-rg text-black">{profile.name}</p>
-                  <p className="text-cap2-rg text-gray-400">{profile.email}</p>
+              {isFetching ? (
+                <div className="h-40pxr w-190pxr animate-bg-pulse rounded-6pxr" />
+              ) : (
+                <div className="flex items-center gap-3.5">
+                  <ProfileImage
+                    userId={userDetail?.userId ?? ''}
+                    src={userDetail?.imageUrl ?? null}
+                    name={userDetail?.name ?? ''}
+                    size={ImageSize.LARGE}
+                  />
+                  <div>
+                    <p className="text-cap1-rg text-black">{userDetail?.name}</p>
+                    <p className="text-cap2-rg text-gray-400">{userDetail?.email}</p>
+                  </div>
                 </div>
-              </div>
+              )}
               <HeaderButtons
                 onSettingClick={onSettingClick}
                 onAddMemberClick={() => console.log('멤버 추가 클릭')}
@@ -75,10 +74,7 @@ const SelectBoxProfile = ({
 
           <div className="bg-stroke-200 h-1pxr w-full"></div>
 
-          <FooterButtons
-            onSettingClick={onSettingClick}
-            onLogoutClick={() => console.log('로그아웃 클릭')}
-          />
+          <FooterButtons />
         </div>
       </div>
     </ModalPortal>

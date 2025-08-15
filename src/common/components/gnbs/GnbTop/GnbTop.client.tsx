@@ -21,7 +21,13 @@ const SEARCH_PATH_MAP: Partial<Record<GnbSection, string>> & { default: string }
   default: 'search', // 기본 경로
 };
 
-const GnbTop = ({ section, title, current, isSnsEventAssistantWithoutWorkspace }: GnbTopProps) => {
+const GnbTop = ({
+  section,
+  title,
+  current,
+  isSnsEventAssistantWithoutWorkspace,
+  isLoading = false,
+}: GnbTopProps) => {
   const pathname = usePathname() ?? '';
   const params = useParams<{ workspaceId?: string }>();
 
@@ -29,6 +35,7 @@ const GnbTop = ({ section, title, current, isSnsEventAssistantWithoutWorkspace }
     ? `/workspace/${params.workspaceId}/${SEARCH_PATH_MAP[section] ?? SEARCH_PATH_MAP.default}`
     : '#';
 
+  const hasWorkspace = !!params.workspaceId;
   const config =
     section === GnbSection.CUSTOM ? sectionConfigs[section](title ?? '') : sectionConfigs[section];
 
@@ -37,6 +44,7 @@ const GnbTop = ({ section, title, current, isSnsEventAssistantWithoutWorkspace }
 
   return (
     <div className="flex w-full flex-col items-start">
+      {/* TODO: 수신 변경사항 - 기훈이 ver로 병합했습니다 반드시 추후 확인하세요 */}
       {/* 상단 제목 */}
       <div className="border-b-stroke-200 h-60pxr py-13pxr flex items-center justify-between self-stretch border-b border-solid bg-white px-6">
         <p className="text-t3-sb text-black">{config.title}</p>

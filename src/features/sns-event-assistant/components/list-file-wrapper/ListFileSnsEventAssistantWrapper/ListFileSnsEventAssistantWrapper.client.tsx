@@ -1,52 +1,67 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+
 import Image from 'next/image';
+import { useParams } from 'next/navigation';
 
 import notFoundImage from '@assets/images/404/image.png';
 
+import useSnsEventList from '@api/sns-event-assistant/get/queries/useSnsEventList';
+
 import ListFileSnsEventAssistant from '@common/components/list-file/ListFileSnsEventAssistant/ListFileSnsEventAssistant.client';
 
-// 임시 데이터
-export const mockSnsEventList = [
-  {
-    snsEventId: 'sns-001',
-    title: '7월 여름 이벤트 댓글 추첨',
-    updatedAt: '2025.07.20',
-    participantCount: 152,
-    winnerCount: 10,
-    isCheckMode: false,
-    isChecked: false,
-    onCheckToggle: (id: string) => console.log(`체크 토글됨: ${id}`),
-  },
-  {
-    snsEventId: 'sns-002',
-    title: '인스타그램 해시태그 이벤트',
-    updatedAt: '2025.07.22',
-    participantCount: 98,
-    winnerCount: 5,
-    isCheckMode: false,
-    isChecked: false,
-    onCheckToggle: (id: string) => console.log(`체크 토글됨: ${id}`),
-  },
-  {
-    snsEventId: 'sns-003',
-    title: '카카오톡 채널 친구추가 이벤트',
-    updatedAt: '2025.07.28',
-    participantCount: 200,
-    winnerCount: 20,
-    isCheckMode: true,
-    isChecked: true,
-    onCheckToggle: (id: string) => console.log(`체크 토글됨: ${id}`),
-  },
-];
+import { ListFileSnsEventAssistantWrapperProps } from './ListFileSnsEventAssistantWrapper.types';
 
-const ListFileSnsEventAssistantWrapper = () => {
-  const hasLists = mockSnsEventList.length > 0;
+const ListFileSnsEventAssistantWrapper = ({
+  checkedList,
+  onCheckModeToggle,
+  onCheckedListToggle,
+}: ListFileSnsEventAssistantWrapperProps) => {
+  const { workspaceId } = useParams<{ workspaceId: string }>();
+  const { extra } = useSnsEventList(workspaceId);
+  const [isCheckMode, setIsCheckMode] = useState(false);
+  const hasLists = !!extra?.snsEventList;
+  const handleCheckToggle = (id: string) => {
+    if (checkedList.includes(id)) {
+      const newCheckedList = checkedList.filter((checkedId) => checkedId !== id);
+      onCheckedListToggle?.(newCheckedList);
+
+      if (newCheckedList.length === 0) {
+        setIsCheckMode(false);
+      }
+    } else {
+      const newCheckedList = [...checkedList, id];
+      onCheckedListToggle?.(newCheckedList);
+      if (newCheckedList.length === 1) {
+        setIsCheckMode(true);
+      }
+    }
+  };
+
+  const isChecked = (id: string) => {
+    return checkedList.includes(id);
+  };
+
+  useEffect(() => {
+    onCheckModeToggle?.(isCheckMode);
+  }, [isCheckMode, onCheckModeToggle]);
+
+  useEffect(() => {
+    onCheckedListToggle?.(checkedList);
+  }, [checkedList, onCheckedListToggle]);
+
   return (
     <>
       {hasLists ? (
-        mockSnsEventList.map((list) => (
-          <ListFileSnsEventAssistant key={list.snsEventId} {...list} />
+        extra?.snsEventList.map((list) => (
+          <ListFileSnsEventAssistant
+            key={list.snsEventId}
+            {...list}
+            isChecked={isChecked(list.snsEventId)}
+            isCheckMode={isCheckMode}
+            onCheckToggle={handleCheckToggle}
+          />
         ))
       ) : (
         <div className="w-658pxr h-440pxr relative">

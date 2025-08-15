@@ -9,6 +9,10 @@ import { ArrowIconsState } from '@icons/ArrowIcons/ArrowIcons.types';
 
 import useFetchWorkspaceDetail from '@api/workspace/get/queries/useFetchWorkspaceDetail';
 
+import { ROUTES } from '@common/constants/routes.constants';
+
+import { useWorkspaceActions, useWorkspaceInfo } from '@common/hooks/stores/useWorkspcaeStore';
+
 import WorkspaceProfileImage from '@common/components/images/WorkspaceProfileImage/WorkspaceProfileImage.client';
 import SelectBoxProfile from '@common/components/select-box/SelectBoxProfile/SelectBoxProfile.client';
 
@@ -17,28 +21,35 @@ import WorkspaceProfileSkeleton from './WorkspaceProfileSkeleton.client';
 
 const WorkSpaceProfile = ({ workspaceId }: WorkspaceProfileProps) => {
   const router = useRouter();
-  const { isFetching, extra: workspaceDetail } = useFetchWorkspaceDetail(workspaceId || '');
+  const { isFetching, extra: workspaceDetail } = useFetchWorkspaceDetail(workspaceId ?? '');
+  const { title, imageUrl } = useWorkspaceInfo();
+  const { setTitle, setImageUrl, setMembers } = useWorkspaceActions();
   const [isOpenSelectBoxProfile, setIsOpenSelectBoxProfile] = useState(false);
-
-  const title = workspaceDetail?.title;
-  const imageUrl = workspaceDetail?.imageUrl;
 
   // workspaceId 존재 여부 + 데이터 유효성 체크 (제목 있는지로)
   const hasWorkspaceId = !!workspaceId;
-  const hasValidWorkspace = !!title;
+
+  // 쿼리 데이터가 있으면 그걸 우선 표시, 없으면 스토어 표시
+  const displayTitle = workspaceDetail?.title ?? title;
+  const displayImageUrl = workspaceDetail?.imageUrl ?? imageUrl;
+  const hasValidWorkspace = !!displayTitle;
 
   const handleClick = () => {
     setIsOpenSelectBoxProfile((prev) => !prev);
   };
 
-  // TODO: ROUTES로 변경 처리 필요
+  // 워크스페이스 있을때만 사용
   const handleSettingClick = () => {
-    if (hasWorkspaceId) {
-      router.push(`/workspace/${workspaceId}/settings`);
-    } else {
-      router.push(`/workspace/settings`);
-    }
+    router.push(ROUTES.MODAL.SETTING(workspaceId));
   };
+
+  // useEffect(() => {
+  //   if (workspaceDetail && hasWorkspaceId) {
+  //     setTitle(workspaceDetail.title);
+  //     setImageUrl(workspaceDetail.imageUrl);
+  //     setMembers(workspaceDetail.members);
+  //   }
+  // }, [workspaceDetail]);
 
   if (!hasWorkspaceId) {
     return (
@@ -68,12 +79,12 @@ const WorkSpaceProfile = ({ workspaceId }: WorkspaceProfileProps) => {
             <div className="flex items-center justify-between self-stretch">
               <div className="flex items-center gap-2">
                 <WorkspaceProfileImage
-                  src={imageUrl || null}
-                  title={title}
+                  src={displayImageUrl || null}
+                  title={displayTitle}
                   className="w-20pxr h-20pxr text-cap2-rg"
                   border
                 />
-                <p className="text-t6-sb text-black">{title}</p>
+                <p className="text-t6-sb text-black">{displayTitle}</p>
               </div>
               <ArrowIcons state={ArrowIconsState.DOWN} />
             </div>

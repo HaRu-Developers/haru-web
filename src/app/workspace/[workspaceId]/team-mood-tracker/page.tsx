@@ -3,7 +3,7 @@ import { GnbSection } from '@common/types/gnbs.types';
 
 import { getCtaDescription, getListTitle } from '@common/utils/assistant-mapping.utils';
 
-import TextCtaWrapper from '@common/components/cta/TextCtaWrapper/TextCtaWrapper.client';
+import TextCtaWrapper from '@common/components/cta/TextCtaWrapper/TextCtaWrapper.server';
 import GnbTop from '@common/components/gnbs/GnbTop/GnbTop.client';
 import ListHeader from '@common/components/list-file/ListHeader/ListHeader.server';
 
@@ -22,7 +22,8 @@ const TeamMoodTrackerDefaultPage = async ({ params }: TeamMoodTrackerDefaultPage
       <div className="assistant-wrapper">
         {/* cta 부분 */}
         {getCtaDescription(FileType.TEAM_MOOD_TRACKER)}
-        <TextCtaWrapper fileType={FileType.TEAM_MOOD_TRACKER} workspaceId={workspaceId} />
+        {/* TODO: 병합 중 임시 해결 */}
+        <TextCtaWrapper fileType={FileType.TEAM_MOOD_TRACKER} workspaceId={workspaceId ?? ''} />
         {/* 리스트 부분 */}
         {getListTitle(FileType.TEAM_MOOD_TRACKER)}
         <ListHeader fileType={FileType.TEAM_MOOD_TRACKER} />

@@ -19,6 +19,7 @@ const RecentDocumentItem = ({
 
   return (
     <Link
+      aria-label={`${title} 파일로 이동`}
       href={href}
       className="h-34pxr rounded-9pxr flex cursor-pointer items-center gap-2 self-stretch px-3 py-1.5"
     >

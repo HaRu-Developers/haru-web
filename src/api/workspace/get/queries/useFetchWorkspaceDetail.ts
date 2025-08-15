@@ -26,7 +26,7 @@ const useFetchWorkspaceDetail = (workspaceId: string) => {
   >({
     queryKey: queryKeys.workspaces.detail(workspaceId).queryKey,
     queryFn: () => fetchWorkspaceDetail({ workspaceId }),
-    enabled: true,
+    enabled: !!workspaceId,
     retry: false,
     extra: (queryResult) => queryResult.data?.result ?? DEFAULT_WORKSPACE_DETAIL,
   });

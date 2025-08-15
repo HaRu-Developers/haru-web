@@ -31,6 +31,8 @@ export function middleware(request: NextRequest) {
   // const isWorkspace = pathname === WORKSPACE_PREFIX || pathname.startsWith(WORKSPACE_PREFIX + '/');
 
   // 루트로 접근 → 랜딩으로
+  // TODO: 자세한 로직은 차주에 수정
+
   // if (pathname === ROOT) {
   //   url.pathname = LANDING;
   //   return NextResponse.redirect(url);

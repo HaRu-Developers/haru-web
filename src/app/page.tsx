@@ -1,14 +1,7 @@
-import Footer from '@common/components/layouts/Footer/Footer.client';
-
-import LandingFull from '@features/landing/components/LandingFull/LandingFull.client';
+import RootRedirectHandler from '@features/main-page/RootRedirectHandler/RootRedirectHandler.client';
 
 const RootPage = () => {
-  return (
-    <>
-      <LandingFull />
-      <Footer />
-    </>
-  );
+  return <RootRedirectHandler />;
 };
 
 export default RootPage;

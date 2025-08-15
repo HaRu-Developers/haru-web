@@ -8,7 +8,6 @@ import GnbTop from '@common/components/gnbs/GnbTop/GnbTop.client';
 import InputFileTitle from '@common/components/inputs/InputFileTitle/InputFileTitle.client';
 import { InputFileTitleMode } from '@common/components/inputs/InputFileTitle/InputFileTitle.types';
 import FileCreatedInfo from '@common/components/FileCreatedInfo/FileCreatedInfo.client';
-import SnsListButton from '@features/sns-event-assistant/components/SnsListButton/SnsListButton.client';
 import DownloadButton from '@common/components/buttons/30px/DownloadButton/DownloadButton.client';
 import FeatureTabIcons from '@icons/FeatureTabIcons/FeatureTabIcons';
 import { FeatureTabIconsState } from '@icons/FeatureTabIcons/FeatureTabIcons.types';
@@ -16,8 +15,6 @@ import RosterList from '@common/components/RosterList/RosterList.server';
 import CategoryOption from '@common/components/CategoryOption/CategoryOption.client';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import SnsLinkItem from '@features/sns-event-assistant/SnsLinkItem/SnsLinkItem.client';
-import SnsLinkItemList from '@features/sns-event-assistant/components/SnsLinkItemList/SnsLinkItemList.client';
-
 const mockItems = [
   {
     userId: 'user1',
@@ -49,9 +46,6 @@ const mockWinnerItems = [
     userId: 'user3',
   },
 ]
-const mockSnsItems = [
-
-]
 enum SnsCategory {
   PARTICIPANT = 'PARTICIPANT',
   WINNER = 'WINNER',
@@ -59,7 +53,7 @@ enum SnsCategory {
 }
 
 const SnsEventAssistantDetailPage = () => {
-  const [title, setTitle] = useState<string>('UMC Networking Day 인스타그램 언급 이벤트');
+  
   const [mode, setMode] = useState<InputFileTitleMode>(InputFileTitleMode.DEFAULT);
   const type = useSearchParams().get('type');
   const { workspaceId, snsEventId } = useParams<{ workspaceId?: string; snsEventId?: string }>();
@@ -68,6 +62,11 @@ const SnsEventAssistantDetailPage = () => {
   const handleClick = (type: SnsCategory) => {
     router.push(`/workspace/${workspaceId}/sns-event-assistant/${snsEventId}?type=${type}`);
   };
+  // if (!snsEventId) {
+  //   return <div>Loading...</div>;
+  // }
+  // const { extra: sns } = useSnsEvent(snsEventId);
+  const [title, setTitle] = useState<string>('타이틀');
   return (
     <section>
       <GnbTop section={GnbSection.CUSTOM} title={title} />
@@ -89,19 +88,19 @@ const SnsEventAssistantDetailPage = () => {
                 <CategoryOption label='당첨자 리스트' active={type === SnsCategory.WINNER} count={1} onClick={() => handleClick(SnsCategory.WINNER)} />
                 <CategoryOption label='SNS 링크' active={type === SnsCategory.LINK} onClick={() => handleClick(SnsCategory.LINK)} />
               </div>
-              <div className='flex gap-x-12pxr items-center'>
+              {type !== SnsCategory.LINK && <div className='flex gap-x-12pxr items-center'>
                 <div className='cursor-pointer' onClick={() => { }}>
                   <FeatureTabIcons state={FeatureTabIconsState.COPY} />
                 </div>
-                <DownloadButton onClick={() => {}} />
-              </div>
+                <DownloadButton onClick={() => { }} />
+              </div>}
             </div>
           </div>
         </div>
         {/* 하단 부분 */}
         <div className='flex justify-center w-full mt-28pxr'>
           {type == SnsCategory.LINK ?
-            (<SnsLinkItemList />)
+            (<SnsLinkItem title="Link Title" link="https://example.com" onClick={() => {}} />)
             : (
             <>
               <RosterList items={items} />

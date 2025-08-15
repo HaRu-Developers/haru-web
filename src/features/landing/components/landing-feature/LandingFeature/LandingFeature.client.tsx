@@ -7,7 +7,7 @@ import FeatureImage from '../feature/FeatureImage/FeatureImage.server';
 import FeatureText from '../feature/FeatureText/FeatureText.client';
 import { LandingFeatureProps } from './LandingFeature.types';
 
-const LandingFeature = ({ className }: LandingFeatureProps) => {
+const LandingFeature = ({ className, onClick }: LandingFeatureProps) => {
   return (
     <div
       className={clsx(
@@ -26,17 +26,17 @@ const LandingFeature = ({ className }: LandingFeatureProps) => {
         {/* AI 회의 진행 매니저 */}
         <div className="mb-82pxr gap-x-43pxr flex w-full">
           <FeatureImage fileType={FileType.AI_MEETING_MANAGER} />
-          <FeatureText fileType={FileType.AI_MEETING_MANAGER} />
+          <FeatureText fileType={FileType.AI_MEETING_MANAGER} onClick={onClick}/>
         </div>
         {/* SNS 이벤트 어시스턴스 */}
         <div className="mb-86pxr gap-x-43pxr flex w-full justify-end">
-          <FeatureText fileType={FileType.SNS_EVENT_ASSISTANT} isFlip={true} />
+          <FeatureText fileType={FileType.SNS_EVENT_ASSISTANT} isFlip={true} onClick={onClick}/>
           <FeatureImage fileType={FileType.SNS_EVENT_ASSISTANT} />
         </div>
         {/* 팀 분위기 트래커 */}
         <div className="gap-x-54pxr flex w-full">
           <FeatureImage fileType={FileType.TEAM_MOOD_TRACKER} />
-          <FeatureText fileType={FileType.TEAM_MOOD_TRACKER} />
+          <FeatureText fileType={FileType.TEAM_MOOD_TRACKER} onClick={onClick} />
         </div>
       </div>
     </div>

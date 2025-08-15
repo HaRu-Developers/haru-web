@@ -11,7 +11,7 @@ import { ApiError } from '@common/errors/ApiError';
 
 import { useAfterQuery } from '@common/hooks/queries/useAfterQuery';
 
-import { Document } from '../../api.types';
+import { ApiDocument } from '../../api.types';
 import fetchRecentDocuments from '../apis/fetchRecentDocuments';
 
 /**
@@ -27,9 +27,9 @@ const useFetchRecentDocuments = (workspaceId: string) => {
 
   // Hydrate된 데이터가 있어 추가 네트워크 요청 없이 바로 캐시 데이터 사용
   return useAfterQuery<
-    { result: { documents: Document[] } }, // TData
+    { result: { documents: ApiDocument[] } }, // TData
     ApiError<ApiErrorBody>, // TError
-    Document[] // TExtra
+    ApiDocument[] // TExtra
   >({
     queryKey: queryKeys.workspaces.recentDocuments(workspaceId).queryKey,
     queryFn: () => fetchRecentDocuments({ workspaceId }),

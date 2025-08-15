@@ -10,4 +10,8 @@ export interface DeleteModalProps {
   onClose: () => void;
   onAbort: () => void;
   onProceed: () => void;
+  cancelBtnDisabled?: boolean;
+  deleteBtnDisabled?: boolean;
+  loading?: boolean; // 로딩 상태
+  loadingText?: string;
 }

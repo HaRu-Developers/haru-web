@@ -7,6 +7,7 @@ import CongratulationIcon from '@svgs/individual/CongratulationIcon.svg';
 import EmailIcon from '@svgs/individual/EmailIcon.svg';
 import GroupIcon from '@svgs/individual/GroupIcon.svg';
 import SearchIcon from '@svgs/individual/SearchIcon.svg';
+import TrashOutlineIcon from '@svgs/individual/TrashOutlineIcon.svg';
 import UnderArrowIcon from '@svgs/individual/UnderArrowIcon.svg';
 import UploadIcon from '@svgs/individual/UploadIcon.svg';
 import WarningIcon from '@svgs/individual/WarningIcon.svg';
@@ -35,6 +36,8 @@ const IndividualIcons = ({ state, className }: IconsCommonProps<IndividualIconsS
       return <GroupIcon className={clsx('h-20pxr w-20pxr', className)} />;
     case IndividualIconsState.EMAIL:
       return <EmailIcon className={clsx('h-20pxr w-20pxr', className)} />;
+    case IndividualIconsState.TRASH_OUTLINE:
+      return <TrashOutlineIcon className={clsx('h-18pxr w-18pxr', className)} />;
     default:
       return null;
   }

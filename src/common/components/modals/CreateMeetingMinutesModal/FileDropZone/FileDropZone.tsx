@@ -7,12 +7,14 @@ import { CrossIconsState } from '@icons/CrossIcons/CrossIcons.types';
 import IndividualIcons from '@icons/IndividualIcons/IndividualIcons';
 import { IndividualIconsState } from '@icons/IndividualIcons/IndividualIcons.types';
 
+import { acceptedTypes, maxSize } from './FileDropZone.constants';
 import { FileDropzoneProps } from './FileDropzone.types';
 
 const FileDropzone = ({ onFileChange, initialFile = null }: FileDropzoneProps) => {
   const [file, setFile] = useState<File | null>(initialFile);
   const [dragActive, setDragActive] = useState<boolean>(false);
   const [hasUploaded, setHasUploaded] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -20,6 +22,20 @@ const FileDropzone = ({ onFileChange, initialFile = null }: FileDropzoneProps) =
   const updateFile = (newFile: File | null) => {
     setFile(newFile);
     onFileChange?.(newFile);
+  };
+
+  // 사이즈, 타입 검사해 에러 메시지 설정
+  const setTypeOrSizeError = (f: File) => {
+    if (!acceptedTypes.includes(f.type)) {
+      setErrorMessage('PDF 파일만 업로드할 수 있습니다.');
+      return true;
+    }
+    if (f.size > maxSize) {
+      setErrorMessage('파일이 너무 큽니다. 최대 10MB까지 업로드할 수 있습니다.');
+      return true;
+    }
+    setErrorMessage('');
+    return false;
   };
 
   // 드래그 관련 핸들러
@@ -35,38 +51,38 @@ const FileDropzone = ({ onFileChange, initialFile = null }: FileDropzoneProps) =
     e.preventDefault();
     e.stopPropagation();
     setDragActive(false);
-    const acceptedTypes = [
-      'application/pdf',
-      'application/msword',
-      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-    ];
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      const droppedFile = e.dataTransfer.files[0];
-      if (acceptedTypes.includes(droppedFile.type)) {
-        updateFile(droppedFile);
-      } else {
-        alert('PDF 또는 Word 문서만 업로드할 수 있습니다.');
-      }
-    }
+
+    const dropped = e.dataTransfer.files?.[0];
+    if (!dropped) return;
+
+    if (setTypeOrSizeError(dropped)) return;
+    updateFile(dropped);
+    setHasUploaded(true);
   };
 
   // 클릭시 input file 열기
-  const handleAreaClick = () => {
-    inputRef.current?.click();
-  };
+  const handleAreaClick = () => inputRef.current?.click();
 
   // 파일 선택 처리
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      updateFile(e.target.files[0]);
-      setHasUploaded(true);
+    const chosen = e.target.files?.[0];
+    if (!chosen) return;
+
+    if (setTypeOrSizeError(chosen)) {
+      // 선택창에서 잘못 고른 경우 인풋 초기화
+      if (inputRef.current) inputRef.current.value = '';
+      return;
     }
+    updateFile(chosen);
+    setHasUploaded(true);
   };
 
   // 파일 삭제
   const handleRemove = () => {
     updateFile(null);
     if (inputRef.current) inputRef.current.value = '';
+    setHasUploaded(false);
+    setErrorMessage('');
   };
 
   return (
@@ -77,7 +93,8 @@ const FileDropzone = ({ onFileChange, initialFile = null }: FileDropzoneProps) =
       onDragLeave={handleDrag}
       onDrop={handleDrop}
       className={clsx(
-        'w-534pxr h-166pxr rounded-12pxr gap-y-8pxr flex flex-col items-center justify-center bg-[#F8F8FA]',
+        'w-534pxr h-166pxr rounded-12pxr gap-y-8pxr flex cursor-pointer flex-col items-center justify-center bg-[#F8F8FA]',
+        !!errorMessage && 'border-system-red border-2',
         dragActive && 'border-2 border-blue-500 bg-blue-50',
       )}
     >
@@ -87,7 +104,7 @@ const FileDropzone = ({ onFileChange, initialFile = null }: FileDropzoneProps) =
         type="file"
         className="hidden"
         onChange={handleChange}
-        accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        accept={acceptedTypes.join(',')}
       />
       <div className="h-86pxr w-86pxr border-stroke-100 rounded-48pxr gap-y-4pxr flex flex-col items-center justify-center border-[1.5px] border-dashed">
         <IndividualIcons state={IndividualIconsState.UPLOAD} />
@@ -111,6 +128,7 @@ const FileDropzone = ({ onFileChange, initialFile = null }: FileDropzoneProps) =
           </button>
         </div>
       )}
+      {errorMessage && <p className="text-b3-rg text-system-red mt-8pxr">{errorMessage}</p>}
     </div>
   );
 };

@@ -29,13 +29,8 @@ const RootLayout = ({
   globalModal: React.ReactNode;
 }>) => {
   return (
-    <html lang="ko">
-      <body
-        className={clsx(
-          'scrollbar-page flex min-h-screen flex-col overflow-y-auto',
-          pretendard.variable,
-        )}
-      >
+    <html lang="ko" className="">
+      <body className={clsx('scrollbar-page flex min-h-screen flex-col', pretendard.variable)}>
         <QueryClientProviders>
           <div id="modal" />
           {children}

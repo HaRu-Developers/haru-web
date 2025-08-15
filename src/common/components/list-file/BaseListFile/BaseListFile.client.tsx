@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 
+import Link from 'next/link';
+
 import clsx from 'clsx';
 
 import CheckboxIcons from '@icons/CheckboxIcons/CheckboxIcons';
@@ -28,25 +30,19 @@ const BaseListFile = ({
   const handleToggle = (e: React.MouseEvent) => {
     e.stopPropagation();
     e.preventDefault();
+    e.stopPropagation();
     onCheckToggle?.(id);
   };
 
   const showCheckbox = isSelectable && (isCheckMode || isHovered);
 
-  // a 태그 중첩 방지를 위해 최상위는 div, 클릭 시 라우팅은 onClick 핸들러로 처리
-  const handleClick = () => {
-    if (href) {
-      window.location.href = href; // 또는 router.push(href)
-    }
-  };
-
   return (
-    <div
-      onClick={handleClick}
+    <Link
+      href={href}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className={clsx(
-        'flex w-full items-center justify-between py-4 transition-colors',
+        'h-73pxr flex w-full items-center justify-between transition-colors',
         {
           'bg-gray-600': isChecked,
           'hover:bg-gray-600': !isChecked,
@@ -54,11 +50,13 @@ const BaseListFile = ({
         className,
       )}
     >
-      <div className="flex items-center">
+      <div className="gap-x-10pxr flex items-center">
         <div
-          className={clsx('mr-2.5 flex h-9 w-9 flex-shrink-0 items-center', {
-            'cursor-pointer': isSelectable,
-          })}
+          className={clsx(
+            'rounded-6pxr h-36pxr w-36pxr flex flex-shrink-0 items-center justify-center',
+            // 선택 가능, 선택 안됐고, 호버 안됐을 때 배경 흰색으로
+            isSelectable && isCheckMode && !isChecked && !isHovered ? 'bg-white' : 'bg-gray-600',
+          )}
           onClick={isSelectable ? handleToggle : undefined}
         >
           {showCheckbox ? (
@@ -79,7 +77,7 @@ const BaseListFile = ({
       </div>
 
       {rightContent && !isCheckMode && <div className="flex items-center">{rightContent}</div>}
-    </div>
+    </Link>
   );
 };
 

@@ -23,6 +23,17 @@ const queryKeys = createQueryKeyStore({
       end,
     ],
   },
+  meetings: {
+    all: null,
+    create: ['meetingMinutes', 'create'],
+    detail: (meetingId: string) => ['meetingMinutes', 'detail', meetingId],
+    list: (workspaceId: string) => ['meetingMinutes', 'list', workspaceId],
+    downloadLink: (meetingId: string) => ['meetingMinutes', 'downloadLink', meetingId],
+    speechQuestion: (meetingId: string) => ['meetingMinutes', 'speechQuestion', meetingId],
+    end: (meetingId: string) => ['meetingMinutes', 'end', meetingId],
+    editTitle: (meetingId: string) => ['meetingMinutes', 'editTitle', meetingId],
+    editProceeding: (meetingId: string) => ['meetingMinutes', 'editProceeding', meetingId],
+  },
 
   moodTracker: {
     all: null,

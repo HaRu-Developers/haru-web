@@ -1,16 +1,19 @@
 import { notFound } from 'next/navigation';
 
-import { HydrationBoundary } from '@tanstack/react-query';
+import { type DehydratedState, HydrationBoundary } from '@tanstack/react-query';
 
 import HaruLogoIcons from '@icons/logos/HaruLogoIcons/HaruLogoIcons';
 import { HaruLogoIconsState } from '@icons/logos/HaruLogoIcons/HaruLogoIcons.types';
 
+import { fetchUserDetail } from '@api/user/get/apis/fetchUserDetail';
 import fetchMyWorkspaces from '@api/workspace/get/apis/fetchMyWorkspaces';
 import fetchRecentDocuments from '@api/workspace/get/apis/fetchRecentDocuments';
 import fetchWorkspaceDetail from '@api/workspace/get/apis/fetchWorkspaceDetail';
 
 import { GnbLeftNavItems } from '@common/constants/gnbs.constants';
 import queryKeys from '@common/constants/query-key.constants';
+
+import { isWorkspaceNotFound } from '@common/errors/guards.utils';
 
 import { getDehydratedState } from '@common/utils/dehydrate';
 
@@ -32,32 +35,47 @@ const isNumericString = (str: string | null) => {
 
 const GnbLeft = async ({ workspaceId }: GnbLeftProps) => {
   // NaN이면 not-found.tsx로 이동
-  // 의도하지 않은 동작이라면 추후 변동 바랍니다 @duwlsssss
   if (!isNumericString(workspaceId)) {
     notFound();
   }
 
   // Server Component에서 prefetch 실행
   // workspaceId가 있을 때만 prefetch
-  let dehydratedState = undefined;
-  if (workspaceId !== null) {
-    const result = await getDehydratedState({
-      prefetch: async (qc) => {
-        await qc.prefetchQuery({
-          queryKey: queryKeys.workspaces.detail(workspaceId).queryKey,
-          queryFn: () => fetchWorkspaceDetail({ workspaceId }),
-        });
-        await qc.prefetchQuery({
-          queryKey: queryKeys.workspaces.myWorkspaces.queryKey,
-          queryFn: fetchMyWorkspaces,
-        });
-        await qc.prefetchQuery({
-          queryKey: queryKeys.workspaces.recentDocuments(workspaceId).queryKey,
-          queryFn: () => fetchRecentDocuments({ workspaceId }),
-        });
-      },
-    });
-    dehydratedState = result.dehydratedState;
+  let dehydratedState: DehydratedState | undefined;
+
+  if (workspaceId != null) {
+    try {
+      const { dehydratedState: state } = await getDehydratedState({
+        prefetch: async (qc) => {
+          // detail을 ensureQueryData로 "먼저" 확인 (여기서 throw 나면 catch로 감)
+          await qc.ensureQueryData({
+            queryKey: queryKeys.workspaces.detail(workspaceId).queryKey,
+            queryFn: () => fetchWorkspaceDetail({ workspaceId }),
+          });
+
+          // 통과했다면 나머지는 병렬 프리패치
+          await Promise.all([
+            qc.prefetchQuery({
+              queryKey: queryKeys.user.detail().queryKey,
+              queryFn: fetchUserDetail,
+            }),
+            qc.prefetchQuery({
+              queryKey: queryKeys.workspaces.myWorkspaces.queryKey,
+              queryFn: fetchMyWorkspaces,
+            }),
+            qc.prefetchQuery({
+              queryKey: queryKeys.workspaces.recentDocuments(workspaceId).queryKey,
+              queryFn: () => fetchRecentDocuments({ workspaceId }),
+            }),
+          ]);
+        },
+      });
+
+      dehydratedState = state;
+    } catch (err) {
+      if (isWorkspaceNotFound(err)) notFound(); // 서버에서만 사용
+      throw err;
+    }
   }
 
   return (
@@ -66,18 +84,18 @@ const GnbLeft = async ({ workspaceId }: GnbLeftProps) => {
         state={HaruLogoIconsState.MIXED}
         className="w-99pxr h-24pxr mb-8pxr mt-5pxr ml-5pxr"
       />
-      <HydrationBoundary state={dehydratedState}>
-        <WorkSpaceProfile workspaceId={workspaceId} />
-        <div className="gap-16pxr flex flex-col">
-          <div className="rounded-10pxr flex flex-col items-start gap-2 self-stretch">
-            {GnbLeftNavItems.map((item) => (
-              <NavItem key={item} item={item} workspaceId={workspaceId} />
-            ))}
-          </div>
-          <div className="bg-stroke-200 h-1pxr w-full shrink-0"></div>
+      {/* <HydrationBoundary state={dehydratedState}> */}
+      <WorkSpaceProfile workspaceId={workspaceId} />
+      <div className="gap-16pxr flex flex-col">
+        <div className="rounded-10pxr flex flex-col items-start gap-2 self-stretch">
+          {GnbLeftNavItems.map((item) => (
+            <NavItem key={item} item={item} workspaceId={workspaceId} />
+          ))}
         </div>
-        {workspaceId != null && <RecentDocumentsSection workspaceId={workspaceId} />}
-      </HydrationBoundary>
+        <div className="bg-stroke-200 h-1pxr w-full shrink-0"></div>
+      </div>
+      {workspaceId != null && <RecentDocumentsSection workspaceId={workspaceId} />}
+      {/* </HydrationBoundary> */}
     </div>
   );
 };

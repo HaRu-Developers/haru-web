@@ -2,10 +2,28 @@
  * 서버, 클라이언트에 따라
  * QueryClient를 생성/관리하는 유틸
  */
-import { QueryClient, defaultShouldDehydrateQuery, isServer } from '@tanstack/react-query';
+import {
+  MutationCache,
+  QueryCache,
+  QueryClient,
+  defaultShouldDehydrateQuery,
+  isServer,
+} from '@tanstack/react-query';
+
+import { logApiError } from '@common/errors/api-error.utils';
 
 function makeQueryClient() {
   return new QueryClient({
+    queryCache: new QueryCache({
+      onError: (error) => {
+        logApiError(error, { scope: 'react-query: query' });
+      },
+    }),
+    mutationCache: new MutationCache({
+      onError: (error) => {
+        logApiError(error, { scope: 'react-query: mutation' });
+      },
+    }),
     defaultOptions: {
       queries: {
         staleTime: 60 * 1000, // 1분

@@ -42,8 +42,8 @@ module.exports = {
     '^@styles/(.*)$',
 
     // 정적 자산
-    '^@icons/(.*)$',
     '^@assets/(.*)$',
+    '^@icons/(.*)$',
 
     // svg 컴포넌트
     '^@svgs/(.*)$',

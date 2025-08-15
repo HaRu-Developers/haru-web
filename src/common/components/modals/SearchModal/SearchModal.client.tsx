@@ -22,7 +22,7 @@ import SearchResultCard from './SearchResultCard/SearchResultCard.client';
 
 const SearchModal = () => {
   const router = useRouter();
-  const { workspaceId } = useParams<{ workspaceId?: string }>();
+  const { workspaceId } = useParams<{ workspaceId: string }>();
 
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [recentQueries, setRecentQueries] = useState<string[]>([]);
@@ -30,7 +30,7 @@ const SearchModal = () => {
   const debouncedSearchQuery = useDebounce(searchQuery, CONFIG.SEARCH_DEBOUNCE_MS);
 
   const { data: searchResults, isFetching } = useSearchDocumentsQuery({
-    workspaceId: workspaceId ?? '',
+    workspaceId,
     title: debouncedSearchQuery,
   });
 

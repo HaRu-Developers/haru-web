@@ -17,47 +17,74 @@ import useAuthStore from '@features/auth/stores/auth-store';
 export const handleResponse = async (res: Response) => {
   return res.json();
 };
+
+/**
+ *  어떤 에러를 Sentry로 보낼지 정책
+ */
+export const shouldReportToSentry = (status: number) => {
+  // 서버오류/네트워크 오류만 전송, 비즈니스 4xx는 제외
+  if (status >= 500 || status === 0) return true;
+
+  // 특정 4xx 코드는 무시
+  // const ignoreCodes = new Set(['LASTOPENED4001']);
+  // if (ignoreCodes.has(code)) return false;
+
+  return false;
+};
+
 /**
  * 응답은 받았으나, 에러인 경우 응답 처리 함수
  */
-export const handleResponseError = async (res: Response, url: string, requestBodyRaw: unknown) => {
+export const handleResponseError = async (
+  res: Response,
+  url: string,
+  requestBodyRaw: unknown,
+  method?: string,
+) => {
   const contentType = res.headers.get('content-type');
+  const rawText = await res.text();
 
-  let requestBody: string;
-  // serializable 하지 않을 것을 대비하여 res.json()으로 바로 변환하지 않습니다.
-  const responseBodyText = await res.text();
-
-  // 기본 응답 본문을 ApiErrorBody 타입으로 초기화합니다.
-  let responseBody: ApiErrorBody = {
-    isSuccess: false,
-    code: 'UNKNOWN',
-    message: `❌ API error ${res.status}`,
-  };
-
-  // Serialize가 불가능할 경우를 handling 합니다.
+  // requestBody 직렬화 (로깅용)
+  let requestBody = '';
   try {
     requestBody =
       typeof requestBodyRaw === 'string' ? requestBodyRaw : JSON.stringify(requestBodyRaw);
   } catch {
+    // 직렬화 불가 값 처리
     requestBody = '[Non-serializable body]';
   }
 
-  // JSON인 경우에만 파싱 시도
+  // JSON만 파싱
+  let responseBody: ApiErrorBody = {
+    isSuccess: false,
+    code: 'UNKNOWN',
+    message: `API error ${res.status}`,
+  };
   if (contentType?.includes('application/json')) {
     try {
-      responseBody = JSON.parse(responseBodyText) as ApiErrorBody;
-    } catch (_error) {
+      responseBody = JSON.parse(rawText) as ApiErrorBody;
+    } catch {
       // 파싱 실패시 문자열 유지
     }
   }
 
-  const error = new ApiError(res.status, responseBody);
+  // 공통 에러 객체 생성
+  const error = new ApiError({
+    status: res.status,
+    message: responseBody.message,
+    code: responseBody.code,
+    body: responseBody,
+    rawText,
+    url,
+    method,
+  });
 
-  if (res.status >= 500) {
+  if (shouldReportToSentry(res.status)) {
     captureApiError(
       error,
       {
         url,
+        method,
         status: res.status,
         requestBody,
         responseHeaders: Object.fromEntries(res.headers.entries()),
@@ -66,8 +93,6 @@ export const handleResponseError = async (res: Response, url: string, requestBod
       'server-error',
     );
   }
-
-  // ERROR 응답이 온 경우에는 return이 아니라 무조건 throw 하도록 함
   throw error;
 };
 
@@ -91,7 +116,8 @@ export const refreshAccessToken = async () => {
   if (!res.ok) {
     // 토큰 갱신 실패 시, 토큰을 초기화합니다.
     clearTokens();
-    throw new ApiError(res.status, {
+    throw new ApiError({
+      status: res.status,
       isSuccess: false,
       code: 'TOKEN_REFRESH_FAILED',
       message: 'Failed to refresh access token',

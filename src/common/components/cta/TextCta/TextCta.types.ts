@@ -9,5 +9,6 @@ export interface TextCtaConfig {
 
 export interface TextCtaProps {
   type: FileType;
-  onClick: () => void;
+  onClick?: () => void;
+  disabled?: boolean;
 }

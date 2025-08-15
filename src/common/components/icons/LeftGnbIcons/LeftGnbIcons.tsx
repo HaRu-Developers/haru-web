@@ -49,7 +49,9 @@ const LeftGnbIcons = ({ state, className }: IconsCommonProps<LeftGnbIconsState>)
       );
     case LeftGnbIconsState.RECENT_FILE:
       return (
-        <LeftGnbRecentFileIcon className={clsx('h-[20px] w-[20px] text-gray-200', className)} />
+        <LeftGnbRecentFileIcon
+          className={clsx('h-[20px] w-[20px] shrink-0 text-gray-200', className)}
+        />
       );
     default:
       return null;

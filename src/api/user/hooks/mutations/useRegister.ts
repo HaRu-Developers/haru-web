@@ -13,10 +13,10 @@ export const useRegister = () => {
     mutationFn: signup,
 
     onSuccess: (data) => {
-      // TODO: 원래는 모달 띄워야 함
       console.log('회원가입 성공. 로그인 페이지로 이동합니다.');
-      // router.push(ROUTES.MODAL.AUTH.AFTER_REGISTER.NORMAL_REGISTER);
-      router.push(ROUTES.MODAL.AUTH.AFTER_REGISTER.INVITED_REGISTER);
+      // TODO: 초대된 가입일 경우 변경하여야 함
+      router.push(ROUTES.MODAL.AUTH.AFTER_REGISTER.NORMAL_REGISTER);
+      // router.push(ROUTES.MODAL.AUTH.AFTER_REGISTER.INVITED_REGISTER);
     },
 
     onError: (err) => {

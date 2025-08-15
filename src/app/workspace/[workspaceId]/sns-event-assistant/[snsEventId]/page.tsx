@@ -14,7 +14,7 @@ import { FeatureTabIconsState } from '@icons/FeatureTabIcons/FeatureTabIcons.typ
 import RosterList from '@common/components/RosterList/RosterList.server';
 import CategoryOption from '@common/components/CategoryOption/CategoryOption.client';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
-import SnsLinkItem from '@features/sns-event-assistant/SnsLinkItem/SnsLinkItem.client';
+import SnsLinkItem from '@features/sns-event-assistant/components/SnsLinkItem/SnsLinkItem.client';
 import useSnsEvent from '@api/sns-event-assistant/get/queries/useSnsEvent';
 import useUpdateSnsEventMutation from '@api/sns-event-assistant/patch/mutations/useUpdateSnsEventMutation';
 const mockItems = [

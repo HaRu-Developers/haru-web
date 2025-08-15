@@ -2,7 +2,6 @@ import React from 'react';
 
 import type { Metadata } from 'next';
 
-import FooterLayout from '@common/components/layouts/FooterLayout.server';
 import GnbLeftLayout from '@common/components/layouts/GnbLeftLayout/GnbLeftLayout.server';
 
 export const metadata: Metadata = {

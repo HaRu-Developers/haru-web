@@ -123,7 +123,10 @@ export const ROUTES = {
       },
     },
     AI_MEETING_MANAGER: {},
-    SNS_EVENT_ASSISTANT: {},
+    SNS_EVENT_ASSISTANT: {
+      CREATE_EVENT: (workspaceId: string) =>
+        `/workspace/${workspaceId}/sns-event-assistant/new-event`,
+    },
     TEAM_MOOD_TRACKER: {
       CREATE_SURVEY: (workspaceId: BigintString) =>
         `/workspace/${workspaceId}/team-mood-tracker/create-new-survey`,

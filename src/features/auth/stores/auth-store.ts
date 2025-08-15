@@ -2,10 +2,14 @@ import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 
+import { useGetUserInfo } from '@api/user/hooks/queries/useGetUserInfo';
+
 // TODO: BE 구현 후에 Optional 전부 제거하기
 interface User {
   id?: string;
   name?: string;
+  email?: string;
+  imageUrl?: string | null;
   accessToken?: string;
   refreshToken?: string;
   workspaceIdList?: string[];
@@ -14,7 +18,7 @@ interface User {
 interface AuthStoreState {
   user: User | null;
   actions: {
-    setUser: (user: User | null) => void;
+    setUser: (newUser: User) => void;
     setUserId: (userId: string) => void;
     setAccessToken: (accessToken: string) => void;
     setRefreshToken: (refreshToken: string) => void;
@@ -29,9 +33,10 @@ const useAuthStore = create<AuthStoreState>()(
       immer((set) => ({
         user: null,
         actions: {
-          setUser: (user) =>
+          setUser: (newUser: User) =>
             set((state) => {
-              state.user = user;
+              state.user = { ...state.user, ...newUser };
+              // 상태가 null인 경우에도 새로운 유저 정보를 설정할 수 있도록 함
             }),
           setUserId: (userId) =>
             set((state) => {

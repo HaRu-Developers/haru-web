@@ -5,16 +5,15 @@ import { useState } from 'react';
 import MoveToNextButton from '@common/components/buttons/48px/MoveToNextButton/MoveToNextButton.client';
 import { MoveToNextButtonWidth } from '@common/components/buttons/48px/MoveToNextButton/MoveToNextButton.types';
 
+import { useUser } from '@features/auth/hooks/useAuthStore';
 import { useOnboardingActions } from '@features/on-boarding/hooks/stores/useOnBoardingStore';
 
 const OnBoardingNameStep = () => {
   const { setName, nextStep } = useOnboardingActions();
   const [inputName, setInputName] = useState('');
 
-  // 임시 더미 데이터, 추후 전역 user 정보로 대체 예정
-  const user = {
-    name: '황지원',
-  };
+  const user = useUser();
+  const { name } = user || {};
 
   const handleNext = () => {
     if (!inputName.trim()) return;
@@ -26,7 +25,7 @@ const OnBoardingNameStep = () => {
   return (
     <div className="flex flex-col">
       <div>
-        <p className="text-t2-bd whitespace-pre-line">{`${user.name} 님, 좋은 HaRu에요!\n 우선, 워크스페이스의 이름을 정해주세요.`}</p>
+        <p className="text-t2-bd whitespace-pre-line">{`${name} 님, 좋은 HaRu에요!\n 우선, 워크스페이스의 이름을 정해주세요.`}</p>
       </div>
       <div className="text-b2-rg mt-6pxr mb-44pxr text-gray-200">
         워크스페이스를 생성하고 팀원을 초대해 협업할 수 있어요.
@@ -36,7 +35,7 @@ const OnBoardingNameStep = () => {
         <label className="text-b3-rg mb-6pxr block text-black">워크스페이스 명</label>
         <input
           className="text-b3-rg w-414pxr rounded-9pxr border-stroke-100 px-14pxr py-13pxr text-gray-black border focus:border-transparent focus:ring-2 focus:ring-[#007AFFB3] focus:outline-none"
-          placeholder={`${user.name}님의 워크스페이스`}
+          placeholder={`${name}님의 워크스페이스`}
           value={inputName}
           onChange={(e) => setInputName(e.target.value)}
         />

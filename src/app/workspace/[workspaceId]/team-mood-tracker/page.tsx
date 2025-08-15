@@ -5,6 +5,7 @@ import { getCtaDescription, getListTitle } from '@common/utils/assistant-mapping
 
 import TextCtaWrapper from '@common/components/cta/TextCtaWrapper/TextCtaWrapper.server';
 import GnbTop from '@common/components/gnbs/GnbTop/GnbTop.client';
+import FooterLayoutServer from '@common/components/layouts/FooterLayout.server';
 import ListHeader from '@common/components/list-file/ListHeader/ListHeader.server';
 
 import ListFileTeamMoodTrakerWrapper from '@features/team-mood-tracker/components/ListFileTeamMoodTrackerWrapper/ListFileTeamMoodTrackerWrapper.client';
@@ -14,7 +15,7 @@ interface TeamMoodTrackerDefaultPageProps {
 }
 
 const TeamMoodTrackerDefaultPage = async ({ params }: TeamMoodTrackerDefaultPageProps) => {
-  const workspaceId = (await params)?.workspaceId;
+  const workspaceId = (await params)?.workspaceId ?? '';
 
   return (
     <section>
@@ -23,7 +24,7 @@ const TeamMoodTrackerDefaultPage = async ({ params }: TeamMoodTrackerDefaultPage
         {/* cta 부분 */}
         {getCtaDescription(FileType.TEAM_MOOD_TRACKER)}
         {/* TODO: 병합 중 임시 해결 */}
-        <TextCtaWrapper fileType={FileType.TEAM_MOOD_TRACKER} workspaceId={workspaceId ?? ''} />
+        <TextCtaWrapper fileType={FileType.TEAM_MOOD_TRACKER} workspaceId={workspaceId} />
         {/* 리스트 부분 */}
         {getListTitle(FileType.TEAM_MOOD_TRACKER)}
         <ListHeader fileType={FileType.TEAM_MOOD_TRACKER} />

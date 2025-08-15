@@ -24,6 +24,16 @@ export const ROUTES = {
   MAIN: {
     BASE_WITHOUT_WS: '/workspace',
     BASE_WITH_WS: (workspaceId: string) => `/workspace/${workspaceId}`,
+    MODAL: {
+      PRIVACY_POLICY: (workspaceId?: string) =>
+        workspaceId
+          ? `/workspace/${workspaceId}/terms?type=privacyPolicy`
+          : `/workspace/terms?type=privacPolicy`,
+      TERMS_OF_SERVICE: (workspaceId?: string) =>
+        workspaceId
+          ? `/workspace/${workspaceId}/terms?type=termsOfService`
+          : `/workspace/terms?type=termsOfService`,
+    },
   },
   // ===== ai-meeting-manager 관련 =====
   AI_MEETING_MANAGER: {
@@ -34,6 +44,14 @@ export const ROUTES = {
     // 회의록 단일 조회
     MINUTES: (workspaceId: string, meetingId: string) =>
       `/workspace/${workspaceId}/ai-meeting-manager/${meetingId}/minutes`,
+    // 모달 관련
+    MODAL: {
+      // 회의 생성 모달
+      CREATE: (workspaceId: string) => `/workspace/${workspaceId}/ai-meeting-manager/create`,
+      // 단일 회의 삭제 확인 모달
+      CONFIRM_DELETE: (workspaceId: string) =>
+        `/workspace/${workspaceId}/ai-meeting-manager/confirm-delete`,
+    },
   },
   //  ===== sns event assistant 관련 =====
   SNS_EVENT_ASSISTANT: (workspaceId: BigintString) =>
@@ -49,6 +67,27 @@ export const ROUTES = {
       `/workspace/${workspaceId}/team-mood-tracker/create?title=${data.title}&description=${data.description}&dueDate=${data.dueDate.toISOString()}&visibility=${data.visibility}`,
   },
   CALENDAR: (workspaceId: BigintString) => `/workspace/${workspaceId}/calendar`,
+  // ===== 파일 조회 =====
+  BUILD_DOCUMENT_ROUTE: (
+    workspaceId: BigintString,
+    documentType: FileType,
+    documentId: BigintString,
+  ) => {
+    const routeMapper: Record<
+      FileType,
+      (workspaceId: BigintString, documentId: BigintString) => BigintString
+    > = {
+      [FileType.AI_MEETING_MANAGER]: (workspaceId: BigintString, documentId: BigintString) =>
+        `/workspace/${workspaceId}/ai-meeting-manager/${documentId}/minutes`,
+      // TODO: 파일 조회에 연결되는 path 작성해주세요
+      [FileType.SNS_EVENT_ASSISTANT]: (workspaceId: BigintString, documentId: BigintString) =>
+        `/workspace/${workspaceId}/sns-event-assistant/${documentId}`,
+      [FileType.TEAM_MOOD_TRACKER]: (workspaceId: BigintString, documentId: BigintString) =>
+        `/workspace/${workspaceId}/team-mood-tracker/${documentId}`,
+    };
+
+    return `${routeMapper[documentType](workspaceId, documentId)}`;
+  },
 
   DETAIL_DOCUMENTS_DEFAULT: {
     // 각 문서 타입에 따른 상세 경로를 생성하는 함수 맵(Map)
@@ -79,6 +118,10 @@ export const ROUTES = {
         NORMAL_REGISTER: '/auth/after-register?invited=false',
       },
     },
+    SNS_EVENT_ASSISTANT: {
+      CREATE_EVENT: (workspaceId: string) =>
+        `/workspace/${workspaceId}/sns-event-assistant/new-event`,
+    },
     AI_MEETING_MANAGER: {
       // 회의 생성 모달
       CREATE: (workspaceId: string) => `/workspace/${workspaceId}/ai-meeting-manager/create`,
@@ -86,7 +129,6 @@ export const ROUTES = {
       CONFIRM_DELETE: (workspaceId: string) =>
         `/workspace/${workspaceId}/ai-meeting-manager/confirm-delete`,
     },
-    SNS_EVENT_ASSISTANT: {},
     TEAM_MOOD_TRACKER: {
       CREATE_SURVEY: (workspaceId: BigintString) =>
         `/workspace/${workspaceId}/team-mood-tracker/create-new-survey`,

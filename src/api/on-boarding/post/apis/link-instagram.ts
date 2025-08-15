@@ -13,6 +13,7 @@ export const linkInstagram = async ({ workspaceId, code }: LinkInstagramRequestD
       headers: {
         code,
       },
+      auth: true,
     },
   );
 

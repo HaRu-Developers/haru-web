@@ -11,6 +11,7 @@ export const inviteMembers = async ({ workspaceId, emails }: InviteMembersReques
     {
       method: 'POST',
       body: JSON.stringify({ workspaceId, emails }),
+      auth: true,
     },
   );
 

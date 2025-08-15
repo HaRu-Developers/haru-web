@@ -11,6 +11,7 @@ export const searchUser = async ({ email }: SearchUserRequestDto) => {
     {
       method: 'POST',
       body: JSON.stringify({ email }),
+      auth: true,
     },
   );
 

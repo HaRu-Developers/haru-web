@@ -52,6 +52,7 @@ export const refreshAccessToken = async ({ refreshToken }: RefreshAccessTokenReq
       headers: {
         RefreshToken: refreshToken,
       },
+      auth: true,
     },
   );
 

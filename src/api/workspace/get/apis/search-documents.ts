@@ -15,6 +15,7 @@ export const searchDocuments = async ({ workspaceId, title }: SearchDocumentsReq
     `${WORKSPACE_API_END_POINTS.SEARCH_DOCUMENTS(workspaceId)}?${query}`,
     {
       method: 'GET',
+      auth: true,
     },
   );
 

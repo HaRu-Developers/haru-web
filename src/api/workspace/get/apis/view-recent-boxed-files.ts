@@ -11,6 +11,7 @@ export const viewRecentBoxedFiles = async ({ workspaceId }: ViewRecentBoxedFiles
     WORKSPACE_API_END_POINTS.RECENT_BOXED_FILES(workspaceId),
     {
       method: 'GET',
+      auth: true,
     },
   );
 

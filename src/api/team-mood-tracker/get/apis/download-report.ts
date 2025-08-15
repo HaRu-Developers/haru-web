@@ -19,6 +19,7 @@ export const downloadReport = async ({
     `${MOOD_TRACKER_API_ENDPOINTS.DOWNLOAD_LINK(moodTrackerHashedId)}?${query}`,
     {
       method: 'GET',
+      auth: true,
     },
   );
 

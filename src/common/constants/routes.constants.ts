@@ -55,6 +55,12 @@ export const ROUTES = {
   },
 
   MODAL: {
+    AUTH: {
+      AFTER_REGISTER: {
+        INVITED_REGISTER: '/auth/after-register?invited=true',
+        NORMAL_REGISTER: '/auth/after-register?invited=false',
+      },
+    },
     AI_MEETING_MANAGER: {},
     SNS_EVENT_ASSISTANT: {},
     TEAM_MOOD_TRACKER: {

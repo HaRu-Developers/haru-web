@@ -12,7 +12,7 @@ export const CreateSnsEvent = async ({
   workspaceId,
   title,
   snsEventLink,
-  condition,
+  snsCondition,
 }: CreateSnsEventAssistantRequestDto) => {
   const response = await defaultApi<BaseResponseDto<CreateSnsEventAssistantResponseDto>>(
     WORKSPACES_SNS_EVENT_ASSISTANT_API_END_POINTS.SNS_EVENT_ASSISTANT_CREATE(workspaceId),
@@ -21,7 +21,7 @@ export const CreateSnsEvent = async ({
       body: JSON.stringify({
         title,
         snsEventLink,
-        condition,
+        snsCondition,
       }),
       auth: true,
     },

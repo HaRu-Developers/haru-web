@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 
-import NewEventModalClient from '../../../../../../features/sns-event-assistant/components/modal-client/CreatingEventModalClient/NewEventModalClient';
+import NewEventModalClient from '@features/sns-event-assistant/components/modal-client/NewEventModalClient/NewEventModalClient';
 
 const NewEventModalPage = () => {
   return (

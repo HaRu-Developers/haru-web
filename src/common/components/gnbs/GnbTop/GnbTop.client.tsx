@@ -40,7 +40,7 @@ const GnbTop = ({ section, title, current, isSnsEventAssistantWithoutWorkspace }
       {/* 상단 제목 */}
       <div className="border-b-stroke-200 h-60pxr py-13pxr flex items-center justify-between self-stretch border-b border-solid bg-white px-6">
         <p className="text-t3-sb text-black">{config.title}</p>
-        {!isCustomSection && <InputSearchBox searchHref={searchPath} />}
+        {!isCustomSection && !!params.workspaceId && <InputSearchBox searchHref={searchPath} />}
       </div>
       {!isCustomSection && (
         // 하단 탭 or 단순 옵션

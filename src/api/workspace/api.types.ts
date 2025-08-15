@@ -129,3 +129,23 @@ export interface fetchCalendarResquestDto {
 export interface fetchCalendarResponseDto {
   documentList: DocumentList[];
 }
+
+export interface ViewRecentBoxedFilesRequestDto {
+  workspaceId: string;
+}
+
+export interface RecentBoxedFile {
+  documentId: string;
+  title: string;
+  documentType: FileType;
+  thumbnailUrl: string | null; // 이미지 URL은 없을 수도 있으므로 null 허용
+  lastOpened: string;
+}
+
+/**
+ * @description 최근 항목 (박스 파일) 조회 API 응답의 result 필드 데이터 형태
+ */
+
+export interface ViewRecentBoxedFilesResponseDto {
+  documents: RecentBoxedFile[];
+}

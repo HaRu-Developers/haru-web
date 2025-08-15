@@ -10,11 +10,11 @@ import ListHeader from '@common/components/list-file/ListHeader/ListHeader.serve
 import ListFileTeamMoodTrakerWrapper from '@features/team-mood-tracker/components/ListFileTeamMoodTrackerWrapper/ListFileTeamMoodTrackerWrapper.client';
 
 interface TeamMoodTrackerDefaultPageProps {
-  params: Promise<{ workspaceId: string }>;
+  params?: Promise<{ workspaceId: string }>;
 }
 
 const TeamMoodTrackerDefaultPage = async ({ params }: TeamMoodTrackerDefaultPageProps) => {
-  const workspaceId = (await params).workspaceId;
+  const workspaceId = (await params)?.workspaceId;
 
   return (
     <section>

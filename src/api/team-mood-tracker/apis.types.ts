@@ -1,3 +1,7 @@
+import { ApiErrorBody } from '@common/types/api.common.types';
+
+import { ApiError } from '@common/errors/ApiError';
+
 import { InputSurveyQuestionType } from '@common/components/inputs/input-survey/types/input-survey.common.types';
 
 import { TeamMoodTrackerSurveyQuestionType } from '@features/team-mood-tracker/constants/question.constants';
@@ -172,6 +176,35 @@ export interface GetViewReportResponseDto extends BaseMoodTrackerResponseDto {
  */
 export interface TeamMoodTrackerPageProps {
   params: { moodTrackerHashedId: string } | Promise<{ moodTrackerHashedId: string }>;
+}
+
+/**
+ * @description 다운로드 포맷 타입
+ */
+export enum DownloadFormat {
+  PDF = 'PDF',
+  DOCX = 'DOCX',
+}
+
+/**
+ * @description 다운로드 링크 조회 API 요청 시 필요한 파라미터 타입
+ */
+export interface TeamMoodReportDownloadLinkRequestDto {
+  moodTrackerHashedId: string;
+  format: DownloadFormat;
+}
+
+/**
+ * @description 다운로드 링크 조회 API 응답의 result 필드 데이터 형태
+ */
+export interface TeamMoodReportDownloadLinkResponseDto {
+  downloadLink: string;
+}
+
+export interface UseTeamMoodDownloadLinkOptions {
+  enabled?: boolean;
+  onSuccess?: (data: TeamMoodReportDownloadLinkResponseDto) => void;
+  onError?: (error: ApiError<ApiErrorBody>) => void;
 }
 
 // --- 경운 작업본

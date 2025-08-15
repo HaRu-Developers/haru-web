@@ -47,6 +47,18 @@ export const ROUTES = {
     return `${routeMapper[documentType](workspaceId)}/${documentId}`;
   },
 
+  DETAIL_DOCUMENTS_DEFAULT: {
+    // 각 문서 타입에 따른 상세 경로를 생성하는 함수 맵(Map)
+    [FileType.AI_MEETING_MANAGER]: (workspaceId: BigintString, documentId: BigintString) =>
+      `/workspace/${workspaceId}/ai-meeting-manager/${documentId}/minutes`,
+
+    [FileType.SNS_EVENT_ASSISTANT]: (workspaceId: BigintString, documentId: BigintString) =>
+      `/workspace/${workspaceId}/sns-event-assistant/${documentId}?type=participant`,
+
+    [FileType.TEAM_MOOD_TRACKER]: (workspaceId: BigintString, documentId: BigintString) =>
+      `/workspace/${workspaceId}/team-mood-tracker/survey/${documentId}?type=TEAM_MOOD_REPORT`,
+  },
+
   AUTH: {
     LOGIN: '/auth/login',
     REGISTER: '/auth/register',

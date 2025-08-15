@@ -12,7 +12,7 @@ import { IndividualIconsState } from '@icons/IndividualIcons/IndividualIcons.typ
 import DatePicker from '@common/components/DatePicker/DatePicker.client';
 import { TimePicker } from '@common/components/TimePicker/TimePicker.client';
 
-import CommonText from '../CommonText/CommonText.server';
+import CommonText from '../CommonText/CommonText.client';
 import { CommonTextType } from '../CommonText/CommonText.types';
 import { DateTimePickerProps } from './DateTimePicker.types';
 import { extractDate, extractTime } from './datetime-picker-util';

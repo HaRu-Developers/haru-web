@@ -18,7 +18,7 @@ const TeamMoodTrackerRootLayout = async ({
 }>) => {
   return (
     <GnbLeftLayout>
-      <GnbTop section={GnbSection.AI_MEETING_MANAGER} />
+      <GnbTop section={GnbSection.TEAM_MOOD_TRACKER} />
       {children}
     </GnbLeftLayout>
   );

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { useRouter } from 'next/navigation';
 
@@ -9,20 +9,19 @@ import { ArrowIconsState } from '@icons/ArrowIcons/ArrowIcons.types';
 
 import useFetchWorkspaceDetail from '@api/workspace/get/queries/useFetchWorkspaceDetail';
 
-import { useWorkspaceActions, useWorkspaceInfo } from '@common/hooks/stores/useWorkspcaeStore';
-
 import WorkspaceProfileImage from '@common/components/images/WorkspaceProfileImage/WorkspaceProfileImage.client';
 import SelectBoxProfile from '@common/components/select-box/SelectBoxProfile/SelectBoxProfile.client';
 
 import { WorkspaceProfileProps } from './WorkspaceProfile.types';
-import WorkspaceProfileSkeleton from './WorkspaceProfileSkeleton.server';
+import WorkspaceProfileSkeleton from './WorkspaceProfileSkeleton.client';
 
 const WorkSpaceProfile = ({ workspaceId }: WorkspaceProfileProps) => {
   const router = useRouter();
   const { isFetching, extra: workspaceDetail } = useFetchWorkspaceDetail(workspaceId || '');
-  const { title, imageUrl } = useWorkspaceInfo();
-  const { setTitle, setImageUrl, setMembers } = useWorkspaceActions();
   const [isOpenSelectBoxProfile, setIsOpenSelectBoxProfile] = useState(false);
+
+  const title = workspaceDetail?.title;
+  const imageUrl = workspaceDetail?.imageUrl;
 
   // workspaceId 존재 여부 + 데이터 유효성 체크 (제목 있는지로)
   const hasWorkspaceId = !!workspaceId;
@@ -40,14 +39,6 @@ const WorkSpaceProfile = ({ workspaceId }: WorkspaceProfileProps) => {
       router.push(`/workspace/settings`);
     }
   };
-
-  useEffect(() => {
-    if (workspaceDetail && hasWorkspaceId) {
-      setTitle(workspaceDetail.title);
-      setImageUrl(workspaceDetail.imageUrl);
-      setMembers(workspaceDetail.members);
-    }
-  }, [workspaceDetail]);
 
   if (!hasWorkspaceId) {
     return (

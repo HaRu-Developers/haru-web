@@ -2,6 +2,8 @@ import { createQueryKeyStore } from '@lukemorales/query-key-factory';
 
 import { DownloadFormat } from '@api/team-mood-tracker/apis.types';
 
+import { TermsType } from '@common/components/modals/terms/TermsModal.types';
+
 // 도메인(기능)별로 키를 그룹화합니다.
 const queryKeys = createQueryKeyStore({
   workspaces: {
@@ -40,6 +42,11 @@ const queryKeys = createQueryKeyStore({
     // 매개변수가 있는 키는 함수로 정의합니다.
     detail: () => ['user', 'detail'],
     edit: () => ['user', 'edit'],
+  },
+
+  terms: {
+    all: null,
+    detail: (type: TermsType) => [type],
   },
 });
 

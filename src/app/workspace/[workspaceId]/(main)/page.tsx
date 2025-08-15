@@ -1,9 +1,6 @@
 'use client';
 
-import Image from 'next/image';
 import { useParams, usePathname, useRouter } from 'next/navigation';
-
-import Image404 from '@assets/images/404/image.png';
 
 import { RecentBoxedFile } from '@api/workspace/api.types';
 import { useViewRecentDocumentsQuery } from '@api/workspace/get/queries/useViewRecentBoxedFiles';
@@ -13,11 +10,10 @@ import { GnbSection } from '@common/types/gnbs.types';
 
 import { ROUTES } from '@common/constants/routes.constants';
 
-import CreateWorkspaceButton from '@common/components/buttons/38px/CreateWorkspaceButton/CreateWorkSpaceButton.client';
 import ImageCta from '@common/components/cta/ImageCta/ImageCta.client';
-import ImageCtaSkeleton from '@common/components/cta/ImageCta/ImageCtaSkeleton';
+import ImageCtaSkeleton from '@common/components/cta/ImageCta/ImageCtaSkeleton.client';
 import BoxedFile from '@common/components/etc/BoxedFile/BoxedFile.client';
-import BoxedFileSkeleton from '@common/components/etc/BoxedFile/BoxedFileSkelton';
+import BoxedFileSkeleton from '@common/components/etc/BoxedFile/BoxedFileSkelton.client';
 import CalendarSection from '@common/components/etc/calendar/CalendarSection/CalendarSection.client';
 import GnbTop from '@common/components/gnbs/GnbTop/GnbTop.client';
 

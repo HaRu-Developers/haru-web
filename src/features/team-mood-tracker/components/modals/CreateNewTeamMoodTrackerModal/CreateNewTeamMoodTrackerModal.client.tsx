@@ -5,7 +5,7 @@ import { CrossIconsState } from '@icons/CrossIcons/CrossIcons.types';
 
 import InputFieldModal from '@common/components/inputs/modals/InputFieldModal/InputFieldModal.client';
 import TextBoxFieldModal from '@common/components/inputs/modals/TextBoxFieldModal/TextBoxFieldModal.client';
-import CommonText from '@common/components/modals/CommonText/CommonText.server';
+import CommonText from '@common/components/modals/CommonText/CommonText.client';
 import { CommonTextType } from '@common/components/modals/CommonText/CommonText.types';
 import DateTimePicker from '@common/components/modals/DateTimePicker/DateTimePicker.client';
 import SelectBoxOption from '@common/components/select-box/SelectBoxOption/SelectBoxOption.client';

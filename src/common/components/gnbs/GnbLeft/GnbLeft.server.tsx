@@ -26,7 +26,7 @@ import WorkSpaceProfile from './WorkspaceProfile/WorkspaceProfile.client';
  * @returns - 문자열이 숫자로만 이루어져 있으면 true,
  */
 const isNumericString = (str: string | null) => {
-  if (str === null) return false;
+  if (str === null) return true; // null이면 ture 반환
   return /^-?\d+$/.test(str);
 };
 

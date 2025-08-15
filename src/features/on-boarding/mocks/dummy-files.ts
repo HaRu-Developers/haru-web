@@ -1,12 +1,4 @@
-import { FileType } from '@common/types/file-type.enum';
-
 import { DocumentType } from '@common/components/etc/BoxedFile/BoxedFile.types';
-
-export const ctaItems = [
-  { type: FileType.AI_MEETING_MANAGER, onClick: () => console.log('AI') },
-  { type: FileType.SNS_EVENT_ASSISTANT, onClick: () => console.log('SNS') },
-  { type: FileType.TEAM_MOOD_TRACKER, onClick: () => console.log('TEAM') },
-];
 
 const now = new Date();
 const docTypes: DocumentType[] = [

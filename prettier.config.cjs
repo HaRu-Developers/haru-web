@@ -35,6 +35,7 @@ module.exports = {
     '^(next/(.*)$)|^(next$)', // Next.js
 
     // 외부 라이브러리
+    '^@tanstack/react-query$', // React Query
     '<THIRD_PARTY_MODULES>',
 
     // 전역 스타일

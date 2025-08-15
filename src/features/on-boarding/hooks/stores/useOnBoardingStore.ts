@@ -12,6 +12,8 @@ export const useOnboardingState = () =>
       image: state.image,
       workspaceId: state.workspaceId,
       emails: state.emails,
+      isInstagramConnected: state.isInstagramConnected,
+      instagramAccountName: state.instagramAccountName,
     })),
   );
 
@@ -30,5 +32,9 @@ export const useOnboardingWorkspaceId = () => useOnboardingStore((state) => stat
 // 인스타그램 연동 확인 훅
 export const useInstagramConnection = () =>
   useOnboardingStore((state) => state.isInstagramConnected);
+
+// 인스타그램 name만 가져오는 훅
+export const useInstagramAccountName = () =>
+  useOnboardingStore((state) => state.instagramAccountName);
 
 export { OnboardingStep };

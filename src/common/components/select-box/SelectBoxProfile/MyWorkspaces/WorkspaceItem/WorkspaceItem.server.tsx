@@ -9,7 +9,7 @@ import WorkspaceProfileImage from '@common/components/images/WorkspaceProfileIma
 const WorkspaceItem = ({ workspaceId, imageUrl, title, isOwner }: WorkspaceSummary) => {
   return (
     <Link
-      href={ROUTES.MAIN(workspaceId)}
+      href={ROUTES.WORKSPACE_MAIN(workspaceId)}
       className="h-32pxr rounded-10pxr p-10pxr flex cursor-pointer items-center justify-between bg-white hover:bg-gray-600"
     >
       <span className="gap-6pxr flex items-center">

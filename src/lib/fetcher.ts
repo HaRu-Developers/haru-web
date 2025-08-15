@@ -136,7 +136,17 @@ export const createFetcher = ({
       }
       // 응답 에러시
       // access token 만료 시 자동으로 재발급하도록 함
-      const resBody = await res.json();
+      // clone에서만 JSON 확인 (원본 res는 아직 미소비)
+      let resBody: { code?: string } = {};
+      try {
+        const ct = res.headers.get('content-type') ?? '';
+        if (ct.includes('application/json')) {
+          resBody = await res.clone().json(); // clone
+        }
+      } catch {
+        // JSON이 아니거나 파싱 실패 → 무시
+      }
+
       // TODO: RT 만료 시에는 로그인 페이지로 이동 시켜야 함 !
       if (res.status === 401 && requiresAuth && resBody.code === 'AUTHORIZATION9002') {
         console.log('AT 만료로 RT 재발급 요청을 합니다.');
@@ -156,21 +166,36 @@ export const createFetcher = ({
         }
 
         newAccessToken = await refreshPromise;
-
         mergedHeaders.set('Authorization', `Bearer ${newAccessToken}`);
 
         // 다시 한 번 실행
+        // fetchOptions 유지
+        const retryOptions: RequestInit = { ...fetchOptions, ...options, headers: mergedHeaders };
+
         try {
-          const newRes = await fetch(url, { ...options, headers: mergedHeaders });
+          const newRes = await fetch(url, retryOptions);
           if (newRes.ok) {
-            return handleResponse(newRes);
+            return handleResponse(newRes); // 성공 시 여기서만 소비
           }
+          //  재시도도 실패한 경우, newRes를 에러 핸들러로
+          return handleResponseError(
+            newRes,
+            url,
+            retryOptions.body,
+            retryOptions.method as string | undefined,
+          );
         } catch (error) {
           return handleFetchError(error);
         }
       }
 
-      return handleResponseError(res, url, mergedOptions.body);
+      // 일반 에러: 원본 res를 처음으로 읽게 함
+      return handleResponseError(
+        res,
+        url,
+        mergedOptions.body,
+        mergedOptions.method as string | undefined,
+      );
     } catch (error) {
       // 네트워크 오류나 기타 예외 처리
       return handleFetchError(error);

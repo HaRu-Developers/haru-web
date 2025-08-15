@@ -31,10 +31,10 @@ export function middleware(request: NextRequest) {
   // const isWorkspace = pathname === WORKSPACE_PREFIX || pathname.startsWith(WORKSPACE_PREFIX + '/');
 
   // 루트로 접근 → 랜딩으로
-  if (pathname === ROOT) {
-    url.pathname = LANDING;
-    return NextResponse.redirect(url);
-  }
+  // if (pathname === ROOT) {
+  //   url.pathname = LANDING;
+  //   return NextResponse.redirect(url);
+  // }
 
   // // 로그인 상태에서 로그인/회원가입 접근 금지
   // if (accessToken && isAuthPage) {

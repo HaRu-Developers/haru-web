@@ -1,4 +1,4 @@
 export interface GnbTopTitleProps {
   meetingId: string;
-  title?: string;
+  // title?: string;
 }

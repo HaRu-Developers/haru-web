@@ -13,12 +13,12 @@ import InputSearchBox from '@common/components/inputs/InputSearchBox/InputSearch
 import { GnbTopProps } from './GnbTop.types';
 
 const SEARCH_PATH_MAP: Partial<Record<GnbSection, string>> & { default: string } = {
-  [GnbSection.AI_MEETING_MANAGER]: 'ai-meeting-manager/search',
-  [GnbSection.SNS_EVENT_ASSISTANT]: 'sns-event-assistant/search',
-  [GnbSection.TEAM_MOOD_TRACKER]: 'team-mood-tracker/search',
-  [GnbSection.MAIN]: 'search',
-  [GnbSection.CALENDAR]: 'calendar/search',
-  default: 'search', // 기본 경로
+  [GnbSection.AI_MEETING_MANAGER]: 'search?type=ai-meeting-manager',
+  [GnbSection.SNS_EVENT_ASSISTANT]: 'search?type=sns-event-assistant',
+  [GnbSection.TEAM_MOOD_TRACKER]: 'search?type=team-mood-tracker',
+  [GnbSection.MAIN]: 'search?type=main',
+  [GnbSection.CALENDAR]: 'search?type=calendar',
+  default: 'search?type=default', // 기본 경로
 };
 
 const GnbTop = ({
@@ -31,8 +31,13 @@ const GnbTop = ({
   const pathname = usePathname() ?? '';
   const params = useParams<{ workspaceId?: string }>();
 
+  /**
+   * Search Modal 띄울 path 설정
+   */
   const searchPath = params.workspaceId
-    ? `/workspace/${params.workspaceId}/${SEARCH_PATH_MAP[section] ?? SEARCH_PATH_MAP.default}`
+    ? // workspaceId가 존재할 경우 -> workspaceId 하위의 search modal path로 이동
+      // 근데 함수 실행이 실패할 경우 default 반환 (section이 잘못된 경우)
+      `/workspace/${params.workspaceId}/${SEARCH_PATH_MAP[section] ?? SEARCH_PATH_MAP.default}`
     : '#';
 
   const hasWorkspace = !!params.workspaceId;

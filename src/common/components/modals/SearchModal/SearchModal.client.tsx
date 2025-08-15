@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
-import { useParams, useRouter } from 'next/navigation';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 
 import clsx from 'clsx';
 
@@ -22,6 +22,11 @@ import SearchResultCard from './SearchResultCard/SearchResultCard.client';
 
 const SearchModal = () => {
   const router = useRouter();
+  const query = useSearchParams();
+  const searchType = query.get('type') || 'default'; // 기본값은 'title'
+
+  console.log('LOG: SEARCH MODAL TRIGGERED IN SECTION:', searchType);
+
   const { workspaceId } = useParams<{ workspaceId: string }>();
 
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -64,6 +69,9 @@ const SearchModal = () => {
       localStorage.setItem(STORAGE_KEYS.RECENT_SEARCHES, JSON.stringify(newQueries));
     }
 
+    /**
+     * 검색 결과에 해당하는 문서의 링크를 생성합니다.
+     */
     const pathGenerator = ROUTES.DETAIL_DOCUMENTS_DEFAULT[document.documentType];
 
     if (pathGenerator && workspaceId) {

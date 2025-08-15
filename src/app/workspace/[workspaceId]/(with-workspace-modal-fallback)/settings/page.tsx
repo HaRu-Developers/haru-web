@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 
-import SettingModalPage from '../../@withWorkspaceModal/(.)settings/page';
+import SettingModalPage from '@/app/workspace/[workspaceId]/@innerWorkspaceIdModal/(.)settings/page';
 
 const SettingsStandalonePage = ({ params }: { params: Promise<{ workspaceId?: string }> }) => {
   return (

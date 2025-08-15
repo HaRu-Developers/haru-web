@@ -13,12 +13,14 @@ const MainPage = async ({
   const workspaceId = (await params).workspaceId;
 
   return (
-    <FooterLayout>
+    <>
       <GnbLeftLayout workspaceId={workspaceId}>
-        <GnbTop section={GnbSection.MAIN} />
-        <MainPageSection />;
+        <FooterLayout>
+          <GnbTop section={GnbSection.MAIN} />
+          <MainPageSection />;
+        </FooterLayout>
       </GnbLeftLayout>
-    </FooterLayout>
+    </>
   );
 };
 

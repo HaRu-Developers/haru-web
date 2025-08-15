@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 
-import ChangePasswordModalPage from '../../../@withWorkspaceModal/(.)settings/(.)change-password/page';
+import ChangePasswordModalPage from '@/app/workspace/[workspaceId]/@innerWorkspaceIdModal/(.)settings/(.)change-password/page';
 
 const ChangePasswordStandalonePage = ({
   params,

@@ -3,7 +3,7 @@
 import CheckboxIcons from '@icons/CheckboxIcons/CheckboxIcons';
 import { CheckboxIconsState } from '@icons/CheckboxIcons/CheckboxIcons.types';
 
-import { Visibility } from '../../types/input-survey.common.types';
+import { SurveyVisibility } from '../../types/input-survey.common.types';
 import { QuestionChoiceOptionProps } from './QuestionChoiceOption.types';
 
 const QuestionChoiceOption = ({
@@ -15,7 +15,7 @@ const QuestionChoiceOption = ({
   onCheck,
 }: QuestionChoiceOptionProps) => {
   const handleClick = () => {
-    if (visibility === Visibility.PRIVATE) return;
+    if (visibility === SurveyVisibility.PRIVATE) return;
     onCheck?.(index);
   };
 
@@ -36,7 +36,7 @@ const QuestionChoiceOption = ({
         value={option}
         placeholder={`옵션 ${index + 1}`}
         onChange={(e) => onChange?.(index, e.target.value)}
-        readOnly={option.trim() === '기타...' || visibility === Visibility.PUBLIC}
+        readOnly={option.trim() === '기타...' || visibility === SurveyVisibility.PUBLIC}
       />
     </div>
   );

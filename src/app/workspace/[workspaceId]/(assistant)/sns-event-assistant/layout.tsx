@@ -1,3 +1,5 @@
+import React from 'react';
+
 import type { Metadata } from 'next';
 
 import GnbLeftLayout from '@common/components/layouts/GnbLeftLayout/GnbLeftLayout.server';
@@ -9,11 +11,11 @@ export const metadata: Metadata = {
 
 const SnsEventAssistantRootLayout = async ({
   children,
-  modal,
+  teamMoodTrackerGeneralModal,
   params,
 }: Readonly<{
   children: React.ReactNode;
-  modal: React.ReactNode;
+  teamMoodTrackerGeneralModal: React.ReactNode;
   params: Promise<{ workspaceId?: string }>;
 }>) => {
   const workspaceId = (await params).workspaceId;
@@ -21,7 +23,7 @@ const SnsEventAssistantRootLayout = async ({
   return (
     <GnbLeftLayout workspaceId={workspaceId}>
       {children}
-      {modal}
+      {teamMoodTrackerGeneralModal}
     </GnbLeftLayout>
   );
 };

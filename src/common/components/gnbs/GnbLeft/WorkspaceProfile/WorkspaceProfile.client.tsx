@@ -31,6 +31,7 @@ const WorkSpaceProfile = ({ workspaceId }: WorkspaceProfileProps) => {
     setIsOpenSelectBoxProfile((prev) => !prev);
   };
 
+  // TODO: ROUTES로 변경 처리 필요
   const handleSettingClick = () => {
     if (hasWorkspaceId) {
       router.push(`/workspace/${workspaceId}/settings`);

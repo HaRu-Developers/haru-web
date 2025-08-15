@@ -23,14 +23,14 @@ const AiMeetingManagerDefaultPage = async ({
 }) => {
   const { workspaceId } = await params;
 
-  const { dehydratedState } = await getDehydratedState({
-    prefetch: async (qc) => {
-      await qc.prefetchQuery({
-        queryKey: queryKeys.meetings.list(workspaceId).queryKey,
-        queryFn: () => fetchMeetingMinutesList({ workspaceId }),
-      });
-    },
-  });
+  // const { dehydratedState } = await getDehydratedState({
+  //   prefetch: async (qc) => {
+  //     await qc.prefetchQuery({
+  //       queryKey: queryKeys.meetings.list(workspaceId).queryKey,
+  //       queryFn: () => fetchMeetingMinutesList({ workspaceId }),
+  //     });
+  //   },
+  // });
 
   return (
     <section>
@@ -42,9 +42,9 @@ const AiMeetingManagerDefaultPage = async ({
         {/* 리스트 부분 */}
         {getListTitle(FileType.AI_MEETING_MANAGER)}
         <ListHeader fileType={FileType.AI_MEETING_MANAGER} />
-        <HydrationBoundary state={dehydratedState}>
-          <ListFileAiMeetingManagerWrapper workspaceId={workspaceId} />
-        </HydrationBoundary>
+        {/* <HydrationBoundary state={dehydratedState}> */}
+        <ListFileAiMeetingManagerWrapper workspaceId={workspaceId} />
+        {/* </HydrationBoundary> */}
       </div>
     </section>
   );

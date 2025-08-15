@@ -1,3 +1,5 @@
+'use client';
+
 import { notFound } from 'next/navigation';
 
 import { type DehydratedState, HydrationBoundary } from '@tanstack/react-query';
@@ -19,7 +21,7 @@ import { getDehydratedState } from '@common/utils/dehydrate';
 
 import { GnbLeftProps } from './GnbLeft.types';
 import NavItem from './NavItem/NavItem.client';
-import RecentDocumentsSection from './RecentDocumentsSection/RecentDocumentsSection.server';
+import RecentDocumentsSection from './RecentDocumentsSection/RecentDocumentsSection.client';
 import WorkSpaceProfile from './WorkspaceProfile/WorkspaceProfile.client';
 
 /**
@@ -33,7 +35,7 @@ const isNumericString = (str: string | null) => {
   return /^-?\d+$/.test(str);
 };
 
-const GnbLeft = async ({ workspaceId }: GnbLeftProps) => {
+const GnbLeft = ({ workspaceId }: GnbLeftProps) => {
   // NaN이면 not-found.tsx로 이동
   if (!isNumericString(workspaceId)) {
     notFound();
@@ -43,40 +45,40 @@ const GnbLeft = async ({ workspaceId }: GnbLeftProps) => {
   // workspaceId가 있을 때만 prefetch
   let dehydratedState: DehydratedState | undefined;
 
-  if (workspaceId != null) {
-    try {
-      const { dehydratedState: state } = await getDehydratedState({
-        prefetch: async (qc) => {
-          // detail을 ensureQueryData로 "먼저" 확인 (여기서 throw 나면 catch로 감)
-          await qc.ensureQueryData({
-            queryKey: queryKeys.workspaces.detail(workspaceId).queryKey,
-            queryFn: () => fetchWorkspaceDetail({ workspaceId }),
-          });
+  // if (workspaceId != null) {
+  //   try {
+  //     const { dehydratedState: state } = await getDehydratedState({
+  //       prefetch: async (qc) => {
+  //         // detail을 ensureQueryData로 "먼저" 확인 (여기서 throw 나면 catch로 감)
+  //         await qc.ensureQueryData({
+  //           queryKey: queryKeys.workspaces.detail(workspaceId).queryKey,
+  //           queryFn: () => fetchWorkspaceDetail({ workspaceId }),
+  //         });
 
-          // 통과했다면 나머지는 병렬 프리패치
-          await Promise.all([
-            qc.prefetchQuery({
-              queryKey: queryKeys.user.detail().queryKey,
-              queryFn: fetchUserDetail,
-            }),
-            qc.prefetchQuery({
-              queryKey: queryKeys.workspaces.myWorkspaces.queryKey,
-              queryFn: fetchMyWorkspaces,
-            }),
-            qc.prefetchQuery({
-              queryKey: queryKeys.workspaces.recentDocuments(workspaceId).queryKey,
-              queryFn: () => fetchRecentDocuments({ workspaceId }),
-            }),
-          ]);
-        },
-      });
+  //         // 통과했다면 나머지는 병렬 프리패치
+  //         await Promise.all([
+  //           qc.prefetchQuery({
+  //             queryKey: queryKeys.user.detail().queryKey,
+  //             queryFn: fetchUserDetail,
+  //           }),
+  //           qc.prefetchQuery({
+  //             queryKey: queryKeys.workspaces.myWorkspaces.queryKey,
+  //             queryFn: fetchMyWorkspaces,
+  //           }),
+  //           qc.prefetchQuery({
+  //             queryKey: queryKeys.workspaces.recentDocuments(workspaceId).queryKey,
+  //             queryFn: () => fetchRecentDocuments({ workspaceId }),
+  //           }),
+  //         ]);
+  //       },
+  //     });
 
-      dehydratedState = state;
-    } catch (err) {
-      if (isWorkspaceNotFound(err)) notFound(); // 서버에서만 사용
-      throw err;
-    }
-  }
+  //     dehydratedState = state;
+  //   } catch (err) {
+  //     if (isWorkspaceNotFound(err)) notFound(); // 서버에서만 사용
+  //     throw err;
+  //   }
+  // }
 
   return (
     <div className="border-stroke-200 p-16pxr flex w-60 shrink-0 flex-col border-r border-solid">

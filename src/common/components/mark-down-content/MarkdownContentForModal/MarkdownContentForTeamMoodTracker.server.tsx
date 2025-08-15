@@ -7,7 +7,6 @@ import { MarkdownContentProps } from '../MarkdownContent.types';
 const MARKER = '[mb22]';
 
 const MarkdownContentForModal = ({ content }: MarkdownContentProps) => {
-  console.log(content);
   return (
     <ReactMarkdown
       remarkPlugins={[remarkGfm]}

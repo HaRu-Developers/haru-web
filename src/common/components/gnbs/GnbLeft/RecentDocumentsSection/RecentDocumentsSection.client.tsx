@@ -2,8 +2,8 @@
 
 import useFetchRecentDocuments from '@api/workspace/get/queries/useFetchRecentDocuments';
 
-import RecentDocumentItem from '../RecentDocumentItem/RecentDocumentItem.server';
-import RecentDocumentItemSkeleton from '../RecentDocumentItem/RecentDocumentItemSkeleton.server';
+import RecentDocumentItem from '../RecentDocumentItem/RecentDocumentItem.client';
+import RecentDocumentItemSkeleton from '../RecentDocumentItem/RecentDocumentItemSkeleton.client';
 import { RecentDocumentsSectionProps } from './RecentDocumentsSection.types';
 
 const RecentDocumentsSection = ({ workspaceId }: RecentDocumentsSectionProps) => {

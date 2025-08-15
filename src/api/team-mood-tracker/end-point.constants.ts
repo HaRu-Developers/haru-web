@@ -15,5 +15,5 @@ export const TEAM_MOOD_TRACKER_PAGE_ROUTES = {
    * @param moodTrackerHashedId 팀 무드 트래커 해시 ID
    */
   DOWNLOAD: (workspaceId: string, moodTrackerHashedId: string) =>
-    `/workspace/${workspaceId}/team-mood-tracker/${moodTrackerHashedId}/download`,
+    `/workspace/${workspaceId}/team-mood-tracker/survey/${moodTrackerHashedId}/download`,
 } as const;

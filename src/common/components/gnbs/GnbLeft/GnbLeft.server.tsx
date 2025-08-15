@@ -35,7 +35,6 @@ const isNumericString = (str: string | null) => {
 
 const GnbLeft = async ({ workspaceId }: GnbLeftProps) => {
   // NaN이면 not-found.tsx로 이동
-  // 의도하지 않은 동작이라면 추후 변동 바랍니다 @duwlsssss
   if (!isNumericString(workspaceId)) {
     notFound();
   }
@@ -85,18 +84,18 @@ const GnbLeft = async ({ workspaceId }: GnbLeftProps) => {
         state={HaruLogoIconsState.MIXED}
         className="w-99pxr h-24pxr mb-8pxr mt-5pxr ml-5pxr"
       />
-      <HydrationBoundary state={dehydratedState}>
-        <WorkSpaceProfile workspaceId={workspaceId} />
-        <div className="gap-16pxr flex flex-col">
-          <div className="rounded-10pxr flex flex-col items-start gap-2 self-stretch">
-            {GnbLeftNavItems.map((item) => (
-              <NavItem key={item} item={item} workspaceId={workspaceId} />
-            ))}
-          </div>
-          <div className="bg-stroke-200 h-1pxr w-full shrink-0"></div>
+      {/* <HydrationBoundary state={dehydratedState}> */}
+      <WorkSpaceProfile workspaceId={workspaceId} />
+      <div className="gap-16pxr flex flex-col">
+        <div className="rounded-10pxr flex flex-col items-start gap-2 self-stretch">
+          {GnbLeftNavItems.map((item) => (
+            <NavItem key={item} item={item} workspaceId={workspaceId} />
+          ))}
         </div>
-        {workspaceId != null && <RecentDocumentsSection workspaceId={workspaceId} />}
-      </HydrationBoundary>
+        <div className="bg-stroke-200 h-1pxr w-full shrink-0"></div>
+      </div>
+      {workspaceId != null && <RecentDocumentsSection workspaceId={workspaceId} />}
+      {/* </HydrationBoundary> */}
     </div>
   );
 };

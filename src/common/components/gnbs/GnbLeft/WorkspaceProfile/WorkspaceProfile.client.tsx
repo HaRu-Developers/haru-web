@@ -43,13 +43,13 @@ const WorkSpaceProfile = ({ workspaceId }: WorkspaceProfileProps) => {
     router.push(ROUTES.MODAL.SETTING(workspaceId));
   };
 
-  useEffect(() => {
-    if (workspaceDetail && hasWorkspaceId) {
-      setTitle(workspaceDetail.title);
-      setImageUrl(workspaceDetail.imageUrl);
-      setMembers(workspaceDetail.members);
-    }
-  }, [workspaceDetail]);
+  // useEffect(() => {
+  //   if (workspaceDetail && hasWorkspaceId) {
+  //     setTitle(workspaceDetail.title);
+  //     setImageUrl(workspaceDetail.imageUrl);
+  //     setMembers(workspaceDetail.members);
+  //   }
+  // }, [workspaceDetail]);
 
   if (!hasWorkspaceId) {
     return (
@@ -84,7 +84,7 @@ const WorkSpaceProfile = ({ workspaceId }: WorkspaceProfileProps) => {
                   className="w-20pxr h-20pxr text-cap2-rg"
                   border
                 />
-                <p className="text-t6-sb text-black">{title}</p>
+                <p className="text-t6-sb text-black">{displayTitle}</p>
               </div>
               <ArrowIcons state={ArrowIconsState.DOWN} />
             </div>

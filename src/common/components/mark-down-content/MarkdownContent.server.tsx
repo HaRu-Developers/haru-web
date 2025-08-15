@@ -15,11 +15,9 @@ import { MarkdownContentProps } from './MarkdownContent.types';
 
 const MarkdownContent = ({ content, variant }: MarkdownContentProps) => {
   const titleMaxWidth = variant === FileType.AI_MEETING_MANAGER ? 'max-w-1096pxr' : 'max-w-668pxr';
-  const titleClassName = `text-t4-bd whitespace-pre-line ${titleMaxWidth} h-32pxr py-4-5pxr mb-3pxr mt-22pxr`;
+  const titleClassName = `text-t4-bd ${titleMaxWidth} py-4-5pxr mb-3pxr mt-24pxr`;
 
-  const pClassName = 'text-b2-rg max-w-628pxr py-2pxr mb-3pxr whitespace-pre-line ml-20pxr';
-
-  const liContainerClassName = `ml-20pxr gap-14pxr mb-3pxr max-w-628pxr flex items-center h-30pxr`;
+  const pClassName = 'text-b2-rg max-w-628pxr py-2pxr mb-3pxr';
 
   return (
     <div className="mb-50pxr">
@@ -31,12 +29,9 @@ const MarkdownContent = ({ content, variant }: MarkdownContentProps) => {
           h3: ({ node, ...props }) => <h3 className={titleClassName} {...props} />,
           h4: ({ node, ...props }) => <h4 className={titleClassName} {...props} />,
           p: ({ node, ...props }) => <p className={pClassName} {...props} />,
-          li: ({ children }) => (
-            <div className={liContainerClassName}>
-              <div className="w-6pxr h-6pxr flex-shrink-0 rounded-full bg-black" />
-              <span className="text-b2-rg py-2pxr flex-1 whitespace-pre-line">{children}</span>
-            </div>
-          ),
+          ul: ({ children }) => <ul className="pl-20pxr list-outside list-disc">{children}</ul>,
+          ol: ({ children }) => <ol className="pl-20pxr list-outside list-decimal">{children}</ol>,
+          li: ({ children }) => <li className="text-b2-rg py-2pxr">{children}</li>,
         }}
       >
         {content}

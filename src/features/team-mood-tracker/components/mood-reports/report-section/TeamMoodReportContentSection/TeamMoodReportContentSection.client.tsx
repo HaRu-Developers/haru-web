@@ -13,7 +13,7 @@ const TeamMoodReportContentSection = ({
 }: TeamMoodReportContentSectionProps) => {
   return (
     <div className="mx-auto">
-      <div className="mb-26pxr">
+      <div className="mb-2pxr">
         <SurveyInSite title="HaRu의 제안" items={suggestionList} />
       </div>
 

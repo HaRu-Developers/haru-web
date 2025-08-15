@@ -7,7 +7,11 @@ import CalendarSection from '@common/components/etc/calendar/CalendarSection/Cal
  */
 const CalendarPage = async ({ params }: workspaceIdTypes) => {
   const { workspaceId } = await params;
-  return <CalendarSection workspaceId={Number(workspaceId)} />;
+  return (
+    <div className="mt-36pxr">
+      <CalendarSection workspaceId={Number(workspaceId)} />;
+    </div>
+  );
 };
 
 export default CalendarPage;

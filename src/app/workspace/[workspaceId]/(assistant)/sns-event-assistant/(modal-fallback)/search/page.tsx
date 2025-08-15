@@ -2,7 +2,8 @@ import { Suspense } from 'react';
 
 import { SearchParamsType } from '@common/types/routes.types';
 
-import SnsEventAssistantSearchModal from '../../@modal/(.)search/page';
+import SearchModalPage from '@/app/workspace/[workspaceId]/(main)/@modal/(.)search/page';
+
 import SnsEventAssistantDefaultPage from '../../page';
 
 const SnsEventAssistantSearchStandalonePage = async ({
@@ -13,7 +14,7 @@ const SnsEventAssistantSearchStandalonePage = async ({
   return (
     <>
       <Suspense fallback={<div>검색 모달 로딩중...</div>}>
-        <SnsEventAssistantSearchModal />
+        <SearchModalPage />
       </Suspense>
       <SnsEventAssistantDefaultPage searchParams={searchParams} />
     </>

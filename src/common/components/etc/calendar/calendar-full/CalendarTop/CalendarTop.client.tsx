@@ -7,7 +7,7 @@ import { CalendarTopProps } from './CalendarTop.types';
 
 const CalendarTop = ({ title, onPrevClick, onTodayClick, onNextClick }: CalendarTopProps) => {
   return (
-    <div className="mt-36pxr mb-16pxr flex w-full justify-center">
+    <div className="mb-16pxr flex w-full justify-center">
       <div className="w-1030pxr h-27pxr flex items-center justify-between">
         <span className="text-t4-bd">{title}</span>
         <div className="gap-2pxr flex items-center justify-between">

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { GnbSection } from '@common/types/gnbs.types';
 
@@ -15,6 +15,8 @@ import RosterList from '@common/components/RosterList/RosterList.server';
 import CategoryOption from '@common/components/CategoryOption/CategoryOption.client';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import SnsLinkItem from '@features/sns-event-assistant/SnsLinkItem/SnsLinkItem.client';
+import useSnsEvent from '@api/sns-event-assistant/get/queries/useSnsEvent';
+import useUpdateSnsEventMutation from '@api/sns-event-assistant/patch/mutations/useUpdateSnsEventMutation';
 const mockItems = [
   {
     userId: 'user1',
@@ -57,16 +59,35 @@ const SnsEventAssistantDetailPage = () => {
   const [mode, setMode] = useState<InputFileTitleMode>(InputFileTitleMode.DEFAULT);
   const type = useSearchParams().get('type');
   const { workspaceId, snsEventId } = useParams<{ workspaceId?: string; snsEventId?: string }>();
-  const router = useRouter();
+  const router = useRouter(); 
   const items = type === SnsCategory.WINNER ? mockWinnerItems : mockItems;
   const handleClick = (type: SnsCategory) => {
     router.push(`/workspace/${workspaceId}/sns-event-assistant/${snsEventId}?type=${type}`);
   };
-  // if (!snsEventId) {
-  //   return <div>Loading...</div>;
-  // }
-  // const { extra: sns } = useSnsEvent(snsEventId);
-  const [title, setTitle] = useState<string>('타이틀');
+  const [title, setTitle] = useState<string>('');
+
+  const { extra: sns } = useSnsEvent(snsEventId || '');
+
+  useEffect(() => {
+    if (sns?.title !== title) {
+      setTitle(sns?.title ?? '');
+    }
+  }, [sns]);
+  
+
+  const { mutate } = useUpdateSnsEventMutation();
+  const handleTitleSave = (newTitle: string) => {
+    console.log(snsEventId, newTitle);
+    mutate(
+      { snsEventId: snsEventId || '', title: newTitle },
+      {
+        onSuccess: () => {
+          if (!newTitle) return;
+          setTitle(newTitle);
+        },
+      }
+    );
+  };
   return (
     <section>
       <GnbTop section={GnbSection.CUSTOM} title={title} />
@@ -75,7 +96,7 @@ const SnsEventAssistantDetailPage = () => {
         <div className="flex w-full justify-center border-b-stroke-200 border-b border-solid bg-white">
           <div className="w-668pxr">
             <div className="flex flex-col gap-16pxr mt-24pxr">
-              <InputFileTitle value={title} onSave={setTitle} mode={mode} onMode={setMode} />
+              <InputFileTitle value={title} onSave={handleTitleSave} mode={mode} onMode={setMode} />
               <FileCreatedInfo
                 name={'이름'}
                 userId={'id'}

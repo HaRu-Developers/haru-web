@@ -3,20 +3,20 @@ import { useState } from 'react';
 import CrossIcons from '@icons/CrossIcons/CrossIcons';
 import { CrossIconsState } from '@icons/CrossIcons/CrossIcons.types';
 
-import NextStepButton from '@common/components/buttons/30px/NextStepButton/NextStepButton.client';
 import InputFieldModal from '@common/components/inputs/modals/InputFieldModal/InputFieldModal.client';
 import TextBoxFieldModal from '@common/components/inputs/modals/TextBoxFieldModal/TextBoxFieldModal.client';
+import CommonText from '@common/components/modals/CommonText/CommonText.server';
+import { CommonTextType } from '@common/components/modals/CommonText/CommonText.types';
+import DateTimePicker from '@common/components/modals/DateTimePicker/DateTimePicker.client';
 import SelectBoxOption from '@common/components/select-box/SelectBoxOption/SelectBoxOption.client';
 import { Option } from '@common/components/select-box/SelectBoxOption/SelectBoxOption.types';
 
-import CommonText from '../CommonText/CommonText.server';
-import { CommonTextType } from '../CommonText/CommonText.types';
-import DateTimePicker from '../DateTimePicker/DateTimePicker.client';
+import NextStepButton from '@buttons/30px/NextStepButton/NextStepButton.client';
 
-interface CreateNewTeamMoodTrackerModalProps {
-  onClose: () => void;
-  onNextStep: () => void;
-}
+import {
+  CreateNewTeamMoodTrackerModalProps,
+  TeamMoodTrackerVisibility,
+} from '@features/team-mood-tracker/components/modals/CreateNewTeamMoodTrackerModal/CreateNewTeamMoodTrackerModal.types';
 
 const CreateNewTeamMoodTrackerModal = ({
   onClose,
@@ -28,11 +28,11 @@ const CreateNewTeamMoodTrackerModal = ({
 
   const optionList: Option[] = [
     {
-      state: 'public',
+      state: TeamMoodTrackerVisibility.PUBLIC,
       label: '전체 공개',
     },
     {
-      state: 'private',
+      state: TeamMoodTrackerVisibility.PRIVATE,
       label: '비공개',
     },
   ];
@@ -43,8 +43,23 @@ const CreateNewTeamMoodTrackerModal = ({
     setSelectedOption(optionList.find((option) => option.state === val) || optionList[0]);
   };
 
+  const handleOnNext = () => {
+    if (!selectedDateTime) {
+      return;
+    }
+
+    onNextStep({
+      title: surveyTitle,
+      dueDate: selectedDateTime,
+      description: surveyDescription,
+      visibility: selectedOption.state as TeamMoodTrackerVisibility,
+    });
+  };
+
+  const isNextStepDisabled = !surveyTitle || !selectedDateTime || !surveyDescription;
+
   return (
-    <div className="p-24pxr rounded-16pxr w-582pxr shadow-modal flex flex-col items-center justify-center">
+    <div className="p-24pxr rounded-16pxr w-582pxr shadow-modal flex flex-col items-center justify-center bg-white">
       {/* 모달 제목 + 닫기 버튼 */}
       <div className="h-32pxr flex w-full items-center justify-between">
         <CommonText type={CommonTextType.T3_BD_BLACK} text="새로운 팀 분위기 설문" />
@@ -96,7 +111,7 @@ const CreateNewTeamMoodTrackerModal = ({
       </div>
       {/* 다음 단계로 버튼 */}
       <div className="mt-16pxr flex w-full items-center justify-end">
-        <NextStepButton onClick={onNextStep} disabled={true} />
+        <NextStepButton onClick={handleOnNext} disabled={isNextStepDisabled} />
       </div>
     </div>
   );

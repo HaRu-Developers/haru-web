@@ -23,7 +23,7 @@ import WorkSpaceProfile from './WorkspaceProfile/WorkspaceProfile.client';
  * isNumberString 함수
  * 문자열이 숫자로만 이루어져 있는지 확인합니다.
  * @param str - 확인할 문자열
- * @returns {boolean} - 문자열이 숫자로만 이루어져 있으면 true,
+ * @returns - 문자열이 숫자로만 이루어져 있으면 true,
  */
 const isNumericString = (str: string | null) => {
   if (str === null) return false;

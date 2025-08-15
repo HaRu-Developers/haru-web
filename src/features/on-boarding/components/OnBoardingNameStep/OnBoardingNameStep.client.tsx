@@ -2,8 +2,6 @@
 
 import { useState } from 'react';
 
-import { useUserInfo } from '@common/hooks/stores/useUserStore';
-
 import MoveToNextButton from '@common/components/buttons/48px/MoveToNextButton/MoveToNextButton.client';
 import { MoveToNextButtonWidth } from '@common/components/buttons/48px/MoveToNextButton/MoveToNextButton.types';
 
@@ -12,9 +10,10 @@ import { useOnboardingActions } from '@features/on-boarding/hooks/stores/useOnBo
 
 const OnBoardingNameStep = () => {
   const { setName, nextStep } = useOnboardingActions();
-  const user = useUser();
-  const name = user?.name;
   const [inputName, setInputName] = useState('');
+
+  const user = useUser();
+  const { name } = user || {};
 
   const handleNext = () => {
     if (!inputName.trim()) return;

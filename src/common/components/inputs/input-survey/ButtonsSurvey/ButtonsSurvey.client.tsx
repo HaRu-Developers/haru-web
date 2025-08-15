@@ -1,8 +1,14 @@
 'use client';
 
+import ToggleButton from '@buttons/22px/ToggleButton/ToggleButton.client';
+
 import { ButtonsSetveyProps } from './ButtonsSurvey.types';
 
-const ButtonsSurvey = ({ onDelete, onToggle }: ButtonsSetveyProps) => {
+const ButtonsSurvey = ({ onDelete, onToggle, isMandatory }: ButtonsSetveyProps) => {
+  const blankFunction = () => {
+    return;
+  };
+
   return (
     <div className="w-159pxr gap-14pxr text-b3-rg flex items-center justify-end">
       <button
@@ -13,11 +19,8 @@ const ButtonsSurvey = ({ onDelete, onToggle }: ButtonsSetveyProps) => {
       </button>
       <div className="gap-6pxr flex items-center text-gray-100">
         필수
-        {/* 안보여서 그냥 추가 했습니다 */}
-        <label className="relative inline-flex cursor-pointer items-center">
-          <input type="checkbox" className="peer sr-only" onClick={onToggle} />
-          <div className="peer peer-checked:bg-primary h-22pxr w-44pxr rounded-1000pxr after:start-2pxr after:top-2pxr after:h-18pxr after:w-18pxr after:border-stroke-200 peer-checked:after:translate-x-22pxr rtl:peer-checked:after:-translate-x-22pxr relative bg-gray-600 after:absolute after:rounded-full after:border after:bg-white after:transition-transform after:duration-200 after:content-[''] peer-checked:after:border-white"></div>
-        </label>
+        {/*TODO: 추후 optional 영역들 조정 후에 변경 필요*/}
+        <ToggleButton state={isMandatory ?? true} onToggle={onToggle ?? blankFunction} />
       </div>
     </div>
   );

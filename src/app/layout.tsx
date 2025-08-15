@@ -23,8 +23,10 @@ export const metadata: Metadata = {
 
 const RootLayout = ({
   children,
+  globalModal,
 }: Readonly<{
   children: React.ReactNode;
+  globalModal: React.ReactNode;
 }>) => {
   return (
     <html lang="ko">
@@ -35,9 +37,10 @@ const RootLayout = ({
         )}
       >
         <QueryClientProviders>
-          {children}
-          <Toaster />
           <div id="modal" />
+          {children}
+          {globalModal}
+          <Toaster />
         </QueryClientProviders>
       </body>
     </html>

@@ -1,8 +1,7 @@
 import { Suspense } from 'react';
 
 import SearchModalPage from '@/app/workspace/[workspaceId]/(main)/@modal/(.)search/page';
-
-import TeamMoodTrackerDefaultPage from '../../page';
+import TeamMoodTrackerDefaultPage from '@/app/workspace/[workspaceId]/team-mood-tracker/page';
 
 const TeamMoodTrackerSearchStandalonePage = () => {
   return (

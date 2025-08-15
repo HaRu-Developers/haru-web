@@ -2,8 +2,12 @@ import { ApiErrorBody } from '@common/types/api.common.types';
 
 import { ApiError } from '@common/errors/ApiError';
 
-import { SurveyQuestionType } from '../../features/team-mood-tracker/constants/question.constants';
+import { InputSurveyQuestionType } from '@common/components/inputs/input-survey/types/input-survey.common.types';
 
+import { TeamMoodTrackerSurveyQuestionType } from '@features/team-mood-tracker/constants/question.constants';
+
+// Request DTO
+// Request DTO
 // Request DTO
 
 /**
@@ -18,6 +22,8 @@ export interface MoodTrackerPathParamsDto {
 export type GetViewSurveyRequestDto = MoodTrackerPathParamsDto;
 /** 리포트 조회 요청 DTO. Path Parameter만 포함합니다. */
 export type GetViewReportRequestDto = MoodTrackerPathParamsDto;
+/** 리포트 생성 요청 DTO. Path Parameter만 포함합니다. */
+export type SendMoodTrackLinkToTeammateViaEmailRequestDto = MoodTrackerPathParamsDto;
 
 /**
  * 분위기 트래커 제목 수정 요청 DTO
@@ -27,6 +33,33 @@ export interface ModifyMoodTrackerTitleRequestDto extends MoodTrackerPathParamsD
   title: string;
 }
 
+export interface CreateSurveyQuestion {
+  title: string; // 질문의 제목
+  type: InputSurveyQuestionType;
+  isMandatory: boolean; // 필수 여부
+  options?: string[]; // 선택지 목록, SUBJECTIVE일 경우 제공하지 않음.
+}
+
+/**
+ * 설문 생성 요청 DTO
+ * @description 설문 생성 시 필요한 정보를 담고 있는 DTO입니다.
+ *
+ * @property title - 설문의 제목
+ * @property description - 설문의 설명
+ * @property dueDate - 설문 마감 일시 (ISO 8601 형식)
+ * @property visibility - 설문의 공개 여부
+ * @property questions - 설문에 포함될 질문 목록
+ */
+export interface CreateNewSurveyRequestDto {
+  title: string;
+  description: string;
+  dueDate: string; // ISO 8601 형식의 날짜 문자열
+  visibility: 'PUBLIC' | 'PRIVATE'; // 공개 여부
+  questions: CreateSurveyQuestion[];
+}
+
+// Response DTO
+// Response DTO
 // Response DTO
 
 /**
@@ -89,19 +122,19 @@ export interface SurveyCheckboxChoiceItem {
 export type SurveyQuestion =
   | (BaseQuestion & {
       /** 질문 유형: 객관식 */
-      type: SurveyQuestionType.MULTIPLE_CHOICE;
+      type: TeamMoodTrackerSurveyQuestionType.MULTIPLE_CHOICE;
       /** 객관식 응답 목록 */
-      mulipleChoiceResponseList: SurveyMultipleChoiceItem[];
+      multipleChoiceResponseList: SurveyMultipleChoiceItem[];
     })
   | (BaseQuestion & {
       /** 질문 유형: 복수선택 */
-      type: SurveyQuestionType.CHECKBOX_CHOICE;
+      type: TeamMoodTrackerSurveyQuestionType.CHECKBOX_CHOICE;
       /** 복수선택 응답 목록 */
       checkboxChoiceResponseList: SurveyCheckboxChoiceItem[];
     })
   | (BaseQuestion & {
       /** 질문 유형: 주관식 */
-      type: SurveyQuestionType.SUBJECTIVE;
+      type: TeamMoodTrackerSurveyQuestionType.SUBJECTIVE;
       /** 주관식 응답 목록 */
       subjectiveResponseList: string[];
     });
@@ -172,4 +205,10 @@ export interface UseTeamMoodDownloadLinkOptions {
   enabled?: boolean;
   onSuccess?: (data: TeamMoodReportDownloadLinkResponseDto) => void;
   onError?: (error: ApiError<ApiErrorBody>) => void;
+}
+
+// --- 경운 작업본
+
+export interface CreateNewSurveyResponseDto {
+  moodTrackerHashedId: string; // 생성된 설문의 해싱된 ID
 }

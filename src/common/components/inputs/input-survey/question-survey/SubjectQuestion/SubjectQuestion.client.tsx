@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 
-import { Visibility } from '../../types/input-survey.common.types';
+import { SurveyVisibility } from '../../types/input-survey.common.types';
 import { SubjectQuestionProps } from './SubjectQuestion.types';
 
 const SubjectQuestion = ({ description, visibility, onChange }: SubjectQuestionProps) => {
@@ -34,7 +34,7 @@ const SubjectQuestion = ({ description, visibility, onChange }: SubjectQuestionP
       onInput={handleResize}
       onChange={handleChange}
       className="min-h-18pxr text-b3-rg w-full resize-none overflow-hidden outline-none"
-      readOnly={visibility === Visibility.PRIVATE}
+      readOnly={visibility === SurveyVisibility.PRIVATE}
     />
   );
 };

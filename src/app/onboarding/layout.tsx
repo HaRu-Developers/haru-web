@@ -1,4 +1,8 @@
+import React from 'react';
+
 import type { Metadata } from 'next';
+
+import GetUserInfo from '@features/auth/components/GetUserInfo/GetUserInfo.client';
 
 export const metadata: Metadata = {
   title: '온보딩 워크스페이스 생성하기 페이지',
@@ -11,7 +15,12 @@ const OnboardingLayout = ({
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
-  return <main>{children}</main>;
+  return (
+    <main>
+      <GetUserInfo />
+      {children}
+    </main>
+  );
 };
 
 export default OnboardingLayout;

@@ -1,3 +1,5 @@
+import React from 'react';
+
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
@@ -11,7 +13,7 @@ const WorkSpaceLayout = async ({
   params,
 }: Readonly<{
   children: React.ReactNode;
-  params: { workspaceId?: string };
+  params: Promise<{ workspaceId?: string }>;
 }>) => {
   const workspaceId = (await params).workspaceId;
 

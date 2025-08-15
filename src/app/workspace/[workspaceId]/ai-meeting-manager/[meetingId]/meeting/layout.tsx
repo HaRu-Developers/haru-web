@@ -10,7 +10,12 @@ const AiMeetingProceedingLayout = ({
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
-  return <>{children}</>;
+  return (
+    <>
+      {children}
+      <div id="cannot-page-scroll" />
+    </>
+  );
 };
 
 export default AiMeetingProceedingLayout;

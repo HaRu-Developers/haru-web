@@ -21,10 +21,12 @@ const SnsEventAssistantRootLayout = async ({
   const workspaceId = (await params).workspaceId;
 
   return (
-    <GnbLeftLayout workspaceId={workspaceId}>
+    <>
+      {/*<GnbLeftLayout workspaceId={workspaceId}>*/}
       {children}
       {snsEventAssistantGeneralModal}
-    </GnbLeftLayout>
+      {/*</GnbLeftLayout>*/}
+    </>
   );
 };
 

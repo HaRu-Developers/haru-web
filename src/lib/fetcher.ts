@@ -136,8 +136,10 @@ export const createFetcher = ({
       }
       // 응답 에러시
       // access token 만료 시 자동으로 재발급하도록 함
-
-      if (res.status === 401 && requiresAuth) {
+      const resBody = await res.json();
+      // TODO: RT 만료 시에는 로그인 페이지로 이동 시켜야 함 !
+      if (res.status === 401 && requiresAuth && resBody.code === 'AUTHORIZATION9002') {
+        console.log('AT 만료로 RT 재발급 요청을 합니다.');
         let newAccessToken: string | null = null;
         // refresh 중복 방지
         if (!refreshPromise) {

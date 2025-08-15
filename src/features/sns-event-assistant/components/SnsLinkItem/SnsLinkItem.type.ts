@@ -1,5 +1,5 @@
 export interface SnsLinkItemProps {
-  title: string,
-  link: string,
-  onClick?: () => void
+  title: string;
+  link: string;
+  onClick?: () => void;
 }

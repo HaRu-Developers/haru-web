@@ -1,18 +1,25 @@
 import clsx from 'clsx';
+
 import { SnsListButtonProps } from './SnsListButton.types';
 
 const SnsListButton = ({ value, onClick, isToggle, num }: SnsListButtonProps) => {
   return (
     <button
-      className={clsx("flex px-9pxr py-6pxr justify-center items-center rounded-7pxr hover:bg-gray-600", {
-        'bg-gray-600': isToggle,
-      })}
+      className={clsx(
+        'px-9pxr py-6pxr rounded-7pxr flex items-center justify-center hover:bg-gray-600',
+        {
+          'bg-gray-600': isToggle,
+        },
+      )}
       onClick={onClick}
     >
-      <span className={clsx(' text-black', {
-        'text-bt3-sb': isToggle,
-        'text-cap1-md': !isToggle,
-      })}>{value}
+      <span
+        className={clsx('text-black', {
+          'text-bt3-sb': isToggle,
+          'text-cap1-md': !isToggle,
+        })}
+      >
+        {value}
         {num && (
           <span
             className={clsx('text-cap1-rg', {
@@ -21,7 +28,7 @@ const SnsListButton = ({ value, onClick, isToggle, num }: SnsListButtonProps) =>
             })}
           >{` ${num}`}</span>
         )}
-        </span>
+      </span>
     </button>
   );
 };

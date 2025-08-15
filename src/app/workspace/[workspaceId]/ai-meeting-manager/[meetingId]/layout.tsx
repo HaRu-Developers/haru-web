@@ -34,7 +34,7 @@ const AiMeetingLayout = async ({
         // 필수 데이터 보장 (없으면 throw → catch에서 notFound)
         const res = await qc.ensureQueryData<BaseResponseDto<FetchMeetingMinutesDetailResponseDto>>(
           {
-            queryKey: queryKeys.meetings.meetingMinutesDetail(meetingId).queryKey,
+            queryKey: queryKeys.meetings.detail(meetingId).queryKey,
             queryFn: () => fetchMeetingMinutesDetail({ meetingId }),
           },
         );

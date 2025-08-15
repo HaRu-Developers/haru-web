@@ -18,7 +18,7 @@ const useDeleteMeetingMinutes = (workspaceId: string) => {
   const queryClient = useQueryClient();
   const { addToast } = useToastActions();
 
-  const listKey = queryKeys.meetings.meetingMinutesList(workspaceId).queryKey;
+  const listKey = queryKeys.meetings.list(workspaceId).queryKey;
 
   return useMutation({
     mutationFn: (data: meetingIdRequestDto) => deleteMeetingMinutes(data),

@@ -25,13 +25,13 @@ const useEditMeetingMinutesTitle = (meetingId: string) => {
   const { addToast } = useToastActions();
 
   return useMutation({
-    mutationKey: queryKeys.meetings.editMeetingMinutesTitle(meetingId).queryKey,
+    mutationKey: queryKeys.meetings.editTitle(meetingId).queryKey,
 
     mutationFn: (data: EditMeetingMinutesTitleParams) => editMeetingMinutesTitle(data),
 
     // 낙관적 업데이트 - 캐시에 새 제목 즉시 반영
     onMutate: async ({ meetingId, title }) => {
-      const detailKey = queryKeys.meetings.meetingMinutesDetail(meetingId).queryKey;
+      const detailKey = queryKeys.meetings.detail(meetingId).queryKey;
 
       await qc.cancelQueries({ queryKey: detailKey });
 
@@ -62,7 +62,7 @@ const useEditMeetingMinutesTitle = (meetingId: string) => {
     // 성공 후 서버 상태 동기화
     onSuccess: async (_data, { meetingId }) => {
       // 회의록 상세 정보, 최근 문서 다시 호출
-      const detailKey = queryKeys.meetings.meetingMinutesDetail(meetingId).queryKey;
+      const detailKey = queryKeys.meetings.detail(meetingId).queryKey;
 
       // 캐시에서 workspaceId 얻어 최근문서도 무효화
       const cached = qc.getQueryData<Detail>(detailKey);

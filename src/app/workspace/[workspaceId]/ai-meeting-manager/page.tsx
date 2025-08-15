@@ -26,7 +26,7 @@ const AiMeetingManagerDefaultPage = async ({
   const { dehydratedState } = await getDehydratedState({
     prefetch: async (qc) => {
       await qc.prefetchQuery({
-        queryKey: queryKeys.meetings.meetingMinutesList(workspaceId).queryKey,
+        queryKey: queryKeys.meetings.list(workspaceId).queryKey,
         queryFn: () => fetchMeetingMinutesList({ workspaceId }),
       });
     },

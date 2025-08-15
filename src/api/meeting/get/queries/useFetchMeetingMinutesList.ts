@@ -1,5 +1,3 @@
-'use client';
-
 import { ApiErrorBody } from '@common/types/api.common.types';
 
 import queryKeys from '@common/constants/query-key.constants';
@@ -20,7 +18,7 @@ const useFetchMeetingMinutesList = (workspaceId: string) => {
     ApiError<ApiErrorBody>, // TError
     MeetingMinutesInfo[] // TExtra
   >({
-    queryKey: queryKeys.meetings.meetingMinutesList(workspaceId).queryKey,
+    queryKey: queryKeys.meetings.list(workspaceId).queryKey,
     queryFn: () => fetchMeetingMinutesList({ workspaceId }),
     enabled: !!workspaceId,
     retry: false,

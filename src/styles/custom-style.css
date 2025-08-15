@@ -13,4 +13,10 @@
     padding-left: var(--spacing-85pxr);
     padding-right: var(--spacing-85pxr);
   }
+
+  /* 임시 포커스 스타일 */
+  .flash-highlight {
+    transition: background-color 0.2s;
+    background-color: rgba(59, 130, 246, 0.08);
+  }
 }

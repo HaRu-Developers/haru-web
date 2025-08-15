@@ -1,5 +1,7 @@
 import { BaseResponseDto } from '@common/types/api.common.types';
 
+import { Speech } from '@features/ai-meeting-manager/types/meeting.types';
+
 // ========== 공통 요청 ==========
 /**
  * 워크스페이스 ID를 포함하는 요청 DTO
@@ -92,7 +94,7 @@ export type DeleteMeetingMinutesResponse = string;
 
 // ========== 회의록 단일 조회 ==========
 /**
- * 회의록 디테일 응답 DTO
+ * 회의록 디테일, 응답 DTO
  *
  * @property {string} userId       - 회의록 생성자 ID
  * @property {string} email        - 생성자 이메일
@@ -152,4 +154,26 @@ export interface EditMeetingMinutesProceedingRequestDto {
  */
 export interface EditMeetingMinutesProceedingParams extends EditMeetingMinutesProceedingRequestDto {
   meetingId: string;
+}
+
+// ========== 회의 발화, 추천질문 ==========
+/**
+ * 회의 발화와 추천 질문 데이터를 포함한 DTO
+ *
+ * @property {string} meetingStartTime - 회의 시작 시각 (ISO 8601 형식)
+ * @property {Speech[]} transcripts - 회의 발화(Transcript) 목록
+ */
+export interface MeetingMinutesSpeechQuestionDTO {
+  meetingStartTime: string;
+  transcripts: Speech[];
+}
+
+// ========== 회의록 다운로드 링크 ==========
+/**
+ * 회의록 다운로드 링크 응답 DTO
+ *
+ * @property {string} downloadLink - 다운로드 링크
+ */
+export interface MeetingMinutesDownloadLinkResponseDTO {
+  downloadLink: string;
 }

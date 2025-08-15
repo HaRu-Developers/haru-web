@@ -3,7 +3,7 @@ import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 
-enableMapSet(); // Set/Map 불변 업데이트 허용 - Immer에서  Set 조작이 허용하기 위해
+enableMapSet(); // Set/Map 불변 업데이트 허용 - Immer에서 Set 조작 허용하기 위해
 
 /**
  * 회의록 리스트 전역 상태

@@ -1,10 +1,10 @@
+'use client';
+
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { ToastType } from '@common/types/toast.types';
 
 import queryKeys from '@common/constants/query-key.constants';
-
-import { ApiError } from '@common/errors/ApiError';
 
 import { useToastActions } from '@common/hooks/stores/useToastStore';
 
@@ -18,10 +18,11 @@ import createNewMeetingMinutes from '../apis/createNewMeetingMinutes';
  */
 const useCreateNewMeetingMinutes = (workspaceId: string) => {
   const queryClient = useQueryClient();
-  const listKey = queryKeys.meetings.meetingMinutesList(workspaceId).queryKey;
+  const listKey = queryKeys.meetings.list(workspaceId).queryKey;
   const { addToast } = useToastActions();
 
   return useMutation({
+    mutationKey: queryKeys.meetings.create.queryKey,
     mutationFn: (meetingData: CreateMeetingMinutesRequestDto) =>
       createNewMeetingMinutes(meetingData),
 

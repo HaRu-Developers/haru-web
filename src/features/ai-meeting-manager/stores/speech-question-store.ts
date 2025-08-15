@@ -25,36 +25,44 @@ interface SpeechQuestionStoreState {
   };
 }
 
+// 질문 텍스트 정규화
+const norm = (s: string) => s.trim().replace(/\s+/g, ' ').toLowerCase();
+
 const speechQuestionStore = create<SpeechQuestionStoreState>()(
   devtools(
     immer((set) => ({
       map: {},
       actions: {
         setForSpeech: (speechId, questions) =>
-          set((s) => ({ map: { ...s.map, [speechId]: questions.slice() } })),
+          set((s) => {
+            s.map[speechId] = questions.slice();
+          }),
         mergeForSpeech: (speechId, questions) =>
           set((s) => {
             const prev = s.map[speechId] ?? [];
-            // 중복 제거 병합
-            const next = Array.from(new Set([...prev, ...questions]));
-            return { map: { ...s.map, [speechId]: next } };
+            const seen = new Set(prev.map(norm));
+            const add = questions.filter((q) => {
+              const k = norm(q);
+              if (seen.has(k)) return false;
+              seen.add(k);
+              return true;
+            });
+            if (add.length) s.map[speechId] = [...prev, ...add];
           }),
         removeQuestion: (speechId, index) =>
           set((s) => {
             const curr = s.map[speechId];
-            if (!curr || index < 0 || index >= curr.length) return s;
-            const next = curr.slice();
-            next.splice(index, 1);
-            return { map: { ...s.map, [speechId]: next } };
+            if (!curr || index < 0 || index >= curr.length) return;
+            curr.splice(index, 1);
           }),
         clearSpeech: (speechId) =>
           set((s) => {
-            if (!(speechId in s.map)) return s;
-            const { [speechId]: _, ...rest } = s.map;
-            return { map: rest };
+            if (s.map[speechId]) delete s.map[speechId];
           }),
-
-        clearAll: () => set({ map: {} }),
+        clearAll: () =>
+          set((s) => {
+            s.map = {};
+          }),
       },
     })),
     { name: 'ai-meeting-manager/speechQuestionStore' },

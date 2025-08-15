@@ -7,7 +7,7 @@ import { AiMeetingPageType } from '@features/ai-meeting-manager/types/page-type.
 import LeftTab from '@features/ai-meeting-manager/components/LeftTab/LeftTab.client';
 import MeetingHeader from '@features/ai-meeting-manager/components/MeetingHeader/MeetingHeader.client';
 import ProceedingPanel from '@features/ai-meeting-manager/components/panels/LeftPanel/ProceedingPanel/ProceedingPanel.client';
-import UtterancePanel from '@features/ai-meeting-manager/components/panels/LeftPanel/UtterancePanel/UtterancePanel.server';
+import SpeechPanel from '@features/ai-meeting-manager/components/panels/LeftPanel/SpeechPanel/SpeechPanel.server';
 import RightPanel from '@features/ai-meeting-manager/components/panels/RightPanel/RightPanel.client';
 
 import { AiMeetingMinutesContentProps } from './AiMeetingMinutes.types';
@@ -26,19 +26,21 @@ const AiMeetingMinutesContent = ({
   const editingScopeRef = useRef<HTMLDivElement>(null!);
 
   return (
-    <div className="flex">
-      {/* 같은 편집 스코프로 묶음 */}
-      <div className="flex flex-1 flex-col" ref={editingScopeRef}>
-        <MeetingHeader editingScopeRef={editingScopeRef} />
-        <LeftTab current={formattedLeftTab} />
-        {isVoiceLogTab ? (
-          <UtterancePanel page={AiMeetingPageType.MINUTES} />
-        ) : (
-          <ProceedingPanel editingScopeRef={editingScopeRef} />
-        )}
+    <>
+      <div className="flex">
+        {/* 같은 편집 스코프로 묶음 */}
+        <div className="flex flex-1 flex-col" ref={editingScopeRef}>
+          <MeetingHeader editingScopeRef={editingScopeRef} />
+          <LeftTab current={formattedLeftTab} />
+          {isVoiceLogTab ? (
+            <SpeechPanel page={AiMeetingPageType.MINUTES} />
+          ) : (
+            <ProceedingPanel editingScopeRef={editingScopeRef} />
+          )}
+        </div>
+        {isVoiceLogTab && <RightPanel />}
       </div>
-      {isVoiceLogTab && <RightPanel />}
-    </div>
+    </>
   );
 };
 

@@ -1,5 +1,3 @@
-'use client';
-
 import { ApiErrorBody } from '@common/types/api.common.types';
 
 import queryKeys from '@common/constants/query-key.constants';
@@ -20,7 +18,7 @@ const useFetchMeetingMinutesDetail = (meetingId: string) => {
     ApiError<ApiErrorBody>, // TError
     MeetingMinutesDetail | undefined // TExtra
   >({
-    queryKey: queryKeys.meetings.meetingMinutesDetail(meetingId).queryKey,
+    queryKey: queryKeys.meetings.detail(meetingId).queryKey,
     queryFn: () => fetchMeetingMinutesDetail({ meetingId }),
     enabled: !!meetingId,
     retry: false,

@@ -25,12 +25,12 @@ const useEditMeetingMinutesProceeding = (meetingId: string) => {
   const { addToast } = useToastActions();
 
   return useMutation({
-    mutationKey: queryKeys.meetings.editMeetingMinutesProceeding(meetingId).queryKey,
+    mutationKey: queryKeys.meetings.editProceeding(meetingId).queryKey,
 
     mutationFn: (data: EditMeetingMinutesProceedingParams) => editMeetingMinutesProceeding(data),
 
     onMutate: async ({ meetingId, proceeding }) => {
-      const detailKey = queryKeys.meetings.meetingMinutesDetail(meetingId).queryKey;
+      const detailKey = queryKeys.meetings.detail(meetingId).queryKey;
 
       await qc.cancelQueries({ queryKey: detailKey });
 
@@ -56,7 +56,7 @@ const useEditMeetingMinutesProceeding = (meetingId: string) => {
     },
     onSuccess: async (_data, _variables) => {
       // 회의록 상세 정보 다시 호출
-      const detailKey = queryKeys.meetings.meetingMinutesDetail(meetingId).queryKey;
+      const detailKey = queryKeys.meetings.detail(meetingId).queryKey;
 
       await qc.invalidateQueries({
         queryKey: detailKey,

@@ -3,7 +3,11 @@ import { defaultApi } from '@lib/fetcher';
 import { BaseResponseDto } from '@common/types/api.common.types';
 
 import { MEETING_API_ENDPOINTS } from '../../api-end-point.constants';
-import { CreateMeetingMinutesRequestDto, CreateMeetingMinutesResponseDto } from '../../api.types';
+import {
+  CreateMeetingMinutesRequest,
+  CreateMeetingMinutesRequestDto,
+  CreateMeetingMinutesResponseDto,
+} from '../../api.types';
 
 /**
  * AI Meeting 회의록 생성
@@ -25,7 +29,10 @@ export const createNewMeetingMinutes = async ({
   formData.append('agendaFile', agendaFile);
   formData.append(
     'request',
-    JSON.stringify({ title: request.title, workspaceId: request.workspaceId }),
+    JSON.stringify({
+      title: request.title,
+      workspaceId: request.workspaceId,
+    } satisfies CreateMeetingMinutesRequest),
   );
 
   const response = await defaultApi<BaseResponseDto<CreateMeetingMinutesResponseDto>>(

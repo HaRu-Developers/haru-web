@@ -21,8 +21,8 @@ const useCreateSnsEventMutation = () => {
     ApiError<ApiErrorBody>, // TError
     CreateSnsEventAssistantRequestDto // TMutateVariables
   >({
-    mutationFn: ({ workspaceId, title, snsEventLink, condition }) =>
-      CreateSnsEvent({ workspaceId, title, snsEventLink, condition }),
+    mutationFn: ({ workspaceId, title, snsEventLink, snsCondition }) =>
+      CreateSnsEvent({ workspaceId, title, snsEventLink, snsCondition }),
     onError: (error) => {
       if (error.code === API_ERROR_CODES.SNS_EVENT.NOT_FOUND) {
         notFound();

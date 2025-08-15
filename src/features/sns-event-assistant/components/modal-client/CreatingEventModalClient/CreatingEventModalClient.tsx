@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { useParams, useRouter } from 'next/navigation';
 
@@ -20,30 +20,50 @@ const CreatingEventModalClient = () => {
   const { newTitle, newSnsEventLink, friendTag, winnerCount, keyword, period } =
     useSnsEventAssistantInfo();
   const { mutate } = useCreateSnsEventMutation();
-  const condition = {
-    winnerCount: winnerCount ?? 0,
-    isPeriod: !!period,
-    period: period ? period?.endDate : null,
-    isKeyword: !!keyword,
-    // keyword는 배열로 되어 있으나 벡엔드는 string으로 받음
-    keyword: [...(keyword?.keyword ?? [])][0],
-    isTaged: !!friendTag,
-    tageCount: friendTag?.requiredFriendTag ?? 0,
-  };
+
+  // useRef를 사용하여 컴포넌트가 처음 렌더링될 때만 API 호출을 트리거
+  const hasCalledMutate = useRef(false);
+
   useEffect(() => {
-    mutate(
-      { workspaceId, title: newTitle, snsEventLink: newSnsEventLink, condition },
-      {
-        onSuccess: (data) => {
-          const snsEventId = data?.result?.snsEventId;
-          router.push(`/workspace/${workspaceId}/sns-event-assistant/${snsEventId}`);
+    // 이미 호출했는지 확인하여 중복 호출 방지
+    if (!hasCalledMutate.current) {
+      hasCalledMutate.current = true;
+
+      const condition = {
+        winnerCount: winnerCount ?? 0,
+        isPeriod: !!period,
+        period: period ? period?.endDate : null,
+        isKeyword: !!keyword,
+        // keyword는 배열로 되어 있으나 백엔드는 string으로 받음
+        keyword: [...(keyword?.keyword ?? [])][0],
+        isTaged: !!friendTag,
+        tageCount: friendTag?.requiredFriendTag ?? 0,
+      };
+
+      mutate(
+        { workspaceId, title: newTitle, snsEventLink: newSnsEventLink, snsCondition: condition },
+        {
+          onSuccess: (data) => {
+            const snsEventId = data?.result?.snsEventId;
+            router.push(`/workspace/${workspaceId}/sns-event-assistant/${snsEventId}`);
+          },
+          onError: (error) => {
+            console.error('SNS 이벤트 어시스턴트 생성 실패:', error);
+          },
         },
-        onError: (error) => {
-          console.error('SNS 이벤트 어시스턴트 생성 실패:', error);
-        },
-      },
-    );
-  }, [mutate, workspaceId, newTitle, newSnsEventLink, condition, router]);
+      );
+    }
+  }, [
+    mutate,
+    workspaceId,
+    newTitle,
+    newSnsEventLink,
+    friendTag,
+    winnerCount,
+    keyword,
+    period,
+    router,
+  ]);
 
   const handleClose = () => {
     router.back();

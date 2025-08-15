@@ -49,7 +49,7 @@ export interface SnsEventAssistantObject extends WorkspaceId {
 export interface CreateSnsEventAssistantRequestDto extends WorkspaceId {
   title: string;
   snsEventLink: string;
-  condition: SnsEventAssistantCondition;
+  snsCondition: SnsEventAssistantCondition;
 }
 
 /**

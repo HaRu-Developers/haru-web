@@ -7,7 +7,7 @@ import { AiMeetingPageType } from '@features/ai-meeting-manager/types/page-type.
 import LeftTab from '@features/ai-meeting-manager/components/LeftTab/LeftTab.client';
 import MeetingHeader from '@features/ai-meeting-manager/components/MeetingHeader/MeetingHeader.client';
 import ProceedingPanel from '@features/ai-meeting-manager/components/panels/LeftPanel/ProceedingPanel/ProceedingPanel.client';
-import SpeechPanel from '@features/ai-meeting-manager/components/panels/LeftPanel/SpeechPanel/SpeechPanel.server';
+import SpeechPanel from '@features/ai-meeting-manager/components/panels/LeftPanel/SpeechPanel/SpeechPanel.client';
 import RightPanel from '@features/ai-meeting-manager/components/panels/RightPanel/RightPanel.client';
 
 import { AiMeetingMinutesContentProps } from './AiMeetingMinutes.types';

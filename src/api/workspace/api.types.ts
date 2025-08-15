@@ -1,3 +1,4 @@
+import { Document } from '@common/types/document.types';
 import { FileType } from '@common/types/file-type.enum';
 
 import { DocumentList } from '@common/components/etc/calendar/types/calendar.common.types';
@@ -58,15 +59,13 @@ export interface WorkspaceSummary extends BaseWorkspace {
 /**
  * 단일 문서 정보
  *
+ * 여기서는 createdAt을 안 받음
+ *
  * @property {string} documentId - 문서 고유 ID
  * @property {string} title - 문서 제목
  * @property {FileType} documentType - 문서 타입 (예: 폴더, 문서 등)
  */
-export interface Document {
-  documentId: string;
-  title: string;
-  documentType: FileType;
-}
+export type ApiDocument = Omit<Document, 'createdAt'>;
 
 // API 응답의 result.documents 배열에 들어갈 각 문서의 타입
 export interface SearchedDocument {
@@ -83,7 +82,7 @@ export interface SearchDocumentsRequestDto {
 }
 
 export interface fetchRecentDocumentsResquestDto {
-  workspaceId: number;
+  workspaceId: string;
 }
 
 // ResponseDto
@@ -94,10 +93,10 @@ export interface SearchDocumentsResponseDto {
 /**
  * 최근 문서 목록 응답 DTO
  *
- * @property {Document[]} documents - 최근 문서 목록
+ * @property {ApiDocument[]} documents - 최근 문서 목록
  */
 export interface FetchRecentDocumentsResponseDto {
-  documents: Document[];
+  documents: ApiDocument[];
 }
 
 /**
@@ -128,4 +127,24 @@ export interface fetchCalendarResquestDto {
 
 export interface fetchCalendarResponseDto {
   documentList: DocumentList[];
+}
+
+export interface ViewRecentBoxedFilesRequestDto {
+  workspaceId: string;
+}
+
+export interface RecentBoxedFile {
+  documentId: string;
+  title: string;
+  documentType: FileType;
+  thumbnailUrl: string | null; // 이미지 URL은 없을 수도 있으므로 null 허용
+  lastOpened: string;
+}
+
+/**
+ * @description 최근 항목 (박스 파일) 조회 API 응답의 result 필드 데이터 형태
+ */
+
+export interface ViewRecentBoxedFilesResponseDto {
+  documents: RecentBoxedFile[];
 }

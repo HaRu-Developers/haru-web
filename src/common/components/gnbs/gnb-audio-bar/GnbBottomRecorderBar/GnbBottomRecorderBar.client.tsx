@@ -1,7 +1,13 @@
+'use client';
+
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import WaveSurfer from 'wavesurfer.js';
 import RecordPlugin from 'wavesurfer.js/dist/plugins/record.js';
+
+import { ToastType } from '@common/types/toast.types';
+
+import { useToastActions } from '@common/hooks/stores/useToastStore';
 
 import StartRecordingButton from '@common/components/buttons/32px/StartRecordingButton/StartRecordingButton.client';
 import StopRecordingButton from '@common/components/buttons/32px/StopRecordingButton/StopRecordingButton.client';
@@ -12,12 +18,25 @@ import { formatAudioProgress } from '../audio-bar.util';
 
 interface GnbBottomRecorderBarProps {
   onRecordEnd: (blob: Blob) => void;
+  external?: {
+    hasStarted: boolean;
+    isRecording: boolean; // (일시정지=false)
+    onStart: () => void;
+    onPauseResume: () => void;
+    onStop: () => void;
+    elapsedSec?: number; // 선택: 상단 타이머
+  };
 }
 
-const GnbBottomRecorderBar = ({ onRecordEnd }: GnbBottomRecorderBarProps) => {
+const GnbBottomRecorderBar = ({ onRecordEnd, external }: GnbBottomRecorderBarProps) => {
+  // 외부모드면 wavesurfer 초기화/녹음 로직 전부 건너뜀
+  const isExternal = !!external;
+
   const recorderWsRef = useRef<WaveSurfer | null>(null);
   const recorderPluginRef = useRef<RecordPlugin | null>(null);
   const recorderContainerRef = useRef<HTMLDivElement | null>(null);
+
+  const { addToast } = useToastActions();
 
   // 녹음 시작 전 최초 상태일 경우 구별을 위해 사용
   const [hasStartedRecording, setHasStartedRecording] = useState<boolean>(false);
@@ -32,14 +51,17 @@ const GnbBottomRecorderBar = ({ onRecordEnd }: GnbBottomRecorderBarProps) => {
       return devices;
     } catch (error) {
       console.error('[ERR] Cannot get audio devices:', error);
-      alert('오디오 디바이스를 가져올 수 없습니다.');
+      addToast({
+        text: '오디오 디바이스를 가져올 수 없습니다.',
+        type: ToastType.ERROR,
+      });
       return [];
     }
   };
 
   const handleRecordResumePause = useCallback(() => {
     if (!recorderPluginRef.current) {
-      // console.error('Recorder plugin is not initialized.');
+      // console.error('[ERR] Recorder plugin is not initialized.');
       return;
     }
 
@@ -52,15 +74,15 @@ const GnbBottomRecorderBar = ({ onRecordEnd }: GnbBottomRecorderBarProps) => {
   }, []);
 
   const handleStartRecording = useCallback(async () => {
-    // initializeWavesurfer();
+    initializeWavesurfer();
 
     if (!recorderPluginRef.current) {
-      // console.error('Recorder plugin is not initialized.');
+      // console.error('[ERR] Recorder plugin is not initialized.');
       return;
     }
 
     const devices = await getAvailableDevices();
-    // console.log('Available devices:', devices);
+    console.log('[INFO] Available devices:', devices);
 
     recorderPluginRef.current.startRecording({ deviceId: devices[0]?.deviceId });
 
@@ -70,7 +92,7 @@ const GnbBottomRecorderBar = ({ onRecordEnd }: GnbBottomRecorderBarProps) => {
 
   const handleEndRecording = useCallback(() => {
     if (!recorderPluginRef.current) {
-      // console.error('Recorder plugin is not initialized.');
+      // console.error('[ERR] Recorder plugin is not initialized.');
       return;
     }
 
@@ -81,7 +103,7 @@ const GnbBottomRecorderBar = ({ onRecordEnd }: GnbBottomRecorderBarProps) => {
     // console.log('Initializing Wavesurfer...');
     // div container is required, assuring it.
     if (!recorderContainerRef.current) {
-      // console.error('Recorder container is not initialized.', recorderContainerRef);
+      // console.error('[ERR] Recorder plugin is not initialized.');
       return;
     }
     // if wavesurfer obj already exists, destroy it.
@@ -162,37 +184,57 @@ const GnbBottomRecorderBar = ({ onRecordEnd }: GnbBottomRecorderBarProps) => {
   }, []);
 
   // 구성은 [녹음 재개/일시정지 버튼] [녹음 진행바] [녹음 시간] [녹음 정지 버튼]
-  return (
-    <div className="w-656pxr h-68pxr rounded-100pxr border-stroke-200/70 px-16pxr flex flex-row items-center border bg-white">
-      {/* 녹음 시작 여부에 따라 선택적 렌더링 */}
-      {hasStartedRecording ? (
-        // 녹음이 시작된 경우
-        <PlayPauseButton
-          className="mr-184pxr"
-          status={isRecording ? PlayPauseButtonStatus.PAUSE : PlayPauseButtonStatus.PLAY}
-          onClick={handleRecordResumePause}
-        />
-      ) : (
-        // 녹음이 시작되지 않은 경우
-        <StartRecordingButton
-          className="mr-137pxr"
-          onClick={async () => await handleStartRecording()}
-        />
-      )}
-      {/* 녹음 시작 여부에 따라 선택적 렌더링, Wavesurfer 객체를 위해 hidden을 활용 */}
-      <div className="w-122pxr bg-audio-bar h-2pxr rounded-100pxr" hidden={hasStartedRecording} />
-      <div className="w-122pxr" ref={recorderContainerRef} hidden={!hasStartedRecording} />
-      {/* 현재 녹음 시간 */}
-      <span className="text-cap1-rg ml-12pxr text-black">
-        {formatAudioProgress(recorderProgress)}
-      </span>
-      {/* 녹음이 시작된 경우에만 정지 버튼 렌더링 */}
-      {hasStartedRecording && (
-        <StopRecordingButton onClick={handleEndRecording} className="ml-155pxr" />
-      )}
-      <div className="flex-grow" /> {/* 남은 공간을 채우기 위한 빈 div */}
-    </div>
-  );
+  if (isExternal) {
+    const { hasStarted, isRecording, onStart, onPauseResume, onStop, elapsedSec = 0 } = external;
+    return (
+      <div className="w-656pxr h-68pxr rounded-100pxr border-stroke-200/70 px-16pxr flex items-center border bg-white">
+        {hasStarted ? (
+          <PlayPauseButton
+            className="mr-184pxr"
+            status={isRecording ? PlayPauseButtonStatus.PAUSE : PlayPauseButtonStatus.PLAY}
+            onClick={onPauseResume}
+          />
+        ) : (
+          <StartRecordingButton className="mr-137pxr" onClick={onStart} />
+        )}
+        <div className="w-122pxr bg-audio-bar h-2pxr rounded-100pxr" />
+        <span className="text-cap1-rg ml-12pxr text-black">{formatAudioProgress(elapsedSec)}</span>
+        {hasStarted && <StopRecordingButton onClick={onStop} className="ml-155pxr" />}
+        <div className="flex-grow" />
+      </div>
+    );
+  }
+  // return (
+  //   <div className="w-656pxr h-68pxr rounded-100pxr border-stroke-200/70 px-16pxr flex flex-row items-center border bg-white">
+  //     {/* 녹음 시작 여부에 따라 선택적 렌더링 */}
+  //     {hasStartedRecording ? (
+  //       // 녹음이 시작된 경우
+  //       <PlayPauseButton
+  //         className="mr-184pxr"
+  //         status={isRecording ? PlayPauseButtonStatus.PAUSE : PlayPauseButtonStatus.PLAY}
+  //         onClick={handleRecordResumePause}
+  //       />
+  //     ) : (
+  //       // 녹음이 시작되지 않은 경우
+  //       <StartRecordingButton
+  //         className="mr-137pxr"
+  //         onClick={async () => await handleStartRecording()}
+  //       />
+  //     )}
+  //     {/* 녹음 시작 여부에 따라 선택적 렌더링, Wavesurfer 객체를 위해 hidden을 활용 */}
+  //     <div className="w-122pxr bg-audio-bar h-2pxr rounded-100pxr" hidden={hasStartedRecording} />
+  //     <div className="w-122pxr" ref={recorderContainerRef} hidden={!hasStartedRecording} />
+  //     {/* 현재 녹음 시간 */}
+  //     <span className="text-cap1-rg ml-12pxr text-black">
+  //       {formatAudioProgress(recorderProgress)}
+  //     </span>
+  //     {/* 녹음이 시작된 경우에만 정지 버튼 렌더링 */}
+  //     {hasStartedRecording && (
+  //       <StopRecordingButton onClick={handleEndRecording} className="ml-155pxr" />
+  //     )}
+  //     <div className="flex-grow" /> {/* 남은 공간을 채우기 위한 빈 div */}
+  //   </div>
+  // );
 };
 
 export default GnbBottomRecorderBar;

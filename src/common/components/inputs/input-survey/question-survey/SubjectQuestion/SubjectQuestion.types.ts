@@ -1,7 +1,7 @@
-import { Visibility } from '../../types/input-survey.common.types';
+import { SurveyVisibility } from '../../types/input-survey.common.types';
 
 export interface SubjectQuestionProps {
   description?: string;
-  visibility: Visibility;
+  visibility: SurveyVisibility;
   onChange?: (value: string) => void;
 }

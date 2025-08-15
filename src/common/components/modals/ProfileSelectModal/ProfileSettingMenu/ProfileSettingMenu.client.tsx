@@ -16,7 +16,7 @@ import SaveButton from '@common/components/buttons/38px/SaveButton/SaveButton.cl
 
 import useEditUserDetail from '@/api/user/patch/mutations/useEditUserDetail';
 
-import CommonText from '../../CommonText/CommonText.server';
+import CommonText from '../../CommonText/CommonText.client';
 import { CommonTextType } from '../../CommonText/CommonText.types';
 import { ProfileSettingMenuProps } from './ProfileSettingMenu.types';
 

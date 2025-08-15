@@ -23,21 +23,19 @@ export const metadata: Metadata = {
 
 const RootLayout = ({
   children,
+  globalModal,
 }: Readonly<{
   children: React.ReactNode;
+  globalModal: React.ReactNode;
 }>) => {
   return (
-    <html lang="ko">
-      <body
-        className={clsx(
-          'scrollbar-page flex min-h-screen flex-col overflow-y-auto',
-          pretendard.variable,
-        )}
-      >
+    <html lang="ko" className="">
+      <body className={clsx('scrollbar-page flex min-h-screen flex-col', pretendard.variable)}>
         <QueryClientProviders>
-          {children}
-          <Toaster />
           <div id="modal" />
+          {children}
+          {globalModal}
+          <Toaster />
         </QueryClientProviders>
       </body>
     </html>

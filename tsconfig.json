@@ -22,10 +22,10 @@
     "paths": {
       "@styles/*": ["styles/*"],
       "@assets/*": ["assets/*"],
-      "@lib/*": ["lib/*"],
-      "@api/*": ["api/*"],
       "@icons/*": ["common/components/icons/*"],
       "@svgs/*": ["assets/svgs/*"],
+      "@lib/*": ["lib/*"],
+      "@api/*": ["api/*"],
       "@common/types/*": ["common/types/*"],
       "@common/constants/*": ["common/constants/*"],
       "@common/errors/*": ["common/errors/*"],
@@ -41,6 +41,6 @@
       "@/*": ["*"]
     }
   },
-  "include": ["image-modules.d.ts", "next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["image-modules.d.ts", "next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/features/ai-meeting-manager/components/MinutesClient/MinutesClient.client.tsx"],
   "exclude": ["node_modules", ".next"]
 }

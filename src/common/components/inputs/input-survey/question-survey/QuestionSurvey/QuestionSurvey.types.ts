@@ -1,10 +1,10 @@
-import { Type, Visibility } from '../../types/input-survey.common.types';
+import { InputSurveyQuestionType, SurveyVisibility } from '../../types/input-survey.common.types';
 
 export interface QuestionSurveyProps {
-  type: Type;
+  type: InputSurveyQuestionType;
   optionList: string[];
   isEtc: boolean;
-  visibility?: Visibility;
+  visibility?: SurveyVisibility;
   description?: string;
   onSubjectBlur?: (value: string) => void;
   onOptionChange?: (updated: string[]) => void;

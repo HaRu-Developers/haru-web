@@ -5,6 +5,7 @@ import queryKeys from '@common/constants/query-key.constants';
 import { ApiError } from '@common/errors/ApiError';
 
 import { useAfterQuery } from '@common/hooks/queries/useAfterQuery';
+import { useToastActions } from '@common/hooks/stores/useToastStore';
 
 import { WorkspaceSummary } from '../../api.types';
 import fetchMyWorkspaces from '../apis/fetchMyWorkspaces';
@@ -22,7 +23,6 @@ const useFetchMyWorkspaces = () => {
     queryFn: () => fetchMyWorkspaces(),
     enabled: true,
     retry: false,
-    throwOnError: true,
     extra: (queryResult) => queryResult.data?.result ?? [],
   });
 };

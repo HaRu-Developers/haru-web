@@ -3,6 +3,6 @@ export interface LeftTabProps {
 }
 
 export enum LeftTabType {
-  MEETING_SUMMARY = 'MEETING_SUMMARY',
+  MEETING_PROCEEDING = 'MEETING_PROCEEDING',
   MEETING_VOICE_LOG = 'MEETING_VOICE_LOG',
 }

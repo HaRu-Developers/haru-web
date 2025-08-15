@@ -26,12 +26,10 @@ const LeftTab = ({ current }: LeftTabProps) => {
   const { setEditing } = useTabActions();
 
   const handleEditClick = () => {
-    console.log('수정 클릭');
     setEditing(true);
   };
 
   const handleEditDoneClick = () => {
-    console.log('수정 완료 클릭');
     setEditing(false);
   };
 
@@ -44,7 +42,7 @@ const LeftTab = ({ current }: LeftTabProps) => {
   };
 
   return (
-    <div className="border-stroke-200 py-13pxr flex h-14 w-full shrink-0 items-center justify-between border-b border-solid bg-white px-5">
+    <div className="border-stroke-200 px-33pxr flex h-[var(--tab-height)] w-full shrink-0 items-center justify-between border-b border-solid bg-white">
       {/* 탭 영역 */}
       <div className="gap-9pxr inline-flex items-center">
         {tabs.map((tab) => {
@@ -61,7 +59,7 @@ const LeftTab = ({ current }: LeftTabProps) => {
 
       {/* 버튼 영역 */}
       <div className="gap-12pxr inline-flex items-center">
-        {current === LeftTabType.MEETING_SUMMARY &&
+        {current === LeftTabType.MEETING_PROCEEDING &&
           (isEditing ? (
             <EditCompleteButton onClick={handleEditDoneClick} />
           ) : (

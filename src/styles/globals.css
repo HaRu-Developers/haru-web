@@ -6,6 +6,7 @@
 @import './token/shadows.css';
 @import './token/break-point.css';
 @import './token/define-pxr.css';
+@import './token/markdown.css';
 @import './custom-style.css';
 @import './animation.css';
 
@@ -19,6 +20,14 @@
   body {
     @apply bg-white text-black antialiased;
     font-family: var(--font-pretendard), sans-serif;
+
+    /* 기본은 스크롤 방지 */
+    overflow-y: hidden;
+  }
+
+  /* '/landing 에서는 스크롤 허용 (#landing-root 부여) */
+  body:has(#landing-root) {
+    overflow-y: scroll;
   }
 
   p {
@@ -28,5 +37,9 @@
 
   button {
     cursor: pointer;
+
+    &:disabled {
+      cursor: not-allowed;
+    }
   }
 }

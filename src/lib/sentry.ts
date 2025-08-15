@@ -3,6 +3,7 @@ import * as Sentry from '@sentry/nextjs';
 type ApiErrorType = 'server-error' | 'network-error' | 'unknown-error';
 interface ApiErrorContext {
   url?: string;
+  method?: string;
   status?: number;
   requestBody?: unknown;
   responseHeaders?: HeadersInit;
@@ -37,7 +38,6 @@ export const captureApiError = (
     }
 
     Sentry.captureException(error); // Sentry로 에러 전송
-    console.log('Sentry로 api 에러 전송');
   });
 };
 
@@ -54,6 +54,5 @@ export const captureRenderError = (error: Error, context?: Record<string, unknow
     }
 
     Sentry.captureException(error);
-    console.log('Sentry로 렌더링 에러 전송');
   });
 };

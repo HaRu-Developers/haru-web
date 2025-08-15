@@ -5,7 +5,7 @@ import { useState } from 'react';
 import QuestionCheckboxOption from '@common/components/inputs/input-survey/question-survey/QuestionCheckboxOption/QuestionCheckboxOption.client';
 import QuestionChoiceOption from '@common/components/inputs/input-survey/question-survey/QuestionChoiceOption/QuestionChoiceOption.client';
 
-import { Type } from '../../types/input-survey.common.types';
+import { InputSurveyQuestionType } from '../../types/input-survey.common.types';
 import { QuestionOptionsProps } from './QuestionOptions.types';
 
 const QuestionOptions = ({
@@ -38,7 +38,7 @@ const QuestionOptions = ({
   return (
     <>
       {optionList.map((option, index) =>
-        type === Type.CHECKBOX ? (
+        type === InputSurveyQuestionType.CHECKBOX ? (
           <QuestionCheckboxOption
             key={index}
             index={index}

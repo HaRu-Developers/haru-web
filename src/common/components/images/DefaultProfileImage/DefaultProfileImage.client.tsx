@@ -7,6 +7,7 @@ import { PROFILE_COLORS } from '@common/constants/profile.constants';
 import hashCode from '@common/utils/hash-code.utils';
 
 import { ImageSize } from '../types/images.common.types';
+import { sizeClassMap } from './DefaultProfileImage.constants';
 import { DefaultProfileImageProps } from './DefaultProfileImage.types';
 
 const DefaultProfileImage = ({
@@ -15,12 +16,6 @@ const DefaultProfileImage = ({
   color,
   size = ImageSize.MEDIUM,
 }: DefaultProfileImageProps) => {
-  const sizeClassMap: Record<ImageSize, string> = {
-    [ImageSize.SMALL]: 'text-cap2-rg h-4 w-4',
-    [ImageSize.MEDIUM]: 'text-cap2-rg h-7 w-7',
-    [ImageSize.LARGE]: 'text-b2-rg h-10 w-10',
-  };
-
   const sizeClass = sizeClassMap[size] ?? sizeClassMap[ImageSize.MEDIUM];
 
   // name이 문자열이 아니거나 비어있으면, 에러를 발생시키는 대신 안전한 대체 UI를 렌더링합니다.
@@ -41,14 +36,16 @@ const DefaultProfileImage = ({
   // 구글 로그인시 lastName의 한 글자 추출
   // 일반 로그인시 한 글자 추출
   const initial = name.slice(0, 1);
+  // userId가 ''인 경우 반영
+  const hashKey = userId?.trim() || name?.trim() || 'anonymous';
   // 같은 사용자면 같은 색상을 가지게
-  const colorIndex = hashCode(name) % PROFILE_COLORS.length;
+  const colorIndex = hashCode(hashKey) % PROFILE_COLORS.length;
   const backgroundColor = color ?? PROFILE_COLORS[colorIndex];
 
   return (
     <div
       className={clsx(
-        `rounded-100pxr px-3pxr flex shrink-0 items-center justify-center gap-2.5 py-1.5 text-white`,
+        `rounded-100pxr px-3pxr flex shrink-0 cursor-default items-center justify-center gap-2.5 py-1.5 text-white`,
         sizeClass,
       )}
       style={{ background: backgroundColor }}

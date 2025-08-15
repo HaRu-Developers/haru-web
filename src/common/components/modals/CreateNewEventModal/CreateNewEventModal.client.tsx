@@ -15,7 +15,7 @@ import NextStepButton from '@common/components/buttons/30px/NextStepButton/NextS
 import InputChips from '@common/components/inputs/InputChips/InputChips.client';
 import InputFieldModal from '@common/components/inputs/modals/InputFieldModal/InputFieldModal.client';
 
-import CommonText from '../CommonText/CommonText.server';
+import CommonText from '../CommonText/CommonText.client';
 import { CommonTextType } from '../CommonText/CommonText.types';
 import DateTimePicker from '../DateTimePicker/DateTimePicker.client';
 import { CreateNewEventModalProps } from './CreateNewEventModal.types';

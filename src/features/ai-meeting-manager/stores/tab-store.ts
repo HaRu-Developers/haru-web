@@ -17,7 +17,7 @@ const tabStore = create<tabStoreState>()(
         setEditing: (val) => set({ isEditing: val }),
       },
     })),
-    { name: 'TabStore' },
+    { name: 'ai-meeting-manager/TabStore' },
   ),
 );
 

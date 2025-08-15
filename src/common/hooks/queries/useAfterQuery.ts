@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useRef } from 'react';
 
 import { UseQueryOptions, UseQueryResult, useQuery } from '@tanstack/react-query';
@@ -33,6 +35,8 @@ interface AfterQueryOptions<TData, TError, TExtra = unknown>
    */
   extra?: ExtraResult<TData, TError, TExtra>;
 }
+
+// TODO: add examples here
 
 /**
  * useAfterQuery

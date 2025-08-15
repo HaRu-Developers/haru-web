@@ -1,6 +1,6 @@
 'use client';
 
-import { Type, Visibility } from '../../types/input-survey.common.types';
+import { InputSurveyQuestionType, SurveyVisibility } from '../../types/input-survey.common.types';
 import AddQuestion from '../AddQuestion/AddQuestion.client';
 import QuestionOptions from '../QuestionOptions/QuestionOptions.client';
 import SubjectQuestion from '../SubjectQuestion/SubjectQuestion.client';
@@ -43,12 +43,12 @@ const QuestionSurvey = ({
   const handleCheck = (value: string[]) => {
     onCheck?.(value);
   };
-  if (type === Type.SUBJECT) {
+  if (type === InputSurveyQuestionType.SUBJECT) {
     return (
       <div className="w-full">
         <SubjectQuestion
           description={description}
-          visibility={visibility ?? Visibility.PUBLIC}
+          visibility={visibility ?? SurveyVisibility.PUBLIC}
           onChange={onDescriptionChange}
         />
       </div>
@@ -64,7 +64,7 @@ const QuestionSurvey = ({
         onCheck={handleCheck}
         type={type}
       />
-      {visibility === Visibility.PRIVATE && (
+      {visibility === SurveyVisibility.PRIVATE && (
         <AddQuestion
           type={type}
           isEtc={isEtc}

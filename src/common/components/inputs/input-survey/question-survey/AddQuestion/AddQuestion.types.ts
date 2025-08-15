@@ -1,7 +1,7 @@
-import { Type } from '../../types/input-survey.common.types';
+import { InputSurveyQuestionType } from '../../types/input-survey.common.types';
 
 export interface AddQuestionProps {
-  type?: Type;
+  type?: InputSurveyQuestionType;
   onOptionAddClick?: () => void;
   onEtcAddClick?: () => void;
   isEtc?: boolean;

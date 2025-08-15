@@ -1,10 +1,13 @@
-import { ApiErrorBody } from '@common/types/api.common.types';
-
-import { ApiError } from '@common/errors/ApiError';
+import {
+  handleFetchError,
+  handleResponse,
+  handleResponseError,
+  refreshAccessToken,
+} from '@lib/fetcher-response-handlers';
 
 import { joinURL } from '@common/utils/join-url.utils';
 
-import { captureApiError } from './sentry';
+import useAuthStore from '@features/auth/stores/auth-store';
 
 interface CreateFetcherOptions {
   baseURL?: string;
@@ -20,60 +23,8 @@ interface CustomRequestInit extends RequestInit {
   auth?: boolean;
 }
 
-/**
- * 정상 응답 처리 함수
- */
-const handleResponse = async (res: Response) => {
-  return res.json();
-};
-
-/**
- * 비정상 응답 처리 함수
- */
-const handleResponseError = async (res: Response, url: string, requestBodyRaw: unknown) => {
-  const contentType = res.headers.get('content-type');
-  let requestBody: string;
-  const responseBodyText = await res.text();
-  let responseBody: ApiErrorBody = {
-    isSuccess: false,
-    code: 'UNKNOWN',
-    message: `❌ API error ${res.status}`,
-  };
-
-  // Serialize가 불가능할 경우를 handling 합니다.
-  try {
-    requestBody =
-      typeof requestBodyRaw === 'string' ? requestBodyRaw : JSON.stringify(requestBodyRaw);
-  } catch {
-    requestBody = '[Non-serializable body]';
-  }
-
-  // JSON인 경우에만 파싱 시도
-  if (contentType?.includes('application/json')) {
-    try {
-      responseBody = JSON.parse(responseBodyText) as ApiErrorBody;
-    } catch (_error) {
-      // 파싱 실패시 문자열 유지
-    }
-  }
-
-  const error = new ApiError(res.status, responseBody);
-
-  if (res.status >= 500) {
-    captureApiError(
-      error,
-      {
-        url,
-        status: res.status,
-        requestBody,
-        responseHeaders: Object.fromEntries(res.headers.entries()),
-        responseBody,
-      },
-      'server-error',
-    );
-  }
-  throw error;
-};
+let isRefreshing = false;
+let refreshPromise: Promise<string> | null = null;
 
 /**
  * Custom Fetcher 함수 구현입니다.
@@ -82,18 +33,22 @@ const handleResponseError = async (res: Response, url: string, requestBodyRaw: u
  *
  * @returns API 요청을 보내는 함수
  */
-export const createFetcher =
-  ({
-    baseURL = process.env.NEXT_PUBLIC_SERVER_API_BASE_URL,
-    headers,
-    fetchOptions,
-  }: CreateFetcherOptions = {}) =>
+export const createFetcher = ({
+  baseURL = process.env.NEXT_PUBLIC_SERVER_API_BASE_URL,
+  headers,
+  fetchOptions,
+}: CreateFetcherOptions = {}) =>
   /**
    * createFetcher가 최종적으로 반환하는 fetcher 함수
    * @param path - API Request 경로 입니다.
    * @param options - fetch 함수에 전달되는 options
    */
-  async <T>(path: string, options?: CustomRequestInit): Promise<T> => {
+  async function innerFunction<T>(path: string, options?: CustomRequestInit): Promise<T> {
+    // Zustand Auth Store를 활용합니다.
+    const { user, actions } = useAuthStore.getState();
+    const { setAccessToken } = actions;
+    const { accessToken, refreshToken } = user ?? {};
+
     if (!baseURL) {
       throw new Error(
         'API baseURL이 누락되었습니다. NEXT_PUBLIC_SERVER_API_BASE_URL 환경 변수를 확인하세요.',
@@ -124,20 +79,29 @@ export const createFetcher =
       mergedHeaders.set('Accept', 'application/json');
     }
 
-    const requiresAuth = options?.auth !== false;
-
     // TODO: PRODUCTION 환경에서는 삭제해야 합니다. by. @kyeoungwoon
-    // 1. 인증이 필요하고, 수동으로 설정된 Authorization 헤더가 없으며, 토큰이 존재할 때만 헤더를 추가합니다.
-    if (
-      requiresAuth &&
-      !mergedHeaders.has('Authorization') &&
-      process.env.NEXT_PUBLIC_ACCESS_TOKEN
-    ) {
-      mergedHeaders.set('Authorization', `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`);
+
+    // options에 auth를 설정한 경우에만 true
+    const requiresAuth = options?.auth ?? false;
+
+    // 인증이 필요하고, 수동으로 설정된 Authorization 헤더가 없으며, 토큰이 존재할 때만 헤더를 추가합니다.
+    if (requiresAuth && !mergedHeaders.has('Authorization')) {
+      // accessToken이 존재하는 경우 Authorization 헤더를 설정합니다.
+      if (accessToken) {
+        mergedHeaders.set('Authorization', `Bearer ${accessToken}`);
+      }
+
+      // NODE_ENV가 test이고, NEXT_PUBLIC_ACCESS_TOKEN을 설정해둔 경우에는
+      // .env 안에 있는 값으로 덮어서 사용하도록 합니다.
+      // NODE_ENV: "development" | "production" | "test"
+      if (process.env.NODE_ENV === 'test' && process.env.NEXT_PUBLIC_ACCESS_TOKEN) {
+        mergedHeaders.set('Authorization', `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`);
+      }
     }
 
     // TODO: axios 기준, withCredentials 옵션을 사용해야 합니다.
     // localStorage나, cookie에 저장된 credentials를 loading 할 수 있도록 ..
+    // HaRu에서는 cookie 기반 인증을 사용하지 않습니다.
 
     // 4. FormData 여부에 따라 Content-Type을 최종적으로 제어합니다.
     if (isFormData) {
@@ -164,45 +128,64 @@ export const createFetcher =
     try {
       const res = await fetch(url, mergedOptions);
 
-      // 응답 인터셉터
+      // 응답 인터셉터 - 우선 서버로부터 응답이 오긴 한 경우.
 
       // 응답 성공시
       if (res.ok) {
         return handleResponse(res);
       }
       // 응답 에러시
-      return handleResponseError(res, url, mergedOptions.body);
-    } catch (error) {
-      // 네트워크 관련 오류 Sentry에 전송
+      // access token 만료 시 자동으로 재발급하도록 함
+      const resBody = await res.json();
+      // TODO: RT 만료 시에는 로그인 페이지로 이동 시켜야 함 !
+      if (res.status === 401 && requiresAuth && resBody.code === 'AUTHORIZATION9002') {
+        console.log('AT 만료로 RT 재발급 요청을 합니다.');
+        let newAccessToken: string | null = null;
+        // refresh 중복 방지
+        if (!refreshPromise) {
+          isRefreshing = true;
+          refreshPromise = refreshAccessToken()
+            .catch((err) => {
+              console.error('Access token refresh failed:', err);
+              throw err;
+            })
+            .finally(() => {
+              refreshPromise = null;
+              isRefreshing = false;
+            });
+        }
 
-      // - fetch 자체가 실패한 경우 (인터넷 연결 끊김, DNS 오류, CORS 등)
-      // - 연결 지연으로 인한 timeout
-      if (
-        error instanceof Error &&
-        (error.message.includes('Failed to fetch') ||
-          error.message.includes('timeout') ||
-          error.message.includes('NetworkError'))
-      ) {
-        captureApiError(error, undefined, 'network-error');
-        // 그 외 예상치 못한 시스템 오류 Sentry에 전송
-        // 다음의 사용자가 의도적으로 취소한 요청은 제외:
-        // - AbortError: 사용자가 fetch를 중단
-        // - canceled: AbortController나 빠른 네비게이션 등으로 요청 취소
-        // - Navigation aborted: Next.js 내부 요청 취소
-      } else if (
-        error instanceof Error &&
-        // 넘어감 목록
-        !error.message.includes('AbortError') &&
-        !error.message.includes('canceled') &&
-        !error.message.includes('Navigation aborted')
-      ) {
-        captureApiError(error, undefined, 'unknown-error');
+        newAccessToken = await refreshPromise;
+
+        mergedHeaders.set('Authorization', `Bearer ${newAccessToken}`);
+
+        // 다시 한 번 실행
+        try {
+          const newRes = await fetch(url, { ...options, headers: mergedHeaders });
+          if (newRes.ok) {
+            return handleResponse(newRes);
+          }
+        } catch (error) {
+          return handleFetchError(error);
+        }
       }
 
-      throw error;
+      return handleResponseError(res, url, mergedOptions.body);
+    } catch (error) {
+      // 네트워크 오류나 기타 예외 처리
+      return handleFetchError(error);
     }
   };
 
+/**
+ * 기본 fetcher 함수입니다.
+ *
+ * auth 옵션을 true로 설정하면, Authorization 헤더를 자동으로 추가합니다.
+ * @example
+ * ```typescript
+ * const data = await defaultApi<ApiResponseDto>('/api/some-endpoint', { auth: true });
+ * ```
+ */
 export const defaultApi = createFetcher({ fetchOptions: { cache: 'no-store' } });
 
 /**

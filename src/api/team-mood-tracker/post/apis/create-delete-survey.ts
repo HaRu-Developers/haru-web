@@ -20,6 +20,7 @@ export const createNewSurvey = async (data: {
     {
       method: 'POST',
       body: JSON.stringify(data.surveyData),
+      auth: true,
     },
   );
 
@@ -33,6 +34,7 @@ export const sendEmail = async ({
     MOOD_TRACKER_API_ENDPOINTS.SEND_EMAIL(moodTrackerHashedId),
     {
       method: 'POST',
+      auth: true,
     },
   );
 

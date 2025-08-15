@@ -10,6 +10,7 @@ const fetchWorkspaceDetail = async ({ workspaceId }: WorkspaceIdRequestDto) => {
     WORKSPACE_API_END_POINTS.WORKSPACE_DETAIL(workspaceId),
     {
       method: 'GET',
+      auth: true,
     },
   );
 

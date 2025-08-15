@@ -11,6 +11,7 @@ export const patchUserInfo = async ({ name, password }: PatchUserInfoRequestDto)
     {
       method: 'PATCH',
       body: JSON.stringify({ name, password }),
+      auth: true,
     },
   );
 

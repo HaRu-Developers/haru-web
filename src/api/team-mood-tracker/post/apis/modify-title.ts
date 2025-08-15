@@ -20,6 +20,7 @@ export const ModifyMoodTrackerTitle = async ({
     {
       method: 'PATCH',
       body: JSON.stringify({ title }),
+      auth: true,
     },
   );
 

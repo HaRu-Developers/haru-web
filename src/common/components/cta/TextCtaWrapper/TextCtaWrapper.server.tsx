@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 
 import TextCta from '@common/components/cta/TextCta/TextCta.client';

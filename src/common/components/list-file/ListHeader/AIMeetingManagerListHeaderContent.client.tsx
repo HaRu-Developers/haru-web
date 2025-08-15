@@ -19,7 +19,7 @@ const AIMeetingManagerListHeaderContent = () => {
   const { isAnyChecked } = useListInfo();
   const { workspaceId } = useParams<{ workspaceId: string }>();
 
-  const href = `${ROUTES.AI_MEETING_MANAGER.MODAL.CONFIRM_DELETE(workspaceId)}`;
+  const href = `${ROUTES.MODAL.AI_MEETING_MANAGER.CONFIRM_DELETE(workspaceId)}`;
 
   return isAnyChecked ? (
     <Link

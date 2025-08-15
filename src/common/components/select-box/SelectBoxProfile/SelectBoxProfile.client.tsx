@@ -1,5 +1,7 @@
 'use client';
 
+import { usePathname, useRouter } from 'next/navigation';
+
 import useFetchUserDetail from '@api/user/get/queries/useFetchUserDetail';
 
 import ModalPortal from '@common/components/ModalPortal/ModalPortal.client';
@@ -20,8 +22,13 @@ const SelectBoxProfile = ({
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   onSettingClick?: () => void;
 }) => {
+  const router = useRouter();
+  const pathname = usePathname();
   const { extra: userDetail, isFetching } = useFetchUserDetail({ enabled: isOpen });
+
   if (!isOpen) return null;
+
+  const settingHref = `${pathname}/settings`;
 
   return (
     <ModalPortal>
@@ -56,8 +63,8 @@ const SelectBoxProfile = ({
                 </div>
               )}
               <HeaderButtons
-                onSettingClick={onSettingClick}
-                onAddMemberClick={() => console.log('멤버 추가 클릭')}
+                onSettingClick={() => router.push(settingHref)}
+                onAddMemberClick={() => router.push(settingHref)}
               />
             </div>
 

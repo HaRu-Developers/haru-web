@@ -16,7 +16,7 @@ const LandingLayout = ({
 }>) => {
   return (
     <FooterLayout>
-      <div id="landing-root">{children}</div>
+      {children}
       {landingModal}
     </FooterLayout>
   );

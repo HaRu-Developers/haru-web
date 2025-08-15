@@ -8,7 +8,7 @@ const MyWorkspaces = () => {
 
   return (
     <div className="gap-3pxr max-h-210pxr scrollbar-component flex flex-col overflow-y-auto">
-      {isFetching && Array.from({ length: 5 }).map((_, idx) => <WorkSpaceItemSkeleton key={idx} />)}
+      {isFetching && Array.from({ length: 1 }).map((_, idx) => <WorkSpaceItemSkeleton key={idx} />)}
 
       {!isFetching &&
         workspaces?.map((ws) => (

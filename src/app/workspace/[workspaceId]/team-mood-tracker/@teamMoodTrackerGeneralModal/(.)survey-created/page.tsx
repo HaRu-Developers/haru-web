@@ -22,7 +22,7 @@ const SurveyCreatedModal = () => {
 
   const handleClose = () =>
     router.push(
-      ROUTES.BUILD_DOCUMENT_ROUTE(workspaceId, FileType.TEAM_MOOD_TRACKER, moodTrackerHashedId),
+      ROUTES.DETAIL_DOCUMENTS_DEFAULT[FileType.TEAM_MOOD_TRACKER](workspaceId, moodTrackerHashedId),
     );
 
   const handleEmailSendClick = () => {

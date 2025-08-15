@@ -21,13 +21,13 @@
     @apply bg-white text-black antialiased;
     font-family: var(--font-pretendard), sans-serif;
 
-    /* 기본은 스크롤 방지 */
-    overflow-y: hidden;
+    /* 기본은 스크롤 가능 */
+    overflow-y: scroll;
   }
 
-  /* '/landing 에서는 스크롤 허용 (#landing-root 부여) */
-  body:has(#landing-root) {
-    overflow-y: scroll;
+  /* #cannnot-page-scroll 에서는 스크롤 불가 */
+  body:has(#cannot-page-scroll) {
+    overflow-y: hidden;
   }
 
   p {

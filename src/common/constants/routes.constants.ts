@@ -1,5 +1,7 @@
 import { FileType } from '@common/types/file-type.enum';
 
+import { TermsType } from '@common/components/modals/terms/TermsModal.types';
+
 import { CreateNewTeamMoodTrackerModalOnNextStepProps } from '@features/team-mood-tracker/components/modals/CreateNewTeamMoodTrackerModal/CreateNewTeamMoodTrackerModal.types';
 
 // TODO : BE와 협의 끝나면 제거하여야 함
@@ -17,13 +19,7 @@ export const ROUTES = {
   ONBOARDING: '/onboarding',
   // ===== main 관련 =====
   ROOT: '/',
-  LANDING: {
-    BASE: '/landing',
-    MODAL: {
-      PRIVACY_POLICY: '/landing/terms?type=privacyPolicy',
-      TERMS_OF_SERVICE: '/landing/terms?type=termsOfService',
-    },
-  },
+  LANDING: '/landing',
   WORKSPACE_MAIN: (workspaceId?: BigintString) => `/workspace/${workspaceId ?? ''}`,
   MAIN: {
     BASE_WITHOUT_WS: '/workspace',
@@ -122,10 +118,16 @@ export const ROUTES = {
         NORMAL_REGISTER: '/auth/after-register?invited=false',
       },
     },
-    AI_MEETING_MANAGER: {},
     SNS_EVENT_ASSISTANT: {
       CREATE_EVENT: (workspaceId: string) =>
         `/workspace/${workspaceId}/sns-event-assistant/new-event`,
+    },
+    AI_MEETING_MANAGER: {
+      // 회의 생성 모달
+      CREATE: (workspaceId: string) => `/workspace/${workspaceId}/ai-meeting-manager/create`,
+      // 단일 회의 삭제 확인 모달
+      CONFIRM_DELETE: (workspaceId: string) =>
+        `/workspace/${workspaceId}/ai-meeting-manager/confirm-delete`,
     },
     TEAM_MOOD_TRACKER: {
       CREATE_SURVEY: (workspaceId: BigintString) =>
@@ -136,5 +138,15 @@ export const ROUTES = {
         `/workspace/${workspaceId}/team-mood-tracker/survey-created?moodTrackerHashedId=${moodTrackerHashedId}`,
     },
     SETTING: (workspaceId: BigintString) => `/workspace/${workspaceId}/settings`,
+    TERMS: {
+      PRIVACY: (workspaceId?: string) =>
+        workspaceId
+          ? `/workspace/${workspaceId}/terms?type=${TermsType.PRIVACY}`
+          : `/workspace/terms?type=${TermsType.PRIVACY}`,
+      SERVICE: (workspaceId?: string) =>
+        workspaceId
+          ? `/workspace/${workspaceId}/terms?type=${TermsType.SERVICE}`
+          : `/workspace/terms?type=${TermsType.SERVICE}`,
+    },
   },
 } as const;

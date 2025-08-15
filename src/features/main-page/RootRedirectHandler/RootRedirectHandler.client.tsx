@@ -16,7 +16,7 @@ const RootRedirectHandler = () => {
     if (user?.accessToken) {
       router.push(ROUTES.WORKSPACE_MAIN());
     } else {
-      router.push(ROUTES.LANDING.BASE);
+      router.push(ROUTES.LANDING);
     }
   }, []);
 

@@ -30,7 +30,7 @@ const useLogout = () => {
       }
 
       // 보호 페이지로 못 돌아가게 replace 사용
-      router.replace(ROUTES.LANDING.BASE);
+      router.replace(ROUTES.ROOT);
     },
   });
 };

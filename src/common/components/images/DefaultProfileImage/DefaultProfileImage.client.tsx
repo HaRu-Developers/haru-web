@@ -16,7 +16,7 @@ const DefaultProfileImage = ({
   color,
   size = ImageSize.MEDIUM,
 }: DefaultProfileImageProps) => {
-  const sizeClass = sizeClassMap[size] ?? sizeClassMap[ImageSize.MEDIUM];
+  const sizeClass = sizeClassMap[size];
 
   // name이 문자열이 아니거나 비어있으면, 에러를 발생시키는 대신 안전한 대체 UI를 렌더링합니다.
   if (typeof name !== 'string' || !name) {

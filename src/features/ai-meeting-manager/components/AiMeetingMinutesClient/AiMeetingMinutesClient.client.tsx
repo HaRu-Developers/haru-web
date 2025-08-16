@@ -10,6 +10,7 @@ import ProceedingPanel from '@features/ai-meeting-manager/components/panels/Left
 import SpeechPanel from '@features/ai-meeting-manager/components/panels/LeftPanel/SpeechPanel/SpeechPanel.client';
 import RightPanel from '@features/ai-meeting-manager/components/panels/RightPanel/RightPanel.client';
 
+import EditKeymap from '../EditKeyMap/EditKeyMap.client';
 import { AiMeetingMinutesContentProps } from './AiMeetingMinutes.types';
 
 /**
@@ -30,6 +31,7 @@ const AiMeetingMinutesContent = ({
       <div className="flex">
         {/* 같은 편집 스코프로 묶음 */}
         <div className="flex flex-1 flex-col" ref={editingScopeRef}>
+          <EditKeymap editingScopeRef={editingScopeRef} />
           <MeetingHeader editingScopeRef={editingScopeRef} />
           <LeftTab current={formattedLeftTab} />
           {isVoiceLogTab ? (

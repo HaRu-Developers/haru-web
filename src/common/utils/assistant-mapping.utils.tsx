@@ -1,5 +1,5 @@
 /**
- * assistant 구조에 사용되는 매핑 함수 모음
+ * assistant (ai-meeting-manager, sns-event-assistant, team-mood-tracker)에 사용되는 매핑 함수 모음
  */
 import { ExtendedFileType, FileType, SNS_EVENT_ASSISTANT_LINK } from '@common/types/file-type.enum';
 

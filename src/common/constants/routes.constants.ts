@@ -21,10 +21,6 @@ export const ROUTES = {
   ROOT: '/',
   LANDING: '/landing',
   WORKSPACE_MAIN: (workspaceId?: BigintString) => `/workspace/${workspaceId ?? ''}`,
-  MAIN: {
-    BASE_WITHOUT_WS: '/workspace',
-    BASE_WITH_WS: (workspaceId: string) => `/workspace/${workspaceId}`,
-  },
   // ===== ai-meeting-manager 관련 =====
   AI_MEETING_MANAGER: {
     BASE: (workspaceId: BigintString) => `/workspace/${workspaceId}/ai-meeting-manager`,
@@ -50,8 +46,8 @@ export const ROUTES = {
   },
   CALENDAR: (workspaceId: BigintString) => `/workspace/${workspaceId}/calendar`,
 
+  // 각 문서 타입에 따른 상세 경로를 생성하는 함수 맵(Map)
   DETAIL_DOCUMENTS_DEFAULT: {
-    // 각 문서 타입에 따른 상세 경로를 생성하는 함수 맵(Map)
     [FileType.AI_MEETING_MANAGER]: (workspaceId: BigintString, documentId: BigintString) =>
       `/workspace/${workspaceId}/ai-meeting-manager/${documentId}/minutes`,
 

@@ -26,7 +26,7 @@ const GnbTop = ({
   title,
   current,
   isSnsEventAssistantWithoutWorkspace,
-  isLoading = false,
+  isLoading,
 }: GnbTopProps) => {
   const pathname = usePathname() ?? '';
   const params = useParams<{ workspaceId?: string }>();
@@ -35,7 +35,6 @@ const GnbTop = ({
     ? `/workspace/${params.workspaceId}/${SEARCH_PATH_MAP[section] ?? SEARCH_PATH_MAP.default}`
     : '#';
 
-  const hasWorkspace = !!params.workspaceId;
   const config =
     section === GnbSection.CUSTOM ? sectionConfigs[section](title ?? '') : sectionConfigs[section];
 
@@ -47,7 +46,9 @@ const GnbTop = ({
       {/* TODO: 수신 변경사항 - 기훈이 ver로 병합했습니다 반드시 추후 확인하세요 */}
       {/* 상단 제목 */}
       <div className="border-b-stroke-200 h-60pxr py-13pxr flex items-center justify-between self-stretch border-b border-solid bg-white px-6">
-        <p className="text-t3-sb text-black">{config.title}</p>
+        <h1 data-testid="gnb-title" className="text-t3-sb text-black">
+          {config.title}
+        </h1>
         {!isCustomSection && !!params.workspaceId && <InputSearchBox searchHref={searchPath} />}
       </div>
       {!isCustomSection && (

@@ -1,12 +1,8 @@
 'use client';
 
-import { useIsFetching } from '@tanstack/react-query';
-
 import useFetchMeetingMinutesDetail from '@api/meeting/get/queries/useFetchMeetingMinutesDetail';
 
 import { GnbSection } from '@common/types/gnbs.types';
-
-import queryKeys from '@common/constants/query-key.constants';
 
 import GnbTop from '@common/components/gnbs/GnbTop/GnbTop.client';
 

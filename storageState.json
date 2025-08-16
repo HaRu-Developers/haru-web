@@ -1,0 +1,14 @@
+{
+  "cookies": [],
+  "origins": [
+    {
+      "origin": "https://org.haru.it.kr",
+      "localStorage": [
+        {
+          "name": "auth-store",
+          "value": "{\"state\":{\"user\":{\"accessToken\":\"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJ1c2VySWQiOjgsImlhdCI6MTc1NTM0MzkyMSwiZXhwIjoxNzU3OTM1OTIxfQ.6YvNbWafJEHb5IQ19vV4kqKWl8LHDlwMNIgwYlysU5YaPNjk4andLu-VAIivomRyvqpnoyR8ReS9jE85YS9OVw\",\"refreshToken\":\"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NTUzNDM5MjEsImV4cCI6MTc1NjU1MzUyMX0.iGY4YPehqgf8y1Nt8p6dCKM8X0TdPiYKi-76XmkXH969-DuIbWoJZbGX3tl7ohsaPl3pqWLDu7OC-DZyBJudVA\"}},\"version\":0}"
+        }
+      ]
+    }
+  ]
+}

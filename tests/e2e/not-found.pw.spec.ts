@@ -1,5 +1,8 @@
 import { expect, test } from '@playwright/test';
 
+// 로그인 세션 적용
+test.use({ storageState: 'storageState.json' });
+
 // 잘못된 ID로 접근하면 NotFound가 보인다
 test('유효하지 않은 id가 들어오면 not found 페이지로 이동한다', async ({ page }) => {
   const res = await page.goto('/workspace/blabla', { waitUntil: 'networkidle' });
@@ -18,7 +21,7 @@ test('유효하지 않은 id가 들어오면 not found 페이지로 이동한다
 // 뒤로가기 버튼이 실제로 이전 페이지로 이동한다
 test('NotFound에서 "이전으로 이동" 클릭 시 이전 페이지로 복귀', async ({ page, baseURL }) => {
   // 이전 페이지 히스토리를 만들어두기
-  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await page.goto('/landing', { waitUntil: 'domcontentloaded' });
 
   // 잘못된 경로로 이동 → NotFound
   await page.goto('/workspace/blabla', { waitUntil: 'networkidle' });

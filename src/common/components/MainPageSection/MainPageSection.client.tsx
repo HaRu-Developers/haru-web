@@ -21,7 +21,7 @@ const MainPageSection = () => {
     }
   }, [isFetching, myWorkspaces, router]);
 
-  if (isFetching) return <p>로드 중...</p>;
+  if (isFetching) return <p className="p-50pxr">로드 중...</p>;
 
   return <WithoutWorkspaceSection />;
 };

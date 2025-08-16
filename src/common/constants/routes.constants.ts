@@ -56,8 +56,8 @@ export const ROUTES = {
   //  ===== sns event assistant 관련 =====
   SNS_EVENT_ASSISTANT: {
     MAIN: (workspaceId: BigintString) => `/workspace/${workspaceId}/sns-event-assistant`,
-    DETAIL: (workspaceId: string, snsEventId: string) =>
-      `/workspace/${workspaceId}/sns-event-assistant/${snsEventId}`,
+    DETAIL: (workspaceId: string, snsEventId: string, type?: string) =>
+      `/workspace/${workspaceId}/sns-event-assistant/${snsEventId}${type ? `?type=${type}` : ''}`,
     CREATE: (workspaceId: string) => `/workspace/${workspaceId}/sns-event-assistant/creating-event`,
     DELETE: (workspaceId: string) => `/workspace/${workspaceId}/sns-event-assistant/delete`,
   },

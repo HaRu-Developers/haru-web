@@ -12,6 +12,8 @@ import useUpdateSnsEventMutation from '@api/sns-event-assistant/patch/mutations/
 
 import { GnbSection } from '@common/types/gnbs.types';
 
+import { ROUTES } from '@common/constants/routes.constants';
+
 import CategoryOption from '@common/components/CategoryOption/CategoryOption.client';
 import FileCreatedInfo from '@common/components/FileCreatedInfo/FileCreatedInfo.client';
 import RosterList from '@common/components/RosterList/RosterList.server';
@@ -22,37 +24,6 @@ import { InputFileTitleMode } from '@common/components/inputs/InputFileTitle/Inp
 
 import SnsLinkItem from '@features/sns-event-assistant/components/SnsLinkItem/SnsLinkItem.client';
 
-const mockItems = [
-  {
-    userId: 'user1',
-  },
-  {
-    userId: 'user2',
-  },
-  {
-    userId: 'user3',
-  },
-  {
-    userId: 'user4',
-  },
-  {
-    userId: 'user5',
-  },
-  {
-    userId: 'user6',
-  },
-];
-const mockWinnerItems = [
-  {
-    userId: 'user1',
-  },
-  {
-    userId: 'user2',
-  },
-  {
-    userId: 'user3',
-  },
-];
 enum SnsCategory {
   PARTICIPANT = 'PARTICIPANT',
   WINNER = 'WINNER',
@@ -62,27 +33,28 @@ enum SnsCategory {
 const SnsEventAssistantDetailPage = () => {
   const [mode, setMode] = useState<InputFileTitleMode>(InputFileTitleMode.DEFAULT);
   const type = useSearchParams().get('type');
-  const { workspaceId, snsEventId } = useParams<{ workspaceId?: string; snsEventId?: string }>();
+  const { workspaceId, snsEventId } = useParams<{ workspaceId: string; snsEventId: string }>();
   const router = useRouter();
-  const items = type === SnsCategory.WINNER ? mockWinnerItems : mockItems;
+  const { extra: sns } = useSnsEvent(snsEventId);
+  const items = type === SnsCategory.WINNER ? sns?.winnerList : sns?.participantList;
+  const leftItems = items?.filter((_, index) => index < items.length / 2) ?? [];
+  const rightItems = items?.filter((_, index) => index >= items.length / 2) ?? [];
   const handleClick = (type: SnsCategory) => {
-    router.push(`/workspace/${workspaceId}/sns-event-assistant/${snsEventId}?type=${type}`);
+    router.push(ROUTES.SNS_EVENT_ASSISTANT.DETAIL(workspaceId, snsEventId, type));
   };
   const [title, setTitle] = useState<string>('');
-
-  const { extra: sns } = useSnsEvent(snsEventId || '');
 
   useEffect(() => {
     if (sns?.title !== title) {
       setTitle(sns?.title ?? '');
     }
-  }, [sns]);
+  }, [sns, title]);
 
   const { mutate } = useUpdateSnsEventMutation();
   const handleTitleSave = (newTitle: string) => {
     console.log(snsEventId, newTitle);
     mutate(
-      { snsEventId: snsEventId || '', title: newTitle },
+      { snsEventId, title: newTitle },
       {
         onSuccess: () => {
           if (!newTitle) return;
@@ -100,20 +72,24 @@ const SnsEventAssistantDetailPage = () => {
           <div className="w-668pxr">
             <div className="gap-16pxr mt-24pxr flex flex-col">
               <InputFileTitle value={title} onSave={handleTitleSave} mode={mode} onMode={setMode} />
-              <FileCreatedInfo name={'이름'} userId={'id'} dateTime={new Date().toISOString()} />
+              <FileCreatedInfo
+                name={sns?.creatorName ?? ''}
+                userId={sns?.creatorId ?? ''}
+                dateTime={''}
+              />
             </div>
             <div className="mt-23pxr mb-13pxr flex w-full justify-between">
               <div className="gap-x-8pxr flex">
                 <CategoryOption
                   label="참여자 리스트"
                   active={type === SnsCategory.PARTICIPANT || !type}
-                  count={1}
+                  count={sns?.participantList?.length ?? 0}
                   onClick={() => handleClick(SnsCategory.PARTICIPANT)}
                 />
                 <CategoryOption
                   label="당첨자 리스트"
                   active={type === SnsCategory.WINNER}
-                  count={1}
+                  count={sns?.winnerList?.length ?? 0}
                   onClick={() => handleClick(SnsCategory.WINNER)}
                 />
                 <CategoryOption
@@ -136,11 +112,11 @@ const SnsEventAssistantDetailPage = () => {
         {/* 하단 부분 */}
         <div className="mt-28pxr flex w-full justify-center">
           {type == SnsCategory.LINK ? (
-            <SnsLinkItem title="Link Title" link="https://example.com" onClick={() => {}} />
+            <SnsLinkItem title={title} link={sns?.snsLink ?? ''} onClick={() => {}} />
           ) : (
             <>
-              <RosterList items={items} />
-              <RosterList items={items} hasLeftBorder={true} />
+              <RosterList items={leftItems ?? []} />
+              <RosterList items={rightItems ?? []} hasLeftBorder={true} />
             </>
           )}
         </div>

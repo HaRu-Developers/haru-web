@@ -1,5 +1,7 @@
+import { PeopleList } from '@api/sns-event-assistant/api.types';
+
 export interface RosterListProps {
-  items: { userId: string }[];
+  items: PeopleList[];
   hasLeftBorder?: boolean;
   startIndex?: number;
 }

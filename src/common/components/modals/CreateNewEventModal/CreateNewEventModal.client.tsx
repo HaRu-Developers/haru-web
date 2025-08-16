@@ -169,12 +169,6 @@ const CreateNewEventModal = ({ onClose, onNextStep }: CreateNewEventModalProps) 
             className="mt-3pxr"
           />
           {keyword.isActive && (
-            // <InputFieldModal
-            //   placeholder="키워드를 입력해 주세요."
-            //   value={keyword}
-            //   onChange={setKeyword}
-            //   className="mt-8pxr"
-            // />
             <InputChips
               inputChips={keyword.keyword}
               placeholder="키워드를 입력해 주세요."

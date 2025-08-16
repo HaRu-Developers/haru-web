@@ -17,6 +17,7 @@ import { GetSnsEventList } from '../apis/get-sns-event-list';
 
 /**
  * SNS 이벤트 상세 조회를 위한 커스텀 훅
+ * @param {string} workspaceId - 워크스페이스 ID
  */
 const useSnsEventList = (workspaceId: string) => {
   const handleError = useCallback((error: ApiError<ApiErrorBody>) => {

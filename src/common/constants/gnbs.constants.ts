@@ -36,7 +36,7 @@ export const GnbLeftNavItems: GnbLeftSection[] = [
 export const GnbSectionPaths = (workspaceId: BigintString) => ({
   [GnbSection.MAIN]: ROUTES.WORKSPACE_MAIN(workspaceId),
   [GnbSection.AI_MEETING_MANAGER]: ROUTES.AI_MEETING_MANAGER.BASE(workspaceId),
-  [GnbSection.SNS_EVENT_ASSISTANT]: ROUTES.SNS_EVENT_ASSISTANT(workspaceId),
+  [GnbSection.SNS_EVENT_ASSISTANT]: ROUTES.SNS_EVENT_ASSISTANT.MAIN(workspaceId),
   [GnbSection.TEAM_MOOD_TRACKER]: ROUTES.TEAM_MOOD_TRACKER.MAIN(workspaceId),
   [GnbSection.CALENDAR]: ROUTES.CALENDAR(workspaceId),
 });

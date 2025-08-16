@@ -54,8 +54,13 @@ export const ROUTES = {
     },
   },
   //  ===== sns event assistant 관련 =====
-  SNS_EVENT_ASSISTANT: (workspaceId: BigintString) =>
-    `/workspace/${workspaceId}/sns-event-assistant`,
+  SNS_EVENT_ASSISTANT: {
+    MAIN: (workspaceId: BigintString) => `/workspace/${workspaceId}/sns-event-assistant`,
+    DETAIL: (workspaceId: string, snsEventId: string) =>
+      `/workspace/${workspaceId}/sns-event-assistant/${snsEventId}`,
+    CREATE: (workspaceId: string) => `/workspace/${workspaceId}/sns-event-assistant/creating-event`,
+    DELETE: (workspaceId: string) => `/workspace/${workspaceId}/sns-event-assistant/delete`,
+  },
   TEAM_MOOD_TRACKER: {
     MAIN: (workspaceId: BigintString) => `/workspace/${workspaceId}/team-mood-tracker`,
     DOCUMENT_PREFIX: (workspaceId: BigintString) =>

@@ -94,8 +94,13 @@ export const ROUTES = {
       SURVEY_CREATED: (workspaceId: BigintString, moodTrackerHashedId: string) =>
         `/workspace/${workspaceId}/team-mood-tracker/survey-created?moodTrackerHashedId=${moodTrackerHashedId}`,
     },
-    SETTING: (workspaceId: BigintString) => {
-      return `/workspace/${workspaceId}/settings`;
+    SETTING: {
+      BASE: (workspaceId: BigintString) => {
+        return `/workspace/${workspaceId}/settings`;
+      },
+      PASSWORD_CHANGE: (workspaceId: BigintString) => {
+        return `/workspace/${workspaceId}/settings/change-password`;
+      },
     },
     TERMS: {
       PRIVACY: (workspaceId?: string) =>

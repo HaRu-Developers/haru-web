@@ -274,5 +274,4 @@ node_modules/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
-storageState.local.json
-storageState.staging.json
+storageState.json

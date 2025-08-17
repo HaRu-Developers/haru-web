@@ -6,7 +6,7 @@
       "localStorage": [
         {
           "name": "auth-store",
-          "value": "{\"state\":{\"user\":{\"accessToken\":\"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJ1c2VySWQiOjgsImlhdCI6MTc1NTM0MzkyMSwiZXhwIjoxNzU3OTM1OTIxfQ.6YvNbWafJEHb5IQ19vV4kqKWl8LHDlwMNIgwYlysU5YaPNjk4andLu-VAIivomRyvqpnoyR8ReS9jE85YS9OVw\",\"refreshToken\":\"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NTUzNDM5MjEsImV4cCI6MTc1NjU1MzUyMX0.iGY4YPehqgf8y1Nt8p6dCKM8X0TdPiYKi-76XmkXH969-DuIbWoJZbGX3tl7ohsaPl3pqWLDu7OC-DZyBJudVA\"}},\"version\":0}"
+          "value": "{\"state\":{\"user\":{\"accessToken\":\"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJ1c2VySWQiOjgsImlhdCI6MTc1NTQxMTUyNSwiZXhwIjoxNzU4MDAzNTI1fQ.znoJm3IFX91s8VpLueIwX6Tu7T5fIqZvzl4bntS35QfoXociUjw3me7gfI_pDEfHSTlbXiDiFJ-502f8n4Cnhg\",\"refreshToken\":\"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NTU0MTE1MjUsImV4cCI6MTc1NjYyMTEyNX0.I3DPzxMaur5On087I-9LEzA7RgeYyUqHK30TNP1Wr7m-lKfW7RPhXYrkzwPerGcTIEr_7bVPe4-4xeezIiUUHQ\"}},\"version\":0}"
         }
       ]
     }

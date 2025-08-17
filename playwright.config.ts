@@ -36,7 +36,7 @@ export default defineConfig({
       use: {
         ...devices['Desktop Chrome'],
         baseURL: 'http://localhost:3000',
-        storageState: 'storageState.local.json',
+        storageState: 'storageState.json',
       },
     },
 
@@ -46,7 +46,7 @@ export default defineConfig({
       testMatch: /auth\.setup\.ts/,
       use: {
         ...devices['Desktop Chrome'],
-        baseURL: process.env.PLAYWRIGHT_BASE_URL,
+        baseURL: process.env.PLAYWRIGHT_BASE_URL!,
       },
     },
     {
@@ -54,8 +54,8 @@ export default defineConfig({
       dependencies: ['setup-staging'],
       use: {
         ...devices['Desktop Chrome'],
-        baseURL: process.env.PLAYWRIGHT_BASE_URL,
-        storageState: 'storageState.staging.json',
+        baseURL: process.env.PLAYWRIGHT_BASE_URL!,
+        storageState: 'storageState.json',
       },
     },
   ],

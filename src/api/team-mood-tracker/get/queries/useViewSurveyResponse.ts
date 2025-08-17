@@ -1,7 +1,12 @@
-import { useQuery } from '@tanstack/react-query';
+import { ApiErrorBody } from '@common/types/api.common.types';
 
 import queryKeys from '@common/constants/query-key.constants';
 
+import { ApiError } from '@common/errors/ApiError';
+
+import { useAfterQuery } from '@common/hooks/queries/useAfterQuery';
+
+import { GetViewSurveyResponseDto } from '@/api/team-mood-tracker/apis.types';
 import { viewSurveyResponse } from '@/api/team-mood-tracker/get/apis/view-survey-response';
 
 /**
@@ -10,15 +15,9 @@ import { viewSurveyResponse } from '@/api/team-mood-tracker/get/apis/view-survey
  */
 
 export const useViewSurveyResponse = (moodTrackerHashedId: string) => {
-  return useQuery({
+  return useAfterQuery<GetViewSurveyResponseDto, ApiError<ApiErrorBody>>({
     ...queryKeys.moodTracker.detail(moodTrackerHashedId),
     queryFn: () => viewSurveyResponse({ moodTrackerHashedId }),
-
     enabled: !!moodTrackerHashedId,
-    staleTime: 1000 * 60 * 5,
-    retry: 1,
-    retryDelay: 1000,
-    gcTime: 1000 * 60 * 10,
-    select: (data) => data.result,
   });
 };

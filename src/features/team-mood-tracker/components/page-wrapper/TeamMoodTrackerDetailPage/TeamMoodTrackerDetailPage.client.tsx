@@ -60,7 +60,7 @@ const TeamMoodTrackerDetailPage = () => {
 
   const isRefetching = isSurveyFetching || isReportFetching;
 
-  const optimisticData = surveyResponse;
+  const optimisticData = surveyResponse || reportResponse;
   const safeResponseList = filterSafeResponseList(surveyResponse?.responseList);
 
   const handleCopyClick = async () => {
@@ -85,6 +85,8 @@ const TeamMoodTrackerDetailPage = () => {
   };
 
   const handleTitleSave = (newTitle: string) => {
+    console.log('%c1. [Component] Saving new title:', 'color: blue;', newTitle); // ✅ 로그 추가
+
     // 제목이 비어있거나 기존과 같다면 저장 로직을 실행하지 않음
     if (!newTitle.trim() || !optimisticData || newTitle === optimisticData.title) {
       setIsEditingTitle(false);

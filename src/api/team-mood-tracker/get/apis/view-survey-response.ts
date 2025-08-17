@@ -17,5 +17,5 @@ export const viewSurveyResponse = async ({ moodTrackerHashedId }: GetViewSurveyR
     },
   );
 
-  return response;
+  return response.result;
 };

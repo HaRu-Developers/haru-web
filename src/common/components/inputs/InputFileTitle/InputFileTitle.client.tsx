@@ -121,9 +121,7 @@ const InputFileTitle = ({
   // 가로 padding
   const px = noPadding ? 'px-0' : 'px-2';
 
-  return isLoading ? (
-    <div className="w-676pxr h-36pxr animate-bg-pulse rounded-6pxr" />
-  ) : (
+  return (
     <input
       aria-label="파일 제목 입력칸"
       type="text"

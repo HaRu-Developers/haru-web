@@ -7,79 +7,121 @@ import { useParams } from 'next/navigation';
 import useFetchMeetingMinutesDetail from '@api/meeting/get/queries/useFetchMeetingMinutesDetail';
 import useEditMeetingMinutesProceeding from '@api/meeting/patch/queries/useEditMeetingMinutesProceeding';
 
-import { useTabActions, useTabInfo } from '@features/ai-meeting-manager/hooks/stores/useTabStore';
+import { equalIgnoringLineEndings } from '@common/utils/equal-ignoring-line-endings';
+
+import { EditorType } from '@features/ai-meeting-manager/types/edit.types';
+
+import {
+  useEditActions,
+  useEditInfo,
+} from '@features/ai-meeting-manager/hooks/stores/useEditStore';
 
 import MarkdownContentForProceeding from '@features/ai-meeting-manager/components/MarkdownContentForProceeding/MarkdownContentForProceeding.client';
+import MarkdownContentForProceedingSkeleton from '@features/ai-meeting-manager/components/MarkdownContentForProceeding/MarkdownContentForProceedingSkeleton.client';
 
 import { ProceedingPanelProps } from './ProceedingPanel.types';
 
 const ProceedingPanel = ({ editingScopeRef }: ProceedingPanelProps) => {
   const { meetingId } = useParams<{ meetingId: string }>();
-  const { extra: detail, isFetching } = useFetchMeetingMinutesDetail(meetingId);
-  const serverContent = detail?.proceeding ?? '';
+  const { extra: meetingMinutesDetail, isFetching } = useFetchMeetingMinutesDetail(meetingId);
+  const serverContent = meetingMinutesDetail?.proceeding ?? '';
 
-  const { isEditing } = useTabInfo();
-  const { setEditing } = useTabActions();
+  // 전역 편집/커밋/취소 tick 구독
+  const { editing, commitTick, cancelTick } = useEditInfo();
+  const { setEditing } = useEditActions();
+  const isEditing = editing[EditorType.PROCEEDING];
 
   const { mutate: saveProceeding, isPending } = useEditMeetingMinutesProceeding(meetingId);
 
-  const isLoading = isFetching || isPending;
   const [draft, setDraft] = useState(serverContent);
+
   const lastActionRef = useRef<'none' | 'save' | 'cancel'>('none');
+  const prevCommitRef = useRef(commitTick);
+  const prevCancelRef = useRef(cancelTick);
 
-  // 서버 값이 바뀌면 에디터에 반영
+  // 서버 값 → draft 동기화 (편집 중이 아닐 때만)
   useEffect(() => {
-    setDraft(serverContent);
-  }, [serverContent]);
+    if (!isEditing) setDraft(serverContent);
+  }, [serverContent, isEditing]);
 
+  // 저장 로직 (origin: commit | auto)
   const doSave = useCallback(() => {
-    lastActionRef.current = 'save';
-    saveProceeding({ meetingId, proceeding: draft });
-    setEditing(false);
-  }, [draft, meetingId, saveProceeding, setEditing]);
+    if (isPending || !isEditing) return;
 
-  const doCancel = useCallback(() => {
-    lastActionRef.current = 'cancel';
-    setDraft(serverContent); // 되돌리기
-    setEditing(false);
-  }, [serverContent, setEditing]);
-
-  const onKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    // Ctrl/Cmd + Enter → 저장
-    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
-      e.preventDefault();
-      if (normalize(draft) !== normalize(serverContent)) doSave();
-    }
-    // Esc → 취소
-    if (e.key === 'Escape') {
-      e.preventDefault();
-      doCancel();
-    }
-  };
-
-  const normalize = (s: string) => s.replace(/\r\n/g, '\n'); // CRLF ↔ LF 차이 무시
-
-  const onBlur = (e: React.FocusEvent<HTMLTextAreaElement>) => {
-    // Ctrl+Enter / Esc 직후 blur는 무시
-    // 키보드 누른 직후에는 blur가 “부수 효과”로 반드시 발생하는데, 그때 onBlur에서 또 저장을 걸면 중복 저장/모순 동작함. 그거 방지
-    if (lastActionRef.current !== 'none') {
-      lastActionRef.current = 'none';
+    const hasChanges = !equalIgnoringLineEndings(draft, serverContent);
+    if (!hasChanges) {
+      setEditing(EditorType.PROCEEDING, false);
       return;
     }
 
-    // 포커스가 같은 편집 스코프 안으로 이동하면 저장하지 않음 - 제목 수정시
+    setEditing(EditorType.PROCEEDING, false);
+    saveProceeding({ meetingId, proceeding: draft });
+  }, [draft, serverContent, isEditing, isPending, setEditing, saveProceeding, meetingId]);
+
+  const doCancel = useCallback(() => {
+    setDraft(serverContent);
+    setEditing(EditorType.PROCEEDING, false);
+  }, [serverContent, setEditing]);
+
+  // commitTick 증가에만 반응
+  useEffect(() => {
+    if (!isEditing) {
+      prevCommitRef.current = commitTick;
+      return;
+    }
+    if (commitTick === prevCommitRef.current) return; // 변화 없으면 스킵
+    prevCommitRef.current = commitTick;
+
+    doSave();
+  }, [commitTick, isEditing, doSave]);
+
+  // cancelTick 증가에만 반응
+  useEffect(() => {
+    if (!isEditing) {
+      prevCancelRef.current = cancelTick;
+      return;
+    }
+    if (cancelTick === prevCancelRef.current) return;
+    prevCancelRef.current = cancelTick;
+
+    doCancel();
+  }, [cancelTick, isEditing, doCancel]);
+
+  // 키 바인딩: Shift+Enter만 줄바꿈 허용 / Enter 저장 / Esc 취소
+  const onKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    // IME 조합 중이면 Enter 무시
+    if (e.nativeEvent?.isComposing) return;
+
+    if (e.key === 'Enter') {
+      if (e.shiftKey) return; // 줄바꿈 허용
+      // Enter(또는 Cmd/Ctrl+Enter) → 저장
+      e.preventDefault();
+      lastActionRef.current = 'save';
+      (e.currentTarget as HTMLTextAreaElement).blur(); // blur에서 auto 저장 경로
+      return;
+    }
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      lastActionRef.current = 'cancel';
+      (e.currentTarget as HTMLTextAreaElement).blur();
+    }
+  };
+
+  // blur: 커밋 진행 중이면 무시 (중복 방지)
+  const onBlur = (e: React.FocusEvent<HTMLTextAreaElement>) => {
+    // 같은 편집 스코프 내부 이동은 무시
     const next = e.relatedTarget as Node | null;
     if (next && editingScopeRef?.current?.contains(next)) return;
 
-    // 진행 중이면(중복 요청 방지) 저장하지 않음
-    if (isLoading) return;
-
-    // 내용이 실제로 바뀌지 않았으면 저장하지 않음
-    const changed = normalize(draft) !== normalize(serverContent);
-    if (!changed) return;
-
-    // 5) 여기까지 왔으면 저장
-    doSave();
+    if (lastActionRef.current === 'save') {
+      doSave();
+    } else if (lastActionRef.current === 'cancel') {
+      doCancel();
+    } else {
+      // 바깥 클릭 자동 저장
+      doSave();
+    }
+    lastActionRef.current = 'none';
   };
 
   return (
@@ -93,9 +135,11 @@ const ProceedingPanel = ({ editingScopeRef }: ProceedingPanelProps) => {
             onKeyDown={onKeyDown}
             onBlur={onBlur}
             placeholder="마크다운으로 회의 진행 내용을 작성하세요"
-            disabled={isLoading}
+            disabled={isPending}
           />
         </div>
+      ) : isFetching ? (
+        <MarkdownContentForProceedingSkeleton />
       ) : (
         <MarkdownContentForProceeding content={serverContent} />
       )}

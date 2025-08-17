@@ -44,7 +44,7 @@ const CreateNewEventModal = ({ onClose, onNextStep }: CreateNewEventModalProps) 
     if (temporaryDate) {
       setPeriod(temporaryDate);
     }
-  }, [temporaryDate]);
+  }, [temporaryDate, setPeriod]);
 
   /**
    * 당첨 인원 수 변경 핸들러

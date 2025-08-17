@@ -5,7 +5,6 @@ import { getCtaDescription, getListTitle } from '@common/utils/assistant-mapping
 
 import TextCtaWrapper from '@common/components/cta/TextCtaWrapper/TextCtaWrapper.server';
 import GnbTop from '@common/components/gnbs/GnbTop/GnbTop.client';
-import FooterLayoutServer from '@common/components/layouts/FooterLayout.server';
 import ListHeader from '@common/components/list-file/ListHeader/ListHeader.server';
 
 import ListFileTeamMoodTrakerWrapper from '@features/team-mood-tracker/components/ListFileTeamMoodTrackerWrapper/ListFileTeamMoodTrackerWrapper.client';

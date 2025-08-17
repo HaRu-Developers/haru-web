@@ -1,5 +1,3 @@
-import React from 'react';
-
 import type { Metadata } from 'next';
 
 import GnbLeftLayout from '@common/components/layouts/GnbLeftLayout/GnbLeftLayout.server';

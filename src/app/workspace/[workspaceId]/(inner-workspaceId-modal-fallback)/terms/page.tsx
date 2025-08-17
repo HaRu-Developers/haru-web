@@ -1,8 +1,7 @@
 import { Suspense } from 'react';
 
 import TermsModalPage from '@/app/workspace/@workspaceModal/(.)terms/page';
-
-import MainWithWorkspacePage from '../../page';
+import MainWithWorkspacePage from '@/app/workspace/[workspaceId]/page';
 
 const TermsStandalonePage = () => {
   return (

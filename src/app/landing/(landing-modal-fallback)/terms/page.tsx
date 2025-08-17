@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 
-import TermsModalPage from '../../@landingModal/(.)terms/page';
-import LandingPage from '../../page';
+import TermsModalPage from '@app/landing/@landingModal/(.)terms/page';
+import LandingPage from '@app/landing/page';
 
 // 새로고침이나 직접 접근 시에도 TermsModalPage를 재활용
 const TermsStandalonePage = () => {

@@ -1,8 +1,7 @@
 import { Suspense } from 'react';
 
-import SearchModalPage from '@/app/workspace/[workspaceId]/@innerWorkspaceIdModal/(.)search/page';
-
-import MainWithWorkspacePage from '../../page';
+import SearchModalPage from '@app/workspace/[workspaceId]/@innerWorkspaceIdModal/(.)search/page';
+import MainWithWorkspacePage from '@app/workspace/[workspaceId]/page';
 
 const SearchStandalonePage = () => {
   return (

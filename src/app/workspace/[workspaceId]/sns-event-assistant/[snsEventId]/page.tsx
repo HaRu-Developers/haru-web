@@ -7,6 +7,7 @@ import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import useSnsEvent from '@api/sns-event-assistant/get/queries/useSnsEvent';
 import useUpdateSnsEventMutation from '@api/sns-event-assistant/patch/mutations/useUpdateSnsEventMutation';
 
+import { SnsEventAssistantListType } from '@common/types/download.enum.types';
 import { GnbSection } from '@common/types/gnbs.types';
 import { ToastType } from '@common/types/toast.types';
 
@@ -25,19 +26,13 @@ import { InputFileTitleMode } from '@common/components/inputs/InputFileTitle/Inp
 import CopyButton from '@features/sns-event-assistant/components/CopyButton/CopyButton.client';
 import SnsLinkItem from '@features/sns-event-assistant/components/SnsLinkItem/SnsLinkItem.client';
 
-enum SnsCategory {
-  PARTICIPANT = 'PARTICIPANT',
-  WINNER = 'WINNER',
-  LINK = 'LINK',
-}
-
 const SnsEventAssistantDetailPage = () => {
   const [mode, setMode] = useState<InputFileTitleMode>(InputFileTitleMode.DEFAULT);
-  const type = useSearchParams().get('type');
+  const type = useSearchParams().get('type') as SnsEventAssistantListType;
   const { workspaceId, snsEventId } = useParams<{ workspaceId: string; snsEventId: string }>();
   const router = useRouter();
   const { extra: sns } = useSnsEvent(snsEventId);
-  const items = type === SnsCategory.WINNER ? sns?.winnerList : sns?.participantList;
+  const items = type === SnsEventAssistantListType.WINNER ? sns?.winnerList : sns?.participantList;
   const leftItems = items?.filter((_, index) => index < items.length / 2) ?? [];
   const rightItems = items?.filter((_, index) => index >= items.length / 2) ?? [];
   const [title, setTitle] = useState<string>('');
@@ -62,7 +57,7 @@ const SnsEventAssistantDetailPage = () => {
       },
     );
   };
-  const handleToggleClick = (type: SnsCategory) => {
+  const handleToggleClick = (type: SnsEventAssistantListType) => {
     router.push(ROUTES.SNS_EVENT_ASSISTANT.DETAIL(workspaceId, snsEventId, type));
   };
   const handleCopyClick = () => {
@@ -90,26 +85,32 @@ const SnsEventAssistantDetailPage = () => {
               <div className="gap-x-8pxr flex">
                 <CategoryOption
                   label="참여자 리스트"
-                  active={type === SnsCategory.PARTICIPANT || !type}
+                  active={type === SnsEventAssistantListType.PARTICIPANT || !type}
                   count={sns?.participantList?.length ?? 0}
-                  onClick={() => handleToggleClick(SnsCategory.PARTICIPANT)}
+                  onClick={() => handleToggleClick(SnsEventAssistantListType.PARTICIPANT)}
                 />
                 <CategoryOption
                   label="당첨자 리스트"
-                  active={type === SnsCategory.WINNER}
+                  active={type === SnsEventAssistantListType.WINNER}
                   count={sns?.winnerList?.length ?? 0}
-                  onClick={() => handleToggleClick(SnsCategory.WINNER)}
+                  onClick={() => handleToggleClick(SnsEventAssistantListType.WINNER)}
                 />
                 <CategoryOption
                   label="SNS 링크"
-                  active={type === SnsCategory.LINK}
-                  onClick={() => handleToggleClick(SnsCategory.LINK)}
+                  active={type === SnsEventAssistantListType.LINK}
+                  onClick={() => handleToggleClick(SnsEventAssistantListType.LINK)}
                 />
               </div>
-              {type !== SnsCategory.LINK && (
+              {type !== SnsEventAssistantListType.LINK && (
                 <div className="gap-x-12pxr flex items-center">
                   <CopyButton onClick={handleCopyClick} />
-                  <DownloadButton onClick={() => {}} />
+                  <DownloadButton
+                    onClick={() =>
+                      router.push(
+                        ROUTES.SNS_EVENT_ASSISTANT.DOWNLOAD(workspaceId, snsEventId, type),
+                      )
+                    }
+                  />
                 </div>
               )}
             </div>
@@ -117,12 +118,16 @@ const SnsEventAssistantDetailPage = () => {
         </div>
         {/* 하단 부분 */}
         <div className="mt-28pxr flex w-full justify-center">
-          {type == SnsCategory.LINK ? (
+          {type == SnsEventAssistantListType.LINK ? (
             <SnsLinkItem title={title} link={sns?.snsLink ?? ''} onClick={handleCopyClick} />
           ) : (
             <>
               <RosterList items={leftItems ?? []} />
-              <RosterList items={rightItems ?? []} hasLeftBorder={true} />
+              <RosterList
+                items={rightItems ?? []}
+                hasLeftBorder={true}
+                startIndex={leftItems.length}
+              />
             </>
           )}
         </div>

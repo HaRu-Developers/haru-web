@@ -60,6 +60,8 @@ export const ROUTES = {
       `/workspace/${workspaceId}/sns-event-assistant/${snsEventId}${type ? `?type=${type}` : ''}`,
     CREATE: (workspaceId: string) => `/workspace/${workspaceId}/sns-event-assistant/creating-event`,
     DELETE: (workspaceId: string) => `/workspace/${workspaceId}/sns-event-assistant/delete`,
+    DOWNLOAD: (workspaceId: string, snsEventId: string, type?: string) =>
+      `/workspace/${workspaceId}/sns-event-assistant/${snsEventId}/download${type ? `?type=${type}` : ''}`,
   },
   TEAM_MOOD_TRACKER: {
     MAIN: (workspaceId: BigintString) => `/workspace/${workspaceId}/team-mood-tracker`,

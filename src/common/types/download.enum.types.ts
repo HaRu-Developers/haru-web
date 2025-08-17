@@ -1,4 +1,4 @@
-export enum Format {
+export enum DownloadFormat {
   PDF = 'PDF',
   DOCX = 'DOCX',
 }
@@ -6,4 +6,5 @@ export enum Format {
 export enum SnsEventAssistantListType {
   PARTICIPANT = 'PARTICIPANT',
   WINNER = 'WINNER',
+  LINK = 'LINK',
 }

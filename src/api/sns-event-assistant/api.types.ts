@@ -1,7 +1,10 @@
 /**
  * 다운로드 포맷 타입을 정의합니다.
  */
-import { Format, SnsEventAssistantListType } from '@common/types/download.enum.types';
+import { ApiErrorBody } from '@common/types/api.common.types';
+import { DownloadFormat, SnsEventAssistantListType } from '@common/types/download.enum.types';
+
+import { ApiError } from '@common/errors/ApiError';
 
 /**
  * SNS 이벤트 ID를 포함하는 기본 인터페이스.
@@ -116,7 +119,7 @@ export type GetSnsEventAssistantListRequestDto = WorkspaceId;
  */
 export interface GetSnsEventAssistantListDownloadRequestDto extends SnsEventAssistantId {
   listType: SnsEventAssistantListType;
-  format: Format;
+  format: DownloadFormat;
 }
 
 /**
@@ -157,4 +160,10 @@ export interface GetSnsEventAssistantListResponseDto {
  */
 export interface GetSnsEventAssistantListDownloadResponseDto {
   downloadLink: string;
+}
+
+export interface UseSnsEventAssistantListDownloadOptions {
+  enabled?: boolean;
+  onSuccess?: (data: GetSnsEventAssistantListDownloadResponseDto) => void;
+  onError?: (error: ApiError<ApiErrorBody>) => void;
 }

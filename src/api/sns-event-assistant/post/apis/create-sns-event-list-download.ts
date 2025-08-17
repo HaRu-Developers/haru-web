@@ -1,7 +1,9 @@
 import { defaultApi } from '@lib/fetcher';
 
+import { DownloadFormat } from '@api/team-mood-tracker/apis.types';
+
 import { BaseResponseDto } from '@common/types/api.common.types';
-import { DownloadFormat, SnsEventAssistantListType } from '@common/types/download.enum.types';
+import { SnsEventAssistantListType } from '@common/types/download.enum.types';
 
 import { WORKSPACES_SNS_EVENT_ASSISTANT_API_END_POINTS } from '../../api-end-point.constants';
 import {
@@ -9,10 +11,15 @@ import {
   GetSnsEventAssistantListDownloadResponseDto,
 } from '../../api.types';
 
-export const GetSnsEventListDownLoad = async ({
+/**
+ * 일단 임시로 만든 함수 - get인지 post인지에 따라 변경 예정
+ * @param param0
+ * @returns
+ */
+export const CreateSnsEventDownload = async ({
   snsEventId,
-  listType,
   format,
+  listType,
 }: GetSnsEventAssistantListDownloadRequestDto) => {
   const query = new URLSearchParams();
   if (!listType) {
@@ -27,12 +34,11 @@ export const GetSnsEventListDownLoad = async ({
     query.append('format', format);
   }
 
-  const url = `${WORKSPACES_SNS_EVENT_ASSISTANT_API_END_POINTS.SNS_EVENT_ASSISTANT_LIST_DOWNLOAD(snsEventId)}?
-    ${query.toString()}`;
+  const url = `${WORKSPACES_SNS_EVENT_ASSISTANT_API_END_POINTS.SNS_EVENT_ASSISTANT_LIST_DOWNLOAD(snsEventId)}?${query.toString()}`;
   const response = await defaultApi<BaseResponseDto<GetSnsEventAssistantListDownloadResponseDto>>(
     url,
     {
-      method: 'GET',
+      method: 'POST',
       auth: true,
     },
   );

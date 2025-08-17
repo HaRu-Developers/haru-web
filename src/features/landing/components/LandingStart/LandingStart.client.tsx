@@ -61,15 +61,16 @@ const LandingStart = ({ onButtonClick, className }: LandingStartProps) => {
   return (
     <div
       className={clsx(
-        'py-92pxr gap-42pxr bg-landing-bg flex w-full flex-col items-center justify-center opacity-0',
+        'py-92pxr gap-42pxr bg-landing-bg flex w-full flex-col items-center justify-center',
         className,
-        {
-          'animate-fade-in-up-and-delay': inView,
-        },
       )}
       ref={ref}
     >
-      <div className="text-h2-bd h-141pxr flex flex-col items-center">
+      <div
+        className={clsx('text-h2-bd h-141pxr flex flex-col items-center opacity-0', {
+          'animate-fade-in-up-and-delay': inView,
+        })}
+      >
         <div>
           <span className="pr-12pxr text-black" ref={el1} />
           <span className="text-primary" ref={el2} />
@@ -79,7 +80,12 @@ const LandingStart = ({ onButtonClick, className }: LandingStartProps) => {
           <span className="text-black" ref={el4} />
         </div>
       </div>
-      <CtaBannerButton onClick={onButtonClick} />
+      <CtaBannerButton
+        onClick={onButtonClick}
+        className={clsx({
+          'animate-fade-in-up-and-delay': inView,
+        })}
+      />
     </div>
   );
 };

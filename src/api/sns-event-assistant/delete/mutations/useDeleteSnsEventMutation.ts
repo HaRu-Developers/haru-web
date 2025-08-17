@@ -13,6 +13,10 @@ import { ApiError } from '@common/errors/ApiError';
 
 import { DeleteSnsEvent } from '../apis/delete-sns-event';
 
+/**
+ * SNS 이벤트를 삭제하는 TanStack Query 뮤테이션 훅입니다.
+ * @param {string} workspaceId - 삭제 후 SNS 이벤트 목록을 갱신하기 위한 워크스페이스 ID입니다.
+ */
 const useDeleteSnsEventMutation = (workspaceId: string) => {
   const queryClient = useQueryClient();
   return useMutation<

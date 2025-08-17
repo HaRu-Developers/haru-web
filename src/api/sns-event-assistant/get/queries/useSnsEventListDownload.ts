@@ -15,7 +15,12 @@ import { useAfterQuery } from '@common/hooks/queries/useAfterQuery';
 import { GetSnsEventListDownLoad } from '../apis/get-sns-event-list-download';
 
 /**
- * SNS 이벤트 상세 조회를 위한 커스텀 훅
+ * SNS 이벤트 목록을 다운로드하기 위한 TanStack Query 커스텀 훅입니다.
+ * @param {GetSnsEventAssistantListDownloadRequestDto} params - 다운로드에 필요한 이벤트 정보입니다.
+ * @param {string} params.snsEventId - 다운로드할 SNS 이벤트의 고유 ID입니다.
+ * @param {SnsEventAssistantListType} params.listType - 다운로드할 목록의 타입입니다.
+ * @param {DownloadFormat} params.format - 다운로드할 파일의 형식입니다.
+ * @param {UseSnsEventAssistantListDownloadOptions} [options] - useAfterQuery 훅에 전달할 옵션 객체입니다.
  */
 const useSnsEventListDownload = (
   params: GetSnsEventAssistantListDownloadRequestDto,

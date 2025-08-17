@@ -13,6 +13,10 @@ import ListHeader from '@common/components/list-file/ListHeader/ListHeader.serve
 
 import ListFileSnsEventAssistantWrapper from '../ListFileSnsEventAssistantWrapper/ListFileSnsEventAssistantWrapper.client';
 
+/**
+ * SNS 이벤트 어시스턴트 파일 목록 전체 부분을 표시하는 컴포넌트입니다.
+ * Check 모드 시 삭제 버튼을 표시합니다.
+ */
 const ListFileSnsEventAssistantListWrapper = () => {
   const { isCheckedMode } = useSnsEventAssistantInfo();
   const { workspaceId } = useParams<{ workspaceId: string }>();

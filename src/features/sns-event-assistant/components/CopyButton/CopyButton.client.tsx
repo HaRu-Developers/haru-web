@@ -5,6 +5,10 @@ import { FeatureTabIconsState } from '@icons/FeatureTabIcons/FeatureTabIcons.typ
 
 import { CopyButtonProps } from './CopyButton.types';
 
+/**
+ * 클립보드에 링크를 복사하는 버튼 컴포넌트입니다.
+ * link이 제공되지 않으면 현재 URL을 복사합니다.
+ */
 const CopyButton = ({ link, onClick, className, isHoverable = true }: CopyButtonProps) => {
   const handleClick = () => {
     if (link) {

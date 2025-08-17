@@ -162,6 +162,9 @@ export interface GetSnsEventAssistantListDownloadResponseDto {
   downloadLink: string;
 }
 
+/**
+ * SNS 이벤트 리스트 다운로드 외부에서 사용할 옵션 인터페이스.
+ */
 export interface UseSnsEventAssistantListDownloadOptions {
   enabled?: boolean;
   onSuccess?: (data: GetSnsEventAssistantListDownloadResponseDto) => void;

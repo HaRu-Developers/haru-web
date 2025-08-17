@@ -23,6 +23,14 @@ import { useToastActions } from '@common/hooks/stores/useToastStore';
 
 import { CreateSnsEvent } from '../apis/create-sns-event';
 
+/**
+ * 새로운 SNS 이벤트를 생성하기 위한 TanStack Query 뮤테이션 훅입니다.
+ * 훅의 `mutate` 함수는 CreateSnsEventAssistantRequestDto 타입의 객체를 전달받습니다.
+ * @param {string} workspaceId - 이벤트가 생성될 워크스페이스의 고유 ID입니다.
+ * @param {string} mutationVariables.title - 새로운 이벤트의 제목입니다.
+ * @param {string} mutationVariables.snsEventLink - SNS 이벤트의 원본 링크입니다.
+ * @param {SnsEventAssistantCondition} mutationVariables.snsCondition - 이벤트 추첨 조건을 정의하는 객체입니다.
+ */
 const useCreateSnsEventMutation = (workspaceId: string) => {
   const queryClient = useQueryClient();
   const router = useRouter();

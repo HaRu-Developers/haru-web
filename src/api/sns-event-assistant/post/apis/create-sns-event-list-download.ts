@@ -12,9 +12,12 @@ import {
 } from '../../api.types';
 
 /**
- * 일단 임시로 만든 함수 - get인지 post인지에 따라 변경 예정
- * @param param0
- * @returns
+ * SNS 이벤트 목록 다운로드 요청을 생성하는 비동기 함수입니다.
+ * API의 요청 방식(GET/POST)에 따라 변경될 수 있습니다.
+ * @param {GetSnsEventAssistantListDownloadRequestDto} dto - 다운로드할 목록의 정보와 형식을 포함하는 객체입니다.
+ * @param {string} dto.snsEventId - 다운로드할 SNS 이벤트의 고유 ID입니다.
+ * @param {DownloadFormat} [dto.format] - 다운로드할 파일의 형식입니다. 값이 없을 경우 `PDF`로 기본 설정됩니다.
+ * @param {SnsEventAssistantListType} [dto.listType] - 다운로드할 목록의 타입입니다. 값이 없을 경우 `PARTICIPANT`로 기본 설정됩니다.
  */
 export const CreateSnsEventDownload = async ({
   snsEventId,

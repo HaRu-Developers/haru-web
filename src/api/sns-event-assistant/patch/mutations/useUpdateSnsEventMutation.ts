@@ -13,6 +13,12 @@ import { ApiError } from '@common/errors/ApiError';
 
 import { UpdateSnsEvent } from '../apis/update-sns-event';
 
+/**
+ * SNS 이벤트의 제목을 수정하기 위한 TanStack Query 뮤테이션 훅입니다.
+ * 훅의 `mutate` 함수는 UpdateSnsEventAssistantRequestDto 타입의 객체를 전달받습니다.
+ * @param {string} mutationVariables.snsEventId - 수정할 SNS 이벤트의 고유 ID입니다.
+ * @param {string} mutationVariables.title - 수정할 새로운 이벤트 제목입니다.
+ */
 const useUpdateSnsEventMutation = () => {
   const queryClient = useQueryClient();
   const { snsEventId } = useParams<{ snsEventId: string }>();

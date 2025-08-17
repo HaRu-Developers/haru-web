@@ -14,6 +14,10 @@ import {
 
 import ListFileSnsEventAssistant from '@common/components/list-file/ListFileSnsEventAssistant/ListFileSnsEventAssistant.client';
 
+/**
+ * SNS 이벤트 어시스턴트 파일 목록을 표시하는 컴포넌트입니다.
+ * 체크 모드에서 각 SNS 이벤트 항목을 체크할 수 있습니다.
+ */
 const ListFileSnsEventAssistantWrapper = () => {
   const { workspaceId } = useParams<{ workspaceId: string }>();
   const { setCheckedList, setIsCheckedMode } = useSnsEventAssistantActions();

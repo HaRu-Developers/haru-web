@@ -17,6 +17,13 @@ import { ApiError } from '@common/errors/ApiError';
 
 import { CreateSnsEventDownload } from '../apis/create-sns-event-list-download';
 
+/**
+ * SNS 이벤트 목록 다운로드 요청을 위한 TanStack Query 뮤테이션 훅입니다.
+ * 훅의 `mutate` 함수는 GetSnsEventAssistantListDownloadRequestDto 타입의 객체를 전달받습니다.
+ * @param {string} mutationVariables.snsEventId - 다운로드할 SNS 이벤트의 고유 ID입니다.
+ * @param {DownloadFormat} mutationVariables.format - 다운로드할 파일의 형식입니다.
+ * @param {SnsEventAssistantListType} mutationVariables.listType - 다운로드할 목록의 타입입니다.
+ */
 const useCreateSnsEventDownloadMutation = () => {
   const router = useRouter();
   return useMutation<

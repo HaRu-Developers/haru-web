@@ -9,6 +9,10 @@ import useSnsEventList from '@api/sns-event-assistant/get/queries/useSnsEventLis
 
 import ListFileSnsEventAssistantLink from '@common/components/list-file/ListFileSnsEventAssistantLink/ListFileSnsEventAssistantLink.client';
 
+/*
+ * ListFileSnsEventAssistantLinkWrapper 컴포넌트는 SNS 이벤트 링크 목록을 렌더링합니다.
+ * 만약 링크가 없다면 404 이미지를 보여줍니다.
+ */
 const ListFileSnsEventAssistantLinkWrapper = () => {
   const { workspaceId } = useParams<{ workspaceId: string }>();
   const { extra: snsEvents } = useSnsEventList(workspaceId);

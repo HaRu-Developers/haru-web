@@ -1,6 +1,4 @@
-import FeatureTabIcons from '@icons/FeatureTabIcons/FeatureTabIcons';
-import { FeatureTabIconsState } from '@icons/FeatureTabIcons/FeatureTabIcons.types';
-
+import CopyButton from '../CopyButton/CopyButton.client';
 import { SnsLinkItemProps } from './SnsLinkItem.type';
 
 const SnsLinkItem = ({ title, link, onClick }: SnsLinkItemProps) => {
@@ -9,9 +7,7 @@ const SnsLinkItem = ({ title, link, onClick }: SnsLinkItemProps) => {
       <span className="text-t5-bd">{title}</span>
       <div className="flex items-center justify-between">
         <span className="text-t7-rg cursor-pointer hover:underline">{link}</span>
-        <div onClick={onClick} className="cursor-pointer">
-          <FeatureTabIcons state={FeatureTabIconsState.COPY} />
-        </div>
+        <CopyButton link={link} onClick={onClick} isHoverable={false} />
       </div>
     </div>
   );

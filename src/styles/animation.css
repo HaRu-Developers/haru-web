@@ -33,10 +33,22 @@
   }
 
   /* 동적 슬라이드 클래스 */
-  .slide-0 { transform: translateX(0); }
-  .slide-1 { transform: translateX(-100%); }
-  .slide-2 { transform: translateX(-200%); }
-  .slide-3 { transform: translateX(-300%); }
+  .slide-0 {
+    transform: translateX(0);
+  }
+  .slide-1 {
+    transform: translateX(-100%);
+  }
+  .slide-2 {
+    transform: translateX(-200%);
+  }
+  .slide-3 {
+    transform: translateX(-300%);
+  }
+
+  .animate-fade-in-up-and-delay {
+    animation: fade-in-up-and-delay 1s ease-out forwards;
+  }
 }
 
 @keyframes fade-in-up {
@@ -86,5 +98,16 @@
   }
   100% {
     clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes fade-in-up-and-delay {
+  0% {
+    transform: translateY(1rem);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
   }
 }

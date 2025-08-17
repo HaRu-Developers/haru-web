@@ -11,10 +11,11 @@ export interface InputFileTitleProps {
   value: string;
   onSave?: (newValue: string) => void;
   onCancel?: () => void;
-  onRequestEdit?: () => void; // 읽기모드에서 클릭 시 편집모드 요청(부모가 setEditing(true) 수행)
   noPadding?: boolean;
   isLoading?: boolean;
   editingScopeRef?: React.RefObject<HTMLDivElement>;
   onClick?: () => void;
   onMode?: (mode: InputFileTitleMode) => void;
+  commitTick?: number; // 저장 신호 (증가할 때만 반응)
+  cancelTick?: number; // 취소 신호 (증가할 때만 반응)
 }

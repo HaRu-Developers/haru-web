@@ -12,7 +12,12 @@ import DownloadButton from '@buttons/30px/DownloadButton/DownloadButton.client';
 import EditCompleteButton from '@buttons/30px/EditCompleteButton/EditCompleteButton.client';
 import IconButton from '@buttons/IconButton/IconButton.client';
 
-import { useTabActions, useTabInfo } from '@features/ai-meeting-manager/hooks/stores/useTabStore';
+import { EditorType } from '@features/ai-meeting-manager/types/edit.types';
+
+import {
+  useEditActions,
+  useEditInfo,
+} from '@features/ai-meeting-manager/hooks/stores/useEditStore';
 
 import { LeftTabLabels } from './LeftTab.constants';
 import { LeftTabProps, LeftTabType } from './LeftTab.types';
@@ -22,15 +27,18 @@ const tabs = Object.values(LeftTabType);
 const LeftTab = ({ current }: LeftTabProps) => {
   const pathname = usePathname() ?? '';
 
-  const { isEditing } = useTabInfo();
-  const { setEditing } = useTabActions();
+  const { editing } = useEditInfo();
+  const { setEditing, requestCommit, resetEditing } = useEditActions();
 
   const handleEditClick = () => {
-    setEditing(true);
+    setEditing(EditorType.TITLE, true);
+    setEditing(EditorType.PROCEEDING, true);
   };
 
   const handleEditDoneClick = () => {
-    setEditing(false);
+    // 여기선 저장을 ‘요청’만
+    // 실제 저장은 MeetingHeader의 InputFileTitle, ProceedingPanel이 수행
+    requestCommit();
   };
 
   const handleDownloadClick = () => {
@@ -48,10 +56,18 @@ const LeftTab = ({ current }: LeftTabProps) => {
         {tabs.map((tab) => {
           const params = new URLSearchParams();
           params.set('leftTab', tab); // 현재 탭 값 설정
+          const isActive = current === tab;
 
           return (
-            <Link key={tab} href={`${pathname}?${params.toString()}`}>
-              <CategoryOption label={LeftTabLabels[tab as LeftTabType]} active={current === tab} />
+            <Link
+              key={tab}
+              href={`${pathname}?${params.toString()}`}
+              onClick={() => {
+                if (!isActive) resetEditing();
+              }}
+              passHref
+            >
+              <CategoryOption label={LeftTabLabels[tab as LeftTabType]} active={isActive} />
             </Link>
           );
         })}
@@ -60,7 +76,7 @@ const LeftTab = ({ current }: LeftTabProps) => {
       {/* 버튼 영역 */}
       <div className="gap-12pxr inline-flex items-center">
         {current === LeftTabType.MEETING_PROCEEDING &&
-          (isEditing ? (
+          (editing[EditorType.TITLE] || editing[EditorType.PROCEEDING] ? (
             <EditCompleteButton onClick={handleEditDoneClick} />
           ) : (
             <>

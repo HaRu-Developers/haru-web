@@ -14,44 +14,108 @@ const InputFileTitle = ({
   value,
   onSave,
   onCancel,
-  onRequestEdit,
-  noPadding = false,
   isLoading = false,
-  editingScopeRef,
   onMode,
+  onClick,
+  editingScopeRef,
+  noPadding = false,
+  commitTick,
+  cancelTick,
 }: InputFileTitleProps) => {
   const [inputValue, setInputValue] = useState<string>(value);
-  const lastActionRef = useRef<'none' | 'enter' | 'escape'>('none');
+  /**
+   * 사용자가 키 눌르면 바로 onBlur가 발생
+   * 그 전에 저장, 취소 의도를 기록해 onBlur에서 실제 동작을 결정하게 함
+   *
+   * 동기적으로 값 바꿔도 리렌더되지 않게 useRef 사용함
+   */
+  const lastActionRef = useRef<'none' | 'save' | 'cancel'>('none');
+  /**
+   * 저장, 취소 요청 확인에(현재 tick과 이전 tick을 비교) 사용
+   */
+  const prevCommitRef = useRef(commitTick);
+  const prevCancelRef = useRef(cancelTick);
+
+  // 서버 값 → 로컬 값 동기화 (편집 중이 아닐 때만)
+  useEffect(() => {
+    if (mode !== InputFileTitleMode.EDITABLE) {
+      setInputValue(value);
+    }
+  }, [value, mode]);
 
   useEffect(() => {
-    setInputValue(value);
-  }, [value]);
+    // commitTick 변화에만 반응
+    if (mode !== InputFileTitleMode.EDITABLE) {
+      prevCommitRef.current = commitTick;
+      return;
+    }
+    if (commitTick == null || commitTick === prevCommitRef.current) return;
+
+    prevCommitRef.current = commitTick;
+
+    // 값 변화했으면
+    const changed = inputValue !== value;
+    if (changed) onSave?.(inputValue.trim());
+    else onCancel?.();
+    onMode?.(InputFileTitleMode.DEFAULT);
+  }, [commitTick, mode, inputValue, value, onSave, onCancel, onMode]);
+
+  useEffect(() => {
+    // cancelTick 변화에만 반응
+    if (mode !== InputFileTitleMode.EDITABLE) {
+      prevCancelRef.current = cancelTick;
+      return;
+    }
+    if (cancelTick == null || cancelTick === prevCancelRef.current) return;
+
+    prevCancelRef.current = cancelTick;
+
+    setInputValue(value); // 롤백
+    onCancel?.();
+    onMode?.(InputFileTitleMode.DEFAULT);
+  }, [cancelTick, mode, value, onCancel, onMode]);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (mode !== InputFileTitleMode.EDITABLE) return;
 
+    // IME 조합 중이면 Enter 무시
+    if (e.nativeEvent?.isComposing) return;
+
     if (e.key === 'Enter') {
-      onSave?.(inputValue);
-      onMode?.(InputFileTitleMode.DEFAULT);
-      (e.currentTarget as HTMLInputElement).blur(); // 이어지는 blur는 가드로 무시
+      e.preventDefault();
+      lastActionRef.current = 'save';
+      (e.currentTarget as HTMLInputElement).blur(); // blur에서 저장
     } else if (e.key === 'Escape') {
-      lastActionRef.current = 'escape';
-      setInputValue(value);
+      e.preventDefault();
+      lastActionRef.current = 'cancel';
+      (e.currentTarget as HTMLInputElement).blur(); // blur에서 취소 처리
+    }
+  };
+
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    if (mode !== InputFileTitleMode.EDITABLE) return;
+
+    // 포커스가 같은 편집 스코프 안으로 이동하면 저장/종료하지 않음
+    const next = e.relatedTarget as Node | null;
+    if (next && editingScopeRef?.current?.contains(next)) return;
+
+    // 값이 바뀌었는지
+    const changed = inputValue !== value;
+
+    if (lastActionRef.current === 'save') {
+      if (changed) onSave?.(inputValue);
+      else onCancel?.(); // 변경 없으면 그냥 종료
+      onMode?.(InputFileTitleMode.DEFAULT);
+    } else if (lastActionRef.current === 'cancel') {
+      setInputValue(value); // 초기값으로 롤백
       onCancel?.();
-      (e.currentTarget as HTMLInputElement).blur();
+    } else {
+      // 마우스로 밖을 클릭해 포커스 아웃된 자연스러운 경우
+      if (changed) onSave?.(inputValue);
+      else onCancel?.(); // 변경 없으면 그냥 종료
+      onMode?.(InputFileTitleMode.DEFAULT);
     }
-  };
-
-  const handleBlur = () => {
-    onSave?.(inputValue);
-    onMode?.(InputFileTitleMode.DEFAULT);
-  };
-
-  // 읽기모드에서 클릭시 편집 요청
-  const handleClickReadOnly = () => {
-    if (mode !== InputFileTitleMode.EDITABLE) {
-      onRequestEdit?.();
-    }
+    lastActionRef.current = 'none';
   };
 
   // 가로 padding
@@ -61,13 +125,13 @@ const InputFileTitle = ({
     <div className="w-676pxr h-36pxr animate-bg-pulse rounded-6pxr" />
   ) : (
     <input
-      aria-label="파일 제목"
+      aria-label="파일 제목 입력칸"
       type="text"
       value={inputValue}
       onChange={(e) => setInputValue(e.target.value)}
       onKeyDown={handleKeyDown}
       onBlur={handleBlur}
-      onClick={handleClickReadOnly}
+      onClick={onClick}
       className={clsx(
         'w-676pxr h-36pxr rounded-4pxr text-t1-sb flex items-center bg-white py-0.5 text-black outline-none focus:outline-none',
         px,

@@ -34,7 +34,6 @@ const useEditMeetingMinutesTitle = (meetingId: string) => {
       const detailKey = queryKeys.meetings.detail(meetingId).queryKey;
 
       await qc.cancelQueries({ queryKey: detailKey });
-
       const prev = qc.getQueryData<Detail>(detailKey);
 
       if (prev?.result) {
@@ -61,13 +60,13 @@ const useEditMeetingMinutesTitle = (meetingId: string) => {
 
     // 성공 후 서버 상태 동기화
     onSuccess: async (_data, { meetingId }) => {
-      // 회의록 상세 정보, 최근 문서 다시 호출
       const detailKey = queryKeys.meetings.detail(meetingId).queryKey;
 
       // 캐시에서 workspaceId 얻어 최근문서도 무효화
       const cached = qc.getQueryData<Detail>(detailKey);
       const workspaceId = cached?.result?.workspaceId;
 
+      // 회의록 상세 정보, 최근 문서 다시 호출
       await Promise.all([
         qc.invalidateQueries({ queryKey: detailKey }),
         workspaceId

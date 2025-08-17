@@ -9,7 +9,7 @@ const CreateNewMeetingStansalonePage = async ({
 }) => {
   return (
     <>
-      <AiMeetingAssistantDefaultPage params={params} />
+      {/* <AiMeetingAssistantDefaultPage params={params} /> */}
       <CreateNewMeetingMinutesModalPage />
     </>
   );

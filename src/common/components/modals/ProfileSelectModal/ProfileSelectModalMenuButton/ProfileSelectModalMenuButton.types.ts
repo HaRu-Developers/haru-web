@@ -6,4 +6,5 @@ export interface ProfileSelectModalMenuButtonProps extends ButtonHTMLAttributes<
   menuName: ProfileSelectModalMenuState;
   className?: string;
   isSelected: boolean;
+  isLogoutPending?: boolean;
 }

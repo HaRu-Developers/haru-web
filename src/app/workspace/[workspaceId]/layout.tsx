@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     '기능별 CTA 박스, 최근 열람한 파일, 그리고 내 캘린더를 한 눈에 조회할 수 있는 페이지입니다.',
 };
 
-const MainWithWorkspaceLayout = ({
+const InnerWorkspaceIdLayout = ({
   children,
   teamMoodTrackerGeneralModal,
   innerWorkspaceIdModal,
@@ -26,4 +26,4 @@ const MainWithWorkspaceLayout = ({
   );
 };
 
-export default MainWithWorkspaceLayout;
+export default InnerWorkspaceIdLayout;

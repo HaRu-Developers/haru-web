@@ -26,11 +26,7 @@ const ProfileSettingMenu = ({ workspaceId, email, instagramAccount }: ProfileSet
   const { addToast } = useToastActions();
   const router = useRouter();
   const handlePasswordModal = () => {
-    if (workspaceId) {
-      router.push(`/workspace/${workspaceId}/settings/change-password`);
-    } else {
-      router.push(`/workspace/settings/change-password`);
-    }
+    router.push(`/workspace/${workspaceId}/settings/change-password`);
   };
   const { mutate: editUserDetail } = useEditUserDetail();
   const handleSave = useCallback(() => {

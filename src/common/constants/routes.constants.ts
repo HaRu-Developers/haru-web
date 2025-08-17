@@ -75,6 +75,10 @@ export const ROUTES = {
         NORMAL_REGISTER: '/auth/after-register?invited=false',
       },
     },
+    SNS_EVENT_ASSISTANT: {
+      CREATE_EVENT: (workspaceId: string) =>
+        `/workspace/${workspaceId}/sns-event-assistant/new-event`,
+    },
     AI_MEETING_MANAGER: {
       // 회의 생성 모달
       CREATE: (workspaceId: string) => `/workspace/${workspaceId}/ai-meeting-manager/create`,
@@ -82,7 +86,6 @@ export const ROUTES = {
       CONFIRM_DELETE: (workspaceId: string) =>
         `/workspace/${workspaceId}/ai-meeting-manager/confirm-delete`,
     },
-    SNS_EVENT_ASSISTANT: {},
     TEAM_MOOD_TRACKER: {
       CREATE_SURVEY: (workspaceId: BigintString) =>
         `/workspace/${workspaceId}/team-mood-tracker/create-new-survey`,
@@ -91,7 +94,9 @@ export const ROUTES = {
       SURVEY_CREATED: (workspaceId: BigintString, moodTrackerHashedId: string) =>
         `/workspace/${workspaceId}/team-mood-tracker/survey-created?moodTrackerHashedId=${moodTrackerHashedId}`,
     },
-    SETTING: (workspaceId: BigintString) => `/workspace/${workspaceId}/settings`,
+    SETTING: (workspaceId: BigintString) => {
+      return `/workspace/${workspaceId}/settings`;
+    },
     TERMS: {
       PRIVACY: (workspaceId?: string) =>
         workspaceId

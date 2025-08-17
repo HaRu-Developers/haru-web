@@ -11,9 +11,15 @@ const TextCtaWrapper = ({ fileType, workspaceId }: TextCtaWrapperProps) => {
   // TODO : optional 떄문에 발생하는 문제 해결 필요
   const href = modalHrefByFileType(workspaceId ?? '')[fileType];
 
+  if (!href) {
+    console.warn(
+      `ERROR: TextCta를 위한 href 생성에 실패했습니다. FILE_TYPE: ${fileType} & WORKSPACE_ID: ${workspaceId}`,
+    );
+  }
+
   return href ? (
     <Link href={href}>
-      <TextCta type={fileType} />
+      <TextCta type={fileType} disabled={false} />
     </Link>
   ) : (
     <TextCta type={fileType} onClick={() => console.warn('미지원')} disabled={!href} />

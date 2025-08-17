@@ -4,7 +4,7 @@ import SearchModalPage from '@/app/workspace/[workspaceId]/@innerWorkspaceIdModa
 
 import MainWithWorkspacePage from '../../page';
 
-const DownloadStandalonePage = () => {
+const SearchStandalonePage = () => {
   return (
     <>
       <Suspense fallback={<div>로딩중...</div>}>
@@ -15,4 +15,4 @@ const DownloadStandalonePage = () => {
   );
 };
 
-export default DownloadStandalonePage;
+export default SearchStandalonePage;

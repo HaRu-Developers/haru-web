@@ -2,8 +2,12 @@
 
 import { useEffect, useState } from 'react';
 
+import { useParams, useRouter } from 'next/navigation';
+
 import CrossIcons from '@icons/CrossIcons/CrossIcons';
 import { CrossIconsState } from '@icons/CrossIcons/CrossIcons.types';
+
+import useLogout from '@api/user/hooks/mutations/useLogout';
 
 import { useUserActions } from '@common/hooks/stores/useUserStore';
 
@@ -11,18 +15,22 @@ import useFetchUserDetail from '@/api/user/get/queries/useFetchUserDetail';
 
 import CommonText from '../CommonText/CommonText.client';
 import { CommonTextType } from '../CommonText/CommonText.types';
-import { ProfileSelectModalMenuState, ProfileSelectModalProps } from './ProfileSelectModal.types';
+import { ProfileSelectModalMenuState } from './ProfileSelectModal.types';
 import { ProfileSelectModalMenuButton } from './ProfileSelectModalMenuButton/ProfileSelectModalMenuButton.client';
 import ProfileSettingMenu from './ProfileSettingMenu/ProfileSettingMenu.client';
 import WorkspaceSettingsMenu from './WorkspaceSettingsMenu/WorkspaceSettingsMenu.client';
 
-const ProfileSelectModal = ({ workspaceId, onClose, onNextStep }: ProfileSelectModalProps) => {
+const ProfileSelectModal = () => {
+  const router = useRouter();
+  const { workspaceId } = useParams<{ workspaceId: string }>();
   const [selectedMenu, setSelectedMenu] = useState<ProfileSelectModalMenuState>(
     ProfileSelectModalMenuState.WORKSPACE_SETTING,
   );
   const { setName } = useUserActions(); // 지금은 설정이지만 gnb 자체에서 해도 될 듯
 
   const { extra: user } = useFetchUserDetail();
+
+  const { mutate: logout, isPending: isLogoutPending } = useLogout();
 
   useEffect(() => {
     if (user && user.name) {
@@ -49,8 +57,7 @@ const ProfileSelectModal = ({ workspaceId, onClose, onNextStep }: ProfileSelectM
 
   const handleMenuClick = (menu: ProfileSelectModalMenuState) => {
     if (menu === ProfileSelectModalMenuState.LOGOUT) {
-      alert('로그아웃합니다. UNIMPLEMENTED');
-      onNextStep(); // 로그아웃 시 다음 단계로 이동
+      logout();
     }
     setSelectedMenu(menu);
   };
@@ -60,7 +67,7 @@ const ProfileSelectModal = ({ workspaceId, onClose, onNextStep }: ProfileSelectM
       {/* 상단 설정 */}
       <div className="px-24pxr pt-24pxr pb-10pxr border-stroke-200 h-66pxr flex w-full items-center justify-between border-b-1">
         <CommonText type={CommonTextType.T3_BD_BLACK} text="설정" />
-        <button className="mr-2pxr" onClick={onClose}>
+        <button className="mr-2pxr" onClick={() => router.back()}>
           <CrossIcons state={CrossIconsState.SIZE_20_GRAY_200} />
         </button>
       </div>
@@ -82,6 +89,7 @@ const ProfileSelectModal = ({ workspaceId, onClose, onNextStep }: ProfileSelectM
           />
           <ProfileSelectModalMenuButton
             menuName={ProfileSelectModalMenuState.LOGOUT}
+            isLogoutPending={isLogoutPending}
             isSelected={selectedMenu === ProfileSelectModalMenuState.LOGOUT}
             className="mt-8pxr"
             onClick={() => handleMenuClick(ProfileSelectModalMenuState.LOGOUT)}

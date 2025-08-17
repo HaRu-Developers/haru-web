@@ -7,7 +7,7 @@ import clsx from 'clsx';
 import FeatureButton from '../../buttons/FeatureButton/FeatureButton.client';
 import { FeatureButtonType } from '../../buttons/FeatureButton/FeatureButton.types';
 import Banner from '../Banner/Banner.server';
-import TitleDisplay from '../TitleDisplay/TitleDisplay.server';
+import TitleDisplay from '../TitleDisplay/TitleDisplay.client';
 import { LandingBannerProps } from './LandingBanner.types';
 
 const LandingBanner = ({ className }: LandingBannerProps) => {

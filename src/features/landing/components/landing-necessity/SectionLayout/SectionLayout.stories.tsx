@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/nextjs';
 
 import { LandingNecessityIconsState } from '@icons/LandingNecessityIcons/LandingNecessityIcons.types';
 
-import SectionLayout from '@features/landing/components/landing-necessity/SectionLayout/SectionLayout.server';
+import SectionLayout from '@features/landing/components/landing-necessity/SectionLayout/SectionLayout.client';
 
 const meta: Meta<typeof SectionLayout> = {
   title: 'features/landing/landing-team/SectionLayout',

@@ -136,10 +136,12 @@ const TeamMoodTrackerDetailPage = () => {
       <div className="relative flex flex-col">
         {/*상단 GNB*/}
         <GnbTop section={GnbSection.CUSTOM} title={optimisticData.title} />
+
         {/*토스트 영역 */}
         <div className="top-100pxr absolute right-0 left-0 z-100 flex justify-center">
           <TeamMoodToast />
         </div>
+
         {/*MAIN CONTENT*/}
         <div className="mt-24pxr mb-10pxr w-668pxr mx-auto flex-col">
           <div className="mb-14pxr">
@@ -163,6 +165,8 @@ const TeamMoodTrackerDetailPage = () => {
             />
           </div>
         </div>
+
+        {/* 탭 영역 */}
         <div className="border-stroke-200 mb-14pxr w-full border-b border-solid bg-white">
           <div className="w-668pxr mx-auto">
             <TeamMoodReportTab

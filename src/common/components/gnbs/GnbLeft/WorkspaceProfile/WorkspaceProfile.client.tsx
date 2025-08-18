@@ -2,14 +2,10 @@
 
 import { useState } from 'react';
 
-import { useRouter } from 'next/navigation';
-
 import ArrowIcons from '@icons/ArrowIcons/ArrowIcons';
 import { ArrowIconsState } from '@icons/ArrowIcons/ArrowIcons.types';
 
 import useFetchWorkspaceDetail from '@api/workspace/get/queries/useFetchWorkspaceDetail';
-
-import { ROUTES } from '@common/constants/routes.constants';
 
 import { useWorkspaceActions, useWorkspaceInfo } from '@common/hooks/stores/useWorkspcaeStore';
 
@@ -20,7 +16,6 @@ import { WorkspaceProfileProps } from './WorkspaceProfile.types';
 import WorkspaceProfileSkeleton from './WorkspaceProfileSkeleton.client';
 
 const WorkSpaceProfile = ({ workspaceId }: WorkspaceProfileProps) => {
-  const router = useRouter();
   const { isFetching, extra: workspaceDetail } = useFetchWorkspaceDetail(workspaceId ?? '');
   const { title, imageUrl } = useWorkspaceInfo();
   const { setTitle, setImageUrl, setMembers } = useWorkspaceActions();
@@ -36,11 +31,6 @@ const WorkSpaceProfile = ({ workspaceId }: WorkspaceProfileProps) => {
 
   const handleClick = () => {
     setIsOpenSelectBoxProfile((prev) => !prev);
-  };
-
-  // 워크스페이스 있을때만 사용
-  const handleSettingClick = () => {
-    router.push(ROUTES.MODAL.SETTING(workspaceId));
   };
 
   // useEffect(() => {
@@ -93,7 +83,6 @@ const WorkSpaceProfile = ({ workspaceId }: WorkspaceProfileProps) => {
             <SelectBoxProfile
               isOpen={isOpenSelectBoxProfile}
               setIsOpen={setIsOpenSelectBoxProfile}
-              onSettingClick={handleSettingClick}
             />
           )}
         </>

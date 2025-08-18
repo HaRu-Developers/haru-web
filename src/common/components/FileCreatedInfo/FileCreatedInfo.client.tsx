@@ -30,7 +30,7 @@ const FileCreatedInfo = ({
         new Date(dateTime),
         isDateTimeDeadline ? 'yyyy년 M월 d일, h:mm a 마감' : 'yyyy년 M월 d일, h:mm a',
       )
-    : '';
+    : null;
   const rawName = name ?? '';
   const displayName = rawName.trim() ? rawName : '작성자 없음';
   const displayDate = formattedDateTime ?? '날짜 없음';

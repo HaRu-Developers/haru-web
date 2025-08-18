@@ -2,22 +2,23 @@
 
 import { notFound } from 'next/navigation';
 
-import { type DehydratedState, HydrationBoundary } from '@tanstack/react-query';
+// import { type DehydratedState, HydrationBoundary } from '@tanstack/react-query';
 
 import HaruLogoIcons from '@icons/logos/HaruLogoIcons/HaruLogoIcons';
 import { HaruLogoIconsState } from '@icons/logos/HaruLogoIcons/HaruLogoIcons.types';
 
-import { fetchUserDetail } from '@api/user/get/apis/fetchUserDetail';
-import fetchMyWorkspaces from '@api/workspace/get/apis/fetchMyWorkspaces';
-import fetchRecentDocuments from '@api/workspace/get/apis/fetchRecentDocuments';
-import fetchWorkspaceDetail from '@api/workspace/get/apis/fetchWorkspaceDetail';
+// import { fetchUserDetail } from '@api/user/get/apis/fetchUserDetail';
+// import fetchMyWorkspaces from '@api/workspace/get/apis/fetchMyWorkspaces';
+// import fetchRecentDocuments from '@api/workspace/get/apis/fetchRecentDocuments';
+// import fetchWorkspaceDetail from '@api/workspace/get/apis/fetchWorkspaceDetail';
 
 import { GnbLeftNavItems } from '@common/constants/gnbs.constants';
-import queryKeys from '@common/constants/query-key.constants';
 
-import { isWorkspaceNotFound } from '@common/errors/guards.utils';
+// import queryKeys from '@common/constants/query-key.constants';
 
-import { getDehydratedState } from '@common/utils/dehydrate';
+// import { isWorkspaceNotFound } from '@common/errors/guards.utils';
+
+// import { getDehydratedState } from '@common/utils/dehydrate';
 
 import { GnbLeftProps } from './GnbLeft.types';
 import NavItem from './NavItem/NavItem.client';
@@ -43,7 +44,7 @@ const GnbLeft = ({ workspaceId }: GnbLeftProps) => {
 
   // Server Component에서 prefetch 실행
   // workspaceId가 있을 때만 prefetch
-  let dehydratedState: DehydratedState | undefined;
+  // let dehydratedState: DehydratedState | undefined;
 
   // if (workspaceId != null) {
   //   try {

@@ -11,6 +11,7 @@ import CreateWorkSpaceButton from '@common/components/buttons/38px/CreateWorkspa
 
 const WithoutWorkspaceSection = () => {
   const router = useRouter();
+
   return (
     <div className="flex flex-col items-center">
       <div className="mb-292pxr flex flex-col">

@@ -1,5 +1,8 @@
 import { expect, test } from '@playwright/test';
 
+// 로그인 세션 적용
+test.use({ storageState: 'storageState.json' });
+
 test('TextCta 클릭 시 모달이 열린다', async ({ page }) => {
   await page.goto('/workspace/11/ai-meeting-manager');
 

@@ -9,6 +9,7 @@ import MeetingHeader from '@features/ai-meeting-manager/components/MeetingHeader
 import MeetingPanel from '@features/ai-meeting-manager/components/panels/MeetingPanel/MeetingPanel.client';
 import ProceedingPanel from '@features/ai-meeting-manager/components/panels/ProceedingPanel/ProceedingPanel.client';
 
+import EditKeymap from '../EditKeyMap/EditKeyMap.client';
 import { AiMeetingMinutesContentProps } from './AiMeetingMinutes.types';
 
 /**
@@ -31,6 +32,7 @@ const AiMeetingMinutesClient = ({
         <MeetingPanel pageType={AiMeetingPageType.MINUTES} leftTab={formattedLeftTab} />
       ) : (
         <>
+          <EditKeymap editingScopeRef={editingScopeRef} />
           <MeetingHeader editingScopeRef={editingScopeRef} />
           <LeftTab current={formattedLeftTab} />
           <ProceedingPanel editingScopeRef={editingScopeRef} />

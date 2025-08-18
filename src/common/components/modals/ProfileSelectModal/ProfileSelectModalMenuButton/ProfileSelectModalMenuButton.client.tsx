@@ -10,6 +10,7 @@ export const ProfileSelectModalMenuButton = ({
   className,
   isSelected,
   onClick,
+  isLogoutPending,
   ...props
 }: ProfileSelectModalMenuButtonProps) => {
   // 로그아웃에 대해서는 별도로 처리함, onClose 등 연동 필요합니다.
@@ -31,7 +32,7 @@ export const ProfileSelectModalMenuButton = ({
             'text-b3-rg': !isSelected,
           })}
         >
-          {menuName}
+          {isLogoutPending ? '로그아웃 중...' : menuName}
         </p>
       </button>
     );

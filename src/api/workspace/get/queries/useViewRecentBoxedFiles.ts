@@ -11,7 +11,7 @@ import { ApiError } from '@common/errors/ApiError';
 
 import { useAfterQuery } from '@common/hooks/queries/useAfterQuery';
 
-import { ViewRecentBoxedFilesRequestDto, ViewRecentBoxedFilesResponseDto } from '../../api.types';
+import { ViewRecentBoxedFilesResponseDto } from '../../api.types';
 import { viewRecentBoxedFiles } from '../apis/view-recent-boxed-files';
 
 /**

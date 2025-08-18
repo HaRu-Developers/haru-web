@@ -64,8 +64,8 @@ module.exports = {
     '^@common/apis/(.*)$',
     '^@common/components/(.*)$',
     '^@common/stores/(.*)$',
-    '^@common/(.*)$', // 나머지 공통 루트
     '^@buttons/(.*)$', // 버튼 컴포넌트
+    '^@common/(.*)$', // 나머지 공통 루트
 
     // 도메인 모듈 (features)
     '^@features/.*/types/(.*)$',
@@ -76,6 +76,9 @@ module.exports = {
     '^@features/.*/apis/(.*)$',
     '^@features/.*/components/(.*)$',
     '^@features/(.*)$', // 나머지 도메인 루트
+
+    // 앱 엔트리
+    '@app/(.*)$',
 
     // 기타 src 하위 경로
     '^@/(.*)$',

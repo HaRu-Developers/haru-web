@@ -12,7 +12,12 @@ import { ImageSize } from '@common/components/images/types/images.common.types';
 import InputFileTitle from '@common/components/inputs/InputFileTitle/InputFileTitle.client';
 import { InputFileTitleMode } from '@common/components/inputs/InputFileTitle/InputFileTitle.types';
 
-import { useTabActions, useTabInfo } from '@features/ai-meeting-manager/hooks/stores/useTabStore';
+import { EditorType } from '@features/ai-meeting-manager/types/edit.types';
+
+import {
+  useEditActions,
+  useEditInfo,
+} from '@features/ai-meeting-manager/hooks/stores/useEditStore';
 
 import { LeftTabType } from '../LeftTab/LeftTab.types';
 import { MeetingHeaderProps } from './MeetingHeader.types';
@@ -25,36 +30,35 @@ const MeetingHeader = ({ editingScopeRef }: MeetingHeaderProps) => {
 
   const { extra: meetingMinutesDetail, isFetching } = useFetchMeetingMinutesDetail(meetingId);
   const { mutate: editMeetingMinutesTitle, isPending } = useEditMeetingMinutesTitle(meetingId);
-  const { isEditing } = useTabInfo();
-  const { setEditing } = useTabActions();
+  const { editing, commitTick, cancelTick } = useEditInfo();
+  const { setEditing } = useEditActions();
 
-  const title = meetingMinutesDetail?.title?.trim() || '제목 없음';
+  const title = meetingMinutesDetail?.title ?? '';
   const userId = meetingMinutesDetail?.userId ?? '';
-  const userName = meetingMinutesDetail?.userName ?? '작성자 없음';
+  const userName = meetingMinutesDetail?.userName ?? '';
   const updatedAt = meetingMinutesDetail?.updatedAt ?? '';
 
-  const inputFileTitleMode = isEditing ? InputFileTitleMode.EDITABLE : InputFileTitleMode.DEFAULT;
-  const handleSaveTitle = useCallback(
-    (inputValue: string) => {
-      // 이전 값이랑 같으면 무시
-      const next = inputValue.trim();
-      if (next === title) {
-        setEditing(false);
-        return;
-      }
-      setEditing(false);
-      editMeetingMinutesTitle({ meetingId, title: next });
+  const inputFileTitleMode = editing[EditorType.TITLE]
+    ? InputFileTitleMode.EDITABLE
+    : InputFileTitleMode.DEFAULT;
+
+  const onSave = useCallback(
+    (next: string) => {
+      if (isPending) return;
+      // console.log('InputFileTitle enter 눌렀을때 ', editing[EditorType.TITLE]);
+      setEditing(EditorType.TITLE, false);
+      editMeetingMinutesTitle({ meetingId, title: next.trim() });
     },
-    [editMeetingMinutesTitle, meetingId, title, setEditing],
+    [isPending, setEditing, editMeetingMinutesTitle, meetingId],
   );
 
-  const handleCancel = useCallback(() => {
-    setEditing(false);
+  const onCancel = useCallback(() => {
+    setEditing(EditorType.TITLE, false);
   }, [setEditing]);
 
   // 음성 기록 탭일때 제목 클릭시 수정모드
-  const handleRequestEdit = useCallback(() => {
-    if (isVoiceLogTab) setEditing(true);
+  const onClick = useCallback(() => {
+    if (isVoiceLogTab) setEditing(EditorType.TITLE, true);
   }, [isVoiceLogTab, setEditing]);
 
   const isLoading = isFetching || isPending;
@@ -66,10 +70,12 @@ const MeetingHeader = ({ editingScopeRef }: MeetingHeaderProps) => {
         value={title}
         noPadding
         mode={inputFileTitleMode}
-        onCancel={handleCancel}
-        onSave={handleSaveTitle}
+        onCancel={onCancel}
+        onSave={onSave}
         editingScopeRef={editingScopeRef}
-        onRequestEdit={handleRequestEdit}
+        onClick={onClick}
+        commitTick={commitTick}
+        cancelTick={cancelTick}
       />
       <FileCreatedInfo
         isLoading={isLoading}

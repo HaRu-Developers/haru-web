@@ -4,6 +4,8 @@ import { ROUTES } from '@common/constants/routes.constants';
 
 /**
  * 새로 고침시 메인으로 리다이렉트 해 모달 제거
+ *
+ * 선택을 zustand store 쓰기 때문
  */
 const ConfirmDeleteStandalonePage = async ({
   params,

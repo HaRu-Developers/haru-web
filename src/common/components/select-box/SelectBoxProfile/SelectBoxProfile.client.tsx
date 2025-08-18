@@ -1,8 +1,10 @@
 'use client';
 
-import { usePathname, useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 
 import useFetchUserDetail from '@api/user/get/queries/useFetchUserDetail';
+
+import { ROUTES } from '@common/constants/routes.constants';
 
 import ModalPortal from '@common/components/ModalPortal/ModalPortal.client';
 import ProfileImage from '@common/components/images/ProfileImage/ProfileImage.client';
@@ -10,25 +12,22 @@ import { ImageSize } from '@common/components/images/types/images.common.types';
 
 import FooterButtons from './FooterButtons/FooterButtons.client';
 import HeaderButtons from './HeaderButtons/HeaderButtons.client';
-import MyWorkspaces from './MyWorkspaces/MyWorkspaces.server';
+import MyWorkspaces from './MyWorkspaces/MyWorkspaces.client';
 import NewWorkspaceButton from './NewWorkspaceButton/NewWorkspaceButton.client';
+import { SelectBoxProfileProps } from './SelectBoxProfile.types';
 
-const SelectBoxProfile = ({
-  isOpen,
-  setIsOpen,
-  onSettingClick,
-}: {
-  isOpen: boolean;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  onSettingClick?: () => void;
-}) => {
+const SelectBoxProfile = ({ isOpen, setIsOpen }: SelectBoxProfileProps) => {
   const router = useRouter();
-  const pathname = usePathname();
+  const { workspaceId } = useParams<{ workspaceId: string }>();
+  // isOpen일 때만 유저 정보 로드
   const { extra: userDetail, isFetching } = useFetchUserDetail({ enabled: isOpen });
 
   if (!isOpen) return null;
 
-  const settingHref = `${pathname}/settings`;
+  const onOpenSettings = () => {
+    setIsOpen(false); // select box profile 닫기
+    router.push(ROUTES.MODAL.SETTING.BASE(workspaceId));
+  };
 
   return (
     <ModalPortal>
@@ -62,10 +61,7 @@ const SelectBoxProfile = ({
                   </div>
                 </div>
               )}
-              <HeaderButtons
-                onSettingClick={() => router.push(settingHref)}
-                onAddMemberClick={() => router.push(settingHref)}
-              />
+              <HeaderButtons onSettingClick={onOpenSettings} onAddMemberClick={onOpenSettings} />
             </div>
 
             <div className="bg-stroke-200 h-px w-full"></div>

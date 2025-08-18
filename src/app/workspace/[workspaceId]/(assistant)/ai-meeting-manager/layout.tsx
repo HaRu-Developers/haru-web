@@ -10,20 +10,14 @@ export const metadata: Metadata = {
 const AiMeetingManagerRootLayout = async ({
   children,
   aiMeetingManagerModal,
-  params,
 }: Readonly<{
   children: React.ReactNode;
   aiMeetingManagerModal: React.ReactNode;
-  params: Promise<{ workspaceId?: string }>;
 }>) => {
-  const workspaceId = (await params).workspaceId;
-
   return (
     <>
-      {/*<GnbLeftLayout workspaceId={workspaceId}>*/}
       {children}
       {aiMeetingManagerModal}
-      {/*</GnbLeftLayout>*/}
     </>
   );
 };

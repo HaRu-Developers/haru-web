@@ -22,7 +22,7 @@ const usePreventLeave = (isDirty: boolean) => {
       event.preventDefault();
 
       // 일부 레거시 브라우저와의 호환성을 위해 returnValue를 설정합니다.
-      // 호황성을 위한 코드라, 우선은 경고 제거를 위해서 주석 처리해둡니다.
+      // 호환성을 위한 코드라, 우선은 경고 제거를 위해서 주석 처리해둡니다.
 
       // 이 값을 커스텀 메시지로 사용할 수는 없습니다.
       // event.returnValue = '';

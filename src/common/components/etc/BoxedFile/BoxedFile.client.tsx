@@ -58,7 +58,8 @@ const BoxedFile = ({ title, lastOpened, thumbnailUrl, documentType, onClick }: B
           <Image
             src={thumbnailUrl}
             alt="파일 이미지"
-            className="rounded-10pxr h-full w-full object-cover object-top pt-10"
+            fill
+            className="rounded-10pxr object-cover object-top pt-10"
           />
         ) : (
           <div className="pt-47pxr pb-13pxr flex flex-col gap-1 px-3.5">

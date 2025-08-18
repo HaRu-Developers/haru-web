@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useCallback } from 'react';
 
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
 
@@ -16,10 +16,15 @@ import GnbTop from '@common/components/gnbs/GnbTop/GnbTop.client';
 import InputFileTitle from '@common/components/inputs/InputFileTitle/InputFileTitle.client';
 import { InputFileTitleMode } from '@common/components/inputs/InputFileTitle/InputFileTitle.types';
 
+import { EditorType } from '@features/ai-meeting-manager/types/edit.types';
 import { TeamMoodTrackerToastType } from '@features/team-mood-tracker/types/TeamMoodTrackerToastStore.types';
 
 import { filterSafeResponseList } from '@features/team-mood-tracker/utils/safe-response-list.utils';
 
+import {
+  useEditActions,
+  useEditInfo,
+} from '@features/ai-meeting-manager/hooks/stores/useEditStore';
 import { useTeamMoodToastActions } from '@features/team-mood-tracker/hooks/stores/useTeamMoodTrackerToastStore';
 
 import TeamMoodAnswerChartSection from '@features/team-mood-tracker/components/mood-reports/answer-section/TeamMoodAnswerChartSection/TeamMoodAnswerChartSection.client';
@@ -44,8 +49,8 @@ const TeamMoodTrackerDetailPage = () => {
 
   const { showCopyToast } = useTeamMoodToastActions();
 
-  // 제목 수정을 위한 상태 추가
-  const [isEditingTitle, setIsEditingTitle] = useState(false);
+  const { editing, commitTick, cancelTick } = useEditInfo();
+  const { setEditing } = useEditActions();
 
   const currentTab =
     (searchParams.get('moodTab') as TeamMoodReportTabType) ??
@@ -56,12 +61,16 @@ const TeamMoodTrackerDetailPage = () => {
   const { data: reportResponse, isFetching: isReportFetching } =
     useViewReportResponse(moodTrackerHashedId);
 
-  const { mutate: modifyTitle } = useModifyMoodTrackerTitleMutation();
+  const { mutate: modifyTitle, isPending } = useModifyMoodTrackerTitleMutation();
 
   const isRefetching = isSurveyFetching || isReportFetching;
 
-  const optimisticData = surveyResponse;
+  const optimisticData = surveyResponse || reportResponse;
   const safeResponseList = filterSafeResponseList(surveyResponse?.responseList);
+
+  const inputFileTitleMode = editing[EditorType.TITLE]
+    ? InputFileTitleMode.EDITABLE
+    : InputFileTitleMode.DEFAULT;
 
   const handleCopyClick = async () => {
     const reportContent = reportResponse?.report;
@@ -84,27 +93,29 @@ const TeamMoodTrackerDetailPage = () => {
     router.push(TEAM_MOOD_TRACKER_PAGE_ROUTES.DOWNLOAD(workspaceId, moodTrackerHashedId));
   };
 
-  const handleTitleSave = (newTitle: string) => {
-    // 제목이 비어있거나 기존과 같다면 저장 로직을 실행하지 않음
-    if (!newTitle.trim() || !optimisticData || newTitle === optimisticData.title) {
-      setIsEditingTitle(false);
-      return;
-    }
+  const handleTitleSave = useCallback(
+    (newTitle: string) => {
+      if (isPending) return;
+      if (!newTitle.trim() || !optimisticData || newTitle === optimisticData.title) {
+        setEditing(EditorType.TITLE, false);
+        return;
+      }
+      setEditing(EditorType.TITLE, false);
+      modifyTitle({
+        moodTrackerHashedId,
+        title: newTitle.trim(),
+      });
+    },
+    [isPending, optimisticData, setEditing, modifyTitle, moodTrackerHashedId],
+  );
 
-    // 1. API 요청을 시작합니다. (성공/실패 처리는 훅이 담당)
-    modifyTitle({
-      moodTrackerHashedId,
-      title: newTitle,
-    });
+  const handleTitleCancel = useCallback(() => {
+    setEditing(EditorType.TITLE, false);
+  }, [setEditing]);
 
-    // 2. API 응답과 상관없이 즉시 수정 모드를 종료합니다.
-    setIsEditingTitle(false);
-  };
-
-  // 제목 수정 취소 핸들러
-  const handleTitleCancel = () => {
-    setIsEditingTitle(false);
-  };
+  const handleTitleClick = useCallback(() => {
+    setEditing(EditorType.TITLE, true);
+  }, [setEditing]);
 
   if (isRefetching) {
     return <TeamMoodTrackerPageSkeleton />;
@@ -132,22 +143,17 @@ const TeamMoodTrackerDetailPage = () => {
         {/*MAIN CONTENT*/}
         <div className="mt-24pxr mb-10pxr w-668pxr mx-auto flex-col">
           <div className="mb-14pxr">
-            {isEditingTitle ? (
-              <InputFileTitle
-                value={optimisticData.title}
-                mode={InputFileTitleMode.EDITABLE}
-                onSave={handleTitleSave}
-                onCancel={handleTitleCancel}
-              />
-            ) : (
-              <div
-                // InputFileTitle과 동일한 스타일을 적용하여 이질감을 없앱니다.
-                className="w-676pxr h-36pxr rounded-4pxr text-t1-sb flex cursor-pointer items-center bg-white py-0.5 text-black"
-                onClick={() => setIsEditingTitle(true)}
-              >
-                {optimisticData.title}
-              </div>
-            )}
+            {/* 잘못된 조건부 렌더링을 제거하고, props가 올바르게 연결된 단일 컴포넌트로 수정 */}
+            <InputFileTitle
+              value={optimisticData.title}
+              isLoading={isPending}
+              mode={inputFileTitleMode}
+              onSave={handleTitleSave}
+              onCancel={handleTitleCancel}
+              onClick={handleTitleClick}
+              commitTick={commitTick}
+              cancelTick={cancelTick}
+            />
           </div>
           <div className="text-cap2-md">
             <FileCreatedInfo

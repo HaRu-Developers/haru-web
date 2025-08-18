@@ -17,5 +17,5 @@ export const viewReportResponse = async ({ moodTrackerHashedId }: GetViewReportR
     },
   );
 
-  return response;
+  return response.result;
 };

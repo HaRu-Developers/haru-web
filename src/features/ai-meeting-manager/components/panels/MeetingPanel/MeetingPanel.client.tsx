@@ -5,10 +5,12 @@ import { useState } from 'react';
 import { useParams } from 'next/navigation';
 
 import useFetchMeetingMinutesSpeechQuestion from '@api/meeting/get/queries/useFetchMeetingMinutesSpeechQuestion';
+import useFetchMeetingMinutesVoiceLink from '@api/meeting/get/queries/useFetchMeetingMinutesVoiceLink';
 
 import parseEnum from '@common/utils/parse-enum.utils';
 
 import GnbBottomPlayerBar from '@common/components/gnbs/gnb-audio-bar/GnbBottomPlayerBar/GnbBottomPlayerBar.client';
+import GnbBottomPlayerBarSkeleton from '@common/components/gnbs/gnb-audio-bar/GnbBottomPlayerBar/GnbBottomPlayerBarSkeleton';
 import GnbBottomRecorderBar from '@common/components/gnbs/gnb-audio-bar/GnbBottomRecorderBar/GnbBottomRecorderBar.client';
 
 import { AiMeetingPageType } from '@features/ai-meeting-manager/types/page-type.types';
@@ -31,6 +33,8 @@ const MeetingPanel = ({ pageType, leftTab }: MeetingPanelProps) => {
   // 발화, 질문 가져오기
   const { extra: { meetingStartTime, transcripts: initialTranscripts } = DEFAULT_SPEECH_QUESTION } =
     useFetchMeetingMinutesSpeechQuestion(meetingId);
+  // 음성 파일 가져오기
+  const { extra: voiceLink = '', isFetching } = useFetchMeetingMinutesVoiceLink(meetingId);
 
   const [micStream, setMicStream] = useState<MediaStream | null>(null);
 
@@ -72,8 +76,10 @@ const MeetingPanel = ({ pageType, leftTab }: MeetingPanelProps) => {
               resumeStreaming={resumeStreaming}
               micStream={micStream}
             />
+          ) : isFetching ? (
+            <GnbBottomPlayerBarSkeleton />
           ) : (
-            <GnbBottomPlayerBar audioUrl={'임시 audioUrl'} />
+            <GnbBottomPlayerBar audioUrl={voiceLink} />
           )}
         </div>
       </div>

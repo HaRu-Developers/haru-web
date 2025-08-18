@@ -1,11 +1,12 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { login } from '@api/user/apis/post/login-register-refresh';
 
+import queryKeys from '@common/constants/query-key.constants';
 import { ROUTES } from '@common/constants/routes.constants';
 
 import { useAuthStoreActions } from '@features/auth/hooks/useAuthStore';
@@ -17,9 +18,12 @@ import { useAuthStoreActions } from '@features/auth/hooks/useAuthStore';
 export const useLogin = () => {
   // const [, setAccessToken] = useLocalStorage(LOCAL_STORAGE_KEYS.ACCESS_TOKEN, '');
   // const [, setRefreshToken] = useLocalStorage(LOCAL_STORAGE_KEYS.REFRESH_TOKEN, '');
+  const queryClient = useQueryClient();
   const router = useRouter();
   const { setAccessToken: setStoreAccessToken, setRefreshToken: setStoreRefreshToken } =
     useAuthStoreActions();
+
+  const searchParams = useSearchParams();
 
   return useMutation({
     mutationFn: login,
@@ -31,7 +35,17 @@ export const useLogin = () => {
       // setRefreshToken(data.refreshToken);
       setStoreRefreshToken(data.refreshToken);
 
-      router.push(ROUTES.WORKSPACE_MAIN());
+      queryClient.invalidateQueries(queryKeys.user.detail());
+
+      const redirectPath = searchParams.get('redirect');
+
+      if (redirectPath) {
+        // redirect 쿼리 파라미터가 있으면 해당 경로로 이동
+        router.push(redirectPath);
+      } else {
+        // 없으면 기본 경로로 이동
+        router.push(ROUTES.WORKSPACE_MAIN());
+      }
     },
 
     onError: (err) => {

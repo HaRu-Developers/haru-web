@@ -170,10 +170,20 @@ export interface MeetingMinutesSpeechQuestionDTO {
 
 // ========== 회의록 다운로드 링크 ==========
 /**
- * 회의록 다운로드 링크 응답 DTO
+ * 회의록 실제 파일 URL 응답 DTO
  *
- * @property {string} downloadLink - 다운로드 링크
+ * @property {string} downloadLink - 실제 파일 URL
  */
 export interface MeetingMinutesDownloadLinkResponseDTO {
   downloadLink: string;
+}
+
+// ========== 회의록 음성 링크 ==========
+/**
+ * 회의록 음성 링크 응답 DTO
+ *
+ * @property {string} voiceLink - 음성 링크
+ */
+export interface MeetingMinutesVoiceLinkResponseDTO {
+  voiceLink: string;
 }

@@ -9,19 +9,19 @@ import { useFocusMapActions } from '@features/ai-meeting-manager/hooks/stores/us
 
 import { AiQuestionCardProps } from './AiQuestionCard.types';
 
-const AiQuestionCard = ({ aiRecommendQuestion, userAnswer, speechId }: AiQuestionCardProps) => {
+const AiQuestionCard = ({ aiRecommendQuestion, userAnswer, segmentId }: AiQuestionCardProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const { registerQuestionRef, unregisterQuestionRef, focusSpeech } = useFocusMapActions();
 
   useEffect(() => {
-    registerQuestionRef(speechId, ref.current);
-    return () => unregisterQuestionRef(speechId, ref.current as HTMLDivElement);
-  }, [speechId, registerQuestionRef, unregisterQuestionRef]);
+    registerQuestionRef(segmentId, ref.current);
+    return () => unregisterQuestionRef(segmentId, ref.current as HTMLDivElement);
+  }, [segmentId, registerQuestionRef, unregisterQuestionRef]);
   return (
     <div
       ref={ref}
-      onClick={() => focusSpeech(speechId, { flashMs: 1200 })}
-      data-speech-id={speechId}
+      onClick={() => focusSpeech(segmentId, { flashMs: 1200 })}
+      data-speech-id={segmentId}
       className="border-stroke-200 w-110 cursor-pointer rounded-xl border bg-white px-5 pt-5 pb-4.5 hover:bg-gray-600"
     >
       <div className="mb-3 inline-flex items-start gap-3">

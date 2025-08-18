@@ -5,7 +5,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useParams } from 'next/navigation';
 
 import useFetchMeetingMinutesDetail from '@api/meeting/get/queries/useFetchMeetingMinutesDetail';
-import useEditMeetingMinutesProceeding from '@api/meeting/patch/queries/useEditMeetingMinutesProceeding';
+import useEditMeetingMinutesProceeding from '@api/meeting/patch/mutations/useEditMeetingMinutesProceeding';
 
 import { useTabActions, useTabInfo } from '@features/ai-meeting-manager/hooks/stores/useTabStore';
 

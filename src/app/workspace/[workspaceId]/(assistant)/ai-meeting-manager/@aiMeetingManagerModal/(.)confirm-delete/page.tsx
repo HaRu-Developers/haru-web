@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import { useParams, useRouter } from 'next/navigation';
 
-import useDeleteMeetingMinutes from '@api/meeting/delete/mutations/useDeleteMeetingMinutes';
+import useDeleteMeetingMinutesMany from '@api/meeting/delete/mutations/useDeleteMeetingMinutesMany';
 
 import { logApiError } from '@common/errors/api-error.utils';
 
@@ -28,11 +28,11 @@ const ConfirmDeleteMeetingMinutesModalPage = () => {
 
   // api 호출 완료 후 페이지 이동할 거여서 mutateAsync 사용
   const {
-    mutateAsync: deleteOne,
+    mutateAsync: deleteMany,
     isError,
     error,
     isPending,
-  } = useDeleteMeetingMinutes(workspaceId);
+  } = useDeleteMeetingMinutesMany(workspaceId);
 
   if (isError) throw error;
 
@@ -42,8 +42,7 @@ const ConfirmDeleteMeetingMinutesModalPage = () => {
     try {
       setSubmitting(true);
       const ids = Array.from(checkedIds);
-      // 단일 삭제만 지원하니까 병렬 호출
-      await Promise.all(ids.map((id) => deleteOne({ meetingId: id })));
+      await deleteMany(ids);
       // 선택 초기화, 선택모드 종료
       clearChecked();
       toggleCheckMode();

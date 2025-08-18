@@ -8,14 +8,17 @@ import { ToastType } from '@common/types/toast.types';
 
 import { useToastActions } from '@common/hooks/stores/useToastStore';
 
-import { Question, Speech, WsInbound } from '../types/meeting.types';
+import { Question, Speech, UiQuestion, WsInbound } from '../types/meeting.types';
 import { type MicController, startMicAndPipeToWebSocket } from '../utils/capture-and-send.utils';
-import { useSpeechQuestionActions } from './stores/useSpeechQuestionsStore';
 
-// 문자열[] → Question[] 로 변환 + 중복 제거
 let _qid = 1;
-// 공백, 대소문자 정규화해 텍스트 해시 키 만듦
+/**
+ * 공백, 대소문자 정규화해 텍스트 해시 키 만듦
+ */
 const norm = (s: string) => s.trim().replace(/\s+/g, ' ').toLowerCase();
+/**
+ * 문자열[] → Question[] 로 변환 + 중복 제거
+ */
 const ensureQuestionObjects = (qs: Array<string | Question>): Question[] => {
   const mapped = qs.map((q) => (typeof q === 'string' ? { questionId: _qid++, question: q } : q));
   const seen = new Set<string>();
@@ -30,10 +33,17 @@ const ensureQuestionObjects = (qs: Array<string | Question>): Question[] => {
   return dedup;
 };
 
+/** 질문들 합치기 */
 const mergeQuestions = (prev: Question[], next: Question[]) => {
-  const seen = new Set(prev.map((q) => q.question));
+  const seen = new Set(prev.map((q) => norm(q.question)));
   const merged = prev.slice();
-  for (const q of next) if (!seen.has(q.question)) merged.push(q);
+  for (const q of next) {
+    const key = norm(q.question);
+    if (!seen.has(key)) {
+      seen.add(key);
+      merged.push(q);
+    }
+  }
   return merged;
 };
 
@@ -43,18 +53,18 @@ const mergeQuestions = (prev: Question[], next: Question[]) => {
 type UseMeetingSocketParams = {
   workspaceId: string;
   meetingId: string;
-  meetingStartTime: string;
-  initialTranscripts?: Speech[]; // 초기 데이터
+  initialTranscripts?: Speech[]; // 초기 발화,질문 데이터
+  onMicStream?: (stream: MediaStream) => void; // 마이크 스트림을 UI에 전달
 };
 
 const useMeetingSocket = ({
   workspaceId,
   meetingId,
-  meetingStartTime,
   initialTranscripts = [],
+  onMicStream,
 }: UseMeetingSocketParams) => {
   const { addToast } = useToastActions();
-  // segmentId를 index로 쓰는 맵
+  // segmentId → 배열 인덱스 매핑
   const indexMapRef = useRef(new Map<number, number>());
 
   // WS URL memo
@@ -65,19 +75,14 @@ const useMeetingSocket = ({
 
   // 연결 상태 변수
   const isOpenOrConnecting = (ws?: WebSocket | null) =>
-    !!ws &&
-    (ws.readyState === WebSocket.OPEN ||
-      ws.readyState === WebSocket.CONNECTING ||
-      ws.readyState === WebSocket.CLOSING);
+    !!ws && (ws.readyState === WebSocket.OPEN || ws.readyState === WebSocket.CONNECTING);
   const isConnectingRef = useRef(false);
-
   const [connected, setConnected] = useState(false);
-  const [speeches, setSpeeches] = useState<Speech[]>(() => initialTranscripts);
   const wsRef = useRef<WebSocket | null>(null);
   const micCtlRef = useRef<MicController | null>(null);
-
-  const { setForSpeech, clearAll } = useSpeechQuestionActions();
   const { mutateAsync: endMeetingMutate, isPending: isEnding } = useEndMeetingMinutes(meetingId);
+
+  const [speeches, setSpeeches] = useState<Speech[]>(() => initialTranscripts);
 
   // 초기/리셋 시
   useEffect(() => {
@@ -87,7 +92,7 @@ const useMeetingSocket = ({
 
     // 현재 실시간 데이터 날리지 않고 병합
     setSpeeches((prev) => {
-      if (!initialTranscripts?.length) return prev;
+      if (initialTranscripts.length === 0) return prev;
       // 이미 받은 segmentId는 유지하고, 새로 온 것만 추가
       const seen = new Set(prev.map((s) => s.segmentId));
       const merged = [...prev];
@@ -96,22 +101,29 @@ const useMeetingSocket = ({
     });
   }, [meetingId, initialTranscripts]);
 
-  // utterance upsert
-  // segmentId 기준으로 배열에서 찾고, 없으면 {...next, aiQuestions: []}로 추가, 있으면 불변 업데이트로 덮어쓰기
+  /**
+   * utterance upsert
+   */
   const upsertSpeech = useCallback((next: Omit<Speech, 'aiQuestions'>) => {
     setSpeeches((prev) => {
-      const idx = indexMapRef.current.get(next.segmentId);
+      // segmentId 기준으로 배열에서 찾고
+      const idx = indexMapRef.current.get(next.segmentId); // segmentId === speechId
+      // 없으면 {...next, aiQuestions: []}로 추가
       if (idx == null) {
         const added = [...prev, { ...next, aiQuestions: [] }];
-        indexMapRef.current.set(next.segmentId, added.length - 1);
+        indexMapRef.current.set(next.segmentId, added.length - 1); // 배열 인덱스니까 added.length - 1 인덱스에 추가
         return added;
       }
+      // 있으면 불변 업데이트로 덮어쓰기
       const copy = prev.slice();
       copy[idx] = { ...copy[idx], ...next };
       return copy;
     });
   }, []);
 
+  /**
+   * aiQuestions 넣기
+   */
   const setQuestionsFor = useCallback((segmentId: number, qObjs: Question[]) => {
     setSpeeches((prev) => {
       const idx = indexMapRef.current.get(segmentId);
@@ -124,6 +136,31 @@ const useMeetingSocket = ({
       return copy;
     });
   }, []);
+
+  /**
+   *  UI용 질문 리스트: [{ speechId, text }]
+   */
+  const questionsForUI = useMemo<UiQuestion[]>(() => {
+    const out: UiQuestion[] = [];
+    for (const s of speeches) {
+      const qs = s.aiQuestions ?? [];
+      for (const q of qs) {
+        out.push({
+          id: q.questionId, // ensureQuestionObjects에서 보장
+          segmentId: s.segmentId,
+          text: q.question,
+        });
+      }
+    }
+    return out;
+  }, [speeches]);
+
+  // segmentId -> text 매핑
+  const speechTextById = useMemo<Record<number, string>>(() => {
+    const m: Record<number, string> = {};
+    for (const s of speeches) m[s.segmentId] = s.text ?? '추천 질문 없음';
+    return m;
+  }, [speeches]);
 
   // connect - Promise 써서 열림 보장까지 resolve
   const connect = useCallback(
@@ -142,8 +179,6 @@ const useMeetingSocket = ({
         }
 
         isConnectingRef.current = true;
-        console.log('[WS] connecting to:', wsUrl);
-
         let ws: WebSocket | null = null;
         try {
           ws = new WebSocket(wsUrl);
@@ -165,11 +200,11 @@ const useMeetingSocket = ({
             resolve();
           }
         };
-        const safeReject = (err?: unknown) => {
+        const safeReject = (e?: unknown) => {
           if (!settled) {
             settled = true;
             cleanup();
-            reject(err instanceof Error ? err : new Error(String(err ?? 'connect failed')));
+            reject(e instanceof Error ? e : new Error('connect failed'));
           }
         };
         const cleanup = () => {
@@ -190,6 +225,9 @@ const useMeetingSocket = ({
           try {
             // worklet + 16k 업스트림 시작
             micCtlRef.current = await startMicAndPipeToWebSocket(ws);
+            const stream = micCtlRef.current?.getStream?.();
+            if (stream && typeof onMicStream === 'function') onMicStream(stream);
+            safeResolve();
           } catch (e) {
             console.error('[WS] mic init failed:', e);
             try {
@@ -211,8 +249,26 @@ const useMeetingSocket = ({
           // 아직 열리기 전에 error면 실패로 처리
           if (!settled) {
             isConnectingRef.current = false;
-            safeReject(new Error('WebSocket error before open'));
+            // safeReject(new Error('WebSocket error before open'));
           }
+        };
+
+        const readyStateStr = (ws?: WebSocket | null) => {
+          if (!ws) return 'NO_SOCKET';
+          return (
+            ['CONNECTING(0)', 'OPEN(1)', 'CLOSING(2)', 'CLOSED(3)'][ws.readyState] ??
+            String(ws.readyState)
+          );
+        };
+
+        const logCloseEvt = (evt: CloseEvent) => {
+          // 일부 서버/프록시는 1006(Abnormal)로 떨어짐 → 거의 핸드셰이크 실패/정책 차단 케이스
+          console.warn('[WS] close', {
+            code: evt.code,
+            reason: evt.reason,
+            wasClean: evt.wasClean,
+            readyState: readyStateStr(wsRef.current),
+          });
         };
 
         ws.onclose = async (evt) => {
@@ -223,6 +279,8 @@ const useMeetingSocket = ({
             reason: evt.reason,
             wasClean: evt.wasClean,
           });
+
+          logCloseEvt(evt);
           await micCtlRef.current?.stop();
           micCtlRef.current = null;
 
@@ -236,14 +294,15 @@ const useMeetingSocket = ({
         ws.onmessage = (ev) => {
           try {
             const raw = JSON.parse(ev.data as string);
+            // 포맷팅
             const msg: WsInbound =
               raw?.type === 'utterance'
                 ? {
                     type: 'utterance',
                     data: {
-                      segmentId:
-                        typeof raw.data.segmentId === 'number'
-                          ? raw.data.segmentId
+                      speechId:
+                        typeof raw.data.speechId === 'number'
+                          ? raw.data.speechId
                           : Number(raw.data.speechId),
                       speakerId: raw.data.speakerId,
                       text: raw.data.text,
@@ -254,29 +313,26 @@ const useMeetingSocket = ({
                   ? {
                       type: 'ai_questions',
                       data: {
-                        segmentId:
-                          typeof raw.data.segmentId === 'number'
-                            ? raw.data.segmentId
+                        speechId:
+                          typeof raw.data.speechId === 'number'
+                            ? raw.data.speechId
                             : Number(raw.data.speechId),
                         questions: raw.data.questions,
                       },
                     }
                   : raw;
 
+            // 이전거와 병합하기
             if (msg.type === 'utterance') {
               upsertSpeech({
-                segmentId: msg.data.segmentId,
+                segmentId: msg.data.speechId,
                 speakerId: msg.data.speakerId,
                 text: msg.data.text,
                 startTime: msg.data.startTime,
               });
             } else if (msg.type === 'ai_questions') {
               const qObjs = ensureQuestionObjects(msg.data.questions);
-              setQuestionsFor(msg.data.segmentId, qObjs);
-              setForSpeech(
-                String(msg.data.segmentId),
-                qObjs.map((q) => q.question),
-              );
+              setQuestionsFor(msg.data.speechId, qObjs);
             } else {
               // 개발 시 디버그
               if (process.env.NODE_ENV !== 'production') {
@@ -288,7 +344,7 @@ const useMeetingSocket = ({
           }
         };
       }),
-    [addToast, setForSpeech, setQuestionsFor, upsertSpeech, wsUrl],
+    [addToast, onMicStream, setQuestionsFor, upsertSpeech, wsUrl],
   );
 
   // 외부 ui에서 쓸 recording controls
@@ -304,9 +360,8 @@ const useMeetingSocket = ({
       void 0;
     }
     await endMeetingMutate({ meetingId });
-    clearAll();
     setSpeeches([]);
-  }, [endMeetingMutate, meetingId, clearAll]);
+  }, [endMeetingMutate, meetingId]);
 
   // cleanup
   useEffect(() => {
@@ -326,24 +381,14 @@ const useMeetingSocket = ({
     };
   }, []);
 
-  // seek helper
-  const calcSeekSeconds = useCallback(
-    (speechStartIso: string) => {
-      const base = new Date(meetingStartTime).getTime();
-      const t = new Date(speechStartIso).getTime();
-      if (!Number.isFinite(base) || !Number.isFinite(t)) return 0;
-      return Math.max(0, (t - base) / 1000);
-    },
-    [meetingStartTime],
-  );
-
   return {
     connected,
     isEnding,
     speeches,
+    questionsForUI, // RightPanel 전용
+    speechTextById, // RightPanel 전용
     connect,
     endMeeting,
-    calcSeekSeconds,
     pauseStreaming,
     resumeStreaming,
     isPaused,

@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { formatAudioProgress } from '../audio-bar.util';
+import { formatAudioProgress } from '../audio-bar.utils';
 import { PlayerProgressBarProps } from './PlayerProgressBar.types';
 
 const PlayerProgressBar = ({

@@ -1,11 +1,10 @@
 import { Question } from '@features/ai-meeting-manager/types/meeting.types';
 
 export interface SpeechItemProps {
-  speechId: string;
+  speechId: number;
   text: string;
   speakerId: string;
-  hasQuestion?: boolean;
   questions: Question[];
   startTime: string;
-  calcSeekSeconds: (speechStartIso: string) => number;
+  meetingStartTime: string;
 }

@@ -11,7 +11,7 @@ import { useFocusMapActions } from '@features/ai-meeting-manager/hooks/stores/us
 
 import { SpeechItemProps } from './SpeechItem.types';
 
-// utils: 초 → MM:SS
+/** 초 → MM:SS */
 const toMMSS = (sec: number) => {
   const m = Math.floor(sec / 60)
     .toString()
@@ -26,43 +26,44 @@ const SpeechItem = ({
   speechId,
   text,
   speakerId,
-  hasQuestion,
+  meetingStartTime,
   questions,
   startTime,
-  calcSeekSeconds,
 }: SpeechItemProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const { registerSpeechRef, unregisterSpeechRef, focusQuestionBySpeech } = useFocusMapActions();
+
+  const hasQuestion = questions.length > 0;
+
   useEffect(() => {
-    registerSpeechRef(speechId, ref.current);
-    return () => unregisterSpeechRef(speechId, ref.current ?? undefined);
+    // cleanup 함수에서 ref.current가 변경될 수 있어 복사해 사용
+    const currentRef = ref.current;
+    registerSpeechRef(speechId, currentRef);
+    return () => unregisterSpeechRef(speechId, currentRef ?? null);
   }, [speechId, registerSpeechRef, unregisterSpeechRef]);
 
-  const onFocusQuestion = (speechId: string) => {
+  const onFocusQuestion = (speechId: number) => {
     console.log(speechId, `발화자 ${speechId} 포커스`);
+  };
+
+  const calcSeekSeconds = (speechStartIso: string) => {
+    const base = new Date(meetingStartTime).getTime();
+    const t = new Date(speechStartIso).getTime();
+    if (!Number.isFinite(base) || !Number.isFinite(t)) return 0;
+    return Math.max(0, (t - base) / 1000);
   };
 
   const speakerLabel = `발화자 ${speakerId}`;
   const seek = calcSeekSeconds(startTime);
   const startAtLabel = toMMSS(seek);
 
-  // 키보드 접근성: Enter/Space로 focusQuestionBySpeech 트리거
-  const onKey = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      focusQuestionBySpeech(speechId, { flashMs: 1200 });
-    }
-  };
-
   return (
     <div
       role="button"
       ref={ref}
       data-speech-id={speechId}
-      tabIndex={0}
       aria-label={`${speakerLabel} ${startAtLabel}`}
-      onClick={() => focusQuestionBySpeech(speechId, { flashMs: 1200 })}
-      onKeyDown={onKey}
+      onClick={() => focusQuestionBySpeech(speechId)}
       className={clsx(
         'group/utt py-12pxr rounded-8pxr w-full cursor-pointer',
         hasQuestion ? 'pl-32pxr' : 'px-32pxr',
@@ -86,7 +87,7 @@ const SpeechItem = ({
                   type="button"
                   aria-label="질문 보기"
                   onClick={(e) => {
-                    e.stopPropagation(); // 부모 onClick(시킹) 막기
+                    e.stopPropagation(); // 부모 onClick 막기
                     onFocusQuestion(speechId);
                   }}
                   className="block transition-opacity group-hover/utt:hidden"

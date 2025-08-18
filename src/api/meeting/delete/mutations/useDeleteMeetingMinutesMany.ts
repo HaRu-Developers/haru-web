@@ -6,22 +6,25 @@ import queryKeys from '@common/constants/query-key.constants';
 
 import { useToastActions } from '@common/hooks/stores/useToastStore';
 
-import { meetingIdRequestDto } from '../../api.types';
 import deleteMeetingMinutes from '../apis/deleteMeetingMinutes';
 
 /**
  * AI Meeting 회의록을 React Query로 삭제하는 커스텀 훅
  *
- * - 내부적으로 `deleteMeetingMinutes` API 함수를 호출합니다.
+ * 삭제할 meetingId 배열을 받아 내부적으로 `deleteMeetingMinutes` API 함수를 호출해 다중 삭제 합니다.
  */
-const useDeleteMeetingMinutes = (workspaceId: string) => {
+const useDeleteMeetingMinutesMany = (workspaceId: string) => {
   const queryClient = useQueryClient();
   const { addToast } = useToastActions();
 
   const listKey = queryKeys.meetings.list(workspaceId).queryKey;
 
   return useMutation({
-    mutationFn: (data: meetingIdRequestDto) => deleteMeetingMinutes(data),
+    mutationKey: queryKeys.meetings.delete(workspaceId).queryKey,
+
+    mutationFn: async (ids: string[]) => {
+      await Promise.all(ids.map((id) => deleteMeetingMinutes({ meetingId: id })));
+    },
 
     onSuccess: async () => {
       // 회의록 리스트 다시 호출
@@ -36,4 +39,4 @@ const useDeleteMeetingMinutes = (workspaceId: string) => {
   });
 };
 
-export default useDeleteMeetingMinutes;
+export default useDeleteMeetingMinutesMany;

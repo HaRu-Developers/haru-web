@@ -6,6 +6,7 @@ export type MicController = {
   pause: () => void;
   resume: () => void;
   isPaused: () => boolean;
+  getStream: () => MediaStream;
 };
 
 /**
@@ -69,6 +70,8 @@ export const startMicAndPipeToWebSocket = async (ws: WebSocket): Promise<MicCont
     },
     // 송신 막음 여부
     isPaused: () => paused,
+    // 스트림 반환
+    getStream: () => stream,
     // 핸들러 해제, 노드 연결 해제, 트랙 stop, 컨텍스트 close()까지 깔끔 종료
     stop: async () => {
       try {

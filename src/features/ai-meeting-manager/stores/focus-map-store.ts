@@ -1,6 +1,5 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
-import { immer } from 'zustand/middleware/immer';
 
 type El = HTMLElement | null;
 
@@ -15,19 +14,19 @@ export type FocusOptions = {
 };
 
 export type FocusActions = {
-  registerSpeechRef: (speechId: string, el: El) => void;
-  unregisterSpeechRef: (speechId: string, el?: El) => void;
+  registerSpeechRef: (segmentId: number, el: El) => void;
+  unregisterSpeechRef: (segmentId: number, el?: El) => void;
 
-  registerQuestionRef: (speechId: string, el: El) => void;
-  unregisterQuestionRef: (speechId: string, el?: El) => void;
+  registerQuestionRef: (segmentId: number, el: El) => void;
+  unregisterQuestionRef: (segmentId: number, el?: El) => void;
 
-  focusSpeech: (speechId: string, opts?: FocusOptions) => void;
-  focusQuestionBySpeech: (speechId: string, opts?: FocusOptions) => void;
+  focusSpeech: (segmentId: number, opts?: FocusOptions) => void;
+  focusQuestionBySpeech: (segmentId: number, opts?: FocusOptions) => void;
 };
 
 export type FocusMapState = {
-  speechRefs: Map<string, El>;
-  questionRefs: Map<string, HTMLElement[]>; // 질문 쪽은 null 저장 안 함
+  speechRefs: Map<number, El>;
+  questionRefs: Map<number, HTMLElement[]>;
   actions: FocusActions;
 };
 
@@ -41,7 +40,7 @@ const flash = (el: El, opts?: FocusOptions) => {
     block: opts?.block ?? 'center',
     inline: opts?.inline ?? 'nearest',
   });
-  window.setTimeout(() => el.classList.remove(FLASH_CLASS), opts?.flashMs ?? 1200);
+  window.setTimeout(() => el.classList.remove(FLASH_CLASS), opts?.flashMs ?? 1000);
 };
 
 const useFocusMapStore = create<FocusMapState>()(
@@ -51,54 +50,52 @@ const useFocusMapStore = create<FocusMapState>()(
       questionRefs: new Map<string, HTMLElement[]>(),
 
       actions: {
-        registerSpeechRef: (speechId, el) =>
+        registerSpeechRef: (segmentId, el) =>
           set((state) => {
             const next = new Map(state.speechRefs);
-            next.set(String(speechId), el ?? null);
+            next.set(segmentId, el);
             return { speechRefs: next };
           }),
 
-        unregisterSpeechRef: (speechId) =>
+        unregisterSpeechRef: (segmentId) =>
           set((state) => {
             const next = new Map(state.speechRefs);
-            next.delete(String(speechId));
+            next.delete(segmentId);
             return { speechRefs: next };
           }),
 
-        registerQuestionRef: (speechId, el) =>
+        registerQuestionRef: (segmentId, el) =>
           set((state) => {
-            const key = String(speechId);
             const next = new Map(state.questionRefs);
-            const arr = next.get(key) ? [...next.get(key)!] : [];
+            const arr = next.get(segmentId) ? [...next.get(segmentId)!] : [];
             if (el && !arr.includes(el)) arr.push(el);
-            next.set(key, arr);
+            next.set(segmentId, arr);
             return { questionRefs: next };
           }),
 
-        unregisterQuestionRef: (speechId, el) =>
+        unregisterQuestionRef: (segmentId, el) =>
           set((state) => {
-            const key = String(speechId);
             const next = new Map(state.questionRefs);
             if (!el) {
-              next.delete(key);
+              next.delete(segmentId);
             } else {
-              const arr = next.get(key);
+              const arr = next.get(segmentId);
               if (arr)
                 next.set(
-                  key,
+                  segmentId,
                   arr.filter((x) => x !== el),
                 );
             }
             return { questionRefs: next };
           }),
 
-        focusSpeech: (speechId, opts) => {
-          const el = get().speechRefs.get(String(speechId)) ?? null;
+        focusSpeech: (segmentId, opts) => {
+          const el = get().speechRefs.get(segmentId) ?? null;
           flash(el, opts);
         },
 
-        focusQuestionBySpeech: (speechId, opts) => {
-          const el = get().questionRefs.get(String(speechId))?.[0] ?? null;
+        focusQuestionBySpeech: (segmentId, opts) => {
+          const el = get().questionRefs.get(segmentId)?.[0] ?? null;
           flash(el, opts);
         },
       },

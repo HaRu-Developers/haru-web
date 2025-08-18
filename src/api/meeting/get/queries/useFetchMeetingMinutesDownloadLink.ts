@@ -18,7 +18,7 @@ const useFetchMeetingMinutesDownloadLink = (meetingId: string) => {
     ApiError<ApiErrorBody>, // TError
     string //TExtra
   >({
-    queryKey: queryKeys.meetings.editTitle(meetingId).queryKey,
+    queryKey: queryKeys.meetings.downloadLink(meetingId).queryKey,
     queryFn: () => fetchMeetingMinutesDownloadLink({ meetingId }),
     enabled: !!meetingId,
     retry: false,

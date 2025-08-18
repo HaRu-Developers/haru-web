@@ -5,7 +5,7 @@ import { useCallback } from 'react';
 import { useParams, useSearchParams } from 'next/navigation';
 
 import useFetchMeetingMinutesDetail from '@api/meeting/get/queries/useFetchMeetingMinutesDetail';
-import useEditMeetingMinutesTitle from '@api/meeting/patch/queries/useEditMeetingMinutesTitle';
+import useEditMeetingMinutesTitle from '@api/meeting/patch/mutations/useEditMeetingMinutesTitle';
 
 import FileCreatedInfo from '@common/components/FileCreatedInfo/FileCreatedInfo.client';
 import { ImageSize } from '@common/components/images/types/images.common.types';

@@ -13,6 +13,6 @@ export const formatAudioProgress = (time: number | undefined | null) => {
   ]
     .map((v) => (v < 10 ? '0' + v : v))
     .join(':');
-  // setProgress(formattedTime);
+
   return formattedTime;
 };

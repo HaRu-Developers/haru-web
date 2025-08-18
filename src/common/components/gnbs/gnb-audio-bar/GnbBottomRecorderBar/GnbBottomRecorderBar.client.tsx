@@ -14,92 +14,36 @@ import StopRecordingButton from '@common/components/buttons/32px/StopRecordingBu
 
 import PlayPauseButton from '../PlayPauseButton/PlayPauseButton.client';
 import { PlayPauseButtonStatus } from '../PlayPauseButton/PlayPauseButton.types';
-import { formatAudioProgress } from '../audio-bar.util';
+import { formatAudioProgress } from '../audio-bar.utils';
 
 interface GnbBottomRecorderBarProps {
-  onRecordEnd: (blob: Blob) => void;
-  external?: {
-    hasStarted: boolean;
-    isRecording: boolean; // (일시정지=false)
-    onStart: () => void;
-    onPauseResume: () => void;
-    onStop: () => void;
-    elapsedSec?: number; // 선택: 상단 타이머
-  };
+  micStream: MediaStream | null; // hook에서 받은 동일 스트림
+  connect: () => Promise<void>;
+  endMeeting: () => Promise<void>;
+  pauseStreaming: () => void;
+  resumeStreaming: () => void;
+  isPaused: () => boolean;
 }
 
-const GnbBottomRecorderBar = ({ onRecordEnd, external }: GnbBottomRecorderBarProps) => {
-  // 외부모드면 wavesurfer 초기화/녹음 로직 전부 건너뜀
-  const isExternal = !!external;
-
+const GnbBottomRecorderBar = ({
+  micStream,
+  connect,
+  endMeeting,
+  pauseStreaming,
+  resumeStreaming,
+  isPaused,
+}: GnbBottomRecorderBarProps) => {
   const recorderWsRef = useRef<WaveSurfer | null>(null);
   const recorderPluginRef = useRef<RecordPlugin | null>(null);
   const recorderContainerRef = useRef<HTMLDivElement | null>(null);
 
   const { addToast } = useToastActions();
 
-  // 녹음 시작 전 최초 상태일 경우 구별을 위해 사용
   const [hasStartedRecording, setHasStartedRecording] = useState<boolean>(false);
   const [isRecording, setIsRecording] = useState<boolean>(false);
-
   const [recorderProgress, setRecorderProgress] = useState<number>(0);
 
-  // 사용 가능한 마이크 디바이스 가져오기
-  const getAvailableDevices = async () => {
-    try {
-      const devices = await RecordPlugin.getAvailableAudioDevices();
-      return devices;
-    } catch (error) {
-      console.error('[ERR] Cannot get audio devices:', error);
-      addToast({
-        text: '오디오 디바이스를 가져올 수 없습니다.',
-        type: ToastType.ERROR,
-      });
-      return [];
-    }
-  };
-
-  const handleRecordResumePause = useCallback(() => {
-    if (!recorderPluginRef.current) {
-      // console.error('[ERR] Recorder plugin is not initialized.');
-      return;
-    }
-
-    const isPaused = recorderPluginRef.current.isPaused();
-    if (isPaused) {
-      recorderPluginRef.current.resumeRecording();
-    } else {
-      recorderPluginRef.current.pauseRecording();
-    }
-  }, []);
-
-  const handleStartRecording = useCallback(async () => {
-    initializeWavesurfer();
-
-    if (!recorderPluginRef.current) {
-      // console.error('[ERR] Recorder plugin is not initialized.');
-      return;
-    }
-
-    const devices = await getAvailableDevices();
-    console.log('[INFO] Available devices:', devices);
-
-    recorderPluginRef.current.startRecording({ deviceId: devices[0]?.deviceId });
-
-    setHasStartedRecording(true);
-    setIsRecording(true);
-  }, []);
-
-  const handleEndRecording = useCallback(() => {
-    if (!recorderPluginRef.current) {
-      // console.error('[ERR] Recorder plugin is not initialized.');
-      return;
-    }
-
-    recorderPluginRef.current.stopRecording();
-  }, []);
-
-  const initializeWavesurfer = () => {
+  const initializeWavesurfer = useCallback(() => {
     // console.log('Initializing Wavesurfer...');
     // div container is required, assuring it.
     if (!recorderContainerRef.current) {
@@ -138,10 +82,8 @@ const GnbBottomRecorderBar = ({ onRecordEnd, external }: GnbBottomRecorderBarPro
       }),
     );
 
-    recorderPlugin.on('record-end', (blob: Blob) => {
-      // console.log('Recording ended:', blob);
-      // console.log('Recorded audio URL:', URL.createObjectURL(blob));
-      onRecordEnd(blob);
+    recorderPlugin.on('record-end', () => {
+      endMeeting();
       setIsRecording(false);
     });
 
@@ -151,11 +93,13 @@ const GnbBottomRecorderBar = ({ onRecordEnd, external }: GnbBottomRecorderBarPro
 
     recorderPlugin.on('record-resume', () => {
       // console.log('Recording resumed');
+      resumeStreaming();
       setIsRecording(true);
     });
 
     recorderPlugin.on('record-pause', () => {
       // console.log('Recording paused');
+      pauseStreaming();
       setIsRecording(false);
     });
 
@@ -163,11 +107,70 @@ const GnbBottomRecorderBar = ({ onRecordEnd, external }: GnbBottomRecorderBarPro
     recorderPluginRef.current = recorderPlugin;
 
     // console.log('Wavesurfer and RecordPlugin initialized');
-  };
+  }, [endMeeting, connect, pauseStreaming, resumeStreaming]);
+
+  // 사용 가능한 마이크 디바이스 가져오기
+  const getAvailableDevices = useCallback(async () => {
+    try {
+      const devices = await RecordPlugin.getAvailableAudioDevices();
+      return devices;
+    } catch (error) {
+      console.error('[ERR] Cannot get audio devices:', error);
+      addToast({
+        text: '오디오 디바이스를 가져올 수 없습니다.',
+        type: ToastType.ERROR,
+      });
+      return [];
+    }
+  }, [addToast]);
+
+  // 일시정지/재개
+  const handleRecordResumePause = useCallback(() => {
+    if (!recorderPluginRef.current) {
+      // console.error('[ERR] Recorder plugin is not initialized.');
+      return;
+    }
+
+    const isPaused = recorderPluginRef.current.isPaused();
+    if (isPaused) {
+      recorderPluginRef.current.resumeRecording();
+    } else {
+      recorderPluginRef.current.pauseRecording();
+    }
+  }, []);
+
+  // 녹음 시작
+  const handleStartRecording = useCallback(async () => {
+    initializeWavesurfer();
+
+    await connect(); // hook이 스트림 생성 + onMicStream으로 넘김
+    if (!micStream || !recorderPluginRef.current) {
+      // console.error('[ERR] Recorder plugin is not initialized.');
+      return;
+    }
+    try {
+      recorderPluginRef.current.renderMicStream(micStream); // ✅ 기존 스트림 표시
+    } catch {
+      void 0;
+    }
+    setHasStartedRecording(true);
+    setIsRecording(true);
+  }, [connect, initializeWavesurfer, micStream]);
+
+  // 종료
+  const handleEndRecording = useCallback(() => {
+    if (!recorderPluginRef.current) {
+      // console.error('[ERR] Recorder plugin is not initialized.');
+      return;
+    }
+
+    recorderPluginRef.current.stopRecording();
+  }, []);
 
   useEffect(() => {
-    // if (!hasStartedRecording) return;
+    if (!hasStartedRecording) return;
 
+    // 기존 객체 있으면 파기
     if (recorderWsRef.current) {
       recorderWsRef.current.destroy();
     }
@@ -181,60 +184,64 @@ const GnbBottomRecorderBar = ({ onRecordEnd, external }: GnbBottomRecorderBarPro
         recorderWsRef.current = null;
       }
     };
-  }, []);
+  }, [hasStartedRecording, initializeWavesurfer]);
 
-  // 구성은 [녹음 재개/일시정지 버튼] [녹음 진행바] [녹음 시간] [녹음 정지 버튼]
-  if (isExternal) {
-    const { hasStarted, isRecording, onStart, onPauseResume, onStop, elapsedSec = 0 } = external;
-    return (
-      <div className="w-656pxr h-68pxr rounded-100pxr border-stroke-200/70 px-16pxr flex items-center border bg-white">
-        {hasStarted ? (
-          <PlayPauseButton
-            className="mr-184pxr"
-            status={isRecording ? PlayPauseButtonStatus.PAUSE : PlayPauseButtonStatus.PLAY}
-            onClick={onPauseResume}
-          />
-        ) : (
-          <StartRecordingButton className="mr-137pxr" onClick={onStart} />
-        )}
-        <div className="w-122pxr bg-audio-bar h-2pxr rounded-100pxr" />
-        <span className="text-cap1-rg ml-12pxr text-black">{formatAudioProgress(elapsedSec)}</span>
-        {hasStarted && <StopRecordingButton onClick={onStop} className="ml-155pxr" />}
-        <div className="flex-grow" />
-      </div>
-    );
-  }
-  // return (
-  //   <div className="w-656pxr h-68pxr rounded-100pxr border-stroke-200/70 px-16pxr flex flex-row items-center border bg-white">
-  //     {/* 녹음 시작 여부에 따라 선택적 렌더링 */}
-  //     {hasStartedRecording ? (
-  //       // 녹음이 시작된 경우
-  //       <PlayPauseButton
-  //         className="mr-184pxr"
-  //         status={isRecording ? PlayPauseButtonStatus.PAUSE : PlayPauseButtonStatus.PLAY}
-  //         onClick={handleRecordResumePause}
-  //       />
-  //     ) : (
-  //       // 녹음이 시작되지 않은 경우
-  //       <StartRecordingButton
-  //         className="mr-137pxr"
-  //         onClick={async () => await handleStartRecording()}
-  //       />
-  //     )}
-  //     {/* 녹음 시작 여부에 따라 선택적 렌더링, Wavesurfer 객체를 위해 hidden을 활용 */}
-  //     <div className="w-122pxr bg-audio-bar h-2pxr rounded-100pxr" hidden={hasStartedRecording} />
-  //     <div className="w-122pxr" ref={recorderContainerRef} hidden={!hasStartedRecording} />
-  //     {/* 현재 녹음 시간 */}
-  //     <span className="text-cap1-rg ml-12pxr text-black">
-  //       {formatAudioProgress(recorderProgress)}
-  //     </span>
-  //     {/* 녹음이 시작된 경우에만 정지 버튼 렌더링 */}
-  //     {hasStartedRecording && (
-  //       <StopRecordingButton onClick={handleEndRecording} className="ml-155pxr" />
-  //     )}
-  //     <div className="flex-grow" /> {/* 남은 공간을 채우기 위한 빈 div */}
-  //   </div>
-  // );
+  // hook에서 넘겨준 micStream이 오면, 그 스트림으로 시각화만
+  useEffect(() => {
+    if (!micStream || !recorderPluginRef.current) return;
+    try {
+      const audioTrack = micStream.getAudioTracks()[0];
+      if (audioTrack) {
+        recorderPluginRef.current.startRecording({ deviceId: audioTrack.getSettings().deviceId });
+      } else {
+        recorderPluginRef.current.startRecording(); // 기본 디바이스 사용
+      }
+      setIsRecording(true);
+      setHasStartedRecording(true);
+    } catch {
+      // 시각화만 실패해도 전송은 hook에서 계속 진행됨
+    }
+
+    return () => {
+      try {
+        recorderPluginRef.current?.stopRecording();
+      } catch {
+        void 0;
+      }
+    };
+  }, [micStream]);
+
+  return (
+    <div className="w-656pxr h-68pxr rounded-100pxr border-stroke-200/70 px-16pxr flex flex-row items-center border bg-white">
+      {/* 녹음 시작 여부에 따라 선택적 렌더링 */}
+      {hasStartedRecording ? (
+        // 녹음이 시작된 경우
+        <PlayPauseButton
+          className="mr-184pxr"
+          status={isRecording ? PlayPauseButtonStatus.PAUSE : PlayPauseButtonStatus.PLAY}
+          onClick={handleRecordResumePause}
+        />
+      ) : (
+        // 녹음이 시작되지 않은 경우
+        <StartRecordingButton
+          className="mr-137pxr"
+          onClick={async () => await handleStartRecording()}
+        />
+      )}
+      {/* 녹음 시작 여부에 따라 선택적 렌더링, Wavesurfer 객체를 위해 hidden을 활용 */}
+      <div className="w-122pxr bg-audio-bar h-2pxr rounded-100pxr" hidden={hasStartedRecording} />
+      <div className="w-122pxr" ref={recorderContainerRef} hidden={!hasStartedRecording} />
+      {/* 현재 녹음 시간 */}
+      <span className="text-cap1-rg ml-12pxr text-black">
+        {formatAudioProgress(recorderProgress)}
+      </span>
+      {/* 녹음이 시작된 경우에만 정지 버튼 렌더링 */}
+      {hasStartedRecording && (
+        <StopRecordingButton onClick={handleEndRecording} className="ml-155pxr" />
+      )}
+      <div className="flex-grow" /> {/* 남은 공간을 채우기 위한 빈 div */}
+    </div>
+  );
 };
 
 export default GnbBottomRecorderBar;

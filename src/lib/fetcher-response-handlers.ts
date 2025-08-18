@@ -7,6 +7,8 @@ import { ApiErrorBody, BaseResponseDto } from '@common/types/api.common.types';
 
 import { ApiError } from '@common/errors/ApiError';
 
+import { joinURL } from '@common/utils/join-url.utils';
+
 import useAuthStore from '@features/auth/stores/auth-store';
 
 /**
@@ -98,18 +100,34 @@ export const handleResponseError = async (
 
 export const refreshAccessToken = async () => {
   const { user, actions } = useAuthStore.getState();
+
   const { setUserId, setAccessToken, setRefreshToken, clearTokens } = actions;
   const { accessToken, refreshToken } = user ?? {};
 
-  if (!refreshToken) {
+  console.log('[fetcher.ts] 토큰 갱신 요청을 시작합니다.', {
+    accessToken,
+    refreshToken,
+  });
+
+  if (!refreshToken || !accessToken) {
     clearTokens();
-    throw new Error('NO REFRESH TOKEN AVAILABLE');
+    throw new Error('NO ACCESS TOKEN OR REFRESH TOKEN AVAILABLE');
   }
 
-  const res = await fetch(AUTH_API_ENDPOINTS.REFRESH_TOKEN, {
+  const baseURL = process.env.NEXT_PUBLIC_SERVER_API_BASE_URL;
+  if (!baseURL) {
+    throw new Error(
+      'API baseURL이 누락되었습니다. NEXT_PUBLIC_SERVER_API_BASE_URL 환경 변수를 확인하세요.',
+    );
+  }
+
+  const safeUrl = joinURL(baseURL, AUTH_API_ENDPOINTS.REFRESH_TOKEN);
+
+  const res = await fetch(safeUrl, {
     method: 'POST',
     headers: {
       RefreshToken: refreshToken,
+      Authorization: `Bearer ${accessToken}`,
     },
   });
 

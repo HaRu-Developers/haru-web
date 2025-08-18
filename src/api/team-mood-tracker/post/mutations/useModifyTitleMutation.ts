@@ -1,6 +1,10 @@
 import { useCallback } from 'react';
 
+import { useParams } from 'next/navigation';
+
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+
+import { ApiDocument } from '@api/workspace/api.types';
 
 import { ApiErrorBody } from '@common/types/api.common.types';
 
@@ -27,6 +31,7 @@ import { ModifyMoodTrackerTitle } from '../apis/modify-title';
 
 export const useModifyMoodTrackerTitleMutation = () => {
   const queryClient = useQueryClient();
+  const { workspaceId } = useParams<{ workspaceId: string }>();
 
   const handleError = useCallback((error: ApiError<ApiErrorBody>) => {
     if (error.code === API_ERROR_CODES.MOOD_TRACKER.MODIFY_NOT_ALLOWED) {
@@ -43,6 +48,7 @@ export const useModifyMoodTrackerTitleMutation = () => {
     onMutate: async ({ moodTrackerHashedId, title: newTitle }) => {
       // 낙관적 업데이트의 기준이 되는 surveyResponse 데이터의 쿼리 키를 가져옵니다.
       const surveyQueryKey = queryKeys.moodTracker.detail(moodTrackerHashedId);
+      const recentDocsQueryKey = queryKeys.workspaces.recentDocuments(workspaceId);
 
       // 1. 진행 중인 쿼리를 취소하여, 현재의 낙관적 업데이트를 덮어쓰는 것을 방지합니다.
       await queryClient.cancelQueries(surveyQueryKey);
@@ -50,6 +56,9 @@ export const useModifyMoodTrackerTitleMutation = () => {
       // 2. 롤백을 대비하여, 현재 캐시에 있는 'surveyResponse' 데이터를 백업합니다.
       const previousSurveyData = queryClient.getQueryData<GetViewSurveyResponseDto>(
         surveyQueryKey.queryKey,
+      );
+      const previousRecentDocs = queryClient.getQueryData<{ result: { documents: ApiDocument[] } }>(
+        recentDocsQueryKey.queryKey,
       );
 
       // 3. 'surveyResponse' 캐시를 새로운 제목으로 즉시 업데이트합니다.
@@ -61,14 +70,36 @@ export const useModifyMoodTrackerTitleMutation = () => {
         });
       }
 
+      if (previousRecentDocs) {
+        const newDocuments = previousRecentDocs.result.documents.map((doc) =>
+          doc.documentId === moodTrackerHashedId ? { ...doc, title: newTitle } : doc,
+        );
+        queryClient.setQueryData(recentDocsQueryKey.queryKey, {
+          ...previousRecentDocs,
+          result: {
+            ...previousRecentDocs.result,
+            documents: newDocuments,
+          },
+        });
+      }
+
       // 4. 백업해 둔 이전 데이터를 context에 담아 onError와 onSettled에 전달합니다.
-      return { previousSurveyData, surveyQueryKey: surveyQueryKey.queryKey };
+      return {
+        previousSurveyData,
+        previousRecentDocs,
+        surveyQueryKey: surveyQueryKey.queryKey,
+        recentDocsQueryKey: recentDocsQueryKey.queryKey,
+      };
     },
 
     onError: (error: Error, variables, context) => {
       // 5. onMutate에서 백업해 둔 'previousSurveyData'를 사용하여 캐시를 원상 복구합니다.
       if (context?.previousSurveyData) {
         queryClient.setQueryData(context.surveyQueryKey, context.previousSurveyData);
+      }
+      // GnbLeft RecentData
+      if (context?.previousRecentDocs) {
+        queryClient.setQueryData(context.recentDocsQueryKey, context.previousRecentDocs);
       }
 
       if (error instanceof ApiError) {

@@ -5,22 +5,11 @@ import clsx from 'clsx';
 import AiQuestionIcons from '@icons/AiQuestionIcons/AiQuestionIcons';
 import { AiQuestionIconsState } from '@icons/AiQuestionIcons/AiQuestionIcons.types';
 import SpeakerIcons from '@icons/SpeakerIcons/SpeakerIcons';
-import { SpeakerIconsState } from '@icons/SpeakerIcons/SpeakerIcons.types';
 
 import { useFocusMapActions } from '@features/ai-meeting-manager/hooks/stores/useFocusMapStore';
 
 import { SpeechItemProps } from './SpeechItem.types';
-
-/** 초 → MM:SS */
-const toMMSS = (sec: number) => {
-  const m = Math.floor(sec / 60)
-    .toString()
-    .padStart(2, '0');
-  const s = Math.floor(sec % 60)
-    .toString()
-    .padStart(2, '0');
-  return `${m}:${s}`;
-};
+import { getSpeakerIconStateFromId, getSpeekerId, toMMSS } from './SpeechItem.utils';
 
 const SpeechItem = ({
   speechId,
@@ -35,6 +24,8 @@ const SpeechItem = ({
 
   const hasQuestion = questions.length > 0;
 
+  const formattedSpeakerId = getSpeekerId(speakerId);
+
   useEffect(() => {
     // cleanup 함수에서 ref.current가 변경될 수 있어 복사해 사용
     const currentRef = ref.current;
@@ -43,7 +34,7 @@ const SpeechItem = ({
   }, [speechId, registerSpeechRef, unregisterSpeechRef]);
 
   const onFocusQuestion = (speechId: number) => {
-    console.log(speechId, `발화자 ${speechId} 포커스`);
+    console.log(speechId, `${speechId} 발화 포커스`);
   };
 
   const calcSeekSeconds = (speechStartIso: string) => {
@@ -53,9 +44,11 @@ const SpeechItem = ({
     return Math.max(0, (t - base) / 1000);
   };
 
-  const speakerLabel = `발화자 ${speakerId}`;
+  const speakerLabel = `발화자 ${formattedSpeakerId}`;
   const seek = calcSeekSeconds(startTime);
   const startAtLabel = toMMSS(seek);
+
+  const iconState = getSpeakerIconStateFromId(formattedSpeakerId);
 
   return (
     <div
@@ -70,7 +63,7 @@ const SpeechItem = ({
       )}
     >
       <div className="gap-x-12pxr flex">
-        <SpeakerIcons state={SpeakerIconsState.USER_1} className="shrink-0 cursor-default" />
+        <SpeakerIcons state={iconState} className="shrink-0 cursor-default" />
         <div className="min-w-0 flex-1">
           <div className="gap-x-10pxr py-5pxr flex cursor-default items-center">
             <p className="text-t5-sb truncate text-black">{speakerLabel}</p>

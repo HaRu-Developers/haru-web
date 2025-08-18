@@ -174,10 +174,7 @@ const useMeetingSocket = ({
   const handleInbound = useCallback(
     (ev: MessageEvent) => {
       try {
-        console.log('ev.data', ev.data);
         const raw = JSON.parse(ev.data as string);
-        console.log('recieved raw', raw);
-
         const msg: WsInbound =
           raw?.type === 'utterance'
             ? {
@@ -205,8 +202,6 @@ const useMeetingSocket = ({
                 }
               : raw;
 
-        console.log('recieved msg', msg);
-
         if (msg.type === 'utterance') {
           upsertSpeech({
             segmentId: msg.data.speechId,
@@ -230,20 +225,6 @@ const useMeetingSocket = ({
   // ---- 운영 핸들러(오픈 후 한 번만 세팅)
   const attachRuntimeHandlers = useCallback(
     (ws: WebSocket) => {
-      // // ✅ 저수준 수신 로거 (삭제 금지, 일시 디버그용)
-      // ws.addEventListener('message', (ev) => {
-      //   const t = typeof ev.data;
-      //   // ArrayBuffer/Blob 길이도 같이
-      //   if (ev.data instanceof ArrayBuffer) {
-      //     console.log('[WS<-] raw event (ArrayBuffer)', ev.data.byteLength, 'bytes');
-      //   } else if (ev.data instanceof Blob) {
-      //     console.log('[WS<-] raw event (Blob)');
-      //     ev.data.arrayBuffer().then((buf) => console.log('[WS<-] blob bytes', buf.byteLength));
-      //   } else {
-      //     console.log('[WS<-] raw event (text)', (ev.data as string)?.slice?.(0, 120));
-      //   }
-      // });
-
       ws.onmessage = handleInbound;
       ws.onerror = () => {
         addToast({ type: ToastType.ERROR, text: '음성 서버 연결 중 오류가 발생했습니다.' });

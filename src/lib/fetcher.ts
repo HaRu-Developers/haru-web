@@ -45,9 +45,8 @@ export const createFetcher = ({
    */
   async function innerFunction<T>(path: string, options?: CustomRequestInit): Promise<T> {
     // Zustand Auth Store를 활용합니다.
-    const { user, actions } = useAuthStore.getState();
-    const { setAccessToken } = actions;
-    const { accessToken, refreshToken } = user ?? {};
+    const { user } = useAuthStore.getState();
+    const { accessToken } = user ?? {};
 
     if (!baseURL) {
       throw new Error(
@@ -142,13 +141,14 @@ export const createFetcher = ({
         const ct = res.headers.get('content-type') ?? '';
         if (ct.includes('application/json')) {
           resBody = await res.clone().json(); // clone
+          console.log('[fetcher.ts] 응답 JSON:', resBody);
         }
       } catch {
         // JSON이 아니거나 파싱 실패 → 무시
       }
 
       // TODO: RT 만료 시에는 로그인 페이지로 이동 시켜야 함 !
-      if (res.status === 401 && requiresAuth && resBody.code === 'AUTHORIZATION9002') {
+      if (res.status === 401 && resBody.code === 'AUTHORIZATION4002') {
         console.log('AT 만료로 RT 재발급 요청을 합니다.');
         let newAccessToken: string | null = null;
         // refresh 중복 방지

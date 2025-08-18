@@ -26,7 +26,7 @@ const GnbTop = ({
   title,
   current,
   isSnsEventAssistantWithoutWorkspace,
-  isLoading = false,
+  isLoading,
 }: GnbTopProps) => {
   const pathname = usePathname() ?? '';
   const params = useParams<{ workspaceId?: string }>();

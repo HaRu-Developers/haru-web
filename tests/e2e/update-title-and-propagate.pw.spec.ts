@@ -1,7 +1,10 @@
 import { expect, test } from '@playwright/test';
 
+// 로그인 세션 적용
+test.use({ storageState: 'storageState.json' });
+
 test('제목 수정시 최근 조회 파일, GnbTop의 제목이 바뀐다', async ({ page }) => {
-  await page.goto('workspace/11/ai-meeting-manager/1/minutes?leftTab=MEETING_VOICE_LOG');
+  await page.goto('/workspace/11/ai-meeting-manager/2/minutes?leftTab=MEETING_VOICE_LOG');
 
   // 제목 클릭 → 편집모드 진입
   const titleInput = page.getByLabel('파일 제목');
@@ -16,20 +19,8 @@ test('제목 수정시 최근 조회 파일, GnbTop의 제목이 바뀐다', asy
   await page.keyboard.press('Enter');
 
   // GnbTop 헤더가 새 제목으로 변경되는지 확인
-  await expect
-    .poll(
-      async () => {
-        const h1 = page.getByRole('heading', { level: 1 });
-        try {
-          const text = await h1.textContent();
-          return text?.trim() ?? '';
-        } catch {
-          return '';
-        }
-      },
-      { timeout: 5000, intervals: [300, 500, 800, 1200] },
-    )
-    .toBe(newTitle);
+  const title = page.getByTestId('gnb-title');
+  await expect(title).toHaveText(newTitle, { timeout: 10_000 });
 
   // 최근 조회 파일 목록에 새 제목이 반영되는지
   const recentLink = page.getByRole('link', { name: new RegExp(`${newTitle} 파일로 이동`) });
@@ -40,6 +31,6 @@ test('제목 수정시 최근 조회 파일, GnbTop의 제목이 바뀐다', asy
 
   // URL은 그대로(모달/탭 이동 없음)인지 확인
   await expect(page).toHaveURL(
-    /\/workspace\/11\/ai-meeting-manager\/1\/minutes\?leftTab=MEETING_VOICE_LOG/,
+    /\/workspace\/11\/ai-meeting-manager\/2\/minutes\?leftTab=MEETING_VOICE_LOG/,
   );
 });

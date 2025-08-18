@@ -20,10 +20,10 @@ const AiMeetingManagerRootLayout = async ({
 
   return (
     <>
-      {/*<GnbLeftLayout workspaceId={workspaceId}>*/}
-      {children}
-      {aiMeetingManagerModal}
-      {/*</GnbLeftLayout>*/}
+      <GnbLeftLayout workspaceId={workspaceId}>
+        {children}
+        {aiMeetingManagerModal}
+      </GnbLeftLayout>
     </>
   );
 };

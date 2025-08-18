@@ -1,14 +1,13 @@
-import { HydrationBoundary } from '@tanstack/react-query';
-
-import fetchMeetingMinutesList from '@api/meeting/get/apis/fetchMeetingMinutesList';
-
+// import { HydrationBoundary } from '@tanstack/react-query';
+// import fetchMeetingMinutesList from '@api/meeting/get/apis/fetchMeetingMinutesList';
 import { FileType } from '@common/types/file-type.enum';
 import { GnbSection } from '@common/types/gnbs.types';
 
-import queryKeys from '@common/constants/query-key.constants';
+// import queryKeys from '@common/constants/query-key.constants';
 
 import { getCtaDescription, getListTitle } from '@common/utils/assistant-mapping.utils';
-import { getDehydratedState } from '@common/utils/dehydrate';
+
+// import { getDehydratedState } from '@common/utils/dehydrate';
 
 import TextCtaWrapper from '@common/components/cta/TextCtaWrapper/TextCtaWrapper.server';
 import GnbTop from '@common/components/gnbs/GnbTop/GnbTop.client';

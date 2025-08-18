@@ -1,5 +1,8 @@
 import { expect, test } from '@playwright/test';
 
+// 로그인 세션 적용
+test.use({ storageState: 'storageState.json' });
+
 test('탭 이동을 한다', async ({ page }) => {
   await page.goto('/workspace/11/ai-meeting-manager/1/minutes');
 

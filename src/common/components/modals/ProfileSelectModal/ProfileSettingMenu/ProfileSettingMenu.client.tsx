@@ -6,6 +6,8 @@ import { useRouter } from 'next/navigation';
 
 import { ToastType } from '@common/types/toast.types';
 
+import { ROUTES } from '@common/constants/routes.constants';
+
 import { useToastActions } from '@common/hooks/stores/useToastStore';
 import { useUserActions, useUserInfo } from '@common/hooks/stores/useUserStore';
 
@@ -26,11 +28,7 @@ const ProfileSettingMenu = ({ workspaceId, email, instagramAccount }: ProfileSet
   const { addToast } = useToastActions();
   const router = useRouter();
   const handlePasswordModal = () => {
-    if (workspaceId) {
-      router.push(`/workspace/${workspaceId}/settings/change-password`);
-    } else {
-      router.push(`/workspace/settings/change-password`);
-    }
+    router.push(ROUTES.MODAL.SETTING.PASSWORD_CHANGE(workspaceId));
   };
   const { mutate: editUserDetail } = useEditUserDetail();
   const handleSave = useCallback(() => {

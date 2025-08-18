@@ -1,3 +1,5 @@
+'use client';
+
 import useFetchMyWorkspaces from '@api/workspace/get/queries/useFetchMyWorkspaces';
 
 import WorkSpaceItemSkeleton from './WorkspaceItem/WorkSpaceItemSkeleton.server';
@@ -8,7 +10,7 @@ const MyWorkspaces = () => {
 
   return (
     <div className="gap-3pxr max-h-210pxr scrollbar-component flex flex-col overflow-y-auto">
-      {isFetching && Array.from({ length: 1 }).map((_, idx) => <WorkSpaceItemSkeleton key={idx} />)}
+      {isFetching && Array.from({ length: 3 }).map((_, idx) => <WorkSpaceItemSkeleton key={idx} />)}
 
       {!isFetching &&
         workspaces?.map((ws) => (

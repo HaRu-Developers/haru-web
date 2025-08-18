@@ -22,10 +22,10 @@ const TeamMoodTrackerRootLayout = async ({
 
   return (
     <>
-      {/*<GnbLeftLayout workspaceId={workspaceId}>*/}
-      {children}
-      {teamMoodTrackerGeneralModal}
-      {/*</GnbLeftLayout>*/}
+      <GnbLeftLayout workspaceId={workspaceId}>
+        {children}
+        {teamMoodTrackerGeneralModal}
+      </GnbLeftLayout>
     </>
   );
 };

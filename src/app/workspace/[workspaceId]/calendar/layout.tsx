@@ -20,12 +20,10 @@ const CalendarLayout = async ({
   const workspaceId = (await params).workspaceId;
 
   return (
-    <>
-      {/*<GnbLeftLayout workspaceId={workspaceId}>*/}
+    <GnbLeftLayout workspaceId={workspaceId}>
       <GnbTop section={GnbSection.CALENDAR} />
       {children}
-      {/*</GnbLeftLayout>*/}
-    </>
+    </GnbLeftLayout>
   );
 };
 

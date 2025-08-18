@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { useParams } from 'next/navigation';
 
 import clsx from 'clsx';
 
@@ -10,19 +10,20 @@ import { ProfileDropdownIconsState } from '@icons/ProfileDropdownIcons/ProfileDr
 
 import useLogout from '@api/user/hooks/mutations/useLogout';
 
+import { ROUTES } from '@common/constants/routes.constants';
+
 const FooterButtons = () => {
   const { mutate: logout, isPending } = useLogout();
   const handleLogout = () => {
     logout();
   };
 
-  const pathname = usePathname();
-  const settingHref = `${pathname}/settings`;
+  const { workspaceId } = useParams<{ workspaceId: string }>();
 
   return (
     <div className="flex w-full items-center justify-between">
       <Link
-        href={settingHref}
+        href={ROUTES.MODAL.SETTING.BASE(workspaceId)}
         className="border-stroke-200 gap-3pxr rounded-7pxr flex h-7 items-center justify-center border border-solid bg-white px-2 py-1.5"
       >
         <ProfileDropdownIcons state={ProfileDropdownIconsState.PROFILE} />

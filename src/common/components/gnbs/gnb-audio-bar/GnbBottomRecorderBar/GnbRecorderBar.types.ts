@@ -1,7 +1,9 @@
 export interface GnbBottomRecorderBarProps {
-  hasStarted: boolean;
-  onStart: () => void;
-  onPauseResume: () => void;
-  onStop: () => void;
-  elapsedSec: number; // 상단 타이머
+  micStream: MediaStream | null; // hook에서 받은 동일 스트림
+  isEnding: boolean;
+  isPaused: () => boolean;
+  connect: () => Promise<void>;
+  endMeeting: () => Promise<void>;
+  pauseStreaming: () => void;
+  resumeStreaming: () => void;
 }

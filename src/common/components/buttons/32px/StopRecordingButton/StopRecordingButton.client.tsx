@@ -5,12 +5,17 @@ import clsx from 'clsx';
 import AudioBarIcons from '@icons/AudioBarIcons/AudioBarIcons';
 import { AudioBarIconsState } from '@icons/AudioBarIcons/AudioBarIcons.types';
 
-import { ButtonsCommonProps } from '../../types/buttons.common.types';
+import { StopRecordingButtonProps } from './StopRecordingButton.types';
 
 /**
  * '녹음 종료' 버튼
  */
-const StopRecordingButton = ({ className, onClick, ...props }: ButtonsCommonProps) => {
+const StopRecordingButton = ({
+  isEnding,
+  className,
+  onClick,
+  ...props
+}: StopRecordingButtonProps) => {
   return (
     <button
       className={clsx(
@@ -18,10 +23,11 @@ const StopRecordingButton = ({ className, onClick, ...props }: ButtonsCommonProp
         className,
       )}
       onClick={onClick}
+      disabled={isEnding}
       {...props}
     >
-      <AudioBarIcons state={AudioBarIconsState.STOP_RECORDING} />
-      <p className="text-bt3-sb whitespace-nowrap">녹음 종료</p>
+      {!isEnding && <AudioBarIcons state={AudioBarIconsState.STOP_RECORDING} />}
+      <p className="text-bt3-sb whitespace-nowrap">{isEnding ? '종료 중...' : '녹음 종료'}</p>
     </button>
   );
 };

@@ -27,7 +27,7 @@ import SpeechPanel from './SpeechPanel/SpeechPanel.client';
 
 const MeetingPanel = ({ pageType, leftTab }: MeetingPanelProps) => {
   const formattedLeftTab = parseEnum(leftTab, LeftTabType, LeftTabType.MEETING_PROCEEDING);
-  const { meetingId, workspaceId } = useParams<{ meetingId: string; workspaceId: string }>();
+  const { workspaceId, meetingId } = useParams<{ workspaceId: string; meetingId: string }>();
   // 발화, 질문 가져오기
   const { extra: { meetingStartTime, transcripts: initialTranscripts } = DEFAULT_SPEECH_QUESTION } =
     useFetchMeetingMinutesSpeechQuestion(meetingId);
@@ -42,15 +42,17 @@ const MeetingPanel = ({ pageType, leftTab }: MeetingPanelProps) => {
     questionsForUI,
     speechTextById,
     connect,
+    isEnding,
+    isPaused,
     endMeeting,
     pauseStreaming,
     resumeStreaming,
-    isPaused,
   } = useMeetingSocket({
     workspaceId,
     meetingId,
     initialTranscripts,
     onMicStream: setMicStream,
+    // sendAudio: false // test api 쓰기 위한 임시 설정
   });
 
   return (
@@ -63,10 +65,11 @@ const MeetingPanel = ({ pageType, leftTab }: MeetingPanelProps) => {
           {isMeetingPage ? (
             <GnbBottomRecorderBar
               connect={connect}
+              isEnding={isEnding}
+              isPaused={isPaused}
               endMeeting={endMeeting}
               pauseStreaming={pauseStreaming}
               resumeStreaming={resumeStreaming}
-              isPaused={isPaused}
               micStream={micStream}
             />
           ) : (

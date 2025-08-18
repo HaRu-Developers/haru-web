@@ -5,39 +5,26 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import WaveSurfer from 'wavesurfer.js';
 import RecordPlugin from 'wavesurfer.js/dist/plugins/record.js';
 
-import { ToastType } from '@common/types/toast.types';
-
-import { useToastActions } from '@common/hooks/stores/useToastStore';
-
 import StartRecordingButton from '@common/components/buttons/32px/StartRecordingButton/StartRecordingButton.client';
 import StopRecordingButton from '@common/components/buttons/32px/StopRecordingButton/StopRecordingButton.client';
 
 import PlayPauseButton from '../PlayPauseButton/PlayPauseButton.client';
 import { PlayPauseButtonStatus } from '../PlayPauseButton/PlayPauseButton.types';
 import { formatAudioProgress } from '../audio-bar.utils';
-
-interface GnbBottomRecorderBarProps {
-  micStream: MediaStream | null; // hook에서 받은 동일 스트림
-  connect: () => Promise<void>;
-  endMeeting: () => Promise<void>;
-  pauseStreaming: () => void;
-  resumeStreaming: () => void;
-  isPaused: () => boolean;
-}
+import { GnbBottomRecorderBarProps } from './GnbRecorderBar.types';
 
 const GnbBottomRecorderBar = ({
   micStream,
+  isEnding,
+  isPaused,
   connect,
   endMeeting,
   pauseStreaming,
   resumeStreaming,
-  isPaused,
 }: GnbBottomRecorderBarProps) => {
   const recorderWsRef = useRef<WaveSurfer | null>(null);
   const recorderPluginRef = useRef<RecordPlugin | null>(null);
   const recorderContainerRef = useRef<HTMLDivElement | null>(null);
-
-  const { addToast } = useToastActions();
 
   const [hasStartedRecording, setHasStartedRecording] = useState<boolean>(false);
   const [isRecording, setIsRecording] = useState<boolean>(false);
@@ -107,22 +94,7 @@ const GnbBottomRecorderBar = ({
     recorderPluginRef.current = recorderPlugin;
 
     // console.log('Wavesurfer and RecordPlugin initialized');
-  }, [endMeeting, connect, pauseStreaming, resumeStreaming]);
-
-  // 사용 가능한 마이크 디바이스 가져오기
-  const getAvailableDevices = useCallback(async () => {
-    try {
-      const devices = await RecordPlugin.getAvailableAudioDevices();
-      return devices;
-    } catch (error) {
-      console.error('[ERR] Cannot get audio devices:', error);
-      addToast({
-        text: '오디오 디바이스를 가져올 수 없습니다.',
-        type: ToastType.ERROR,
-      });
-      return [];
-    }
-  }, [addToast]);
+  }, [endMeeting, pauseStreaming, resumeStreaming]);
 
   // 일시정지/재개
   const handleRecordResumePause = useCallback(() => {
@@ -131,31 +103,31 @@ const GnbBottomRecorderBar = ({
       return;
     }
 
-    const isPaused = recorderPluginRef.current.isPaused();
-    if (isPaused) {
+    if (isPaused()) {
       recorderPluginRef.current.resumeRecording();
     } else {
       recorderPluginRef.current.pauseRecording();
     }
-  }, []);
+  }, [isPaused]);
 
   // 녹음 시작
   const handleStartRecording = useCallback(async () => {
-    initializeWavesurfer();
-
     await connect(); // hook이 스트림 생성 + onMicStream으로 넘김
-    if (!micStream || !recorderPluginRef.current) {
+
+    if (!recorderPluginRef.current) {
       // console.error('[ERR] Recorder plugin is not initialized.');
       return;
     }
+
     try {
-      recorderPluginRef.current.renderMicStream(micStream); // ✅ 기존 스트림 표시
+      // 같은 인스턴스에서 startRecording 호출
+      recorderPluginRef.current.startRecording();
+      setHasStartedRecording(true);
+      setIsRecording(true);
     } catch {
       void 0;
     }
-    setHasStartedRecording(true);
-    setIsRecording(true);
-  }, [connect, initializeWavesurfer, micStream]);
+  }, [connect]);
 
   // 종료
   const handleEndRecording = useCallback(() => {
@@ -168,47 +140,32 @@ const GnbBottomRecorderBar = ({
   }, []);
 
   useEffect(() => {
-    if (!hasStartedRecording) return;
-
-    // 기존 객체 있으면 파기
-    if (recorderWsRef.current) {
-      recorderWsRef.current.destroy();
-    }
-
+    // 마운트 시 initializeWavesurfer() 1회만 생성
     initializeWavesurfer();
-    // console.log('Wavesurfer Initialized');
-
-    return () => {
-      if (recorderWsRef.current) {
-        recorderWsRef.current.destroy();
-        recorderWsRef.current = null;
-      }
-    };
-  }, [hasStartedRecording, initializeWavesurfer]);
-
-  // hook에서 넘겨준 micStream이 오면, 그 스트림으로 시각화만
-  useEffect(() => {
-    if (!micStream || !recorderPluginRef.current) return;
-    try {
-      const audioTrack = micStream.getAudioTracks()[0];
-      if (audioTrack) {
-        recorderPluginRef.current.startRecording({ deviceId: audioTrack.getSettings().deviceId });
-      } else {
-        recorderPluginRef.current.startRecording(); // 기본 디바이스 사용
-      }
-      setIsRecording(true);
-      setHasStartedRecording(true);
-    } catch {
-      // 시각화만 실패해도 전송은 hook에서 계속 진행됨
-    }
-
     return () => {
       try {
         recorderPluginRef.current?.stopRecording();
       } catch {
         void 0;
       }
+      try {
+        recorderWsRef.current?.destroy();
+      } catch {
+        void 0;
+      }
+      recorderPluginRef.current = null;
+      recorderWsRef.current = null;
     };
+  }, [initializeWavesurfer]);
+
+  // hook에서 넘겨준 micStream이 오면, 그 스트림으로 시각화만
+  useEffect(() => {
+    if (!micStream || !recorderPluginRef.current) return;
+    try {
+      recorderPluginRef.current.renderMicStream(micStream);
+    } catch {
+      void 0;
+    }
   }, [micStream]);
 
   return (
@@ -237,7 +194,11 @@ const GnbBottomRecorderBar = ({
       </span>
       {/* 녹음이 시작된 경우에만 정지 버튼 렌더링 */}
       {hasStartedRecording && (
-        <StopRecordingButton onClick={handleEndRecording} className="ml-155pxr" />
+        <StopRecordingButton
+          isEnding={isEnding}
+          onClick={handleEndRecording}
+          className="ml-155pxr"
+        />
       )}
       <div className="flex-grow" /> {/* 남은 공간을 채우기 위한 빈 div */}
     </div>

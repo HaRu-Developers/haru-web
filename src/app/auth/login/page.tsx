@@ -21,6 +21,7 @@ const LoginPage = () => {
           {/* -- 또는 -- */}
           <DdoneunDivider className="mt-24pxr" />
           {/* 이메일 & 비밀번호 폼 */}
+          {/* 추후 fallback은 스켈레톤으로 대체 해도 됨 */}
           <Suspense fallback={<div>로딩중...</div>}>
             <LoginForm />
           </Suspense>

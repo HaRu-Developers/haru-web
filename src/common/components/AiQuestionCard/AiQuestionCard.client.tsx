@@ -14,8 +14,10 @@ const AiQuestionCard = ({ aiRecommendQuestion, userAnswer, segmentId }: AiQuesti
   const { registerQuestionRef, unregisterQuestionRef, focusSpeech } = useFocusMapActions();
 
   useEffect(() => {
-    registerQuestionRef(segmentId, ref.current);
-    return () => unregisterQuestionRef(segmentId, ref.current as HTMLDivElement);
+    const node = ref.current;
+    if (!node) return;
+    registerQuestionRef(segmentId, node);
+    return () => unregisterQuestionRef(segmentId, node);
   }, [segmentId, registerQuestionRef, unregisterQuestionRef]);
   return (
     <div

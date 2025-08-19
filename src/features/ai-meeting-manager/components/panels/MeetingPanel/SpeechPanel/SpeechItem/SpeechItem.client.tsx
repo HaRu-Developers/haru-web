@@ -22,7 +22,7 @@ const SpeechItem = ({
   const ref = useRef<HTMLDivElement>(null);
   const { registerSpeechRef, unregisterSpeechRef, focusQuestionBySpeech } = useFocusMapActions();
 
-  const hasQuestion = questions.length > 0;
+  const hasQuestion = questions && questions.length > 0;
 
   const formattedSpeakerId = getSpeekerId(speakerId);
 
@@ -70,7 +70,7 @@ const SpeechItem = ({
             <p className="text-b4-rg text-gray-400">{startAtLabel}</p>
           </div>
 
-          <div className={clsx('flex justify-between')}>
+          <div className={'gap-10pxr flex items-start'}>
             <p className="text-b3-rg break-words whitespace-pre-wrap text-black">{text}</p>
 
             {hasQuestion && (

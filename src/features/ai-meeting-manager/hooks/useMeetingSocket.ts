@@ -8,45 +8,10 @@ import { ToastType } from '@common/types/toast.types';
 
 import { useToastActions } from '@common/hooks/stores/useToastStore';
 
-import { Question, Speech, UiQuestion, WsInbound } from '../types/meeting.types';
+import { Question, Speech, WsInbound } from '../types/meeting.types';
 import { type MicController, startMicAndPipeToWebSocket } from '../utils/capture-and-send.utils';
+import { ensureQuestionObjects, mergeQuestions } from '../utils/meeting-format.utils';
 import { useMeetingModalActions } from './stores/useMeetingModalStore';
-
-let _qid = 1;
-/**
- * 공백, 대소문자 정규화해 텍스트 해시 키 만듦
- */
-const norm = (s: string) => s.trim().replace(/\s+/g, ' ').toLowerCase();
-/**
- * 문자열[] → Question[] 로 변환 + 중복 제거
- */
-const ensureQuestionObjects = (qs: Array<string | Question>): Question[] => {
-  const mapped = qs.map((q) => (typeof q === 'string' ? { questionId: _qid++, question: q } : q));
-  const seen = new Set<string>();
-  const dedup: Question[] = [];
-  for (const q of mapped) {
-    const key = norm(q.question);
-    if (!seen.has(key)) {
-      seen.add(key);
-      dedup.push(q);
-    }
-  }
-  return dedup;
-};
-
-/** 질문들 합치기 */
-const mergeQuestions = (prev: Question[], next: Question[]) => {
-  const seen = new Set(prev.map((q) => norm(q.question)));
-  const merged = prev.slice();
-  for (const q of next) {
-    const key = norm(q.question);
-    if (!seen.has(key)) {
-      seen.add(key);
-      merged.push(q);
-    }
-  }
-  return merged;
-};
 
 /**
  * 훅 param 타입
@@ -148,31 +113,6 @@ const useMeetingSocket = ({
       return copy;
     });
   }, []);
-
-  /**
-   *  UI용 질문 리스트: [{ speechId, text }]
-   */
-  const questionsForUI = useMemo<UiQuestion[]>(() => {
-    const out: UiQuestion[] = [];
-    for (const s of speeches) {
-      const qs = s.aiQuestions ?? [];
-      for (const q of qs) {
-        out.push({
-          id: q.questionId, // ensureQuestionObjects에서 보장
-          segmentId: s.segmentId,
-          text: q.question,
-        });
-      }
-    }
-    return out;
-  }, [speeches]);
-
-  // segmentId -> text 매핑
-  const speechTextById = useMemo<Record<number, string>>(() => {
-    const m: Record<number, string> = {};
-    for (const s of speeches) m[s.segmentId] = s.text ?? '추천 질문 없음';
-    return m;
-  }, [speeches]);
 
   // ---- 서버 메시지 파서(한 곳)
   const handleInbound = useCallback(
@@ -471,8 +411,6 @@ const useMeetingSocket = ({
     connected,
     isEnding,
     speeches,
-    questionsForUI, // RightPanel 전용
-    speechTextById, // RightPanel 전용
     connect,
     pauseStreaming,
     resumeStreaming,

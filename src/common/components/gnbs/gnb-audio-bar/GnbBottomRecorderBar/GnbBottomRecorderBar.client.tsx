@@ -44,8 +44,8 @@ const GnbBottomRecorderBar = ({
 
     const ws = WaveSurfer.create({
       container: recorderContainerRef.current,
-      waveColor: '#007AFF', // color variable : audio-bar
-      progressColor: '#007AFF',
+      waveColor: '#E65787',
+      progressColor: '#E65787',
       fillParent: true,
       dragToSeek: false,
       // minPxPerSec: 5000,
@@ -207,7 +207,7 @@ const GnbBottomRecorderBar = ({
         />
       )}
       {/* 녹음 시작 여부에 따라 선택적 렌더링, Wavesurfer 객체를 위해 hidden을 활용 */}
-      <div className="w-122pxr bg-audio-bar h-2pxr rounded-100pxr" hidden={hasStartedRecording} />
+      <div className="w-122pxr bg-primary h-2pxr rounded-100pxr" hidden={hasStartedRecording} />
       <div className="w-122pxr" ref={recorderContainerRef} hidden={!hasStartedRecording} />
       {/* 현재 녹음 시간 */}
       <span className="text-cap1-rg ml-12pxr text-black">

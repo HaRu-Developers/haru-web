@@ -107,7 +107,7 @@ const PlayerProgressBar = ({
         {/* 진행 구간 */}
         <div
           className={[
-            'bg-audio-bar h-full rounded-full',
+            'bg-primary h-full rounded-full',
             dragging ? 'transition-none' : 'transition-all duration-300',
           ].join(' ')}
           style={{ width: `${progress}%` }}
@@ -115,7 +115,7 @@ const PlayerProgressBar = ({
         {/* 핸들 */}
         <div
           className={[
-            'h-14pxr w-14pxr bg-audio-bar absolute top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full',
+            'h-14pxr w-14pxr bg-primary absolute top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full',
             dragging ? 'opacity-100' : 'opacity-0 group-hover:opacity-100',
             'transition-opacity duration-100',
           ].join(' ')}

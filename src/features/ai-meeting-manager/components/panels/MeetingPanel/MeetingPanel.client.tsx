@@ -23,6 +23,11 @@ import { AiMeetingPageType } from '@features/ai-meeting-manager/types/page-type.
 import { DEFAULT_SPEECH_QUESTION } from '@features/ai-meeting-manager/constants/speechQuestion.constants';
 
 import {
+  selectQuestionsForUI,
+  selectSpeechTextById,
+} from '@features/ai-meeting-manager/utils/meeting-format.utils';
+
+import {
   useMeetingModalActions,
   useMeetingModalInfo,
 } from '@features/ai-meeting-manager/hooks/stores/useMeetingModalStore';
@@ -62,8 +67,6 @@ const MeetingPanel = ({ pageType, leftTab }: MeetingPanelProps) => {
   // 소켓: 실시간 발화/질문 업데이트 + 오디오 청크 전송
   const {
     speeches,
-    questionsForUI,
-    speechTextById,
     connect,
     isPaused,
     endMeeting,
@@ -79,6 +82,9 @@ const MeetingPanel = ({ pageType, leftTab }: MeetingPanelProps) => {
     onMicStream: setMicStream,
     // sendAudio: false // test api 쓰기 위한 임시 설정
   });
+
+  const questionsForUI = selectQuestionsForUI(speeches);
+  const speechTextById = selectSpeechTextById(speeches);
 
   // 이미 진행된 회의인데 /meeting에 접근하면
   const alreadyDidMeeting =

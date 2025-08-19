@@ -34,7 +34,7 @@ const TitleDisplay = () => {
         <span className="animate-fade-in-color animate-delay-300 text-black">
           운영 관리 플랫폼,{' '}
         </span>
-        <span className="text-primary animate-fade-in-color animate-delay-500">Haru</span>
+        <span className="text-primary animate-fade-in-color animate-delay-500">HaRu</span>
       </div>
     </div>
   );

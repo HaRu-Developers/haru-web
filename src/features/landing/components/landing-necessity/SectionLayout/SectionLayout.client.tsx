@@ -13,7 +13,7 @@ const SectionLayout = forwardRef<HTMLDivElement, SectionLayoutProps>(
     return (
       <div
         className={clsx(
-          'gap-14pxr pr-196pxr flex w-full flex-col items-start justify-center whitespace-pre-line opacity-0',
+          'gap-14pxr pr-150pxr flex w-full flex-col items-start justify-center whitespace-pre-line opacity-0',
           className,
           {
             'animate-fade-in-up-and-delay': inView,

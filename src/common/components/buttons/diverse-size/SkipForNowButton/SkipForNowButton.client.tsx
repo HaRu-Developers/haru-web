@@ -18,9 +18,9 @@ const SkipForNowButton = ({ onClick, buttonType, ...props }: SkipForNowButtonPro
     <button
       className={clsx({
         'text-bt1-sb inline-flex items-center justify-center border bg-white text-gray-100': true,
-        'border-stroke-200 h-[38px] w-[128px] rounded-[7px] px-[16px] py-[12px] hover:bg-gray-600':
+        'border-stroke-200 h-38pxr w-128pxr rounded-7pxr px-16pxr py-12pxr hover:bg-gray-600':
           buttonType == SkipForNowButtonType.SIZE_38,
-        'border-stroke-100 h-[48px] w-[146px] rounded-[9px] py-[16.5px]':
+        'border-stroke-100 h-48pxr w-146pxr rounded-9pxr py-16-5pxr':
           buttonType === SkipForNowButtonType.SIZE_48,
       })}
       onClick={onClick}

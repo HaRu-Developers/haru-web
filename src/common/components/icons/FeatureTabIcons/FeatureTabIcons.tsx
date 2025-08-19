@@ -11,11 +11,11 @@ import { FeatureTabIconsState } from './FeatureTabIcons.types';
 const FeatureTabIcons = ({ state, className }: IconsCommonProps<FeatureTabIconsState>) => {
   switch (state) {
     case FeatureTabIconsState.COPY:
-      return <CopyIcon className={clsx('h-[20px] w-[20px]', className)} />;
+      return <CopyIcon className={clsx('h-20pxr w-20pxr', className)} />;
     case FeatureTabIconsState.EDIT:
-      return <EditIcon className={clsx('h-[20px] w-[20px]', className)} />;
+      return <EditIcon className={clsx('h-20pxr w-20pxr', className)} />;
     case FeatureTabIconsState.LINK:
-      return <LinkIcon className={clsx('h-[20px] w-[20px]', className)} />;
+      return <LinkIcon className={clsx('h-20pxr w-20pxr', className)} />;
     default:
       return null;
   }

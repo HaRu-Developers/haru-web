@@ -17,7 +17,7 @@ import { IndividualIconsState } from './IndividualIcons.types';
 const IndividualIcons = ({ state, className }: IconsCommonProps<IndividualIconsState>) => {
   switch (state) {
     case IndividualIconsState.CONGRATULATE_SIGN_UP:
-      return <CongratulationIcon className={clsx('h-174.47pxr w-202.36pxr', className)} />;
+      return <CongratulationIcon className={clsx('h-174pxr w-202pxr', className)} />;
     case IndividualIconsState.WARNING:
       return <WarningIcon className={clsx('h-36pxr w-36pxr', className)} />;
     case IndividualIconsState.UNDER_ARROW:

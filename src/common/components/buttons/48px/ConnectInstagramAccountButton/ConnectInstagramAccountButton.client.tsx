@@ -16,7 +16,7 @@ const ConnectInstagramAccountButton = ({
 }: ConnectInstagramAccountButtonProps) => {
   return (
     <button
-      className="text-b3-rg border-stroke-100 inline-flex h-[48px] w-[414px] items-center justify-center gap-x-[4px] rounded-[9px] border bg-white py-[16.5px] text-gray-100"
+      className="text-b3-rg border-stroke-100 h-48pxr w-414pxr gap-x-4pxr rounded-9pxr inline-flex items-center justify-center border bg-white text-gray-100"
       onClick={onClick}
       {...props}
     >

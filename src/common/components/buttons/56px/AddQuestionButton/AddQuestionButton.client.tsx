@@ -14,7 +14,7 @@ const AddQuestionButton = ({ onClick, className, ...props }: ButtonsCommonProps)
   return (
     <button
       className={clsx(
-        'text-button-1 inline-flex h-[56px] w-[668px] items-center justify-center gap-x-[4px] rounded-[12px] bg-gray-600 px-[218px] py-[37px] text-gray-400',
+        'text-button-1 h-56pxr w-668pxr gap-x-4pxr rounded-12pxr px-218pxr py-37pxr inline-flex items-center justify-center bg-gray-600 text-gray-400',
         className,
       )}
       onClick={onClick}

@@ -12,7 +12,7 @@ const LoginButton = ({ className, disabled, onClick, ...props }: ButtonsCommonPr
     <button
       aria-label="일반 로그인 버튼"
       className={clsx(
-        'text-bt1-sb inline-flex h-[48px] w-[414px] items-center justify-center rounded-[9px] px-[152px] py-[17px] text-white',
+        'text-bt1-sb h-48pxr w-414pxr rounded-9pxr px-152pxr py-17pxr inline-flex items-center justify-center text-white',
         !disabled ? 'bg-gray-100' : 'bg-gray-500',
         className,
       )}

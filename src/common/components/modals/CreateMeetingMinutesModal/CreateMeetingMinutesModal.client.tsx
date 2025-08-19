@@ -30,15 +30,8 @@ const CreateMeetingMinutesModal = ({
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   // api 호출 완료 후 페이지 이동할 거여서 mutateAsync 사용
-  const {
-    mutateAsync: createNewMeetingMinutes,
-    isError,
-    error,
-    isPending,
-  } = useCreateNewMeetingMinutes(workspaceId);
-
-  // 렌더 중 throw → error.tsx가 뜸
-  if (isError) throw error;
+  const { mutateAsync: createNewMeetingMinutes, isPending } =
+    useCreateNewMeetingMinutes(workspaceId);
 
   const handleFileChange = (file: File | null) => {
     setSelectedFile(file);
@@ -55,7 +48,7 @@ const CreateMeetingMinutesModal = ({
     onNextStep(meetingId); // meetingId 전달
   };
 
-  const disabled = !meetingTitle || !selectedFile || isPending;
+  const disabledNextStepButton = !meetingTitle || !selectedFile;
 
   return (
     <div
@@ -70,7 +63,7 @@ const CreateMeetingMinutesModal = ({
           새로운 회의록
         </h1>
 
-        <button className="mr-2pxr" onClick={onClose} aria-label="닫기">
+        <button disabled={isPending} className="mr-2pxr" onClick={onClose} aria-label="닫기">
           <CrossIcons state={CrossIconsState.SIZE_20_GRAY_200} />
         </button>
       </div>
@@ -79,15 +72,20 @@ const CreateMeetingMinutesModal = ({
         placeholder="회의의 제목을 입력해 주세요."
         value={meetingTitle}
         onChange={setMeetingTitle}
+        disabled={isPending}
       />
       <div className="w-534pxr gap-y-8pxr items-center justify-center">
         <p className="text-cap1-rg mb-8pxr text-gray-200">회의 안건지 업로드</p>
-        <FileDropzone onFileChange={handleFileChange} initialFile={selectedFile} />
+        <FileDropzone
+          disabled={isPending}
+          onFileChange={handleFileChange}
+          initialFile={selectedFile}
+        />
       </div>
       <div className="w-534pxr flex items-center justify-end">
         <NextStepButton
           onClick={handleCreate}
-          disabled={disabled}
+          disabled={disabledNextStepButton}
           loading={isPending}
           loadingText="생성 중..."
         />

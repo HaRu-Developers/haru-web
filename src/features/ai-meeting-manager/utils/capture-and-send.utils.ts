@@ -36,7 +36,7 @@ export const startMicAndPipeToWebSocket = async (ws: WebSocket): Promise<MicCont
 
   let paused = false;
 
-  // 640 샘플(=1280B), 40ms @ 16kHz
+  // 640 샘플(=1280B), 20ms @ 16kHz
   const FRAME_SAMPLES = 640;
   const q: number[] = [];
   const toI16 = (f: number) => {

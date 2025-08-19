@@ -18,10 +18,10 @@ const RightPanel = ({
   questionsForUI: UiQuestion[];
   speechTextById: Record<number, string>;
 }) => {
-  console.log({
-    questionsForUI,
-    speechTextById,
-  });
+  // console.log({
+  //   questionsForUI,
+  //   speechTextById,
+  // });
   const hasRecommandQuestion = questionsForUI.length > 0;
 
   const label = hasRecommandQuestion

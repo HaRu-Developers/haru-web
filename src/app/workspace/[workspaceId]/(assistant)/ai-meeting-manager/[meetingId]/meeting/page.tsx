@@ -4,7 +4,7 @@ import MeetingPanel from '@features/ai-meeting-manager/components/panels/Meeting
 
 const AiMeetingProceedingPage = () => {
   return (
-    <section className="scrollbar-component max-h-[calc(100dvh-var(--gnb-top-height))] flex-1 overflow-y-auto">
+    <section className="scrollbar-component max-h-[calc(100dvh-var(--gnb-top-height))] flex-1">
       <MeetingPanel pageType={AiMeetingPageType.MEETING} />
     </section>
   );

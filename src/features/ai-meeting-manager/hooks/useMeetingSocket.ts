@@ -10,6 +10,7 @@ import { useToastActions } from '@common/hooks/stores/useToastStore';
 
 import { Question, Speech, UiQuestion, WsInbound } from '../types/meeting.types';
 import { type MicController, startMicAndPipeToWebSocket } from '../utils/capture-and-send.utils';
+import { useMeetingModalActions } from './stores/useMeetingModalStore';
 
 let _qid = 1;
 /**
@@ -66,6 +67,9 @@ const useMeetingSocket = ({
   sendAudio = true,
 }: UseMeetingSocketParams) => {
   const { addToast } = useToastActions();
+  const { openEndMeetingModal, openMmLoadingModal, closeEndMeetingModal, closeMmLoadingModal } =
+    useMeetingModalActions();
+
   // segmentId → 배열 인덱스 매핑
   const indexMapRef = useRef(new Map<number, number>());
 
@@ -354,11 +358,12 @@ const useMeetingSocket = ({
   const pauseStreaming = useCallback(() => {
     if (!sendAudio) return;
     micCtlRef.current?.pause();
+    console.log('pauseStreaming');
   }, [sendAudio]);
   const resumeStreaming = useCallback(async () => {
     if (!sendAudio) return;
     const ws = wsRef.current;
-    // WS 미오픈이면 그냥 리턴(외부에서 connect 먼저 호출하도록 유지)
+    // WS 미오픈이면 그냥 리턴(외부에서 connect 먼저 호출하도록)
     if (!ws || ws.readyState !== WebSocket.OPEN) return;
     const current = micCtlRef.current;
     const stream = current?.getStream?.();
@@ -376,30 +381,54 @@ const useMeetingSocket = ({
       return;
     }
     current.resume();
+    console.log('resumeStreaming');
   }, [onMicStream, sendAudio]);
   const isPaused = useCallback(() => micCtlRef.current?.isPaused() ?? false, []);
 
   // ---- 회의 종료
-  const endMeeting = useCallback(async () => {
+  // 모달 열기
+  const onOpenEndMeetingModal = useCallback(async () => {
     try {
-      await micCtlRef.current?.stop();
-    } catch {
-      void 0;
+      window.dispatchEvent(new CustomEvent('recorder'));
+      // endmeetingModal 열기
+      openEndMeetingModal();
+    } catch (e) {
+      console.error(e);
     }
+  }, [openEndMeetingModal]);
+
+  // 모달에서 확인 눌렀을때
+  const endMeeting = useCallback(async () => {
     // 서버에 종료 요청 → 서버가 WS 닫음
     await endMeetingMutate({ meetingId });
+    // 회의록 생성 로딩 모달 열기
+    // isEnding일 동안에만
+    if (isEnding) {
+      openMmLoadingModal();
+    } else closeMmLoadingModal();
 
-    // 클라에서 WS도 정리(서버가 닫는다면 중복 close여도 안전)
-    try {
-      wsRef.current?.close(1000, 'client-end');
-    } catch {
-      void 0;
-    }
+    // 회의록 생성 모달도 닫음
+    closeEndMeetingModal();
+
     wsRef.current = null;
 
     setConnected(false);
     setSpeeches([]);
-  }, [endMeetingMutate, meetingId]);
+  }, [
+    meetingId,
+    isEnding,
+    endMeetingMutate,
+    openMmLoadingModal,
+    closeMmLoadingModal,
+    closeEndMeetingModal,
+  ]);
+
+  // 모달에서 취소 눌렀을때
+  const cancelEndMeeting = useCallback(async () => {
+    // UI(RecordPlugin)에게 재개 지시
+    window.dispatchEvent(new CustomEvent('recorder'));
+    closeEndMeetingModal();
+  }, [closeEndMeetingModal]);
 
   // ---- sendAudio가 꺼질 때 즉시 업스트림 중단 및 UI 동기화
   useEffect(() => {
@@ -445,10 +474,12 @@ const useMeetingSocket = ({
     questionsForUI, // RightPanel 전용
     speechTextById, // RightPanel 전용
     connect,
-    endMeeting,
     pauseStreaming,
     resumeStreaming,
     isPaused,
+    onOpenEndMeetingModal,
+    endMeeting,
+    cancelEndMeeting,
   };
 };
 

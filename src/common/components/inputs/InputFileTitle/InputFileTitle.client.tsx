@@ -5,6 +5,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 
 import { InputFileTitleMode, InputFileTitleProps } from './InputFileTitle.types';
+import InputFileTitleSkeleton from './InputFileTitleSkeleton.client';
 
 /*
  * 인풋 파일 타이틀 컴포넌트
@@ -121,7 +122,9 @@ const InputFileTitle = ({
   // 가로 padding
   const px = noPadding ? 'px-0' : 'px-2';
 
-  return (
+  return isLoading ? (
+    <InputFileTitleSkeleton />
+  ) : (
     <input
       aria-label="파일 제목 입력칸"
       type="text"

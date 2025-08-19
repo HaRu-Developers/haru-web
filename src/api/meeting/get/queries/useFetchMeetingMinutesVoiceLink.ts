@@ -12,7 +12,7 @@ import fetchMeetingMinutesVoiceLink from '../apis/fetchMeetingMinutesVoiceLink';
 /**
  * 특정 회의록 다운로드 링크 가져오는 훅
  */
-const useFetchMeetingMinutesVoiceLink = (meetingId: string) => {
+const useFetchMeetingMinutesVoiceLink = (meetingId: string, opts: { enabled?: boolean } = {}) => {
   return useAfterQuery<
     { result: MeetingMinutesVoiceLinkResponseDTO }, // TData
     ApiError<ApiErrorBody>, // TError
@@ -20,7 +20,7 @@ const useFetchMeetingMinutesVoiceLink = (meetingId: string) => {
   >({
     queryKey: queryKeys.meetings.voiceLink(meetingId).queryKey,
     queryFn: () => fetchMeetingMinutesVoiceLink({ meetingId }),
-    enabled: !!meetingId,
+    enabled: (opts.enabled ?? true) && !!meetingId,
     retry: false,
     extra: (qr) => qr.data?.result.voiceLink ?? '',
   });

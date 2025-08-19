@@ -19,4 +19,9 @@
     transition: background-color 0.2s;
     background-color: rgba(59, 130, 246, 0.08);
   }
+
+  .disabled-style {
+    cursor: not-allowed;
+    pointer-events: none;
+  }
 }

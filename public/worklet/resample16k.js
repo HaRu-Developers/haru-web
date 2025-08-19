@@ -5,6 +5,7 @@ class Resample16kProcessor extends AudioWorkletProcessor {
     this.phase = 0; // 출력 16k 타임라인 상의 위치
     this.inRate = sampleRate;
     this.outRate = 16000;
+    // this.step = this.outRate / this.inRate; // 16000/48000 = 1/3
     this.step = this.inRate / this.outRate; // 입력 1샘플 당 출력에서 전진하는 양
     this.prev = 0;
   }
@@ -40,3 +41,5 @@ class Resample16kProcessor extends AudioWorkletProcessor {
     return true;
   }
 }
+
+registerProcessor('Resample16kProcessor', Resample16kProcessor);

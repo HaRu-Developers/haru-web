@@ -17,7 +17,7 @@ type Options = {
  * innerWorkspaceId 내에서 쓸 거임
  */
 const useStandaloneModalRedirect = (
-  getRedirectPath: (workspaceId: string) => string,
+  getRedirectPath: (workspaceId: string, documentId?: string) => string,
   options?: Options,
 ) => {
   const router = useRouter();

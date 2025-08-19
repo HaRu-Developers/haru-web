@@ -79,13 +79,13 @@ const GnbBottomRecorderBar = ({
     });
 
     recorderPlugin.on('record-resume', () => {
-      // console.log('Recording resumed');
+      console.log('Recording resumed');
       resumeStreaming();
       setIsRecording(true);
     });
 
     recorderPlugin.on('record-pause', () => {
-      // console.log('Recording paused');
+      console.log('Recording paused');
       pauseStreaming();
       setIsRecording(false);
     });
@@ -167,6 +167,27 @@ const GnbBottomRecorderBar = ({
       void 0;
     }
   }, [micStream]);
+
+  // recorder:resume, pause 이벤트 발생시 다시 플레이 or 멈춤
+  // recorder:resume, recorder:pause 수신
+  useEffect(() => {
+    const onExternalEvent = async () => {
+      if (!hasStartedRecording || !recorderPluginRef.current) return;
+      try {
+        if (isPaused()) {
+          recorderPluginRef.current.resumeRecording();
+        } else {
+          recorderPluginRef.current.pauseRecording();
+        }
+      } catch (e) {
+        console.error('onExternalEvent', e);
+      }
+    };
+    window.addEventListener('recorder', onExternalEvent);
+    return () => {
+      window.removeEventListener('recorder', onExternalEvent);
+    };
+  }, [hasStartedRecording, isRecording, isPaused]);
 
   return (
     <div className="w-656pxr h-68pxr rounded-100pxr border-stroke-200/70 px-16pxr flex flex-row items-center border bg-white">

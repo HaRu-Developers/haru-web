@@ -2,8 +2,10 @@
 
 import { useEffect, useState } from 'react';
 
+import { useSearchParams } from 'next/navigation';
+
 import { useCheckEmailDuplication } from '@api/user/hooks/mutations/useCheckEmailDuplication';
-import { useRegister } from '@api/user/hooks/mutations/useRegister';
+import { useSignupAndLoginMutation } from '@api/user/hooks/mutations/useRegisterAndLogin';
 
 import useDebounce from '@common/hooks/useDebounce';
 
@@ -18,6 +20,8 @@ import TermsAgreeCheckbox from '../TermsAgreeCheckbox/TermsAgreeCheckbox.client'
 import { TermsAgreeState } from '../TermsAgreeCheckbox/TermsAgreeCheckbox.types';
 
 const RegisterForm = () => {
+  const searchParams = useSearchParams();
+
   const [email, setEmail] = useState<string>('');
   const debouncedEmail = useDebounce(email, 300); // 이메일 입력에 대한 디바운스 적용
 
@@ -33,20 +37,28 @@ const RegisterForm = () => {
     marketingConsent: false,
   });
 
-  const { mutate: register } = useRegister();
+  // useRegister 훅 대신 새로운 통합 훅을 사용합니다.
+  // 이 훅은 성공 시 자동으로 로그인 처리 및 페이지 이동까지 담당합니다.
+  const { mutate: signupAndLogin } = useSignupAndLoginMutation();
   const { mutate: checkEmailDuplication } = useCheckEmailDuplication({
     onAvailable: () => setIsAvailableEmail(true),
     onUnavailable: () => setIsAvailableEmail(false),
   });
-
   const handleRegister = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    register({
+    // URL에서 'token' 쿼리 파라미터 값을 읽어옵니다. 초대 링크가 아니면 null이 됩니다.
+    const token = searchParams.get('token');
+
+    // 통합 회원가입 함수를 호출합니다.
+    // 폼 데이터와 함께 token 값을 전달하여, 초대 가입인지 일반 가입인지 서버에 알려줍니다.
+
+    signupAndLogin({
       email,
       name,
       password,
       marketingAgreed: termsAgreeState.marketingConsent,
+      token: token || undefined, // token이 null이면 undefined로 전달
     });
   };
 
@@ -71,7 +83,7 @@ const RegisterForm = () => {
     if (debouncedEmail) {
       checkEmailDuplication({ email: debouncedEmail });
     }
-  }, [debouncedEmail]);
+  }, [debouncedEmail, checkEmailDuplication]);
 
   return (
     <form className="gap-y-20pxr flex flex-col" onSubmit={handleRegister}>
@@ -116,7 +128,11 @@ const RegisterForm = () => {
       />
 
       {/* 회원가입 버튼 */}
-      <RegisterButton className="mt-22pxr" disabled={!isRegisterAvailable} type="submit" />
+      <RegisterButton
+        className="mt-22pxr"
+        disabled={!isRegisterAvailable}
+        type="submit"
+      ></RegisterButton>
     </form>
   );
 };

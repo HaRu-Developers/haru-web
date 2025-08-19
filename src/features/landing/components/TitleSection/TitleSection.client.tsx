@@ -69,10 +69,10 @@ const TitleSection = forwardRef<HTMLDivElement, TitleSectionProps>(
             'flex-row': !isSpacing,
           })}
         >
-          {title1 ? (isTyping ? <span className="mr-10pxr text-black" ref={el1}></span> : <span className="mr-10pxr text-black">{title1}</span>) : null}
+          {title1 && <span className="mr-10pxr text-black" ref={isTyping ? el1 : undefined}>{isTyping ? null : title1}</span>}
           <div>
-            {title2 ? (isTyping ? <span className="text-primary" ref={el2}></span> : <span className="text-primary">{title2}</span>) : null}
-            {title3 ? (isTyping ? <span ref={el3}></span> : <span className='text-black'>{title3}</span>) : null}
+            {title2 && <span className="text-primary" ref={isTyping ? el2 : undefined}>{isTyping ? null : title2}</span>}
+            {title3 && <span ref={isTyping ? el3 : undefined}>{isTyping ? null : title3}</span>}
           </div>
         </div>
         {description && (

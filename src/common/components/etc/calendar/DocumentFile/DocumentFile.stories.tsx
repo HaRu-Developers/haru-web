@@ -31,6 +31,12 @@ const documentFile = [
     documentType: FileType.TEAM_MOOD_TRACKER,
     createdAt: '2025-07-08T00:00:00Z',
   },
+  {
+    documentId: '4',
+    title: '팀 분위기 보고서 Q1 - 2025년 7월 8일',
+    documentType: FileType.TEAM_MOOD_TRACKER,
+    createdAt: '2025-07-08T00:00:00Z',
+  },
 ];
 export const AiMeetingManager: Story = {
   args: {

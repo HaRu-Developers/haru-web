@@ -1,11 +1,13 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import CrossIcons from '@icons/CrossIcons/CrossIcons';
 import { CrossIconsState } from '@icons/CrossIcons/CrossIcons.types';
 
 import useCreateNewMeetingMinutes from '@api/meeting/post/mutations/useCreateNewMeetingMinutes';
+
+import usePreventLeave from '@common/hooks/usePreventLeave';
 
 import NextStepButton from '@common/components/buttons/30px/NextStepButton/NextStepButton.client';
 import InputFieldModal from '@common/components/inputs/modals/InputFieldModal/InputFieldModal.client';
@@ -32,6 +34,15 @@ const CreateMeetingMinutesModal = ({
   // api 호출 완료 후 페이지 이동할 거여서 mutateAsync 사용
   const { mutateAsync: createNewMeetingMinutes, isPending } =
     useCreateNewMeetingMinutes(workspaceId);
+
+  // 파생값으로 dirty 계산
+  const isDirty = useMemo(
+    () => meetingTitle.trim().length > 0 || selectedFile !== null,
+    [meetingTitle, selectedFile],
+  );
+
+  // 이탈 방지: 작성 중이거나 업로드 중이면 막기
+  usePreventLeave(isDirty || isPending);
 
   const handleFileChange = (file: File | null) => {
     setSelectedFile(file);

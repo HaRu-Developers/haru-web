@@ -12,13 +12,16 @@ import CreateMeetingMinutesModal from '@/common/components/modals/CreateMeetingM
 const CreateNewMeetingMinutesModalPage = () => {
   const router = useRouter();
   const { workspaceId } = useParams<{ workspaceId: string }>();
-  const handleNextStep = useCallback((meetingId: string) => {
-    // replace를 쓰면 히스토리에 모달 경로가 남지 않음
-    router.replace(ROUTES.AI_MEETING_MANAGER.MEETING(workspaceId, meetingId));
-  }, []);
+  const handleNextStep = useCallback(
+    (meetingId: string) => {
+      // replace를 쓰면 히스토리에 모달 경로가 남지 않음
+      router.replace(ROUTES.AI_MEETING_MANAGER.MEETING(workspaceId, meetingId));
+    },
+    [router, workspaceId],
+  );
 
   return (
-    <ModalLayout>
+    <ModalLayout canClickDimmed={false}>
       <CreateMeetingMinutesModal
         workspaceId={workspaceId}
         onClose={() => router.back()}

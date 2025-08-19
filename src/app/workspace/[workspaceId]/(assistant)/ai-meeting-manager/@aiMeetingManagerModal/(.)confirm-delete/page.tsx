@@ -58,7 +58,7 @@ const ConfirmDeleteMeetingMinutesModalPage = () => {
   const disabled = isPending || submitting;
 
   return (
-    <ModalLayout>
+    <ModalLayout canClickDimmed={false}>
       <DeleteModal
         modalType={DeleteModalType.DELETE_MEETING_MINUTES}
         onClose={handleClose}

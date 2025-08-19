@@ -1,5 +1,6 @@
 export const AUTH_API_ENDPOINTS = {
   SIGN_UP: '/users/signup',
+  SIGN_UP_AND_LOGIN_IN: '/users/signup-and-login',
   CHECK_EMAIL_DUPLICATION: '/users/signup/same',
   REFRESH_TOKEN: '/users/refresh',
   LOGIN: '/users/login',

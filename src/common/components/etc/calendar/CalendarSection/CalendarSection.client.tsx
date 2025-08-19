@@ -1,6 +1,8 @@
 'use client';
 
-import { notFound } from 'next/navigation';
+import { useRouter } from 'next/navigation';
+
+import { ROUTES } from '@common/constants/routes.constants';
 
 import useFetchCalendar from '@/api/workspace/get/queries/useFetchCalendar';
 
@@ -9,9 +11,10 @@ import { useCalendarStore } from '../stores/calendar-store';
 import { getCalendarDates } from '../utils/calendar-date.utils';
 import { CalendarSectionProps } from './CalendarSection.types';
 
-const CalendarSection = ({ workspaceId, onFileClick }: CalendarSectionProps) => {
+const CalendarSection = ({ workspaceId }: CalendarSectionProps) => {
+  const router = useRouter();
   if (!workspaceId || Number.isNaN(workspaceId)) {
-    notFound();
+    router.replace(ROUTES.NOT_FOUND);
   }
   const { currentDate, setCurrentDate } = useCalendarStore();
   const current = new Date(currentDate.setDate(1));
@@ -51,7 +54,6 @@ const CalendarSection = ({ workspaceId, onFileClick }: CalendarSectionProps) => 
       onPrevClick={handlePrevClick}
       onTodayClick={handleTodayClick}
       onNextClick={handleNextClick}
-      onFileClick={onFileClick}
     />
   );
 };

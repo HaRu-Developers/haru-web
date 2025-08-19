@@ -28,31 +28,31 @@ const operatingMonth = firstDayOfMonth.getMonth() + 1;
 // mockDocuments를 1차원 배열로 정의
 const mockDocuments: DocumentList[] = [
   {
-    documentId: 1,
+    documentId: '1',
     title: `회의록 - 2025년 6월 24일`,
     documentType: FileType.AI_MEETING_MANAGER,
     createdAt: '2025-06-24T00:00:00Z',
   },
   {
-    documentId: 2,
+    documentId: '2',
     title: `7월 8일 회의록`,
     documentType: FileType.AI_MEETING_MANAGER,
     createdAt: '2025-07-08T00:00:00Z',
   },
   {
-    documentId: 3,
+    documentId: '3',
     title: `SNS 이벤트 초안`,
     documentType: FileType.SNS_EVENT_ASSISTANT,
     createdAt: '2025-07-08T00:00:00Z',
   },
   {
-    documentId: 4,
+    documentId: '4',
     title: `팀 분위기 보고서 Q1`,
     documentType: FileType.TEAM_MOOD_TRACKER,
     createdAt: '2025-07-08T00:00:00Z',
   },
   {
-    documentId: 5,
+    documentId: '5',
     title: `월간 회의록 요약`,
     documentType: FileType.AI_MEETING_MANAGER,
     createdAt: '2025-07-19T00:00:00Z',
@@ -65,9 +65,6 @@ export const Week: Story = {
     endDate: WeekendLater,
     documents: mockDocuments,
     operatingMonth: operatingMonth,
-    onFileClick: (documentId: number) => {
-      console.log(`Clicked on file with documentId: ${documentId}`);
-    },
   },
 };
 
@@ -77,8 +74,5 @@ export const Month: Story = {
     endDate: monthLater,
     documents: mockDocuments,
     operatingMonth: operatingMonth,
-    onFileClick: (documentId: number) => {
-      console.log(`Clicked on file with documentId: ${documentId}`);
-    },
   },
 };

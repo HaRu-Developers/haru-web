@@ -17,16 +17,23 @@ import { InputFileTitleMode } from '@common/components/inputs/InputFileTitle/Inp
 
 import SnsBodyList from './SnsBodyList/SnsBodyList.client';
 import SnsTopAction from './SnsTopAction/SnsTopAction.client';
+import { useEditInfo } from '@features/ai-meeting-manager/hooks/stores/useEditStore';
 
 interface SnsDetailMainProps {
   snsEventId?: string;
   sns?: SnsEventAssistantObject;
   onTitleSave?: (newTitle: string) => void;
 }
-const SnsDetailMain = ({ snsEventId, sns, onTitleSave }: SnsDetailMainProps) => {
+
+const SnsDetailMain = ({
+  snsEventId,
+  sns,
+  onTitleSave,
+}: SnsDetailMainProps) => {
   const [mode, setMode] = useState<InputFileTitleMode>(InputFileTitleMode.DEFAULT);
   const type = useSearchParams().get('type') as SnsEventAssistantListType;
   const { addToast } = useToastActions();
+  const { commitTick, cancelTick } = useEditInfo();
 
   const handleCopyClick = () => {
     addToast({
@@ -43,21 +50,24 @@ const SnsDetailMain = ({ snsEventId, sns, onTitleSave }: SnsDetailMainProps) => 
   return (
     <>
       {/* 상단 부분 */}
-      <div className="border-b-stroke-200 flex w-full justify-center border-b border-solid bg-white">
-        <div className="w-668pxr">
-          <div className="gap-16pxr mt-24pxr flex flex-col">
-            <InputFileTitle
-              value={sns?.title ?? ''}
-              onSave={handleSaveTitle}
-              mode={mode}
-              onRequestEdit={() => setMode(InputFileTitleMode.EDITABLE)}
-            />
-            <FileCreatedInfo
-              name={sns?.creatorName ?? ''}
-              userId={sns?.creatorId ?? ''}
-              dateTime={`${sns?.updatedAt}`}
-            />
-          </div>
+      <div className="border-b-stroke-200 flex w-full flex-col justify-center border-b border-solid bg-white">
+        <div className="mx-auto mt-24pxr">
+          <InputFileTitle
+            value={sns?.title ?? ''}
+            onSave={handleSaveTitle}
+            mode={mode}
+            onClick={() => setMode(InputFileTitleMode.EDITABLE)}
+            onCancel={() => setMode(InputFileTitleMode.DEFAULT)}
+            commitTick={commitTick}
+            cancelTick={cancelTick}
+          />
+        </div>
+        <div className="w-668pxr gap-16pxr mt-24pxr flex flex-col mx-auto">
+          <FileCreatedInfo
+            name={sns?.creatorName ?? ''}
+            userId={sns?.creatorId ?? ''}
+            dateTime={`${sns?.updatedAt}`}
+          />
           <SnsTopAction
             workspaceId={sns?.workspaceId ?? ''}
             snsEventId={snsEventId ?? ''}

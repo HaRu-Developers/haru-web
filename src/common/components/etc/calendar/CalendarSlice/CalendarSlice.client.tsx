@@ -13,7 +13,6 @@ const CalendarSlice = ({
   date,
   files,
   isVisible,
-  onFileClick,
   isToday,
   isSecondRowOrBelow,
   isNotLastColumn,
@@ -55,7 +54,7 @@ const CalendarSlice = ({
       </div>
 
       {files?.map((file, index) => (
-        <DocumentFile key={index} file={file} onClick={onFileClick} />
+        <DocumentFile key={index} file={file} />
       ))}
     </div>
   );

@@ -9,5 +9,4 @@ export interface CalendarFullProps {
   onPrevClick?: () => void;
   onTodayClick?: () => void;
   onNextClick?: () => void;
-  onFileClick?: (id: number) => void;
 }

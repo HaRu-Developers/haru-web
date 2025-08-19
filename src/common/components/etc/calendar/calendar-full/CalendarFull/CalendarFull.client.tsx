@@ -15,7 +15,6 @@ const CalendarFull = ({
   onPrevClick,
   onTodayClick,
   onNextClick,
-  onFileClick,
 }: CalendarFullProps) => {
   return (
     <>
@@ -32,7 +31,6 @@ const CalendarFull = ({
           endDate={endDate}
           documents={documents}
           operatingMonth={operatingMonth}
-          onFileClick={onFileClick}
         />
       </div>
     </>

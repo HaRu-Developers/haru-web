@@ -49,3 +49,13 @@ export interface UiQuestion {
   segmentId: number;
   text: string;
 }
+
+/**
+ * 플레이이바 조작으로 발화 포커스를 하기 위한
+ * 시작, 끝 시간 매핑 타입
+ */
+export interface FocusSegment {
+  segmentId: number;
+  startMs: number;
+  endMs: number;
+}

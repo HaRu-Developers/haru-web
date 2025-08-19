@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { useParams, useRouter } from 'next/navigation';
 
@@ -22,6 +22,7 @@ import { AiMeetingPageType } from '@features/ai-meeting-manager/types/page-type.
 
 import { DEFAULT_SPEECH_QUESTION } from '@features/ai-meeting-manager/constants/speechQuestion.constants';
 
+import buildFocusSegments from '@features/ai-meeting-manager/utils/build-focus-segments.utils';
 import {
   selectQuestionsForUI,
   selectSpeechTextById,
@@ -86,6 +87,15 @@ const MeetingPanel = ({ pageType, leftTab }: MeetingPanelProps) => {
   const questionsForUI = selectQuestionsForUI(speeches);
   const speechTextById = selectSpeechTextById(speeches);
 
+  const segments = useMemo(
+    () =>
+      buildFocusSegments(
+        speeches.map((s) => ({ segmentId: s.segmentId, startTime: s.startTime })),
+        meetingStartTime /* ISO */,
+      ),
+    [speeches, meetingStartTime],
+  );
+
   // 이미 진행된 회의인데 /meeting에 접근하면
   const alreadyDidMeeting =
     isMeetingPage && (!!meetingStartTime || (initialTranscripts.length ?? 0) > 0);
@@ -103,7 +113,6 @@ const MeetingPanel = ({ pageType, leftTab }: MeetingPanelProps) => {
         진행 완료된 회의라 회의록 페이지로 이동합니다...
       </p>
     );
-
   const handleCloseLoadingModal = () => {
     closeMmLoadingModal();
     // 선택 - 닫으면서 EndMeetingModal 다시 열기
@@ -136,7 +145,10 @@ const MeetingPanel = ({ pageType, leftTab }: MeetingPanelProps) => {
               ) : isFetching ? (
                 <GnbBottomPlayerBarSkeleton />
               ) : (
-                <GnbBottomPlayerBar audioUrl={voiceLink} />
+                <GnbBottomPlayerBar
+                  audioUrl={voiceLink}
+                  // focusSegments={segments}
+                />
               )}
             </div>
           </div>

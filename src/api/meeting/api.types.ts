@@ -1,5 +1,3 @@
-import { BaseResponseDto } from '@common/types/api.common.types';
-
 import { Speech } from '@features/ai-meeting-manager/types/meeting.types';
 
 // ========== 공통 요청 ==========

@@ -90,11 +90,13 @@ const useFocusMapStore = create<FocusMapState>()(
           }),
 
         focusSpeech: (segmentId, opts) => {
+          console.log('focusSpeech', segmentId);
           const el = get().speechRefs.get(segmentId) ?? null;
           flash(el, opts);
         },
 
         focusQuestionBySpeech: (segmentId, opts) => {
+          console.log('focusQuestionBySpeech', segmentId);
           const el = get().questionRefs.get(segmentId)?.[0] ?? null;
           flash(el, opts);
         },

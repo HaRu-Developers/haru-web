@@ -1,19 +1,3 @@
-import { notFound } from 'next/navigation';
-
-import type { DehydratedState } from '@tanstack/react-query';
-import { HydrationBoundary } from '@tanstack/react-query';
-
-import { FetchMeetingMinutesDetailResponseDto } from '@api/meeting/api.types';
-import fetchMeetingMinutesDetail from '@api/meeting/get/apis/fetchMeetingMinutesDetail';
-
-import { BaseResponseDto } from '@common/types/api.common.types';
-
-import queryKeys from '@common/constants/query-key.constants';
-
-import { isMeetingNotFound } from '@common/errors/guards.utils';
-
-import { getDehydratedState } from '@common/utils/dehydrate';
-
 import GnbTopTitle from '@features/ai-meeting-manager/components/GnbTopTitle/GnbTopTitle.client';
 
 const AiMeetingLayout = async ({

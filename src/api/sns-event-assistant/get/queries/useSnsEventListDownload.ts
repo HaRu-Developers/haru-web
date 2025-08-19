@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 
-import { notFound } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 import { GetSnsEventAssistantListDownloadResponseDto } from '@api/sns-event-assistant/api.types';
 
@@ -9,6 +9,7 @@ import { Format, SnsEventAssistantListType } from '@common/types/download.enum.t
 
 import { API_ERROR_CODES } from '@common/constants/api-error-codes.constants';
 import queryKeys from '@common/constants/query-key.constants';
+import { ROUTES } from '@common/constants/routes.constants';
 
 import { ApiError } from '@common/errors/ApiError';
 
@@ -24,9 +25,11 @@ const useSnsEventListDownload = (
   listType: SnsEventAssistantListType,
   format: Format,
 ) => {
+  const router = useRouter();
+
   const handleError = useCallback((error: ApiError<ApiErrorBody>) => {
     if (error.code === API_ERROR_CODES.SNS_EVENT.NOT_FOUND) {
-      notFound(); // Next.js not-found.tsx로 이동
+      router.replace(ROUTES.NOT_FOUND);
     }
   }, []);
 

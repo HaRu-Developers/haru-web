@@ -8,7 +8,107 @@ on:
   push:
     branches: [main, develop]
     paths:
+      - '**.stories.tsx'name: 'Storybook Deployment to Chromatic'
+
+on:
+  pull_request:
+    branches: [main, develop]
+    paths:
       - '**.stories.tsx'
+  push:
+    branches: [main, develop]
+    paths:
+      - '**.stories.tsx'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  storybook-deployment-chromatic:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout To Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: pnpm 설정
+        uses: pnpm/action-setup@v4
+        with:
+          version: 8
+
+      - name: Node.js 설정
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: pnpm 의존성 설치
+        run: pnpm install --frozen-lockfile
+
+      # -- 여기부터 추가된 단계 --
+
+      - name: `node_modules` 디렉터리 확인
+        run: ls -la node_modules
+
+      - name: Storybook 빌드 테스트 (디버그용)
+        run: pnpm run build-storybook
+        env:
+          NODE_OPTIONS: --max-old-space-size=4096
+
+      # -- 여기까지 추가된 단계 --
+
+      - name: Chromatic 배포
+        id: publish_chromatic
+        uses: chromaui/action@latest
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          buildScriptName: build-storybook
+          onlyChanged: true
+
+      - name: UTC to KST 변환
+        id: convert_utc_to_kst
+        run: |
+          TS="${{ github.event.head_commit.timestamp }}"
+          KST=$(date -d "$TS +9 hours" +"%Y-%m-%d %H:%M:%S")
+          echo "kst_time=$KST" >> $GITHUB_OUTPUT
+
+      - name: Comment에 Chromatic URL 기록
+        if: ${{ github.event_name == 'pull_request' }}
+        uses: thollander/actions-comment-pull-request@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          pr-number: ${{ github.event.pull_request.number }}
+          message: |
+            ### 🎨 Storybook Deployed
+
+            📦 PR #${{ github.event.pull_request.number }} by ${{ github.event.pull_request.user.login }}
+            👤 ${{ github.event.head_commit.author.name }} @${{ github.event.head_commit.author.username }}
+            📅 KST ${{ steps.convert_utc_to_kst.outputs.kst_time }}
+
+            #### 🔗 Links
+            **[📖 Storybook 보러가기](${{ steps.publish_chromatic.outputs.storybookUrl }})**
+
+            ---
+            *Powered by Chromatic* ✨
+          comment-tag: 'storybook_deploy_${{ github.event.pull_request.number }}'
+          mode: 'upsert'
+
+      - name: 배포 결과 요약
+        if: ${{ github.event_name == 'push' }}
+        run: |
+          echo "✅ Push deployment completed"
+          echo "🎨 Storybook available at: ${{ steps.publish_chromatic.outputs.storybookUrl }}"
+
+      - name: Final deployment summary
+        if: always()
+        run: |
+          echo "🏁 Chromatic Deployment Workflow Complete"
+          echo "📊 Status: ${{ job.status }}"
+          echo "🔗 Storybook: ${{ steps.publish_chromatic.outputs.storybookUrl }}"
   workflow_dispatch:
 
 permissions:
@@ -37,7 +137,7 @@ jobs:
           cache: 'pnpm'
 
       - name: pnpm 의존성 설치
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
 
       - name: Storybook 설정 파일 확인
         run: |

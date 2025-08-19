@@ -1,7 +1,7 @@
 import SurveyInSiteSkeleton from '@common/components/box-text/SurveyInSite/SurveyInSiteSkeleton';
 import GnbTopSkeleton from '@common/components/gnbs/GnbTop/GnbTopSkeleton';
 
-import TeamMoodReportTabSkeleton from '@features/team-mood-tracker/components/tabs/TeamMoodReportTab/TeamMoodReportTabSkeleton';
+import TeamMoodReportTabSkeleton from '@features/team-mood-tracker/components/mood-reports/report-section/TeamMoodReportTab/TeamMoodReportTabSkeleton';
 
 /**
  * @description 팀 분위기 트래커 상세 페이지 전체에 대한 스켈레톤 UI

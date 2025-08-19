@@ -28,11 +28,12 @@ import {
 import { useTeamMoodToastActions } from '@features/team-mood-tracker/hooks/stores/useTeamMoodTrackerToastStore';
 
 import TeamMoodAnswerChartSection from '@features/team-mood-tracker/components/mood-reports/answer-section/TeamMoodAnswerChartSection/TeamMoodAnswerChartSection.client';
+import TeamMoodSurveyQuestionSection from '@features/team-mood-tracker/components/mood-reports/question-section/TeamMoodSurveyQuestionSection/TeamMoodSurveyQuestionSection.client';
 import TeamMoodReportContentSection from '@features/team-mood-tracker/components/mood-reports/report-section/TeamMoodReportContentSection/TeamMoodReportContentSection.client';
 import TeamMoodReportNoneContentSection from '@features/team-mood-tracker/components/mood-reports/report-section/TeamMoodReportNoneContentSection/TeamMoodReportNoneContentSection.server';
+import TeamMoodReportTab from '@features/team-mood-tracker/components/mood-reports/report-section/TeamMoodReportTab/TeamMoodReportTab.client';
+import { TeamMoodReportTabType } from '@features/team-mood-tracker/components/mood-reports/report-section/TeamMoodReportTab/TeamMoodReportTab.types';
 import TeamMoodTrackerPageSkeleton from '@features/team-mood-tracker/components/skeletons/TeamMoodTrackerSkeleton/TeamMoodTrackerSkeleton';
-import TeamMoodReportTab from '@features/team-mood-tracker/components/tabs/TeamMoodReportTab/TeamMoodReportTab.client';
-import { TeamMoodReportTabType } from '@features/team-mood-tracker/components/tabs/TeamMoodReportTab/TeamMoodReportTab.types';
 import TeamMoodToast from '@features/team-mood-tracker/components/toasts/TeamMoodToast/TeamMoodToast.client';
 
 const TeamMoodTrackerDetailPage = () => {
@@ -199,7 +200,9 @@ const TeamMoodTrackerDetailPage = () => {
         {currentTab === TeamMoodReportTabType.SURVEY_LIST && (
           <div className="w-668pxr mx-auto">
             <div className="text-t1-md mt-230pxr flex items-center justify-center text-center">
-              경운님, 이쪽에 구현해주시면 됩니다.
+              {/* 경운님, 이쪽에 구현해주시면 됩니다. */}
+              {/* 저쪽 신사분의 메세지는 냅둬야지~ */}
+              <TeamMoodSurveyQuestionSection moodTrackerHashedId={moodTrackerHashedId} />
             </div>
           </div>
         )}

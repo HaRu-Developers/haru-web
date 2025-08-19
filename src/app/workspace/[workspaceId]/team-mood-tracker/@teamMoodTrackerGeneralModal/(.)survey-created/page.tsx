@@ -9,6 +9,8 @@ import { ROUTES } from '@common/constants/routes.constants';
 import ModalLayoutWithoutPortal from '@common/components/layouts/ModalLayoutWithoutPortal/ModalLayoutWithoutPortal.client';
 import SurveyLinkCreatedModal from '@common/components/modals/SurveyLinkCreatedModal/SurveyLinkCreatedModal.client';
 
+import { TeamMoodReportTabType } from '@features/team-mood-tracker/components/mood-reports/report-section/TeamMoodReportTab/TeamMoodReportTab.types';
+
 const SurveyCreatedModal = () => {
   const router = useRouter();
   const params = useParams<{ workspaceId: string }>();
@@ -22,7 +24,11 @@ const SurveyCreatedModal = () => {
 
   const handleClose = () =>
     router.push(
-      ROUTES.DETAIL_DOCUMENTS_DEFAULT[FileType.TEAM_MOOD_TRACKER](workspaceId, moodTrackerHashedId),
+      ROUTES.DETAIL_DOCUMENTS_DEFAULT[FileType.TEAM_MOOD_TRACKER](
+        workspaceId,
+        moodTrackerHashedId,
+        TeamMoodReportTabType.SURVEY_LIST,
+      ),
     );
 
   const handleEmailSendClick = () => {

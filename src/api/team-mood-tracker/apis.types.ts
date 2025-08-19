@@ -19,6 +19,8 @@ export interface MoodTrackerPathParamsDto {
 }
 
 /** 설문 조회 요청 DTO. Path Parameter만 포함합니다. */
+export type GetViewSurveyQuestionRequestDto = MoodTrackerPathParamsDto;
+/** 설문 조회 요청 DTO. Path Parameter만 포함합니다. */
 export type GetViewSurveyRequestDto = MoodTrackerPathParamsDto;
 /** 리포트 조회 요청 DTO. Path Parameter만 포함합니다. */
 export type GetViewReportRequestDto = MoodTrackerPathParamsDto;
@@ -212,3 +214,73 @@ export interface UseTeamMoodDownloadLinkOptions {
 export interface CreateNewSurveyResponseDto {
   moodTrackerHashedId: string; // 생성된 설문의 해싱된 ID
 }
+
+/**
+ * 경운 제작본 : 설문에 있는 질문 목록을 가져올 때 사용합니다.
+ */
+export interface GetSurveyQuestionListResponseDto {
+  workspaceId: string;
+  moodTrackerHashedId: string;
+  title: string;
+  creatorId: string;
+  creatorName: string;
+  updatedAt: string; // ISO 8601 형식의 날짜 문자열
+  dueDate: string; // ISO 8601 형식의 날짜 문자열
+  respondentsNum: number; // 현재까지의 응답자 수
+  description: string; // 설문의 설명
+  questionList: SurveyQuestionTypeOnGet[]; // 설문에 포함된 질문 목록
+}
+
+/**
+ * 경운 제작본 : 모든 질문 유형의 기본 구조
+ */
+interface BaseQuestionOnGet {
+  /** 질문의 고유 ID */
+  questionId: string;
+  /** 질문의 내용 */
+  questionTitle: string;
+  isMandatory: boolean; // 필수 여부
+}
+
+/**
+ * 경운 제작본 : 객관식 문항의 응답 항목
+ */
+export interface SurveyMultipleChoiceItemOnGet {
+  /** 객관식 선택지의 고유 ID */
+  multipleChoiceId: string;
+  /** 선택지의 내용 */
+  content: string;
+}
+
+/**
+ * 경운 제작본 : 복수선택 문항의 응답 항목
+ */
+export interface SurveyCheckboxChoiceItemOnGet {
+  /** 복수선택 선택지의 고유 ID */
+  checkboxChoiceId: string;
+  /** 선택지의 내용 */
+  content: string;
+}
+
+/**
+ * 경운 제작본 : 질문 유형(type)에 따라 구조가 달라지는 질문 객체 타입 (Discriminated Union)
+ */
+export type SurveyQuestionTypeOnGet =
+  | (BaseQuestionOnGet & {
+      /** 질문 유형: 객관식 */
+      type: TeamMoodTrackerSurveyQuestionType.MULTIPLE_CHOICE;
+      /** 객관식 응답 목록 */
+      multipleChoiceResponseList: SurveyMultipleChoiceItemOnGet[];
+    })
+  | (BaseQuestionOnGet & {
+      /** 질문 유형: 복수선택 */
+      type: TeamMoodTrackerSurveyQuestionType.CHECKBOX_CHOICE;
+      /** 복수선택 응답 목록 */
+      checkboxChoiceResponseList: SurveyCheckboxChoiceItemOnGet[];
+    })
+  | (BaseQuestionOnGet & {
+      /** 질문 유형: 주관식 */
+      type: TeamMoodTrackerSurveyQuestionType.SUBJECTIVE;
+      /** 주관식 응답 목록 */
+      isMandatory: boolean; // 필수 여부
+    });

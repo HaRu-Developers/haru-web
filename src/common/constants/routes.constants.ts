@@ -54,8 +54,11 @@ export const ROUTES = {
     [FileType.SNS_EVENT_ASSISTANT]: (workspaceId: BigintString, documentId: BigintString) =>
       `/workspace/${workspaceId}/sns-event-assistant/${documentId}?type=participant`,
 
-    [FileType.TEAM_MOOD_TRACKER]: (workspaceId: BigintString, documentId: BigintString) =>
-      `/workspace/${workspaceId}/team-mood-tracker/survey/${documentId}?type=TEAM_MOOD_REPORT`,
+    [FileType.TEAM_MOOD_TRACKER]: (
+      workspaceId: BigintString,
+      documentId: BigintString,
+      documentType = 'TEAM_MOOD_REPORT',
+    ) => `/workspace/${workspaceId}/team-mood-tracker/survey/${documentId}?type=${documentType}`,
   },
 
   AUTH: {

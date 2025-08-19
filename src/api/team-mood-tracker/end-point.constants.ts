@@ -1,6 +1,7 @@
 export const MOOD_TRACKER_API_ENDPOINTS = {
   REPORTS: (moodTrackerHashedId: string) => `/mood-trackers/${moodTrackerHashedId}/reports`,
   RESPONSES: (moodTrackerHashedId: string) => `/mood-trackers/${moodTrackerHashedId}/responses`,
+  QUESTIONS: (moodTrackerHashedId: string) => `/mood-trackers/${moodTrackerHashedId}/questions`,
   MODIFY_TITLE: (moodTrackerHashedId: string) => `/mood-trackers/${moodTrackerHashedId}`,
   DOWNLOAD_LINK: (moodTrackerHashedId: string) => `/mood-trackers/${moodTrackerHashedId}/download`,
   // 설문 생성 API, 같은 URI 활용하는거도 있는데 공용으로 쓰지 말고 새로 만들어서 사용하세요!

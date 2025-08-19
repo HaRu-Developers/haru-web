@@ -44,6 +44,7 @@ const queryKeys = createQueryKeyStore({
 
   moodTracker: {
     all: null,
+    question: (moodTrackerHashedId: string) => ['moodTracker', moodTrackerHashedId, 'question'],
     detail: (moodTrackerHashedId: string) => [moodTrackerHashedId],
     report: (moodTrackerHashedId: string) => [moodTrackerHashedId, 'report'],
     downloadLink: (moodTrackerHashedId: string, format: DownloadFormat) => [

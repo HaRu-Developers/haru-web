@@ -7,7 +7,7 @@ import clsx from 'clsx';
 import FeatureButton from '../../buttons/FeatureButton/FeatureButton.client';
 import { FeatureButtonType } from '../../buttons/FeatureButton/FeatureButton.types';
 import Banner from '../Banner/Banner.server';
-import TitleDisplay from '../TitleDisplay/TitleDisplay.server';
+import TitleDisplay from '../TitleDisplay/TitleDisplay.client';
 import { LandingBannerProps } from './LandingBanner.types';
 
 const LandingBanner = ({ className }: LandingBannerProps) => {
@@ -23,7 +23,7 @@ const LandingBanner = ({ className }: LandingBannerProps) => {
       {/* 배너 타이틀 영역 */}
       <TitleDisplay />
       {/* 배너 전체 영역 */}
-      <div className="h-615pxr bg-primary-selected rounded-20pxr w-1200pxr flex flex-col items-center justify-center overflow-hidden">
+      <div className="h-615pxr bg-primary-selected rounded-20pxr w-1200pxr animate-fade-in-up-and-delay flex flex-col items-center justify-center overflow-hidden opacity-0">
         {/* 기능 버튼 */}
         <div className="mt-60pxr mb-61pxr gap-x-8pxr flex">
           <FeatureButton

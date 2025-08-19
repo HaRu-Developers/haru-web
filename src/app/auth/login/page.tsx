@@ -1,3 +1,5 @@
+import { Suspense } from 'react';
+
 import GoogleLoginButton from '@common/components/buttons/48px/GoogleLoginButton/GoogleLoginButton.client';
 import LoginOnBoarding from '@common/components/onboarding/LoginOnBoaring/LoginOnBoarding.client';
 
@@ -19,7 +21,9 @@ const LoginPage = () => {
           {/* -- 또는 -- */}
           <DdoneunDivider className="mt-24pxr" />
           {/* 이메일 & 비밀번호 폼 */}
-          <LoginForm />
+          <Suspense fallback={<div>로딩중...</div>}>
+            <LoginForm />
+          </Suspense>
           {/* 가입하기 버튼 */}
           <HaveNoAccount />
         </div>

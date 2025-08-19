@@ -51,7 +51,7 @@ const SnsDetailMain = ({
     <>
       {/* 상단 부분 */}
       <div className="border-b-stroke-200 flex w-full flex-col justify-center border-b border-solid bg-white">
-        <div className='mx-auto mt-24pxr'>
+        <div className="mx-auto mt-24pxr">
           <InputFileTitle
             value={sns?.title ?? ''}
             onSave={handleSaveTitle}

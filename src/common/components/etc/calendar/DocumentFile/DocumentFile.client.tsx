@@ -22,7 +22,7 @@ const DocumentFile = ({ file }: DocumentFileProps) => {
   };
   const router = useRouter();
   const iconState = documentIconMap[file.documentType];
-  const {workspaceId} = useParams<{workspaceId: string}>();
+  const { workspaceId } = useParams<{ workspaceId: string }>();
   const handleClick = () => {
     switch (file.documentType) {
       case FileType.AI_MEETING_MANAGER:
@@ -32,7 +32,7 @@ const DocumentFile = ({ file }: DocumentFileProps) => {
         router.push(ROUTES.SNS_EVENT_ASSISTANT.DETAIL(workspaceId, file.documentId));
         break;
       case FileType.TEAM_MOOD_TRACKER:
-        //router.push(ROUTES.TEAM_MOOD_TRACKER.MAIN(workspaceId, file?.documentId));
+        // TODO: TEAM_MOOD_TRACKER 라우트 구현 후 활성화 - router.push(ROUTES.TEAM_MOOD_TRACKER.MAIN(workspaceId, file?.documentId));
         break;
     }
   };

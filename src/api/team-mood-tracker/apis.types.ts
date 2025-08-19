@@ -64,6 +64,17 @@ export interface CreateNewSurveyRequestDto {
 // Response DTO
 // Response DTO
 
+export interface SurveyBaseInfoResponseDto {
+  workspaceId: string;
+  moodTrackerHashedId: string;
+  title: string;
+  creatorId: string;
+  creatorName: string;
+  updatedAt: string;
+  dueDate: string;
+  respondentsNum: number;
+}
+
 /**
  * 분위기 트래커 관련 API 응답의 공통 기본 DTO
  */
@@ -284,3 +295,34 @@ export type SurveyQuestionTypeOnGet =
       /** 주관식 응답 목록 */
       isMandatory: boolean; // 필수 여부
     });
+
+interface BaseQuestionOnPost {
+  /** 질문의 고유 ID */
+  questionId: string;
+}
+/**
+ * 경운 제작본 : 질문 유형(type)에 따라 구조가 달라지는 질문 객체 타입 (Discriminated Union)
+ */
+export type SurveyQuestionTypeOnPost =
+  | (BaseQuestionOnPost & {
+      /** 질문 유형: 객관식 */
+      type: TeamMoodTrackerSurveyQuestionType.MULTIPLE_CHOICE;
+      multipleChoiceId: string;
+    })
+  | (BaseQuestionOnPost & {
+      /** 질문 유형: 복수선택 */
+      type: TeamMoodTrackerSurveyQuestionType.CHECKBOX_CHOICE;
+      checkboxChoiceIdList: string[];
+    })
+  | (BaseQuestionOnPost & {
+      /** 질문 유형: 주관식 */
+      type: TeamMoodTrackerSurveyQuestionType.SUBJECTIVE;
+      subjectiveAnswer: string;
+    });
+
+/**
+ * 설문 응답 제출 Request DTO
+ */
+export interface PostSurveyRequestDto {
+  answers: SurveyQuestionTypeOnPost[];
+}

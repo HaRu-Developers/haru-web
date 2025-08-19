@@ -52,6 +52,7 @@ const queryKeys = createQueryKeyStore({
       'download',
       format,
     ],
+    surveyBasicInfo: (moodTrackerHashedId: string) => [moodTrackerHashedId, 'surveyBasicInfo'],
   },
 
   user: {

@@ -1,0 +1,22 @@
+import { defaultApi } from '@lib/fetcher';
+
+import { SurveyQuestionTypeOnPost } from '@api/team-mood-tracker/apis.types';
+import { MOOD_TRACKER_API_ENDPOINTS } from '@api/team-mood-tracker/end-point.constants';
+
+import { BaseResponseDto } from '@common/types/api.common.types';
+
+export const submitSurvey = async (data: {
+  moodTrackerHashedId: string;
+  surveyQuestion: SurveyQuestionTypeOnPost[];
+}) => {
+  const response = await defaultApi<BaseResponseDto<object>>(
+    MOOD_TRACKER_API_ENDPOINTS.SUBMIT_SURVEY(data.moodTrackerHashedId),
+    {
+      method: 'POST',
+      body: JSON.stringify(data.surveyQuestion),
+      auth: true,
+    },
+  );
+
+  return response;
+};

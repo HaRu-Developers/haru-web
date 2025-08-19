@@ -7,6 +7,8 @@ export const MOOD_TRACKER_API_ENDPOINTS = {
   // 설문 생성 API, 같은 URI 활용하는거도 있는데 공용으로 쓰지 말고 새로 만들어서 사용하세요!
   CREATE_SURVEY: (workspaceId: string) => `mood-trackers/workspaces/${workspaceId}`,
   SEND_EMAIL: (moodTrackerHashedId: string) => `/mood-trackers/${moodTrackerHashedId}/emails`,
+  SUBMIT_SURVEY: (moodTrackerHashedId: string) => `/mood-trackers/${moodTrackerHashedId}/answer`,
+  SURVEY_BASIC_INFO: (moodTrackerHashedId: string) => `/mood-trackers/${moodTrackerHashedId}`,
 } as const;
 
 export const TEAM_MOOD_TRACKER_PAGE_ROUTES = {

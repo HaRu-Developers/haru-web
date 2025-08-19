@@ -7,6 +7,8 @@ export const useSnsEventAssistantInfo = () =>
     useShallow((state) => ({
       newTitle: state.newTitle,
       newSnsEventLink: state.newSnsEventLink,
+      checkedList: state.checkedList,
+      isCheckedMode: state.isCheckedMode,
       winnerCount: state.conditions.winnerCount,
       period: state.conditions.period,
       keyword: state.conditions.keyword,

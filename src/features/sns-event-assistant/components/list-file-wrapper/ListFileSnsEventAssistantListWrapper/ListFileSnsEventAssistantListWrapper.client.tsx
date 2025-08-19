@@ -1,66 +1,29 @@
 'use client';
 
-import { useState } from 'react';
-
-import useDeleteSnsEventMutation from '@api/sns-event-assistant/delete/mutations/useDeleteSnsEventMutation';
+import { useParams, useRouter } from 'next/navigation';
 
 import { FileType } from '@common/types/file-type.enum';
+
+import { ROUTES } from '@common/constants/routes.constants';
+
+import { useSnsEventAssistantInfo } from '@common/hooks/stores/useSnsEventAssistantStore';
 
 import ListDeleteButton from '@common/components/list-file/ListDeleteButton/ListDeleteButton.client';
 import ListHeader from '@common/components/list-file/ListHeader/ListHeader.server';
 
 import ListFileSnsEventAssistantWrapper from '../ListFileSnsEventAssistantWrapper/ListFileSnsEventAssistantWrapper.client';
 
+/**
+ * SNS 이벤트 어시스턴트 파일 목록 전체 부분을 표시하는 컴포넌트입니다.
+ * Check 모드 시 삭제 버튼을 표시합니다.
+ */
 const ListFileSnsEventAssistantListWrapper = () => {
-  const [isCheckedMode, setIsCheckMode] = useState<boolean>(true);
-  const [checkedList, setCheckedList] = useState<string[]>([]);
-  const { mutate } = useDeleteSnsEventMutation();
-  // 화면 갱신 해야 함 - create가 안되서 일단 보류...
-  // store tankquery 사용 예정
+  const { isCheckedMode } = useSnsEventAssistantInfo();
+  const { workspaceId } = useParams<{ workspaceId: string }>();
+  const router = useRouter();
   const handleDelete = () => {
-    if (checkedList.length === 0) return;
-
-    const successfullyDeletedIds: string[] = [];
-    let pendingDeletions = checkedList.length;
-
-    checkedList.forEach((snsEventId) => {
-      mutate(
-        { snsEventId },
-        {
-          onSuccess: () => {
-            successfullyDeletedIds.push(snsEventId);
-            pendingDeletions--;
-
-            if (pendingDeletions === 0) {
-              const newCheckedList = checkedList.filter(
-                (id) => !successfullyDeletedIds.includes(id),
-              );
-
-              setCheckedList(newCheckedList);
-
-              if (newCheckedList.length === 0) {
-                setIsCheckMode(false);
-              }
-            }
-          },
-          onError: (error) => {
-            console.error(`Deletion of ${snsEventId} failed:`, error);
-            pendingDeletions--;
-            if (pendingDeletions === 0) {
-              const newCheckedList = checkedList.filter(
-                (id) => !successfullyDeletedIds.includes(id),
-              );
-              setCheckedList(newCheckedList);
-              if (newCheckedList.length === 0) {
-                setIsCheckMode(false);
-              }
-            }
-          },
-        },
-      );
-    });
+    router.push(ROUTES.SNS_EVENT_ASSISTANT.DELETE(workspaceId));
   };
-
   return (
     <>
       {!isCheckedMode ? (
@@ -68,16 +31,11 @@ const ListFileSnsEventAssistantListWrapper = () => {
           <ListHeader fileType={FileType.SNS_EVENT_ASSISTANT} />
         </div>
       ) : (
-        <div className="mt-7pxr w-full">
+        <div className="pb-10pxr mt-7pxr mb-9pxr border-b-stroke-200 w-full border-b">
           <ListDeleteButton onClick={handleDelete} />
-          <div className="mt-8pxr mb-9pxr h-1pxr w-full bg-[#E6E9EF]" />
         </div>
       )}
-      <ListFileSnsEventAssistantWrapper
-        checkedList={checkedList}
-        onCheckModeToggle={setIsCheckMode}
-        onCheckedListToggle={setCheckedList}
-      />
+      <ListFileSnsEventAssistantWrapper />
     </>
   );
 };

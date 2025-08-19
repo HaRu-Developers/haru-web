@@ -16,39 +16,32 @@ import ModalLayout from '@/common/components/layouts/ModalLayout/ModalLayout.cli
 const CreatingEventModalClient = () => {
   const router = useRouter();
   const { workspaceId } = useParams<{ workspaceId: string }>();
-
   const { newTitle, newSnsEventLink, friendTag, winnerCount, keyword, period } =
     useSnsEventAssistantInfo();
-  const { mutate } = useCreateSnsEventMutation();
 
-  // useRef를 사용하여 컴포넌트가 처음 렌더링될 때만 API 호출을 트리거
+  const { mutate, isPending } = useCreateSnsEventMutation(workspaceId);
+
   const hasCalledMutate = useRef(false);
 
   useEffect(() => {
-    // 이미 호출했는지 확인하여 중복 호출 방지
     if (!hasCalledMutate.current) {
       hasCalledMutate.current = true;
 
       const condition = {
         winnerCount: winnerCount ?? 0,
-        isPeriod: !!period,
-        period: period ? period?.endDate : null,
-        isKeyword: !!keyword,
-        // keyword는 배열로 되어 있으나 백엔드는 string으로 받음
-        keyword: [...(keyword?.keyword ?? [])][0],
-        isTaged: !!friendTag,
+        isPeriod: period?.isActive ?? false,
+        period: period?.endDate,
+        isKeyword: keyword?.isActive ?? false,
+        keyword: [...(keyword?.keyword ?? [])][0], // keyword는 배열로 되어 있으나 백엔드는 string으로 받음
+        isTaged: friendTag?.isActive ?? false,
         tageCount: friendTag?.requiredFriendTag ?? 0,
       };
-
       mutate(
         { workspaceId, title: newTitle, snsEventLink: newSnsEventLink, snsCondition: condition },
         {
-          onSuccess: (data) => {
-            const snsEventId = data?.result?.snsEventId;
-            router.push(`/workspace/${workspaceId}/sns-event-assistant/${snsEventId}`);
-          },
           onError: (error) => {
             console.error('SNS 이벤트 어시스턴트 생성 실패:', error);
+            router.back();
           },
         },
       );
@@ -69,11 +62,14 @@ const CreatingEventModalClient = () => {
     router.back();
   };
 
-  return (
-    <ModalLayout>
-      <LoadingModal modalType={LoadingModalType.SNS_EVENT} onClose={handleClose} />
-    </ModalLayout>
-  );
+  if (isPending) {
+    return (
+      <ModalLayout>
+        <LoadingModal modalType={LoadingModalType.SNS_EVENT} onClose={handleClose} />
+      </ModalLayout>
+    );
+  }
+  return null;
 };
 
 export default CreatingEventModalClient;

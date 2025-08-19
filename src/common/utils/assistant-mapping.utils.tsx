@@ -29,7 +29,7 @@ export const getListTitle = (type: ExtendedFileType) => {
     case FileType.AI_MEETING_MANAGER:
       return <BoldText text={'내 AI 회의록'} className={'mt-56pxr mb-16pxr'} />;
     case FileType.SNS_EVENT_ASSISTANT:
-      return <BoldText text={'내 이벤트 추첨 기록'} className={'mt-56pxr mb-16pxr'} />;
+      return <BoldText text={'내 이벤트 추첨 기록'} className={'mt-56pxr'} />;
     case FileType.TEAM_MOOD_TRACKER:
       return <BoldText text={'내 팀 분위기 리포트'} className={'mt-56pxr mb-16pxr'} />;
     case SNS_EVENT_ASSISTANT_LINK:

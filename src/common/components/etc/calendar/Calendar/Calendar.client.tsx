@@ -11,7 +11,6 @@ const Calendar = ({
   endDate,
   documents,
   operatingMonth,
-  onFileClick,
 }: CalendarProps) => {
   const today = new Date();
   const startDateValue = typeof startDate === 'number' ? new Date(startDate) : startDate;
@@ -43,7 +42,6 @@ const Calendar = ({
           isToday={date.toISOString().split('T')[0] === today.toISOString().split('T')[0]}
           isSecondRowOrBelow={Math.floor(idx / 7) > 0}
           isNotLastColumn={idx % 7 !== 6}
-          onFileClick={onFileClick}
         />
       ))}
     </div>

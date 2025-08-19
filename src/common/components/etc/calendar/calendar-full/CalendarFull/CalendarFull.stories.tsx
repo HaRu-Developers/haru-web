@@ -22,29 +22,19 @@ export const Default: Story = {
     const initialEnd = new Date(initialStart);
     initialEnd.setDate(initialStart.getDate() + 34);
 
-    const [startDate, setStartDate] = useState<Date>(initialStart);
-    const [endDate, setEndDate] = useState<Date>(initialEnd);
-    const [currentDate, setCurrentDate] = useState<Date>(new Date());
+    const [startDate, _setStartDate] = useState<Date>(initialStart);
+    const [endDate, _setEndDate] = useState<Date>(initialEnd);
 
     const mockDocuments: DocumentList[] = [
       {
-        documentId: 1,
+        documentId: "1",
         title: '회의록 - 테스트',
         documentType: FileType.AI_MEETING_MANAGER,
         createdAt: '2025-06-29T00:00:00Z',
       },
     ];
-    const [documents, setDocuments] = useState<DocumentList[]>(mockDocuments);
+    const [documents, _setDocuments] = useState<DocumentList[]>(mockDocuments);
 
-    const handleCalChange = (newStartDate: Date, newEndDate: Date, currentDate: Date) => {
-      setStartDate(newStartDate);
-      setEndDate(newEndDate);
-      setCurrentDate(currentDate);
-    };
-
-    const handleFileClick = (id: number) => {
-      console.log(`File with id ${id} clicked`);
-    };
 
     return (
       <CalendarFull
@@ -53,7 +43,6 @@ export const Default: Story = {
         startDate={startDate}
         endDate={endDate}
         operatingMonth={7}
-        onFileClick={handleFileClick}
       />
     );
   },

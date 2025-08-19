@@ -183,15 +183,12 @@ const TeamMoodTrackerDetailPage = () => {
           </div>
         </div>
 
-        {currentTab === TeamMoodReportTabType.TEAM_MOOD_REPORT &&
-          (reportResponse?.report && reportResponse?.report.trim() !== '' ? (
-            <TeamMoodReportContentSection
-              suggestionList={reportResponse.suggestionList}
-              report={reportResponse.report}
-            />
-          ) : (
-            <TeamMoodReportNoneContentSection />
-          ))}
+        {currentTab === TeamMoodReportTabType.TEAM_MOOD_REPORT && (
+          <TeamMoodReportContentSection
+            suggestionList={reportResponse?.suggestionList}
+            report={reportResponse?.report}
+          />
+        )}
 
         {currentTab === TeamMoodReportTabType.ANSWER_SUMMARY && surveyResponse && (
           <TeamMoodAnswerChartSection responses={safeResponseList} />

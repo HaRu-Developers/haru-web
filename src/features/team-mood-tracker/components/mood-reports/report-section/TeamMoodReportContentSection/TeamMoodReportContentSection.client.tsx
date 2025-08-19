@@ -1,9 +1,13 @@
 'use client';
 
+import { useViewReportResponse } from '@api/team-mood-tracker/get/queries/useViewReportResponse';
+
 import { FileType } from '@common/types/file-type.enum';
 
 import SurveyInSite from '@common/components/box-text/SurveyInSite/SurveyInSite.server';
 import MarkdownContent from '@common/components/mark-down-content/MarkdownContent.server';
+
+import TeamMoodReportNoneContentSection from '@features/team-mood-tracker/components/mood-reports/report-section/TeamMoodReportNoneContentSection/TeamMoodReportNoneContentSection.server';
 
 import { TeamMoodReportContentSectionProps } from './TeamMoodReportContentSection.types';
 
@@ -11,6 +15,13 @@ const TeamMoodReportContentSection = ({
   suggestionList,
   report,
 }: TeamMoodReportContentSectionProps) => {
+  // const { data: reportResponse, isFetching: isReportFetching } =
+  //   useViewReportResponse(moodTrackerHashedId);
+
+  if (!suggestionList || !report || (report && report.trim() === '')) {
+    return <TeamMoodReportNoneContentSection />;
+  }
+
   return (
     <div className="mx-auto">
       <div className="mb-2pxr">

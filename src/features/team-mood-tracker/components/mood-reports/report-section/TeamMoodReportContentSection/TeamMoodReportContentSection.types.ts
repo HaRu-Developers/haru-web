@@ -1,4 +1,4 @@
 export interface TeamMoodReportContentSectionProps {
-  suggestionList: string[];
-  report: string;
+  suggestionList?: string[];
+  report?: string;
 }

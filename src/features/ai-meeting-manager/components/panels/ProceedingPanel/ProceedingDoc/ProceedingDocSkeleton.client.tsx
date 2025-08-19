@@ -1,4 +1,4 @@
-const MarkdownContentForProceedingSkeleton = () => {
+const ProceedingDocSkeleton = () => {
   return (
     <div className="gap-34pxr flex flex-col items-start">
       {Array.from({ length: 3 }, (_, idx) => (
@@ -15,4 +15,4 @@ const MarkdownContentForProceedingSkeleton = () => {
   );
 };
 
-export default MarkdownContentForProceedingSkeleton;
+export default ProceedingDocSkeleton;

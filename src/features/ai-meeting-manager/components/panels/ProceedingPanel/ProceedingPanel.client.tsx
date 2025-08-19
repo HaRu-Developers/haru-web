@@ -11,14 +11,15 @@ import { equalIgnoringLineEndings } from '@common/utils/equal-ignoring-line-endi
 
 import { EditorType } from '@features/ai-meeting-manager/types/edit.types';
 
+import parseProceeding from '@features/ai-meeting-manager/utils/parse-proceeding.utils';
+
 import {
   useEditActions,
   useEditInfo,
 } from '@features/ai-meeting-manager/hooks/stores/useEditStore';
 
-import MarkdownContentForProceeding from '@features/ai-meeting-manager/components/MarkdownContentForProceeding/MarkdownContentForProceeding.client';
-import MarkdownContentForProceedingSkeleton from '@features/ai-meeting-manager/components/MarkdownContentForProceeding/MarkdownContentForProceedingSkeleton.client';
-
+import ProceedingDoc from './ProceedingDoc/ProceedingDoc.client';
+import ProceedingDocSkeleton from './ProceedingDoc/ProceedingDocSkeleton.client';
 import { ProceedingPanelProps } from './ProceedingPanel.types';
 
 const ProceedingPanel = ({ editingScopeRef }: ProceedingPanelProps) => {
@@ -38,6 +39,9 @@ const ProceedingPanel = ({ editingScopeRef }: ProceedingPanelProps) => {
   const lastActionRef = useRef<'none' | 'save' | 'cancel'>('none');
   const prevCommitRef = useRef(commitTick);
   const prevCancelRef = useRef(cancelTick);
+
+  // 내용을 객체로 만듦
+  const sections = parseProceeding(serverContent);
 
   // 서버 값 → draft 동기화 (편집 중이 아닐 때만)
   useEffect(() => {
@@ -139,9 +143,9 @@ const ProceedingPanel = ({ editingScopeRef }: ProceedingPanelProps) => {
           />
         </div>
       ) : isFetching ? (
-        <MarkdownContentForProceedingSkeleton />
+        <ProceedingDocSkeleton />
       ) : (
-        <MarkdownContentForProceeding content={serverContent} />
+        <ProceedingDoc sections={sections} />
       )}
     </section>
   );

@@ -18,5 +18,8 @@ export const useViewSurveyResponse = (moodTrackerHashedId: string) => {
     ...queryKeys.moodTracker.detail(moodTrackerHashedId),
     queryFn: () => viewSurveyResponse({ moodTrackerHashedId }),
     enabled: !!moodTrackerHashedId,
+    throwOnError: (err) => !err.isTeamMoodTrackerSurveyBeforeDueDate(),
+    onError: (err) =>
+      console.log('ERR ON VIEW SURVEY', err.isTeamMoodTrackerSurveyBeforeDueDate(), err.toJSON()),
   });
 };

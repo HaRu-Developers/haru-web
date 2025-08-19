@@ -270,13 +270,13 @@ export type SurveyQuestionTypeOnGet =
       /** 질문 유형: 객관식 */
       type: TeamMoodTrackerSurveyQuestionType.MULTIPLE_CHOICE;
       /** 객관식 응답 목록 */
-      multipleChoiceResponseList: SurveyMultipleChoiceItemOnGet[];
+      multipleChoiceList: SurveyMultipleChoiceItemOnGet[];
     })
   | (BaseQuestionOnGet & {
       /** 질문 유형: 복수선택 */
       type: TeamMoodTrackerSurveyQuestionType.CHECKBOX_CHOICE;
       /** 복수선택 응답 목록 */
-      checkboxChoiceResponseList: SurveyCheckboxChoiceItemOnGet[];
+      checkboxChoiceList: SurveyCheckboxChoiceItemOnGet[];
     })
   | (BaseQuestionOnGet & {
       /** 질문 유형: 주관식 */

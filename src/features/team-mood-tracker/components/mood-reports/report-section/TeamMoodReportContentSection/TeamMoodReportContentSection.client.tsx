@@ -12,11 +12,13 @@ import TeamMoodReportNoneContentSection from '@features/team-mood-tracker/compon
 import { TeamMoodReportContentSectionProps } from './TeamMoodReportContentSection.types';
 
 const TeamMoodReportContentSection = ({
-  suggestionList,
-  report,
+  moodTrackerHashedId,
 }: TeamMoodReportContentSectionProps) => {
-  // const { data: reportResponse, isFetching: isReportFetching } =
-  //   useViewReportResponse(moodTrackerHashedId);
+  // TODO: parent component에서 분리한 부분입니다. PARENT component를 수정하여야 합니다.
+  const { data: reportResponse, isFetching: isReportFetching } =
+    useViewReportResponse(moodTrackerHashedId);
+
+  const { report, suggestionList } = reportResponse || {};
 
   if (!suggestionList || !report || (report && report.trim() === '')) {
     return <TeamMoodReportNoneContentSection />;

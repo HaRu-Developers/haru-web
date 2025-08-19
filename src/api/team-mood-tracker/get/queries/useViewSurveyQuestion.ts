@@ -8,8 +8,8 @@ import { useAfterQuery } from '@common/hooks/queries/useAfterQuery';
 export const useViewSurveyQuestion = (moodTrackerHashedId: string) => {
   return useAfterQuery<GetSurveyQuestionListResponseDto>({
     queryFn: () => getSurveyQuestionList(moodTrackerHashedId),
-    // enabled: !!moodTrackerHashedId,
-    enabled: false,
+    enabled: !!moodTrackerHashedId,
+    // enabled: false,
     queryKey: queryKeys.moodTracker.question(moodTrackerHashedId).queryKey,
   });
 };

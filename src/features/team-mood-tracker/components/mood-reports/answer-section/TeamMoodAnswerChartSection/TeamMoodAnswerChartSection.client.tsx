@@ -1,16 +1,25 @@
 'use client';
 
+import { useViewSurveyResponse } from '@api/team-mood-tracker/get/queries/useViewSurveyResponse';
+
 import BarChart from '@common/components/survey/BarChart/BarChar.client';
 import PieChart from '@common/components/survey/PieChart/PieChart.client';
 import SubjectiveAnswers from '@common/components/survey/SubjectiveAnswer/SubjectiveAnswser.server';
 
 import { TeamMoodTrackerSurveyQuestionType } from '@features/team-mood-tracker/constants/question.constants';
 
+import { filterSafeResponseList } from '@features/team-mood-tracker/utils/safe-response-list.utils';
+
 import { TeamMoodAnswerChartSectionProps } from './TeamMoodAnswerChartSection.types';
 
 const PIE_CHART_COLORS = ['#E65787', '#5E8BFF', '#FFD66C', '#84D1B6', '#B28DFF']; // 임시 색상
 
-const TeamMoodAnswerChartSection = ({ responses }: TeamMoodAnswerChartSectionProps) => {
+const TeamMoodAnswerChartSection = ({ moodTrackerHashedId }: TeamMoodAnswerChartSectionProps) => {
+  const { data: surveyResponse, isFetching: isSurveyFetching } =
+    useViewSurveyResponse(moodTrackerHashedId);
+
+  const responses = filterSafeResponseList(surveyResponse?.responseList);
+
   return (
     <div className="w-668pxr gap-y-24pxr mx-auto flex flex-col">
       {responses.map((response) => {

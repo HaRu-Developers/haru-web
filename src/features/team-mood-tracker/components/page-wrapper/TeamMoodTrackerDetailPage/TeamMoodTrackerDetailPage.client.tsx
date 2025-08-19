@@ -19,8 +19,6 @@ import { InputFileTitleMode } from '@common/components/inputs/InputFileTitle/Inp
 import { EditorType } from '@features/ai-meeting-manager/types/edit.types';
 import { TeamMoodTrackerToastType } from '@features/team-mood-tracker/types/TeamMoodTrackerToastStore.types';
 
-import { filterSafeResponseList } from '@features/team-mood-tracker/utils/safe-response-list.utils';
-
 import {
   useEditActions,
   useEditInfo,
@@ -30,7 +28,6 @@ import { useTeamMoodToastActions } from '@features/team-mood-tracker/hooks/store
 import TeamMoodAnswerChartSection from '@features/team-mood-tracker/components/mood-reports/answer-section/TeamMoodAnswerChartSection/TeamMoodAnswerChartSection.client';
 import TeamMoodSurveyQuestionSection from '@features/team-mood-tracker/components/mood-reports/question-section/TeamMoodSurveyQuestionSection/TeamMoodSurveyQuestionSection.client';
 import TeamMoodReportContentSection from '@features/team-mood-tracker/components/mood-reports/report-section/TeamMoodReportContentSection/TeamMoodReportContentSection.client';
-import TeamMoodReportNoneContentSection from '@features/team-mood-tracker/components/mood-reports/report-section/TeamMoodReportNoneContentSection/TeamMoodReportNoneContentSection.server';
 import TeamMoodReportTab from '@features/team-mood-tracker/components/mood-reports/report-section/TeamMoodReportTab/TeamMoodReportTab.client';
 import { TeamMoodReportTabType } from '@features/team-mood-tracker/components/mood-reports/report-section/TeamMoodReportTab/TeamMoodReportTab.types';
 import TeamMoodTrackerPageSkeleton from '@features/team-mood-tracker/components/skeletons/TeamMoodTrackerSkeleton/TeamMoodTrackerSkeleton';
@@ -53,21 +50,41 @@ const TeamMoodTrackerDetailPage = () => {
   const { editing, commitTick, cancelTick } = useEditInfo();
   const { setEditing } = useEditActions();
 
+  /**
+   * query string에서 현재 tab 정보를 가져옵니다.
+   */
   const currentTab =
     (searchParams.get('moodTab') as TeamMoodReportTabType) ??
     TeamMoodReportTabType.TEAM_MOOD_REPORT;
 
+  // TODO: 이거 다 삭제해야 합니다.
   const { data: surveyResponse, isFetching: isSurveyFetching } =
     useViewSurveyResponse(moodTrackerHashedId);
   const { data: reportResponse, isFetching: isReportFetching } =
     useViewReportResponse(moodTrackerHashedId);
 
+  // console.log('LOG', surveyResponse, reportResponse);
+  /**
+   * 파일 제목을 변경하는 useMutation
+   */
   const { mutate: modifyTitle, isPending } = useModifyMoodTrackerTitleMutation();
 
   const isRefetching = isSurveyFetching || isReportFetching;
 
+  // TODO: 아래 수정 후에 const로 다시 변경
   const optimisticData = surveyResponse || reportResponse;
-  const safeResponseList = filterSafeResponseList(surveyResponse?.responseList);
+
+  // TODO: 설문 정보 조회 API가 새로 만들어지면 다시 추가할 필요가 있습니다
+  // if (!optimisticData) return <div>NO OPTIMISTIC DATA, CHECK CODE</div>;
+  const dummyData = {
+    title: 'NO_DATA',
+    creatorName: 'NO_DATA',
+    creatorId: 'NO_DATA',
+    updatedAt: new Date().toISOString(),
+    respondentsNum: 404,
+  };
+
+  const { title, creatorName, creatorId, updatedAt, respondentsNum } = optimisticData || dummyData;
 
   const inputFileTitleMode = editing[EditorType.TITLE]
     ? InputFileTitleMode.EDITABLE
@@ -118,37 +135,35 @@ const TeamMoodTrackerDetailPage = () => {
     setEditing(EditorType.TITLE, true);
   }, [setEditing]);
 
+  // TODO: skeleton은 tab 단위로 수정
   if (isRefetching) {
     return <TeamMoodTrackerPageSkeleton />;
   }
 
-  if (
-    (currentTab === TeamMoodReportTabType.ANSWER_SUMMARY && !surveyResponse) ||
-    (currentTab === TeamMoodReportTabType.TEAM_MOOD_REPORT && !reportResponse)
-    // || (currentTab === TeamMoodReportTabType.SURVEY_LIST && !surveyData)
-  ) {
-    return <div>데이터를 불러올 수 없습니다.</div>;
-  }
-
-  if (!optimisticData) return null;
+  // TODO: error handlers - is it needed?
+  // if (
+  //   (currentTab === TeamMoodReportTabType.ANSWER_SUMMARY && !surveyResponse) ||
+  //   (currentTab === TeamMoodReportTabType.TEAM_MOOD_REPORT && !reportResponse)
+  //   // || (currentTab === TeamMoodReportTabType.SURVEY_LIST && !surveyData)
+  // ) {
+  //   return <div>데이터를 불러올 수 없습니다.</div>;
+  // }
 
   return (
     <>
       <div className="relative flex flex-col">
         {/*상단 GNB*/}
-        <GnbTop section={GnbSection.CUSTOM} title={optimisticData.title} />
-
+        <GnbTop section={GnbSection.CUSTOM} title={title} />
         {/*토스트 영역 */}
         <div className="top-100pxr absolute right-0 left-0 z-100 flex justify-center">
           <TeamMoodToast />
         </div>
-
         {/*MAIN CONTENT*/}
         <div className="mt-24pxr mb-10pxr w-668pxr mx-auto flex-col">
           <div className="mb-14pxr">
             {/* 잘못된 조건부 렌더링을 제거하고, props가 올바르게 연결된 단일 컴포넌트로 수정 */}
             <InputFileTitle
-              value={optimisticData.title}
+              value={title}
               isLoading={isPending}
               mode={inputFileTitleMode}
               onSave={handleTitleSave}
@@ -159,22 +174,18 @@ const TeamMoodTrackerDetailPage = () => {
             />
           </div>
           <div className="text-cap2-md">
-            <FileCreatedInfo
-              name={optimisticData.creatorName}
-              userId={optimisticData.creatorId}
-              dateTime={optimisticData.updatedAt}
-            />
+            <FileCreatedInfo name={creatorName} userId={creatorId} dateTime={updatedAt} />
           </div>
         </div>
-
         {/* 탭 영역 */}
+        {/* TODO: 이거 그냥 마음에 안들어서 바꾸고 싶어요 @kyeoungwoon */}
         <div className="border-stroke-200 mb-14pxr w-full border-b border-solid bg-white">
           <div className="w-668pxr mx-auto">
             <TeamMoodReportTab
               current={currentTab}
               counts={{
                 [TeamMoodReportTabType.TEAM_MOOD_REPORT]: 0,
-                [TeamMoodReportTabType.ANSWER_SUMMARY]: optimisticData.respondentsNum,
+                [TeamMoodReportTabType.ANSWER_SUMMARY]: respondentsNum,
                 [TeamMoodReportTabType.SURVEY_LIST]: 0,
               }}
               handleCopyClick={handleCopyClick}
@@ -182,26 +193,16 @@ const TeamMoodTrackerDetailPage = () => {
             />
           </div>
         </div>
-
         {currentTab === TeamMoodReportTabType.TEAM_MOOD_REPORT && (
-          <TeamMoodReportContentSection
-            suggestionList={reportResponse?.suggestionList}
-            report={reportResponse?.report}
-          />
+          <TeamMoodReportContentSection moodTrackerHashedId={moodTrackerHashedId} />
         )}
-
         {currentTab === TeamMoodReportTabType.ANSWER_SUMMARY && surveyResponse && (
-          <TeamMoodAnswerChartSection responses={safeResponseList} />
+          <TeamMoodAnswerChartSection moodTrackerHashedId={moodTrackerHashedId} />
         )}
-
         {currentTab === TeamMoodReportTabType.SURVEY_LIST && (
-          <div className="w-668pxr mx-auto">
-            <div className="text-t1-md mt-230pxr flex items-center justify-center text-center">
-              {/* 경운님, 이쪽에 구현해주시면 됩니다. */}
-              {/* 저쪽 신사분의 메세지는 냅둬야지~ */}
-              <TeamMoodSurveyQuestionSection moodTrackerHashedId={moodTrackerHashedId} />
-            </div>
-          </div>
+          // 경운님, 이쪽에 구현해주시면 됩니다.
+          // 저쪽 신사분의 메세지는 냅둬야지~
+          <TeamMoodSurveyQuestionSection moodTrackerHashedId={moodTrackerHashedId} />
         )}
       </div>
     </>

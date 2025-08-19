@@ -1,6 +1,9 @@
-import clsx from 'clsx';
+'use client';
 
-import TitleSection from '../../TitleSection/TitleSection.server';
+import clsx from 'clsx';
+import { useInView } from 'react-intersection-observer';
+
+import TitleSection from '../../TitleSection/TitleSection.client';
 import ColorTitle from '../ColorTitle/ColorTitle.server';
 import { LandingIntroductionProps } from './LandingIntroduction.types';
 
@@ -12,7 +15,11 @@ const LandingIntroduction = ({ className }: LandingIntroductionProps) => {
   const titleContainClass = 'pb-20pxr border-stroke-200 flex w-full justify-between border-b';
   const blackTextClass = 'text-t5-sb text-black';
   const grayTextClass = 'text-gray-200 text-b2-rg';
-
+  const { ref: titleRef, inView: titleInView } = useInView({ triggerOnce: true, threshold: 0.1 });
+  const { ref: descriptionRef, inView: descriptionInview } = useInView({
+    triggerOnce: true,
+    threshold: 0.4,
+  });
   return (
     <div
       className={clsx(
@@ -20,9 +27,19 @@ const LandingIntroduction = ({ className }: LandingIntroductionProps) => {
         className,
       )}
     >
-      <TitleSection title2="HaRu" title3="는 무슨 뜻인가요?" />
-      <div className="flex">
-        <div className={clsx('mr-52pxr w-322pxr', meanContainClass)}>
+      <TitleSection
+        ref={titleRef}
+        inView={titleInView}
+        title2="HaRu"
+        title3="는 무슨 뜻인가요?"
+        className="h-64pxr"
+      />
+      <div className="flex" ref={descriptionRef}>
+        <div
+          className={clsx('mr-52pxr w-322pxr animate-delay-0 opacity-0', meanContainClass, {
+            'animate-fade-in-up-and-delay': descriptionInview,
+          })}
+        >
           {/* 타이틀 부분 */}
           <div className={titleContainClass}>
             <ColorTitle firstTitle="H" title="uman" description="인적" />
@@ -37,7 +54,11 @@ const LandingIntroduction = ({ className }: LandingIntroductionProps) => {
             </div>
           </div>
         </div>
-        <div className={clsx('mr-43pxr w-455pxr', meanContainClass)}>
+        <div
+          className={clsx('mr-43pxr w-455pxr animate-delay-500 opacity-0', meanContainClass, {
+            'animate-fade-in-up-and-delay': descriptionInview,
+          })}
+        >
           {/* 타이틀 부분 */}
           <div className={titleContainClass}>
             <div className="flex flex-col">
@@ -64,7 +85,11 @@ const LandingIntroduction = ({ className }: LandingIntroductionProps) => {
             </div>
           </div>
         </div>
-        <div className={clsx('w-340pxr', meanContainClass)}>
+        <div
+          className={clsx('w-340pxr animate-delay-1000 opacity-0', meanContainClass, {
+            'animate-fade-in-up-and-delay': descriptionInview,
+          })}
+        >
           {/* 타이틀 부분 */}
           <div className={titleContainClass}>
             <ColorTitle firstTitle="U" title="ser-Friendly" description="사용자 친화적" />

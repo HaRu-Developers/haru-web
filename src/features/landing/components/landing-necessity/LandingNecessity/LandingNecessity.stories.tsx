@@ -1,8 +1,6 @@
 import { Meta, StoryObj } from '@storybook/nextjs';
 
-import { LandingNecessityIconsState } from '@icons/LandingNecessityIcons/LandingNecessityIcons.types';
-
-import LandingNecessity from '@features/landing/components/landing-necessity/LandingNecessity/LandingNecessity.server';
+import LandingNecessity from '@features/landing/components/landing-necessity/LandingNecessity/LandingNecessity.client';
 
 const meta: Meta<typeof LandingNecessity> = {
   title: 'features/landing/landing-team/LandingNecessity',

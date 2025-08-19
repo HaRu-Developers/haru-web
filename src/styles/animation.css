@@ -14,6 +14,41 @@
   .animate-bg-pulse {
     animation: bg-pulse 750ms ease-out 1ms infinite;
   }
+
+  /* 텍스트 색상 서서히 나타나기 */
+  .animate-fade-in-color {
+    opacity: 0;
+    animation-name: fade-in-opacity;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+  }
+
+  /* 클립 패스 왼쪽에서 나타나기 */
+  .animate-clip-path-left {
+    animation-name: clip-path-left;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+  }
+
+  /* 동적 슬라이드 클래스 */
+  .slide-0 {
+    transform: translateX(0);
+  }
+  .slide-1 {
+    transform: translateX(-100%);
+  }
+  .slide-2 {
+    transform: translateX(-200%);
+  }
+  .slide-3 {
+    transform: translateX(-300%);
+  }
+
+  .animate-fade-in-up-and-delay {
+    animation: fade-in-up-and-delay 1s ease-out forwards;
+  }
 }
 
 @keyframes fade-in-up {
@@ -45,5 +80,34 @@
   }
   50% {
     background-color: rgba(0, 0, 0, 0.06);
+  }
+}
+
+@keyframes fade-in-opacity {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes clip-path-left {
+  0% {
+    clip-path: inset(0 100% 0 0);
+  }
+  100% {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes fade-in-up-and-delay {
+  0% {
+    transform: translateY(1rem);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
   }
 }

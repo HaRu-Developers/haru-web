@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/nextjs';
 
-import TitleSection from '@features/landing/components/TitleSection/TitleSection.server';
+import TitleSection from '@features/landing/components/TitleSection/TitleSection.client';
 
 const meta: Meta<typeof TitleSection> = {
   title: 'features/landing/TitleSection',

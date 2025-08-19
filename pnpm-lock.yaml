@@ -50,6 +50,9 @@ importers:
       react-dom:
         specifier: ^19.1.0
         version: 19.1.1(react@19.1.1)
+      react-intersection-observer:
+        specifier: ^9.16.0
+        version: 9.16.0(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       react-markdown:
         specifier: ^10.1.0
         version: 10.1.0(@types/react@19.1.10)(react@19.1.1)
@@ -59,6 +62,9 @@ importers:
       require-in-the-middle:
         specifier: ^7.5.2
         version: 7.5.2
+      typed.js:
+        specifier: ^2.1.0
+        version: 2.1.0
       typescript-eslint:
         specifier: ^8.35.0
         version: 8.39.1(eslint@9.33.0(jiti@2.5.1))(typescript@5.9.2)
@@ -1084,7 +1090,6 @@ packages:
 
   '@evilmartians/lefthook@1.12.3':
     resolution: {integrity: sha512-MtXIt8h+EVTv5tCGLzh9UwbA/LRv6esdPJOHlxr8NDKHbFnbo8PvU5uVQcm3PAQTd4DZN3HoyokqrwGwntoq6w==}
-    cpu: [x64, arm64, ia32]
     os: [darwin, linux, win32]
     hasBin: true
 
@@ -5206,6 +5211,15 @@ packages:
     peerDependencies:
       react: ^19.1.1
 
+  react-intersection-observer@9.16.0:
+    resolution: {integrity: sha512-w9nJSEp+DrW9KmQmeWHQyfaP6b03v+TdXynaoA964Wxt7mdR3An11z4NNCQgL4gKSK7y1ver2Fq+JKH6CWEzUA==}
+    peerDependencies:
+      react: ^17.0.0 || ^18.0.0 || ^19.0.0
+      react-dom: ^17.0.0 || ^18.0.0 || ^19.0.0
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+
   react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
 
@@ -5847,6 +5861,9 @@ packages:
   typed-array-length@1.0.7:
     resolution: {integrity: sha512-3KS2b+kL7fsuk/eJZ7EQdnEmQoaho/r6KUef7hxvltNA5DR8NAUM+8wJMbJyZ4G9/7i3v5zPBIMN5aybAh2/Jg==}
     engines: {node: '>= 0.4'}
+
+  typed.js@2.1.0:
+    resolution: {integrity: sha512-bDuXEf7YcaKN4g08NMTUM6G90XU25CK3bh6U0THC/Mod/QPKlEt9g/EjvbYB8x2Qwr2p6J6I3NrsoYaVnY6wsQ==}
 
   typescript-eslint@8.39.1:
     resolution: {integrity: sha512-GDUv6/NDYngUlNvwaHM1RamYftxf782IyEDbdj3SeaIHHv8fNQVRC++fITT7kUJV/5rIA/tkoRSSskt6osEfqg==}
@@ -12002,6 +12019,12 @@ snapshots:
       react: 19.1.1
       scheduler: 0.26.0
 
+  react-intersection-observer@9.16.0(react-dom@19.1.1(react@19.1.1))(react@19.1.1):
+    dependencies:
+      react: 19.1.1
+    optionalDependencies:
+      react-dom: 19.1.1(react@19.1.1)
+
   react-is@16.13.1: {}
 
   react-is@17.0.2: {}
@@ -12793,6 +12816,8 @@ snapshots:
       is-typed-array: 1.1.15
       possible-typed-array-names: 1.1.0
       reflect.getprototypeof: 1.0.10
+
+  typed.js@2.1.0: {}
 
   typescript-eslint@8.39.1(eslint@9.33.0(jiti@2.5.1))(typescript@5.9.2):
     dependencies:

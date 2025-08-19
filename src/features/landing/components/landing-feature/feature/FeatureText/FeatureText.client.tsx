@@ -1,3 +1,5 @@
+'use client';
+
 import clsx from 'clsx';
 
 import LandingFeatureIcons from '@icons/LandingFeatureIcons/LandingFeatureIcons';

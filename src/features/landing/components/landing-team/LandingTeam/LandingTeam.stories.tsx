@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/nextjs';
 
-import LandingTeam from '@features/landing/components/landing-team/LandingTeam/LandingTeam.server';
+import LandingTeam from '@features/landing/components/landing-team/LandingTeam/LandingTeam.client';
 
 const meta: Meta<typeof LandingTeam> = {
   title: 'features/landing/landing-team/LandingTeam',

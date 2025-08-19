@@ -24,10 +24,15 @@ export interface SnsEventAssistantStoreState {
   newTitle: string;
   newSnsEventLink: string;
   conditions: EventConditions;
+  checkedList: string[];
+  isCheckedMode: boolean;
   actions: {
+    setNewEventInit: () => void;
     setNewTitle: (title: string) => void;
     setNewSnsEventLink: (link: string) => void;
     setConditions: (conditions: EventConditions) => void;
+    setCheckedList: (list: string[]) => void;
+    setIsCheckedMode: (isCheckedMode: boolean) => void;
     setWinnerCount: (count: number | null) => void;
     togglePeriod: () => void;
     toggleKeyword: () => void;
@@ -46,8 +51,19 @@ const snsEventAssistantStore = create<SnsEventAssistantStoreState>()(
     immer((set) => ({
       newTitle: '',
       newSnsEventLink: '',
+      checkedList: [],
+      isCheckedMode: false,
       conditions: DEFAULT_CONDITIONS,
       actions: {
+        setNewEventInit: () => {
+          set((state) => {
+            state.newTitle = '';
+            state.newSnsEventLink = '';
+            state.conditions = DEFAULT_CONDITIONS;
+            state.checkedList = [];
+            state.isCheckedMode = false;
+          });
+        },
         setNewTitle: (title) => {
           set((state) => {
             state.newTitle = title;
@@ -61,6 +77,16 @@ const snsEventAssistantStore = create<SnsEventAssistantStoreState>()(
         setConditions: (newConditions) => {
           set((state) => {
             state.conditions = newConditions;
+          });
+        },
+        setCheckedList: (list) => {
+          set((state) => {
+            state.checkedList = list;
+          });
+        },
+        setIsCheckedMode: (isCheckedMode) => {
+          set((state) => {
+            state.isCheckedMode = isCheckedMode;
           });
         },
         setWinnerCount: (count) => {

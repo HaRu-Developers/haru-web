@@ -119,7 +119,6 @@ const InputFileTitle = ({
   };
 
   // 가로 padding
-  const px = noPadding ? 'px-0' : 'px-2';
 
   return (
     <input
@@ -131,9 +130,9 @@ const InputFileTitle = ({
       onBlur={handleBlur}
       onClick={onClick}
       className={clsx(
-        'w-676pxr h-36pxr rounded-4pxr text-t1-sb flex items-center bg-white py-0.5 text-black outline-none focus:outline-none',
-        px,
-        { 'border-stroke-100 border': mode === InputFileTitleMode.EDITABLE },
+        'w-692pxr h-36pxr rounded-4pxr border px-2 text-t1-sb flex items-center bg-white py-0.5 text-black outline-none focus:outline-none',
+        { 'border-stroke-100 px-2': mode === InputFileTitleMode.EDITABLE },
+        { 'hover:bg-gray-600 border-transparent': mode === InputFileTitleMode.DEFAULT },
       )}
       readOnly={mode !== InputFileTitleMode.EDITABLE}
       autoFocus={mode === InputFileTitleMode.EDITABLE}

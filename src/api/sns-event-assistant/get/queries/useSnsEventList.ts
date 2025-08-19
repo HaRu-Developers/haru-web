@@ -16,7 +16,8 @@ import { useAfterQuery } from '@common/hooks/queries/useAfterQuery';
 import { GetSnsEventList } from '../apis/get-sns-event-list';
 
 /**
- * SNS 이벤트 상세 조회를 위한 커스텀 훅
+ * 특정 워크스페이스의 SNS 이벤트 목록을 조회하는 커스텀 훅입니다.
+ * @param {string} workspaceId - 이벤트 목록을 조회할 워크스페이스의 고유 ID입니다.
  */
 const useSnsEventList = (workspaceId: string) => {
   const handleError = useCallback((error: ApiError<ApiErrorBody>) => {

@@ -16,7 +16,8 @@ import { useAfterQuery } from '@common/hooks/queries/useAfterQuery';
 import { GetSnsEvent } from '../apis/get-sns-event';
 
 /**
- * SNS 이벤트 상세 조회를 위한 커스텀 훅
+ * 특정 SNS 이벤트의 상세 정보를 조회하는 커스텀 훅입니다.
+ * @param {string} snsEventId - 상세 정보를 조회할 SNS 이벤트의 고유 ID입니다.
  */
 const useSnsEvent = (snsEventId: string) => {
   const handleError = useCallback((error: ApiError<ApiErrorBody>) => {

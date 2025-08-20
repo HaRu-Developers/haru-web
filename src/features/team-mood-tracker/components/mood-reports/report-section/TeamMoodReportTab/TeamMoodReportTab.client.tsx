@@ -33,8 +33,10 @@ const TeamMoodReportTab = ({
           const params = new URLSearchParams();
           params.set('moodTab', tab);
 
+          const href = `${pathname}?${params.toString()}`;
+
           return (
-            <Link key={tab} href={`${pathname}?${params.toString()}`}>
+            <Link key={tab} href={href}>
               <CategoryOption
                 label={TeamMoodReportTabLabels[tab as TeamMoodReportTabType]}
                 active={current === tab}

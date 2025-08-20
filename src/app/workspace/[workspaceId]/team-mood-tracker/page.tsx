@@ -26,7 +26,6 @@ const TeamMoodTrackerDefaultPage = async ({ params }: TeamMoodTrackerDefaultPage
         <TextCtaWrapper fileType={FileType.TEAM_MOOD_TRACKER} workspaceId={workspaceId} />
         {/* 리스트 부분 */}
         {getListTitle(FileType.TEAM_MOOD_TRACKER)}
-        <ListHeader fileType={FileType.TEAM_MOOD_TRACKER} />
         <ListFileTeamMoodTrakerWrapper />
       </div>
     </section>

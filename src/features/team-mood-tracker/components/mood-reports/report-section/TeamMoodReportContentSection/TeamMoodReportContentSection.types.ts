@@ -1,4 +1,6 @@
+import { Dispatch, SetStateAction } from 'react';
+
 export interface TeamMoodReportContentSectionProps {
-  suggestionList: string[];
-  report: string;
+  moodTrackerHashedId: string;
+  setCopyHandler: Dispatch<SetStateAction<() => void>>;
 }

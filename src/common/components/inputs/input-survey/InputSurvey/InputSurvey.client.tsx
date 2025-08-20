@@ -49,7 +49,7 @@ const InputSurveyQuestion = ({
   return (
     <div className="w-668pxr px-17pxr py-20pxr gap-10pxr rounded-4pxr shadow-survey-form border-stroke-200 relative flex shrink-0 flex-col items-start border-2 bg-white">
       {/* 설문 생성 시에만 상단 바 표시 */}
-      {surveyComponentUsingSituation === SurveySituation.PRIVATE && (
+      {surveyComponentUsingSituation === SurveySituation.CREATING_SURVEY && (
         <MovingBarSurvey className="absolute top-0 left-0" onClick={onTopMovingBarClick} />
       )}
 
@@ -61,13 +61,15 @@ const InputSurveyQuestion = ({
             onChange={onQuestionTitleChange}
             placeholder={questionTitlePlaceholder}
             visibility={surveyComponentUsingSituation}
-            // 설문지 조회 상황일 때 제목 하단의 stroke가 길어지기 위해 사용
-            className={surveyComponentUsingSituation === SurveySituation.PUBLIC ? 'w-full' : ''}
+            // 설문지를 생성하는 상황이 아닐 때 제목 하단의 stroke가 길어지기 위해 사용
+            className={
+              surveyComponentUsingSituation !== SurveySituation.CREATING_SURVEY ? 'w-full' : ''
+            }
           />
 
           {/* 질문 타입을 변경할 수 있는 드롭다운 입니다. */}
           {/* 설문 생성 시에만 변경할 수 있도록 조건부로 렌더링 합니다. */}
-          {surveyComponentUsingSituation === SurveySituation.PRIVATE && (
+          {surveyComponentUsingSituation === SurveySituation.CREATING_SURVEY && (
             <SelectBoxOption
               options={selectBoxOptions}
               initState={questionType || selectBoxOptions[0].state}
@@ -92,7 +94,7 @@ const InputSurveyQuestion = ({
       </div>
 
       {/*질문 생성 시에만 필수 여부 및 삭제 버튼 등이 활성화될 수 있도록 조건부로 렌더링 합니다.*/}
-      {surveyComponentUsingSituation === SurveySituation.PRIVATE && (
+      {surveyComponentUsingSituation === SurveySituation.CREATING_SURVEY && (
         <div className="flex w-full justify-end">
           <ButtonsSurvey
             isMandatory={isQuestionMandatory}

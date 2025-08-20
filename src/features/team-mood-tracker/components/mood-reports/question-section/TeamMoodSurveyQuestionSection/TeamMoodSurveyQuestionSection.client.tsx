@@ -58,7 +58,7 @@ const TeamMoodSurveyQuestionSection = ({
               questionTitle={question.questionTitle}
               questionType={question.type as unknown as InputSurveyQuestionType}
               multipleOrCheckboxOptions={options}
-              surveyComponentUsingSituation={SurveySituation.PUBLIC}
+              surveyComponentUsingSituation={SurveySituation.VIEW_SURVEY_QUESTIONS}
             />
           );
         })}

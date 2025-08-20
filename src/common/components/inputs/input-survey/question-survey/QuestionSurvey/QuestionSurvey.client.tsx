@@ -68,7 +68,9 @@ const QuestionSurvey = ({
       <div className="w-full">
         <SubjectQuestion
           subjectiveQuestionResponse={subjectiveQuestionResponse}
-          surveyComponentUsingSituation={surveyComponentUsingSituation ?? SurveySituation.PUBLIC}
+          surveyComponentUsingSituation={
+            surveyComponentUsingSituation ?? SurveySituation.PARTICIPATING_SURVEY
+          }
           onSubjectiveQuestionResponseChange={onSubjectiveQuestionResponseChange}
         />
       </div>
@@ -86,7 +88,7 @@ const QuestionSurvey = ({
         questionType={questionType}
       />
       {/*설문을 생성하는 상황에서는 항목을 추가할 수 있는 컴포넌트를 추가로 렌더링 해줍니다.*/}
-      {surveyComponentUsingSituation === SurveySituation.PRIVATE && (
+      {surveyComponentUsingSituation === SurveySituation.CREATING_SURVEY && (
         <AddQuestion
           type={questionType}
           // isQuestionHaveEtcChoice={isQuestionHaveEtcChoice}

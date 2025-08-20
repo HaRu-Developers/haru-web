@@ -7,9 +7,11 @@
  */
 export enum SurveySituation {
   // 문항 조회 및 설문 참여 시
-  PUBLIC = 'PUBLIC',
+  PARTICIPATING_SURVEY = 'PARTICIPATING_SURVEY',
   // 질문 생성 시
-  PRIVATE = 'PRIVATE',
+  CREATING_SURVEY = 'CREATING_SURVEY',
+  // 질문 조회 시
+  VIEW_SURVEY_QUESTIONS = 'VIEW_SURVEY_QUESTIONS',
 }
 
 export enum InputSurveyQuestionType {

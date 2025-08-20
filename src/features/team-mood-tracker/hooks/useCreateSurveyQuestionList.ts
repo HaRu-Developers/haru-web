@@ -25,7 +25,7 @@ export const useCreateSurveyQuestionList = (isCreating: boolean = true) => {
     const newQuestion: InputSurveyQuestionProps = {
       questionTitle: '',
       questionTitlePlaceholder: '문항의 제목을 입력하세요.',
-      surveyComponentUsingSituation: SurveySituation.PRIVATE, // 설문 생성 시에는 PRIVATE로 설정
+      surveyComponentUsingSituation: SurveySituation.CREATING_SURVEY, // 설문 생성 시에는 PRIVATE로 설정
       questionType: questionList[questionList.length - 1].questionType, // 마지막으로 선택된 타입을 사용
       multipleOrCheckboxOptions: [''],
       isQuestionMandatory: false,

@@ -42,6 +42,8 @@ export interface CreateSurveyQuestion {
   options?: string[]; // 선택지 목록, SUBJECTIVE일 경우 제공하지 않음.
 }
 
+export type PublicOrPrivate = 'PUBLIC' | 'PRIVATE';
+
 /**
  * 설문 생성 요청 DTO
  * @description 설문 생성 시 필요한 정보를 담고 있는 DTO입니다.
@@ -56,7 +58,7 @@ export interface CreateNewSurveyRequestDto {
   title: string;
   description: string;
   dueDate: string; // ISO 8601 형식의 날짜 문자열
-  visibility: 'PUBLIC' | 'PRIVATE'; // 공개 여부
+  visibility: PublicOrPrivate; // 공개 여부
   questions: CreateSurveyQuestion[];
 }
 

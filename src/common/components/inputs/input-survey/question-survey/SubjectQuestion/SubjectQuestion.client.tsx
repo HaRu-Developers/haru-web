@@ -38,8 +38,8 @@ const SubjectQuestion = ({
       onInput={handleResize}
       onChange={handleChange}
       className="min-h-18pxr text-b3-rg w-full resize-none overflow-hidden outline-none"
-      // 설문조사에 응하는 시점에서만 작성할 수 있도록 합니다. (생성 시에는 막음)
-      readOnly={surveyComponentUsingSituation === SurveySituation.PRIVATE}
+      // 설문조사에 응하고 있지 않다면, readOnly가 되도록 합니다.
+      readOnly={surveyComponentUsingSituation !== SurveySituation.PARTICIPATING_SURVEY}
     />
   );
 };

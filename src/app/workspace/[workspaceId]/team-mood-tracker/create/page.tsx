@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 
-import { CreateNewSurveyRequestDto } from '@api/team-mood-tracker/apis.types';
+import { CreateNewSurveyRequestDto, PublicOrPrivate } from '@api/team-mood-tracker/apis.types';
 import { useCreateSurvey } from '@api/team-mood-tracker/post/mutations/useCreateSurvey';
 
 import { GnbSection } from '@common/types/gnbs.types';
@@ -46,7 +46,7 @@ const CreateSurveyPage = () => {
       title: pageQuery.title,
       description: pageQuery.description,
       dueDate: pageQuery.dueDate,
-      visibility: pageQuery.visibility as SurveySituation, // PUBLIC 또는 PRIVATE
+      visibility: pageQuery.visibility as PublicOrPrivate, // PUBLIC 또는 PRIVATE
       questions: transferQuestionListToApiFormat(questionList),
     };
 

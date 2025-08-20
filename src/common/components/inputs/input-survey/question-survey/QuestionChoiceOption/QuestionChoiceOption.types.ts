@@ -1,10 +1,10 @@
 import { SurveySituation } from '../../types/input-survey.common.types';
 
 export interface QuestionChoiceOptionProps {
-  index: number;
-  option: string;
-  visibility?: SurveySituation;
-  isSelected?: boolean;
+  questionIndex: number;
+  optionName: string;
+  surveyComponentUsingSituation?: SurveySituation;
+  isCheckboxSelected?: boolean;
   onOptionNameChange?: (index: number, value: string) => void;
-  onCheck?: (index: number) => void;
+  onCheckboxClick?: (index: number) => void;
 }

@@ -8,7 +8,7 @@ export const surveyDefaultQuestions: InputSurveyQuestionProps[] = [
   {
     questionTitle: '',
     questionTitlePlaceholder: '문항의 제목을 입력하세요.',
-    surveyComponentUsingSituation: SurveySituation.PRIVATE, // 설문 생성 시에는 PRIVATE로 설정
+    surveyComponentUsingSituation: SurveySituation.CREATING_SURVEY, // 설문 생성 시에는 PRIVATE로 설정
     questionType: InputSurveyQuestionType.CHOICE,
     multipleOrCheckboxOptions: [''],
     isQuestionMandatory: false,

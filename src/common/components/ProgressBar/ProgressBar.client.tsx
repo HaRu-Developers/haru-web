@@ -1,3 +1,5 @@
+'use client';
+
 import { ProgressBarProps } from './ProgressBar.types';
 
 const ProgressBar = ({ progress }: ProgressBarProps) => {

@@ -2,10 +2,10 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 
+import { clamp01 } from '@common/utils/clamp.utils';
+
 import { formatAudioProgress } from '../audio-bar.utils';
 import { PlayerProgressBarProps } from './PlayerProgressBar.types';
-
-const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
 
 const PlayerProgressBar = ({
   progress,
@@ -54,6 +54,8 @@ const PlayerProgressBar = ({
   const handlePointerUp = useCallback(
     (e: PointerEvent) => {
       if (pointerIdRef.current !== null && e.pointerId !== pointerIdRef.current) return;
+      // ✅ 포인터 캡처 해제 (브라우저별 엣지 케이스 방지)
+      // try { barRef.current?.releasePointerCapture(e.pointerId); } catch {}
       setDragging(false);
       pointerIdRef.current = null;
       // 마지막 위치 확정
@@ -90,6 +92,8 @@ const PlayerProgressBar = ({
     [dragging, calcPct, onSeekStart, onSeek, onSeekEnd],
   );
 
+  const visualRatio = progress / 100;
+
   return (
     <div className="gap-y-5pxr mt-8pxr ml-8pxr flex touch-none flex-col select-none">
       <div
@@ -100,26 +104,27 @@ const PlayerProgressBar = ({
         aria-valuenow={Math.round(progress)}
         aria-label="Playback position"
         tabIndex={0}
-        className="h-5pxr w-564pxr bg-stroke-200 relative cursor-pointer rounded-full outline-none"
+        className="h-5pxr w-564pxr bg-stroke-200 relative cursor-pointer overflow-hidden rounded-full outline-none"
         onPointerDown={handlePointerDown}
         onClick={handleClick}
       >
         {/* 진행 구간 */}
         <div
           className={[
-            'bg-primary h-full rounded-full',
+            'bg-primary absolute inset-0 h-full origin-left rounded-l-full',
             dragging ? 'transition-none' : 'transition-all duration-300',
           ].join(' ')}
-          style={{ width: `${progress}%` }}
+          // scaleX로 그리기(GPU)
+          style={{ transform: `scaleX(${visualRatio})` }}
         />
         {/* 핸들 */}
         <div
           className={[
-            'h-14pxr w-14pxr bg-primary absolute top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full',
+            'h-14pxr w-14pxr bg-primary absolute top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-l-full',
             dragging ? 'opacity-100' : 'opacity-0 group-hover:opacity-100',
             'transition-opacity duration-100',
           ].join(' ')}
-          style={{ left: `${progress}%` }}
+          style={{ left: `${Math.max(0, Math.min(100, progress))}%` }}
         />
       </div>
 

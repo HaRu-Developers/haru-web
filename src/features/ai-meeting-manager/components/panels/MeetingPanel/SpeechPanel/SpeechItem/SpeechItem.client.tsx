@@ -20,7 +20,7 @@ const SpeechItem = ({
   startTime,
 }: SpeechItemProps) => {
   const ref = useRef<HTMLDivElement>(null);
-  const { registerSpeechRef, unregisterSpeechRef, focusQuestionBySpeech } = useFocusMapActions();
+  const { registerSpeechRef, unregisterSpeechRef, focusQuestionsBySpeech } = useFocusMapActions();
 
   const hasQuestion = questions && questions.length > 0;
 
@@ -32,10 +32,6 @@ const SpeechItem = ({
     registerSpeechRef(speechId, currentRef);
     return () => unregisterSpeechRef(speechId, currentRef ?? null);
   }, [speechId, registerSpeechRef, unregisterSpeechRef]);
-
-  const onFocusQuestion = (speechId: number) => {
-    console.log(speechId, `${speechId} 발화 포커스`);
-  };
 
   const calcSeekSeconds = (speechStartIso: string) => {
     const base = new Date(meetingStartTime).getTime();
@@ -56,10 +52,10 @@ const SpeechItem = ({
       ref={ref}
       data-speech-id={speechId}
       aria-label={`${speakerLabel} ${startAtLabel}`}
-      onClick={() => focusQuestionBySpeech(speechId)}
+      onClick={() => focusQuestionsBySpeech(speechId)}
       className={clsx(
-        'group/utt py-12pxr rounded-8pxr w-full cursor-pointer',
-        hasQuestion ? 'pl-32pxr' : 'px-32pxr',
+        'group/utt py-12pxr rounded-8pxr px-12pxr w-full',
+        hasQuestion ? 'cursor-pointer hover:bg-gray-600' : '',
       )}
     >
       <div className="gap-x-12pxr flex">
@@ -70,36 +66,22 @@ const SpeechItem = ({
             <p className="text-b4-rg text-gray-400">{startAtLabel}</p>
           </div>
 
-          <div className={'gap-10pxr flex items-start'}>
+          <div className="gap-14pxr flex items-start">
             <p className="text-b3-rg break-words whitespace-pre-wrap text-black">{text}</p>
 
             {hasQuestion && (
               <>
                 {/* 기본 아이콘 */}
-                <button
-                  type="button"
-                  aria-label="질문 보기"
-                  onClick={(e) => {
-                    e.stopPropagation(); // 부모 onClick 막기
-                    onFocusQuestion(speechId);
-                  }}
+                <AiQuestionIcons
+                  state={AiQuestionIconsState.SIZE_18}
                   className="block transition-opacity group-hover/utt:hidden"
-                >
-                  <AiQuestionIcons state={AiQuestionIconsState.SIZE_18} />
-                </button>
+                />
 
                 {/* 호버 아이콘 */}
-                <button
-                  type="button"
-                  aria-label="질문 보기"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onFocusQuestion(speechId);
-                  }}
+                <AiQuestionIcons
+                  state={AiQuestionIconsState.SIZE_20_HOVER}
                   className="hidden transition-opacity group-hover/utt:block"
-                >
-                  <AiQuestionIcons state={AiQuestionIconsState.SIZE_20_HOVER} />
-                </button>
+                />
               </>
             )}
           </div>

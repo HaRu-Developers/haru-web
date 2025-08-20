@@ -22,12 +22,13 @@ const GnbBottomPlayerBar = ({ audioUrl }: GnbBottomPlayerBarProps) => {
 
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [isSeeking, setIsSeeking] = useState(false); // 드래그 중
-  const [currentTime, setCurrentTime] = useState<number>(0);
-  const [duration, setDuration] = useState<number>(0);
-  const [progress, setProgress] = useState<number>(0);
+  const [currentTime, setCurrentTime] = useState<number>(0); // sec
+  const [duration, setDuration] = useState<number>(0); // sec
+  const [progress, setProgress] = useState<number>(0); // %
 
   const { addToast } = useToastActions();
 
+  // ===== 플레이어 로직(진행 업데이트/클릭/드래그)
   const stopRaf = useCallback(() => {
     if (rafRef.current != null) {
       cancelAnimationFrame(rafRef.current);
@@ -57,15 +58,14 @@ const GnbBottomPlayerBar = ({ audioUrl }: GnbBottomPlayerBarProps) => {
     return stopRaf;
   }, [isPlaying, startRaf, stopRaf]);
 
-  // 오디오 이벤트
+  // 메타데이터에서 duration(sec) 세팅
   useEffect(() => {
     const audio = audioRef.current;
-    if (!audio || !audioUrl) {
+    if (!audio) {
       return;
     }
-    // console.log('Audio', audio.duration);
 
-    const onLoadedMeta = () => setDuration(audio.duration ?? 0);
+    const onLoaded = () => setDuration(audio.duration ?? 0);
     const onPlay = () => setIsPlaying(true);
     const onPause = () => setIsPlaying(false);
     const onEnded = () => {
@@ -79,14 +79,14 @@ const GnbBottomPlayerBar = ({ audioUrl }: GnbBottomPlayerBarProps) => {
       setIsPlaying(false);
     };
 
-    audio.addEventListener('loadedmetadata', onLoadedMeta);
+    audio.addEventListener('loadedmetadata', onLoaded);
     audio.addEventListener('play', onPlay);
     audio.addEventListener('pause', onPause);
     audio.addEventListener('ended', onEnded);
     audio.addEventListener('error', onError);
 
     return () => {
-      audio.removeEventListener('loadedmetadata', onLoadedMeta);
+      audio.removeEventListener('loadedmetadata', onLoaded);
       audio.removeEventListener('play', onPlay);
       audio.removeEventListener('pause', onPause);
       audio.removeEventListener('ended', onEnded);
@@ -94,20 +94,39 @@ const GnbBottomPlayerBar = ({ audioUrl }: GnbBottomPlayerBarProps) => {
     };
   }, [audioUrl, addToast]);
 
-  // 클릭으로 점프
+  /** ms로 시킹 */
+  const seekToMs = useCallback(
+    (ms: number) => {
+      const audio = audioRef.current;
+      if (!audio) return;
+      const durSec = audio.duration ?? duration ?? 0;
+      const durMs = durSec * 1000;
+      const tMs = Math.max(0, Math.min(ms, durMs || ms));
+      const tSec = tMs / 1000;
+      audio.currentTime = tSec;
+      setCurrentTime(tSec);
+      setProgress(durSec ? (tSec / durSec) * 100 : 0);
+    },
+    [duration],
+  );
+
+  /**
+   *  진행바 클릭해 점프 → 포커스 포함
+   */
   const handleProgressClick = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
       if (!audioRef.current || !duration) return;
       const rect = (e.currentTarget as HTMLDivElement).getBoundingClientRect();
       const ratio = Math.min(Math.max((e.clientX - rect.left) / rect.width, 0), 1);
-      audioRef.current.currentTime = ratio * duration;
-      setCurrentTime(audioRef.current.currentTime);
-      setProgress(ratio * 100);
+      const targetMs = ratio * duration * 1000;
+      seekToMs(targetMs);
     },
-    [duration],
+    [duration, seekToMs],
   );
 
-  // 드래그(시킹) 지원: 드래그 중엔 화면만 업데이트, 드롭에서 실제 seek
+  /**
+   * 드래그(시킹) 지원: 드래그 중엔 화면만 업데이트, 드롭에서 실제 seek, 포커스
+   */
   const handleSeekStart = useCallback(() => {
     if (!audioRef.current) return;
     wasPlayingBeforeSeekRef.current = !audioRef.current.paused;
@@ -132,10 +151,9 @@ const GnbBottomPlayerBar = ({ audioUrl }: GnbBottomPlayerBarProps) => {
         setIsSeeking(false);
         return;
       }
-      const t = (finalProgress / 100) * duration;
-      audioRef.current.currentTime = t;
-      setCurrentTime(t);
-      setProgress(finalProgress);
+      const tSec = (finalProgress / 100) * duration;
+      const tMs = tSec * 1000;
+      seekToMs(tMs); // 드래그 종료 시 포커스 O
       setIsSeeking(false);
 
       // 드래그 시작 전에 재생 중이었으면 다시 재생
@@ -143,7 +161,7 @@ const GnbBottomPlayerBar = ({ audioUrl }: GnbBottomPlayerBarProps) => {
         audioRef.current.play().catch(() => {});
       }
     },
-    [duration],
+    [duration, seekToMs],
   );
 
   // 토글 재생

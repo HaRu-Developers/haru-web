@@ -1,3 +1,5 @@
+import { Format } from '@common/types/download.enum.types';
+
 import { Speech } from '@features/ai-meeting-manager/types/meeting.types';
 
 // ========== 공통 요청 ==========
@@ -167,6 +169,17 @@ export interface MeetingMinutesSpeechQuestionDTO {
 }
 
 // ========== 회의록 다운로드 링크 ==========
+/**
+ * 회의록 다운로드 요청 DTO
+ *
+ * @property {string} meetingId
+ * @property {Format} format - 다운로드할 파일 포맷
+ */
+export interface MeetingMinutesDownloadLinkRequestDTO {
+  meetingId: string;
+  format: Format;
+}
+
 /**
  * 회의록 실제 파일 URL 응답 DTO
  *

@@ -22,7 +22,9 @@ const AiQuestionCard = ({ aiRecommendQuestion, userAnswer, segmentId }: AiQuesti
   return (
     <div
       ref={ref}
-      onClick={() => focusSpeech(segmentId, { flashMs: 1200 })}
+      onClick={() => {
+        focusSpeech(segmentId);
+      }}
       data-speech-id={segmentId}
       className="border-stroke-200 w-110 cursor-pointer rounded-xl border bg-white px-5 pt-5 pb-4.5 hover:bg-gray-600"
     >

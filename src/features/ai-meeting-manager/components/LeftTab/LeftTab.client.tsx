@@ -2,13 +2,15 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 
 import FeatureTabIcons from '@icons/FeatureTabIcons/FeatureTabIcons';
 import { FeatureTabIconsState } from '@icons/FeatureTabIcons/FeatureTabIcons.types';
 
 import useFetchMeetingMinutesDetail from '@api/meeting/get/queries/useFetchMeetingMinutesDetail';
 import useFetchMeetingMinutesSpeechQuestion from '@api/meeting/get/queries/useFetchMeetingMinutesSpeechQuestion';
+
+import { ROUTES } from '@common/constants/routes.constants';
 
 import useCopyToClipboard from '@common/hooks/useCopyToClipboard';
 
@@ -35,7 +37,8 @@ import { LeftTabProps, LeftTabType } from './LeftTab.types';
 const tabs = Object.values(LeftTabType);
 
 const LeftTab = ({ current }: LeftTabProps) => {
-  const { meetingId } = useParams<{ meetingId: string }>();
+  const { workspaceId, meetingId } = useParams<{ workspaceId: string; meetingId: string }>();
+  const router = useRouter();
 
   // 발화 가져오기
   const { extra: { transcripts } = DEFAULT_SPEECH_QUESTION, isFetching: isSpeechFetching } =
@@ -60,10 +63,6 @@ const LeftTab = ({ current }: LeftTabProps) => {
     // 여기선 저장을 ‘요청’만
     // 실제 저장은 MeetingHeader의 InputFileTitle, ProceedingPanel이 수행
     requestCommit();
-  };
-
-  const handleDownloadClick = () => {
-    console.log('다운로드 클릭');
   };
 
   const handleCopyClick = async (tab: LeftTabType) => {
@@ -115,7 +114,11 @@ const LeftTab = ({ current }: LeftTabProps) => {
                   <FeatureTabIcons state={FeatureTabIconsState.COPY} />
                 </IconButton>
               </div>
-              <DownloadButton onClick={handleDownloadClick} />
+              <DownloadButton
+                onClick={() =>
+                  router.push(ROUTES.MODAL.AI_MEETING_MANAGER.DOWNLOAD(workspaceId, meetingId))
+                }
+              />
             </>
           ))}
         {current === LeftTabType.MEETING_VOICE_LOG && (

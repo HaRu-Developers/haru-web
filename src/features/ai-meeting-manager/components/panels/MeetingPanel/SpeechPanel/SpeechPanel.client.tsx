@@ -13,7 +13,7 @@ const SpeechPanel = ({ speeches, pageType, meetingStartTime }: SpeechPanelProps)
   return (
     <div
       className={clsx(
-        'pr-26pxr pb-80pxr scrollbar-component w-full overflow-y-auto',
+        'pl-20pxr pr-14pxr pb-80pxr scrollbar-component w-full overflow-y-auto',
         isMeetingPage
           ? 'pt-20pxr h-[calc(100dvh_-_var(--gnb-top-height)_-_var(--meeting-header-height))]'
           : 'pt-10pxr h-[calc(100dvh_-_var(--gnb-top-height)_-_var(--meeting-header-height)_-_var(--tab-height))]',

@@ -7,12 +7,15 @@ export const metadata: Metadata = {
 
 const AiMeetingMinutesLayout = ({
   children,
+  aiMeetingManagerMinutesModal,
 }: Readonly<{
   children: React.ReactNode;
+  aiMeetingManagerMinutesModal: React.ReactNode;
 }>) => {
   return (
     <>
       {children}
+      {aiMeetingManagerMinutesModal}
       <div id="cannot-page-scroll" />
     </>
   );

@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react';
 
+import * as z from 'zod';
+
 import { useCheckEmailDuplication } from '@api/user/hooks/mutations/useCheckEmailDuplication';
 import { useRegister } from '@api/user/hooks/mutations/useRegister';
 
@@ -21,20 +23,21 @@ import TermsAgreeCheckbox from '../TermsAgreeCheckbox/TermsAgreeCheckbox.client'
 import { TermsAgreeState } from '../TermsAgreeCheckbox/TermsAgreeCheckbox.types';
 
 const RegisterForm = () => {
-  const [email, setEmail] = useState<string>('');
-  const debouncedEmail = useDebounce(email, 300); // 이메일 입력에 대한 디바운스 적용
+  const [formData, setFormData] = useState<RegisterFormData>({
+    email: '',
+    name: '',
+    password: '',
+    confirmPassword: '',
+    termsAgreeState: {
+      serviceTerms: false,
+      privacyPolicy: false,
+      marketingConsent: false,
+    },
+  });
 
-  const [name, setName] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [confirmPassword, setConfirmPassword] = useState<string>('');
+  const debouncedEmail = useDebounce(formData.email, 500); // 이메일 입력에 대한 디바운스 적용
 
   const [isAvailableEmail, setIsAvailableEmail] = useState<boolean | null>(null);
-
-  const [termsAgreeState, setTermsAgreeState] = useState<TermsAgreeState>({
-    serviceTerms: false,
-    privacyPolicy: false,
-    marketingConsent: false,
-  });
 
   const { mutate: register } = useRegister();
   const { mutate: checkEmailDuplication } = useCheckEmailDuplication({
@@ -44,70 +47,105 @@ const RegisterForm = () => {
 
   const { addToast } = useToastActions();
 
+  const registerFormSchema = z
+    .strictObject({
+      email: z.email('유효하지 않은 이메일 입니다.').refine(() => isAvailableEmail, {
+        error: '이미 사용 중인 이메일 입니다.',
+        path: ['duplicateEmail'],
+      }),
+      name: z.string().min(1, '이름을 입력해 주세요.'),
+      password: z.string().min(8, '비밀번호는 8자 이상이어야 합니다.'),
+      confirmPassword: z.string().min(8, '비밀번호는 8자 이상이어야 합니다.'),
+      termsAgreeState: z
+        .strictObject({
+          serviceTerms: z.boolean(),
+          privacyPolicy: z.boolean(),
+          marketingConsent: z.boolean(), // 마케팅 정보 수신 동의는 선택 사항
+        })
+        .refine((state) => state.serviceTerms && state.privacyPolicy, {
+          error: '필수 약관에 동의해 주세요.',
+        }),
+    })
+    .refine((data) => data.password === data.confirmPassword, {
+      error: '비밀번호가 일치하지 않습니다.',
+      path: ['confirmPassword'],
+    });
+
+  type RegisterFormData = z.infer<typeof registerFormSchema>;
+
+  const registerFormValid = registerFormSchema.safeParse(formData);
+
+  const validateField = (
+    field: keyof RegisterFormData,
+    value: RegisterFormData[keyof RegisterFormData],
+  ) => {
+    if (!value) {
+      return {
+        state: OnboardingState.DEFAULT,
+        message: undefined,
+      };
+    }
+    const fieldSchema = registerFormSchema.shape[field];
+    const result = fieldSchema.safeParse(value);
+
+    let state;
+    let message;
+
+    if (result.success) {
+      state = OnboardingState.APPROVAL;
+      if (field === 'email') {
+        message = '사용 가능한 이메일 입니다.';
+      } else if (field === 'password') {
+        message = '사용 가능한 비밀번호 입니다.';
+      } else if (field === 'confirmPassword') {
+        message = '비밀번호가 일치합니다.';
+      }
+    } else {
+      state = OnboardingState.ERROR;
+      message = result.error.issues[0].message;
+    }
+
+    return {
+      state,
+      message,
+    };
+  };
+
   const handleRegister = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!isAllRequiredFieldsFilled) {
+    const isRequiredTermsAgreed = registerFormSchema.shape.termsAgreeState.safeParse(
+      formData.termsAgreeState,
+    ).success;
+
+    if (!isRequiredTermsAgreed) {
       return addToast({
         type: ToastType.ERROR,
-        text: '모든 항목을 입력해 주세요.',
+        text: '필수 약관에 동의해 주세요.',
       });
-    } else if (!isRequiredTermsAgreed) {
+    } else if (!registerFormValid.success) {
       return addToast({
         type: ToastType.ERROR,
-        text: '필수 이용 약관에 동의해 주세요.',
+        text: '정보를 올바르게 입력해 주세요.',
       });
     }
 
+    const requestData = registerFormValid.data;
+
     register({
-      email,
-      name,
-      password,
-      marketingAgreed: termsAgreeState.marketingConsent,
+      email: requestData.email,
+      name: requestData.name,
+      password: requestData.password,
+      marketingAgreed: requestData.termsAgreeState.marketingConsent,
     });
   };
 
-  const passwordCheckEqualsPassword = (): OnboardingState => {
-    if (!password || !confirmPassword) {
-      return OnboardingState.DEFAULT;
-    }
-    return password === confirmPassword ? OnboardingState.APPROVAL : OnboardingState.ERROR;
-  };
-
-  const passwordCheckMessage = (state: OnboardingState) => {
-    if (state === OnboardingState.DEFAULT) {
-      return undefined;
-    } else if (state === OnboardingState.APPROVAL) {
-      return '비밀번호가 일치합니다.';
-    } else if (state === OnboardingState.ERROR) {
-      return '비밀번호가 일치하지 않습니다.';
-    }
-  };
-
-  const isAllRequiredFieldsFilled =
-    email &&
-    isAvailableEmail &&
-    name &&
-    password &&
-    confirmPassword &&
-    password === confirmPassword;
-
-  const isRequiredTermsAgreed = termsAgreeState.serviceTerms && termsAgreeState.privacyPolicy;
-
-  /**
-   * 회원가입 가능 여부를 판단하는 로직
-   *
-   * 이메일, 이름, 비밀번호, 비밀번호 확인이 모두 입력되어 있고,
-   * 비밀번호와 비밀번호 확인이 일치하며,
-   * 서비스 이용 약관과 개인정보 처리 방침에 동의한 경우에만 회원가입 버튼이 활성화됩니다.
-   */
-  const isRegisterAvailable = isAllRequiredFieldsFilled && isRequiredTermsAgreed;
-
   useEffect(() => {
     if (debouncedEmail) {
+      // TODO: 이메일이 입력되고 유효한 경우에만 중복 체크를 수행하도록 변경할 것
       checkEmailDuplication({ email: debouncedEmail });
     }
-  }, [debouncedEmail]);
+  }, [checkEmailDuplication, debouncedEmail]);
 
   return (
     <form className="gap-y-20pxr flex flex-col" onSubmit={handleRegister}>
@@ -115,11 +153,10 @@ const RegisterForm = () => {
       {/* TODO: 기획 단 UX 라이팅에 따라 변경 필요 */}
       <InputOnboarding
         title="이메일 주소"
-        inputValue={email}
+        inputValue={formData.email}
         placeholder="이메일 주소를 입력해 주세요"
-        onChange={setEmail}
-        state={isAvailableEmail === false ? OnboardingState.ERROR : undefined}
-        message={isAvailableEmail === false ? '이미 사용 중인 계정입니다.' : undefined}
+        onChange={(email) => setFormData({ ...formData, email })}
+        {...validateField('email', formData.email)}
       />
       {/* {isAvailableEmail === false && (
           <span className="mt-6pxr text-cap1-rg text-system-red">이미 사용 중인 계정입니다.</span>
@@ -127,34 +164,36 @@ const RegisterForm = () => {
       {/* </div> */}
       <InputOnboarding
         title="이름"
-        inputValue={name}
+        inputValue={formData.name}
         placeholder="이름을 입력해 주세요"
-        onChange={setName}
+        onChange={(name) => setFormData({ ...formData, name })}
       />
       <InputOnboarding
         title="비밀번호"
-        inputValue={password}
+        inputValue={formData.password}
         placeholder="비밀번호를 입력해 주세요"
-        onChange={setPassword}
+        onChange={(password) => setFormData({ ...formData, password })}
+        {...validateField('password', formData.password)}
         type={OnboardingType.HIDE}
       />
       <InputOnboarding
         title="비밀번호 확인"
-        inputValue={confirmPassword}
+        inputValue={formData.confirmPassword}
         placeholder="동일한 비밀번호를 한 번 더 입력해 주세요"
-        onChange={setConfirmPassword}
-        state={passwordCheckEqualsPassword()}
-        message={passwordCheckMessage(passwordCheckEqualsPassword())}
+        onChange={(confirmPassword) => setFormData({ ...formData, confirmPassword })}
+        {...validateField('confirmPassword', formData.confirmPassword)}
         type={OnboardingType.HIDE}
       />
       {/* 동의 버튼들 - 서비스이용약관, 개인정보처리방침, 마케팅정보수신 동의 (이거만 선택) */}
       <TermsAgreeCheckbox
-        termsAgreeState={termsAgreeState}
-        setTermsAgreeState={setTermsAgreeState}
+        termsAgreeState={formData.termsAgreeState}
+        setTermsAgreeState={(termsAgreeState: TermsAgreeState) =>
+          setFormData({ ...formData, termsAgreeState })
+        }
       />
 
       {/* 회원가입 버튼 */}
-      <RegisterButton className="mt-22pxr" disabled={!isRegisterAvailable} type="submit" />
+      <RegisterButton className="mt-22pxr" disabled={!registerFormValid.success} type="submit" />
     </form>
   );
 };

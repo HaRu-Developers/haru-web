@@ -13,7 +13,7 @@ import queryKeys from '@common/constants/query-key.constants';
 
 import { ApiError } from '@common/errors/ApiError';
 
-import { GetViewSurveyResponseDto, ModifyMoodTrackerTitleRequestDto } from '../../apis.types';
+import { ModifyMoodTrackerTitleRequestDto, SurveyBaseInfoResponseDto } from '../../apis.types';
 import { ModifyMoodTrackerTitle } from '../apis/modify-title';
 
 /**
@@ -47,25 +47,25 @@ export const useModifyMoodTrackerTitleMutation = () => {
 
     onMutate: async ({ moodTrackerHashedId, title: newTitle }) => {
       // 낙관적 업데이트의 기준이 되는 surveyResponse 데이터의 쿼리 키를 가져옵니다.
-      const surveyQueryKey = queryKeys.moodTracker.detail(moodTrackerHashedId);
+      const surveyBasicInfoQueryKey = queryKeys.moodTracker.surveyBasicInfo(moodTrackerHashedId);
       const recentDocsQueryKey = queryKeys.workspaces.recentDocuments(workspaceId);
 
-      // 1. 진행 중인 쿼리를 취소하여, 현재의 낙관적 업데이트를 덮어쓰는 것을 방지합니다.
-      await queryClient.cancelQueries(surveyQueryKey);
+      // 1. 관련된 모든 쿼리를 취소합니다.
+      await queryClient.cancelQueries({ queryKey: surveyBasicInfoQueryKey.queryKey });
+      await queryClient.cancelQueries({ queryKey: recentDocsQueryKey.queryKey });
 
       // 2. 롤백을 대비하여, 현재 캐시에 있는 'surveyResponse' 데이터를 백업합니다.
-      const previousSurveyData = queryClient.getQueryData<GetViewSurveyResponseDto>(
-        surveyQueryKey.queryKey,
+      const previousBasicInfo = queryClient.getQueryData<SurveyBaseInfoResponseDto>(
+        surveyBasicInfoQueryKey.queryKey,
       );
       const previousRecentDocs = queryClient.getQueryData<{ result: { documents: ApiDocument[] } }>(
         recentDocsQueryKey.queryKey,
       );
 
-      // 3. 'surveyResponse' 캐시를 새로운 제목으로 즉시 업데이트합니다.
-      //    UI 컴포넌트가 이 데이터를 바라보고 있으므로, 화면이 즉각적으로 변경됩니다.
-      if (previousSurveyData) {
-        queryClient.setQueryData<GetViewSurveyResponseDto>(surveyQueryKey.queryKey, {
-          ...previousSurveyData,
+      // 3. 'surveyBasicInfo' 캐시를 새로운 제목으로 즉시 업데이트합니다.
+      if (previousBasicInfo) {
+        queryClient.setQueryData<SurveyBaseInfoResponseDto>(surveyBasicInfoQueryKey.queryKey, {
+          ...previousBasicInfo,
           title: newTitle,
         });
       }
@@ -85,17 +85,17 @@ export const useModifyMoodTrackerTitleMutation = () => {
 
       // 4. 백업해 둔 이전 데이터를 context에 담아 onError와 onSettled에 전달합니다.
       return {
-        previousSurveyData,
+        previousBasicInfo,
         previousRecentDocs,
-        surveyQueryKey: surveyQueryKey.queryKey,
+        surveyBasicInfoQueryKey: surveyBasicInfoQueryKey.queryKey,
         recentDocsQueryKey: recentDocsQueryKey.queryKey,
       };
     },
 
     onError: (error: Error, variables, context) => {
       // 5. onMutate에서 백업해 둔 'previousSurveyData'를 사용하여 캐시를 원상 복구합니다.
-      if (context?.previousSurveyData) {
-        queryClient.setQueryData(context.surveyQueryKey, context.previousSurveyData);
+      if (context?.previousBasicInfo) {
+        queryClient.setQueryData(context.surveyBasicInfoQueryKey, context.previousBasicInfo);
       }
       // GnbLeft RecentData
       if (context?.previousRecentDocs) {

@@ -1,7 +1,5 @@
 'use client';
 
-import { useEffect } from 'react';
-
 import { useParams, useRouter } from 'next/navigation';
 
 import { ROUTES } from '@common/constants/routes.constants';
@@ -22,16 +20,9 @@ const CreateNewSurveyModal = () => {
   };
 
   const onMoveToSetQuestions = (data: CreateNewTeamMoodTrackerModalOnNextStepProps) => {
+    console.log('onMoveToSetQuestions Triggered', data);
     router.push(ROUTES.TEAM_MOOD_TRACKER.CREATE_SURVEY(workspaceId, data));
-    // router.push(
-    //   `?modal=createSurvey&title=${data.title}&description=${data.description}&dueDate=${data.dueDate.toISOString()}&visibility=${data.visibility}`,
-    // );
   };
-
-  useEffect(() => {
-    console.log('MOUNT create-new-survey modal, pathname=', window.location.pathname);
-    return () => console.log('UNMOUNT create-new-survey modal');
-  }, []);
 
   return (
     <ModalLayoutWithoutPortal>

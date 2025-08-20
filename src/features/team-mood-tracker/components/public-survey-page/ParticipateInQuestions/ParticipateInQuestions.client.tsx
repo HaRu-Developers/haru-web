@@ -55,7 +55,7 @@ const ParticipateInQuestions = ({
   };
 
   /**
-   *
+   * 사용자가 주관식 문항에 대한 응답을 변경할 때 호출되는 함수입니다.
    */
   const handleEachSubjectiveResponseChange = (questionId: string, userResponse: string) => {
     setSurveyUserResponse((prev) => {
@@ -105,6 +105,10 @@ const ParticipateInQuestions = ({
     });
   };
 
+  /**
+   * 사용자가 객관식 또는 복수선택 문항에 대한 응답을 변경할 때 호출되는 함수입니다.
+   * optionIndexList는 사용자가 선택한 옵션의 인덱스 리스트입니다.
+   */
   const handleQuestionOptionClick = (questionId: string, optionIndexList: number[]) => {
     setSurveyUserResponse((prev) => {
       const updatedUserResponses = [...prev];
@@ -207,6 +211,9 @@ const ParticipateInQuestions = ({
     });
   };
 
+  /**
+   * 최종적으로 컴포넌트에 한 번에 전달하기 위한 핸들러 모음, questionId를 기반으로 생성합니다.
+   */
   const surveyQuestionHandlerSet = (questionId: string) => {
     return {
       onSubjectiveQuestionResponseChange: (val: string) =>

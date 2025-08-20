@@ -1,35 +1,17 @@
 import SurveyInSiteSkeleton from '@common/components/box-text/SurveyInSite/SurveyInSiteSkeleton';
 
+import InputFileTitleSkeleton from '@common/skeletons/InputFileTitleSkeleton/InputFileTitleSkeleton.server';
+
+import TeamMoodReportTabSkeleton from '@features/team-mood-tracker/components/mood-reports/report-section/TeamMoodReportTab/TeamMoodReportTabSkeleton';
+import QuestionsSkeleton from '@features/team-mood-tracker/components/skeletons/QuestionsSkeleton/QuestionsSkeleton.server';
+
 const TeamMoodTrackerFilePageSectionSkeleton = () => {
   return (
-    <div className="w-668pxr mx-auto">
-      <div className="mb-26pxr">
-        <SurveyInSiteSkeleton />
-      </div>
-      <div className="space-y-4">
-        <div className="animate-bg-pulse rounded-4pxr h-6 w-1/3" />
-        <div className="space-y-2">
-          <div className="animate-bg-pulse rounded-4pxr h-4 w-full" />
-          <div className="animate-bg-pulse rounded-4pxr h-4 w-full" />
-          <div className="animate-bg-pulse rounded-4pxr h-4 w-5/6" />
-        </div>
-        <div className="animate-bg-pulse rounded-4pxr h-6 w-1/4" />
-        <div className="space-y-2">
-          <div className="animate-bg-pulse rounded-4pxr h-4 w-full" />
-          <div className="animate-bg-pulse rounded-4pxr h-4 w-4/5" />
-        </div>
-        <div className="animate-bg-pulse rounded-4pxr h-6 w-1/3" />
-        <div className="space-y-2">
-          <div className="animate-bg-pulse rounded-4pxr h-4 w-full" />
-          <div className="animate-bg-pulse rounded-4pxr h-4 w-full" />
-          <div className="animate-bg-pulse rounded-4pxr h-4 w-5/6" />
-        </div>
-        <div className="animate-bg-pulse rounded-4pxr h-6 w-1/4" />
-        <div className="space-y-2">
-          <div className="animate-bg-pulse rounded-4pxr h-4 w-full" />
-          <div className="animate-bg-pulse rounded-4pxr h-4 w-4/5" />
-        </div>
-      </div>
+    <div className="w-668pxr gap-y-26pxr my-64pxr mx-auto flex flex-col items-center">
+      <InputFileTitleSkeleton />
+      <TeamMoodReportTabSkeleton />
+      <SurveyInSiteSkeleton />
+      <QuestionsSkeleton />
     </div>
   );
 };

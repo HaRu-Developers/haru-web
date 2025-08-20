@@ -18,9 +18,16 @@ import SurveyInfo from '@common/components/box-text/SurveyInfo/SurveyInfo.server
 import MoveToHaRuLandingPageButton from '@features/team-mood-tracker/components/public-survey-page/MoveToHaRuLandingPageButton/MoveToHaRuLandingPageButton.client';
 import ParticipateInQuestions from '@features/team-mood-tracker/components/public-survey-page/ParticipateInQuestions/ParticipateInQuestions.client';
 import SubmitSurveyButton from '@features/team-mood-tracker/components/public-survey-page/SubmitSurveyButton/SubmitSurveyButton.client';
+import TeamMoodTrackerFilePageSectionSkeleton from '@features/team-mood-tracker/components/skeletons/TeamMoodTrackerFilePageSectionSkeleton/TeamMoodTrackerFilePageSectionSkeleton.server';
 
 // 공개된, 설문조사 응답 페이지 입니다.
 const PublicSurveyPage = () => {
+  /**
+   * 사용자의 응답을 기록해두는 state 입니다.
+   */
+  const [surveyUserResponse, setSurveyUserResponse] = useState<SurveyQuestionTypeOnPost[]>([]);
+  const [isSurveySubmitted, setIsSurveySubmitted] = useState<boolean>(false);
+
   const router = useRouter();
   const { mutate: submitSurvey } = useSubmitSurvey({ onSuccess: () => setIsSurveySubmitted(true) });
 
@@ -29,15 +36,9 @@ const PublicSurveyPage = () => {
   const { data: surveyBasicInfo, isFetching: isFetchingSurveyBasicInfo } =
     useSurveyBasicInfo(moodTrackerHashedId);
 
-  /**
-   * 사용자의 응답을 기록해두는 state 입니다.
-   *
-   */
-  const [surveyUserResponse, setSurveyUserResponse] = useState<SurveyQuestionTypeOnPost[]>([]);
-  const [isSurveySubmitted, setIsSurveySubmitted] = useState<boolean>(false);
-
+  // 스켈레톤
   if (isFetchingSurveyBasicInfo || !surveyBasicInfo) {
-    return <div>Loading?</div>;
+    return <TeamMoodTrackerFilePageSectionSkeleton />;
   }
 
   const { title, creatorName, creatorId, updatedAt } = surveyBasicInfo;

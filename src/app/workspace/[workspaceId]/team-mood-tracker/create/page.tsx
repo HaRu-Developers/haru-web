@@ -42,10 +42,18 @@ const CreateSurveyPage = () => {
   });
 
   const handleWriteComplete = () => {
+    const transferDueDateIntoKstTime = (date: string) => {
+      // 페이지에서 입력받은 dueDate는 UTC 기준이므로, KST로 변환합니다.
+      const utcDate = new Date(date);
+      const kstOffset = 9 * 60; // KST는 UTC+9
+      utcDate.setMinutes(utcDate.getMinutes() + kstOffset);
+      return utcDate.toISOString(); // ISO 형식으로 반환
+    };
+
     const surveyData: CreateNewSurveyRequestDto = {
       title: pageQuery.title,
       description: pageQuery.description,
-      dueDate: pageQuery.dueDate,
+      dueDate: transferDueDateIntoKstTime(pageQuery.dueDate),
       visibility: pageQuery.visibility as PublicOrPrivate, // PUBLIC 또는 PRIVATE
       questions: transferQuestionListToApiFormat(questionList),
     };

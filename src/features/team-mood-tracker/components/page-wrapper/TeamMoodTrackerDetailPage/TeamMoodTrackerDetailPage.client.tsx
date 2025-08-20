@@ -1,10 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useParams, useSearchParams } from 'next/navigation';
 
-import { useParams, useRouter, useSearchParams } from 'next/navigation';
-
-import { TEAM_MOOD_TRACKER_PAGE_ROUTES } from '@api/team-mood-tracker/end-point.constants';
 import { useSurveyBasicInfo } from '@api/team-mood-tracker/get/queries/useSurveyBasicInfo';
 
 import { GnbSection } from '@common/types/gnbs.types';
@@ -16,7 +13,6 @@ import TeamMoodAnswerChartSection from '@features/team-mood-tracker/components/m
 import TeamMoodTrackerDetailPageTitle from '@features/team-mood-tracker/components/mood-reports/common/TeamMoodTrackerDetailPageTitle/TeamMoodTrackerDetailPageTitle.client';
 import TeamMoodSurveyQuestionSection from '@features/team-mood-tracker/components/mood-reports/question-section/TeamMoodSurveyQuestionSection/TeamMoodSurveyQuestionSection.client';
 import TeamMoodReportContentSection from '@features/team-mood-tracker/components/mood-reports/report-section/TeamMoodReportContentSection/TeamMoodReportContentSection.client';
-import TeamMoodReportTab from '@features/team-mood-tracker/components/mood-reports/report-section/TeamMoodReportTab/TeamMoodReportTab.client';
 import { TeamMoodReportTabType } from '@features/team-mood-tracker/components/mood-reports/report-section/TeamMoodReportTab/TeamMoodReportTab.types';
 import TeamMoodTrackerPageSkeleton from '@features/team-mood-tracker/components/skeletons/TeamMoodTrackerSkeleton/TeamMoodTrackerSkeleton';
 import TeamMoodToast from '@features/team-mood-tracker/components/toasts/TeamMoodToast/TeamMoodToast.client';
@@ -31,10 +27,6 @@ const TeamMoodTrackerDetailPage = () => {
   const workspaceId = params.workspaceId;
   const moodTrackerHashedId = params.moodTrackerHashedId;
 
-  const router = useRouter();
-
-  const [copyHandler, setCopyHandler] = useState<() => void>(() => () => {});
-
   /**
    * query string에서 현재 tab 정보를 가져옵니다.
    */
@@ -47,23 +39,30 @@ const TeamMoodTrackerDetailPage = () => {
 
   // TODO: skeleton은 tab 단위로 수정
 
-  const handleDownloadClick = () => {
-    router.push(TEAM_MOOD_TRACKER_PAGE_ROUTES.DOWNLOAD(workspaceId, moodTrackerHashedId));
-  };
-
   const renderTabContent = () => {
     switch (currentTab) {
       case TeamMoodReportTabType.TEAM_MOOD_REPORT:
         return (
           <TeamMoodReportContentSection
             moodTrackerHashedId={moodTrackerHashedId}
-            setCopyHandler={setCopyHandler}
+            workspaceId={workspaceId}
+            respondentsNum={surveyBasicInfo?.respondentsNum ?? 0}
           />
         );
       case TeamMoodReportTabType.ANSWER_SUMMARY:
-        return <TeamMoodAnswerChartSection moodTrackerHashedId={moodTrackerHashedId} />;
+        return (
+          <TeamMoodAnswerChartSection
+            moodTrackerHashedId={moodTrackerHashedId}
+            respondentsNum={surveyBasicInfo?.respondentsNum ?? 0}
+          />
+        );
       case TeamMoodReportTabType.SURVEY_LIST:
-        return <TeamMoodSurveyQuestionSection moodTrackerHashedId={moodTrackerHashedId} />;
+        return (
+          <TeamMoodSurveyQuestionSection
+            moodTrackerHashedId={moodTrackerHashedId}
+            respondentsNum={surveyBasicInfo?.respondentsNum ?? 0}
+          />
+        );
       default:
         return <div>알 수 없는 탭입니다.</div>;
     }
@@ -74,7 +73,7 @@ const TeamMoodTrackerDetailPage = () => {
     return <TeamMoodTrackerPageSkeleton />;
   }
 
-  const { title, creatorName, creatorId, updatedAt, respondentsNum } = surveyBasicInfo;
+  const { title, creatorName, creatorId, updatedAt } = surveyBasicInfo;
 
   return (
     <>
@@ -86,28 +85,14 @@ const TeamMoodTrackerDetailPage = () => {
           <TeamMoodToast />
         </div>
         {/* MAIN CONTENT */}
-        <div className="mt-24pxr mb-10pxr w-668pxr mx-auto flex-col">
+        <div className="mt-24pxr mx-auto">
           <TeamMoodTrackerDetailPageTitle
             moodTrackerHashedId={moodTrackerHashedId}
             surveyBasicInfo={surveyBasicInfo}
           />
-          <FileCreatedInfo name={creatorName} userId={creatorId} dateTime={updatedAt} />
         </div>
-        {/* 탭 영역 */}
-        {/* TODO: 이거 그냥 마음에 안들어서 바꾸고 싶어요 @kyeoungwoon */}
-        <div className="border-stroke-200 mb-14pxr w-full border-b border-solid bg-white">
-          <div className="w-668pxr mx-auto">
-            <TeamMoodReportTab
-              current={currentTab}
-              counts={{
-                [TeamMoodReportTabType.TEAM_MOOD_REPORT]: 0,
-                [TeamMoodReportTabType.ANSWER_SUMMARY]: respondentsNum,
-                [TeamMoodReportTabType.SURVEY_LIST]: 0,
-              }}
-              handleCopyClick={copyHandler}
-              handleDownloadClick={handleDownloadClick}
-            />
-          </div>
+        <div className="mb-10pxr w-668pxr mx-auto flex-col">
+          <FileCreatedInfo name={creatorName} userId={creatorId} dateTime={updatedAt} />
         </div>
         {renderTabContent()}
       </div>

@@ -5,6 +5,9 @@ import { useEffect, useState } from 'react';
 import { useCheckEmailDuplication } from '@api/user/hooks/mutations/useCheckEmailDuplication';
 import { useRegister } from '@api/user/hooks/mutations/useRegister';
 
+import { ToastType } from '@common/types/toast.types';
+
+import { useToastActions } from '@common/hooks/stores/useToastStore';
 import useDebounce from '@common/hooks/useDebounce';
 
 import RegisterButton from '@common/components/buttons/48px/RegisterButton/RegisterButton.client';
@@ -39,8 +42,22 @@ const RegisterForm = () => {
     onUnavailable: () => setIsAvailableEmail(false),
   });
 
+  const { addToast } = useToastActions();
+
   const handleRegister = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!isAllRequiredFieldsFilled) {
+      return addToast({
+        type: ToastType.ERROR,
+        text: '모든 항목을 입력해 주세요.',
+      });
+    } else if (!isRequiredTermsAgreed) {
+      return addToast({
+        type: ToastType.ERROR,
+        text: '필수 이용 약관에 동의해 주세요.',
+      });
+    }
 
     register({
       email,
@@ -67,6 +84,16 @@ const RegisterForm = () => {
     }
   };
 
+  const isAllRequiredFieldsFilled =
+    email &&
+    isAvailableEmail &&
+    name &&
+    password &&
+    confirmPassword &&
+    password === confirmPassword;
+
+  const isRequiredTermsAgreed = termsAgreeState.serviceTerms && termsAgreeState.privacyPolicy;
+
   /**
    * 회원가입 가능 여부를 판단하는 로직
    *
@@ -74,15 +101,7 @@ const RegisterForm = () => {
    * 비밀번호와 비밀번호 확인이 일치하며,
    * 서비스 이용 약관과 개인정보 처리 방침에 동의한 경우에만 회원가입 버튼이 활성화됩니다.
    */
-  const isRegisterAvailable =
-    email &&
-    isAvailableEmail &&
-    name &&
-    password &&
-    confirmPassword &&
-    password === confirmPassword &&
-    termsAgreeState.serviceTerms &&
-    termsAgreeState.privacyPolicy;
+  const isRegisterAvailable = isAllRequiredFieldsFilled && isRequiredTermsAgreed;
 
   useEffect(() => {
     if (debouncedEmail) {

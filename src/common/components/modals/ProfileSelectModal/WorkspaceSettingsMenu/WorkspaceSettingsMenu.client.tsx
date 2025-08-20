@@ -2,6 +2,8 @@
 
 import { useCallback, useState } from 'react';
 
+import { useRouter } from 'next/navigation';
+
 import useInstagram from '@api/sns-event-assistant/get/queries/useInstagram';
 import useFetchWorkspaceDetail from '@api/workspace/get/queries/useFetchWorkspaceDetail';
 import useEditWorkspaceDetail from '@api/workspace/patch/mutations/useEditWorkspaceDetail';
@@ -29,6 +31,7 @@ import { WorkspaceSettingsMenuProps } from './WorkspaceSettingsMenu.types';
  */
 const WorkspaceSettingsMenu = ({ workspaceId }: WorkspaceSettingsMenuProps) => {
   // 내부적으로 처리 되서 반환 됩니다.
+  const router = useRouter();
   const [value, setValue] = useState<string>('');
   const [emails, setEmails] = useState<string[]>([]);
   const [image, setImage] = useState<File>(); // 워크스페이스 프로필 이미지 변경 시 사용
@@ -39,6 +42,9 @@ const WorkspaceSettingsMenu = ({ workspaceId }: WorkspaceSettingsMenuProps) => {
   const { addToast } = useToastActions();
   const { setTitle: setWorkspaceTitle, setImageUrl } = useWorkspaceActions();
   const { extra: instagram } = useInstagram(workspaceId);
+  const handleAddWorkspace = () => {
+    router.push(ROUTES.ONBOARDING);
+  };
   const handleSave = useCallback(() => {
     // 서버에 프로필 수정 요청 api
     editWorkspaceDetail(
@@ -135,7 +141,7 @@ const WorkspaceSettingsMenu = ({ workspaceId }: WorkspaceSettingsMenuProps) => {
       {/* 워크스페이스 추가 섹션 */}
       <div className="gap-y-12pxr flex w-full flex-col">
         <CommonText type={CommonTextType.T5_SB_BLACK} text="워크스페이스 추가" />
-        <AddWorkspaceButton />
+        <AddWorkspaceButton onClick={handleAddWorkspace} />
       </div>
 
       {/* 구분선 */}

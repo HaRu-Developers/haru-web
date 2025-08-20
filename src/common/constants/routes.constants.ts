@@ -126,14 +126,9 @@ export const ROUTES = {
       },
     },
     TERMS: {
-      PRIVACY: (workspaceId?: string) =>
-        workspaceId
-          ? `/workspace/${workspaceId}/terms?type=${TermsType.PRIVACY}`
-          : `/workspace/terms?type=${TermsType.PRIVACY}`,
-      SERVICE: (workspaceId?: string) =>
-        workspaceId
-          ? `/workspace/${workspaceId}/terms?type=${TermsType.SERVICE}`
-          : `/workspace/terms?type=${TermsType.SERVICE}`,
+      PRIVACY: `/terms?type=${TermsType.PRIVACY}`,
+      SERVICE: `/terms?type=${TermsType.SERVICE}`,
+      MARKETING: `/terms?type=${TermsType.MARKETING}`,
     },
   },
 } as const;

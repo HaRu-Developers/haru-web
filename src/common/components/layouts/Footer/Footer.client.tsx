@@ -23,23 +23,17 @@ const Footer = () => {
           </div>
           {/* 링크 부분 */}
           <div className="flex items-center gap-2.5">
-            <Link
-              className="cursor-pointer hover:underline"
-              href={ROUTES.MODAL.TERMS.SERVICE(workspaceId)}
-            >
+            <Link className="cursor-pointer hover:underline" href={ROUTES.MODAL.TERMS.SERVICE}>
               서비스이용약관
             </Link>
-            <Link
-              className="cursor-pointer hover:underline"
-              href={ROUTES.MODAL.TERMS.PRIVACY(workspaceId)}
-            >
+            <Link className="cursor-pointer hover:underline" href={ROUTES.MODAL.TERMS.PRIVACY}>
               개인정보처리방침
             </Link>
           </div>
         </div>
 
         <div className="flex flex-col items-start gap-0.5">
-          <span>Copyright © HaRu</span>
+          <span>Copyright &copy; HaRu</span>
           <span>All rights reserved.</span>
         </div>
       </div>

@@ -81,7 +81,8 @@ const ProfileSettingMenu = ({ workspaceId, email }: ProfileSettingMenuProps) => 
           {/* 이메일 주소 */}
           <div className="gap-y-8pxr flex w-full flex-col items-start justify-center">
             <CommonText type={CommonTextType.CAP1_RG_GRAY_200} text="이메일 주소" />
-            <span className="border-stroke-200 rounded-4pxr px-10pxr text-b3-rg py-7pxr flex w-full items-start justify-start border text-black">
+            {/* 여기도 마찬가지로 #F8F8FA 값이 없어 넣음 */}
+            <span className="border-stroke-200 rounded-4pxr px-10pxr text-b3-rg py-7pxr flex w-full items-start justify-start border bg-[#F8F8FA] text-gray-400">
               {email}
             </span>
           </div>

@@ -21,6 +21,11 @@ export const ROUTES = {
   ROOT: '/',
   LANDING: '/landing',
   WORKSPACE_MAIN: (workspaceId?: BigintString) => `/workspace/${workspaceId ?? ''}`,
+  DOCUMENT_DELETE_CONFIRMED: (workspaceId: string, fileType: FileType) => {
+    if (fileType === FileType.TEAM_MOOD_TRACKER) {
+      return `/workspace/${workspaceId}/team-mood-tracker?deleteConfirmed=true`;
+    }
+  },
   // ===== ai-meeting-manager 관련 =====
   AI_MEETING_MANAGER: {
     BASE: (workspaceId: BigintString) => `/workspace/${workspaceId}/ai-meeting-manager`,
@@ -79,6 +84,14 @@ export const ROUTES = {
   NOT_FOUND: '/404', // 실제로 없는 주소
 
   MODAL: {
+    GENERAL: {
+      CONFIRM_DELETE: (workspaceId: string, fileType?: string, redirectUrlOnConfirm?: string) => {
+        const params = [];
+        if (fileType) params.push(`fileType=${fileType}`);
+        if (redirectUrlOnConfirm) params.push(`redirect=${redirectUrlOnConfirm}`);
+        return `/workspace/${workspaceId}/confirm-delete${params.length ? `?${params.join('&')}` : ''}`;
+      },
+    },
     AUTH: {
       AFTER_REGISTER: {
         INVITED_REGISTER: '/auth/after-register?invited=true',

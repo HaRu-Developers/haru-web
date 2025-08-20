@@ -328,3 +328,19 @@ export type SurveyQuestionTypeOnPost =
 export interface PostSurveyRequestDto {
   answers: SurveyQuestionTypeOnPost[];
 }
+
+export interface TeamMoodTrackerReportListItem {
+  /** 해싱된 팀 무드 트래커의 고유 ID */
+  moodTrackerHashedId: string;
+  /** 팀 무드 트래커의 제목 */
+  title: string;
+  // ISO 8601 형식의 날짜 문자열
+  updatedAt: string;
+  // ISO 8601 형식의 날짜 문자열
+  dueDate: string;
+  // 현재까지의 응답자 수
+  respondentsNum: number;
+}
+export interface GetTeamMoodTrackerReportListResponseDto {
+  moodTrackerList: TeamMoodTrackerReportListItem[];
+}

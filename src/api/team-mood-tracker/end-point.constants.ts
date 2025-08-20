@@ -1,4 +1,5 @@
 export const MOOD_TRACKER_API_ENDPOINTS = {
+  REPORT_LIST: (workspaceId: string) => `/mood-trackers/workspaces/${workspaceId}`,
   REPORTS: (moodTrackerHashedId: string) => `/mood-trackers/${moodTrackerHashedId}/reports`,
   RESPONSES: (moodTrackerHashedId: string) => `/mood-trackers/${moodTrackerHashedId}/responses`,
   QUESTIONS: (moodTrackerHashedId: string) => `/mood-trackers/${moodTrackerHashedId}/questions`,
@@ -9,6 +10,7 @@ export const MOOD_TRACKER_API_ENDPOINTS = {
   SEND_EMAIL: (moodTrackerHashedId: string) => `/mood-trackers/${moodTrackerHashedId}/emails`,
   SUBMIT_SURVEY: (moodTrackerHashedId: string) => `/mood-trackers/${moodTrackerHashedId}/answer`,
   SURVEY_BASIC_INFO: (moodTrackerHashedId: string) => `/mood-trackers/${moodTrackerHashedId}/bases`,
+  DELETE_REPORT: (moodTrackerHashedId: string) => `/mood-trackers/${moodTrackerHashedId}`,
 } as const;
 
 export const TEAM_MOOD_TRACKER_PAGE_ROUTES = {

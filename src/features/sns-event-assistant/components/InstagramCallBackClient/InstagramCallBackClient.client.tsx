@@ -36,7 +36,7 @@ const InstagramCallBackClient = () => {
     if (!code) {
       // workspaceId 조건은 위에서 이미 확인했으므로 제거 가능
       console.error('인증 코드가 없습니다.');
-      router.push(ROUTES.ONBOARDING);
+      router.push(ROUTES.MODAL.SETTING.WORKSPACE_SETTING(workspaceId));
       return;
     }
 
@@ -54,7 +54,7 @@ const InstagramCallBackClient = () => {
             snsAccount: data.instagramAccountName,
           });
           // 3. 온보딩 페이지로 복귀
-          router.push(ROUTES.PROFILE.WORKSPACE_SETTING(workspaceId));
+          router.push(ROUTES.MODAL.SETTING.WORKSPACE_SETTING(workspaceId));
         },
       },
     );

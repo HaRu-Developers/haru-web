@@ -23,7 +23,7 @@ const FooterButtons = () => {
   return (
     <div className="flex w-full items-center justify-between">
       <Link
-        href={ROUTES.MODAL.SETTING.BASE(workspaceId)}
+        href={ROUTES.MODAL.SETTING.PROFILE_SETTING(workspaceId)}
         className="border-stroke-200 gap-3pxr rounded-7pxr flex h-7 items-center justify-center border border-solid bg-white px-2 py-1.5"
       >
         <ProfileDropdownIcons state={ProfileDropdownIconsState.PROFILE} />

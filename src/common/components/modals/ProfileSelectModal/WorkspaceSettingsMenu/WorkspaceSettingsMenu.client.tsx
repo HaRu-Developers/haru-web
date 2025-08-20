@@ -70,7 +70,7 @@ const WorkspaceSettingsMenu = ({ workspaceId }: WorkspaceSettingsMenuProps) => {
     const clientId = process.env.NEXT_PUBLIC_INSTAGRAM_CLIENT_ID;
 
     // 2. 리디렉션 URI
-    const redirectUri = `${window.location.origin}${ROUTES.PROFILE.INSTAGRAM_CALLBACK}`;
+    const redirectUri = `${window.location.origin}${ROUTES.MODAL.SETTING.INSTAGRAM_CALLBACK}`;
 
     // 3. 인스타그램에 요청할 권한 범위 설정
     const scope =

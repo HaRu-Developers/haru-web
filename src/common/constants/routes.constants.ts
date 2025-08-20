@@ -52,15 +52,6 @@ export const ROUTES = {
       `/workspace/${workspaceId}/team-mood-tracker/create?title=${data.title}&description=${data.description}&dueDate=${data.dueDate.toISOString()}&visibility=${data.visibility}`,
   },
   CALENDAR: (workspaceId: BigintString) => `/workspace/${workspaceId}/calendar`,
-  PROFILE: {
-    BASE: (workspaceId: BigintString) => `/workspace/${workspaceId}/settings`,
-    WORKSPACE_SETTING: (workspaceId: BigintString) =>
-      `/workspace/${workspaceId}/settings?tab=workspace`,
-    PROFILE_SETTING: (workspaceId: BigintString) =>
-      `/workspace/${workspaceId}/profile/?tab=profile`,
-    INSTAGRAM_CALLBACK: (workspaceId: BigintString) =>
-      `/workspace/${workspaceId}/settings/instagram-callback`,
-  },
 
   // 각 문서 타입에 따른 상세 경로를 생성하는 함수 맵(Map)
   DETAIL_DOCUMENTS_DEFAULT: {
@@ -114,6 +105,12 @@ export const ROUTES = {
       BASE: (workspaceId: BigintString) => {
         return `/workspace/${workspaceId}/settings`;
       },
+      WORKSPACE_SETTING: (workspaceId: BigintString) =>
+        `/workspace/${workspaceId}/settings?tab=workspace`,
+      PROFILE_SETTING: (workspaceId: BigintString) =>
+        `/workspace/${workspaceId}/settings?tab=profile`,
+      INSTAGRAM_CALLBACK: (workspaceId: BigintString) =>
+        `/workspace/${workspaceId}/settings/instagram-callback`,
       PASSWORD_CHANGE: (workspaceId: BigintString) => {
         return `/workspace/${workspaceId}/settings/change-password`;
       },

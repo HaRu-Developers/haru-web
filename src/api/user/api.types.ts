@@ -11,3 +11,11 @@ export interface fetchUpdateUserResquestDto {
 }
 
 export type fetchUserResponseDto = User;
+
+export interface PasswordCheckRequestDto {
+  requestPassword: string;
+}
+
+export interface PasswordCheckResponseDto {
+  isMatched: boolean;
+}

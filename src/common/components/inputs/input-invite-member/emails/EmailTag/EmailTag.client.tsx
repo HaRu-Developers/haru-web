@@ -20,7 +20,7 @@ const EmailTag = ({ value, emails = [], state = 0, onClick }: EmailTagProps) => 
   return (
     <div
       className={clsx(
-        'border-stroke-200 shadow-dropdown-popup rounded-8pxr flex flex-col items-start gap-2.5 self-stretch border px-1 py-1.5',
+        'border-stroke-200 shadow-dropdown-popup rounded-8pxr flex flex-col items-start gap-2.5 self-stretch border bg-white px-1 py-1.5',
       )}
     >
       <div

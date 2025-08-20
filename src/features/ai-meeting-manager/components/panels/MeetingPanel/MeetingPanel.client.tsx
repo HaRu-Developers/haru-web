@@ -75,7 +75,6 @@ const MeetingPanel = ({ pageType, leftTab }: MeetingPanelProps) => {
     isEnding,
     pauseStreaming,
     resumeStreaming,
-    isLoading,
   } = useMeetingSocket({
     workspaceId,
     meetingId,
@@ -109,8 +108,6 @@ const MeetingPanel = ({ pageType, leftTab }: MeetingPanelProps) => {
     // 선택 - 닫으면서 EndMeetingModal 다시 열기
     openEndMeetingModal();
   };
-
-  console.log(isLoading);
 
   return (
     <>

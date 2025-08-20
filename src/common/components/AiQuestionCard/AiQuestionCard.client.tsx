@@ -36,7 +36,7 @@ const AiQuestionCard = ({ aiRecommendQuestion, userAnswer, segmentId }: AiQuesti
         <div className="text-t6-sb text-black">{aiRecommendQuestion}</div>
       </div>
 
-      <div className="text-cap2-rg rounded-3pxr py-5pxr ml-9 overflow-hidden bg-gray-600 px-2 text-ellipsis whitespace-nowrap text-gray-200">
+      <div className="text-cap2-rg rounded-3pxr py-5pxr ml-9 truncate bg-gray-600 px-2 text-gray-200">
         {userAnswer}
       </div>
     </div>

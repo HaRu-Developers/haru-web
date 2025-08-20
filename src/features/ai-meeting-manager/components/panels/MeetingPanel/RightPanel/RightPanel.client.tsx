@@ -4,9 +4,12 @@ import AiQuestionIcons from '@icons/AiQuestionIcons/AiQuestionIcons';
 import { AiQuestionIconsState } from '@icons/AiQuestionIcons/AiQuestionIcons.types';
 
 import AiQuestionCard from '@common/components/AiQuestionCard/AiQuestionCard.client';
+import AiQuestionCardSkeleton from '@common/components/AiQuestionCard/AiQuestionCardSkeleton.client';
 import CategoryOption from '@common/components/CategoryOption/CategoryOption.client';
 
 import { UiQuestion } from '@features/ai-meeting-manager/types/meeting.types';
+
+import { useSpeechQuestionInfo } from '@features/ai-meeting-manager/hooks/stores/useSpeechQuestionStore';
 
 import { RightTabLabels } from './RightPanel.constants';
 import { RightTabType } from './RightPanel.types';
@@ -22,6 +25,7 @@ const RightPanel = ({
   //   questionsForUI,
   //   speechTextById,
   // });
+  const { isFetching } = useSpeechQuestionInfo();
   const hasRecommandQuestion = questionsForUI.length > 0;
 
   const label = hasRecommandQuestion
@@ -56,6 +60,7 @@ const RightPanel = ({
             ))}
           </div>
         )}
+        {isFetching && <AiQuestionCardSkeleton />}
       </div>
     </section>
   );

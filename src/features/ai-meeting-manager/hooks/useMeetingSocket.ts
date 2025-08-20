@@ -16,17 +16,19 @@ import { Question, Speech, WsInbound } from '../types/meeting.types';
 import { type MicController, startMicAndPipeToWebSocket } from '../utils/capture-and-send.utils';
 import { ensureQuestionObjects, mergeQuestions } from '../utils/meeting-format.utils';
 import { useMeetingModalActions } from './stores/useMeetingModalStore';
+import { useSpeechQuestionActions } from './stores/useSpeechQuestionStore';
+import useLevelFetching from './useLevelFetching';
 
 /**
  * 훅 param 타입
  */
-type UseMeetingSocketParams = {
+interface UseMeetingSocketParams {
   workspaceId: string;
   meetingId: string;
   initialTranscripts?: Speech[]; // 초기 발화,질문 데이터
   onMicStream?: React.Dispatch<React.SetStateAction<MediaStream | null>>; // 마이크 스트림을 UI에 전달
   sendAudio?: boolean; // 오디오 업스트림 전송 여부
-};
+}
 
 const useMeetingSocket = ({
   workspaceId,
@@ -36,6 +38,7 @@ const useMeetingSocket = ({
   sendAudio = true,
 }: UseMeetingSocketParams) => {
   const router = useRouter();
+  const { setIsFetching } = useSpeechQuestionActions();
   const { addToast } = useToastActions();
   const { openEndMeetingModal, openMmLoadingModal, closeEndMeetingModal, closeMmLoadingModal } =
     useMeetingModalActions();
@@ -43,6 +46,8 @@ const useMeetingSocket = ({
   // ===== 상태
   const [speeches, setSpeeches] = useState<Speech[]>(() => initialTranscripts);
   const [connected, setConnected] = useState(false);
+  // 레벨 감지용 micStream state
+  const [levelStream, setLevelStream] = useState<MediaStream | null>(null);
 
   // ===== refs
   // segmentId → 배열 인덱스 매핑
@@ -204,6 +209,8 @@ const useMeetingSocket = ({
         // 2) 로컬 자원 정리
         try {
           await micCtlRef.current?.stop();
+          // 레벨 감지용 state 업데이트
+          setLevelStream(null);
         } catch {
           void 0;
         }
@@ -281,6 +288,7 @@ const useMeetingSocket = ({
               if (stream && onMicStream) {
                 onMicStream(stream);
               }
+              setLevelStream(stream); // 마이크 준비됨 트리거
             }
             resolve();
           } catch (e) {
@@ -330,6 +338,9 @@ const useMeetingSocket = ({
 
   const isPaused = useCallback(() => micCtlRef.current?.isPaused() ?? false, []);
 
+  // ===== 음량 감지 (isFetching 계산)
+  useLevelFetching({ micStream: levelStream, isPaused, setIsFetching });
+
   // ===== 회의 종료
   // 모달 열기
   const onOpenEndMeetingModal = useCallback(async () => {
@@ -366,6 +377,7 @@ const useMeetingSocket = ({
 
     try {
       await micCtlRef.current?.stop();
+      setLevelStream(null);
     } catch {
       void 0;
     }
@@ -407,6 +419,7 @@ const useMeetingSocket = ({
       (async () => {
         try {
           await micCtlRef.current?.stop();
+          setLevelStream(null);
         } catch {
           void 0;
         }
@@ -420,50 +433,6 @@ const useMeetingSocket = ({
     }
   }, [onMicStream, sendAudio]);
 
-  // ===== 음량 감지 (isLoading 계산)
-  const [voiceDetected, setVoiceDetected] = useState(false);
-  const isLoading = !isPaused() && voiceDetected;
-
-  useEffect(() => {
-    const stream = micCtlRef.current?.getStream?.();
-    if (!stream) return;
-
-    console.log(voiceDetected);
-
-    const ac = new AudioContext();
-    const src = ac.createMediaStreamSource(stream);
-    const analyser = ac.createAnalyser();
-    analyser.fftSize = 256;
-    src.connect(analyser);
-
-    const data = new Uint8Array(analyser.fftSize);
-    let rafId = 0;
-
-    const tick = () => {
-      analyser.getByteTimeDomainData(data);
-      let sum = 0;
-      for (let i = 0; i < data.length; i++) {
-        const v = data[i] - 128;
-        sum += v * v;
-      }
-      const rms = Math.sqrt(sum / data.length);
-      setVoiceDetected(rms > 5); // 필요시 튜닝
-      rafId = requestAnimationFrame(tick);
-    };
-    tick();
-
-    return () => {
-      cancelAnimationFrame(rafId);
-      try {
-        src.disconnect();
-        analyser.disconnect();
-        ac.close();
-      } catch {
-        void 0;
-      }
-    };
-  }, [connected, voiceDetected]);
-
   // ===== 언마운트 정리
   useEffect(() => {
     return () => {
@@ -475,6 +444,7 @@ const useMeetingSocket = ({
       wsRef.current = null;
       try {
         micCtlRef.current?.stop();
+        setLevelStream(null); // 레벨 감지 중단 트리거
       } catch {
         void 0;
       }
@@ -493,7 +463,6 @@ const useMeetingSocket = ({
     onOpenEndMeetingModal,
     endMeeting,
     cancelEndMeeting,
-    isLoading,
   };
 };
 

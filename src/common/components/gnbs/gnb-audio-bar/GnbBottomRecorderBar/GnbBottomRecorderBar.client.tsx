@@ -18,13 +18,13 @@ const GnbBottomRecorderBar = ({
   isEnding,
   isPaused,
   connect,
-  endMeeting,
-  pauseStreaming,
-  resumeStreaming,
+  onOpenEndMeetingModal,
 }: GnbBottomRecorderBarProps) => {
   const recorderWsRef = useRef<WaveSurfer | null>(null);
   const recorderPluginRef = useRef<RecordPlugin | null>(null);
   const recorderContainerRef = useRef<HTMLDivElement | null>(null);
+  // 왜 멈췄는지 추적: 일반 일시정지 vs 종료 확인
+  const pauseCauseRef = useRef<'none' | 'user-pause' | 'ending-confirm'>('none');
 
   const [hasStartedRecording, setHasStartedRecording] = useState<boolean>(false);
   const [isRecording, setIsRecording] = useState<boolean>(false);
@@ -70,7 +70,7 @@ const GnbBottomRecorderBar = ({
     );
 
     recorderPlugin.on('record-end', () => {
-      endMeeting();
+      // 서버/브라우저의 강제 종료 케이스
       setIsRecording(false);
     });
 
@@ -79,14 +79,12 @@ const GnbBottomRecorderBar = ({
     });
 
     recorderPlugin.on('record-resume', () => {
-      console.log('Recording resumed');
-      resumeStreaming();
+      pauseCauseRef.current = 'none'; // 원인 무관
       setIsRecording(true);
     });
 
     recorderPlugin.on('record-pause', () => {
-      console.log('Recording paused');
-      pauseStreaming();
+      // pause는 원인을 유지해 둠
       setIsRecording(false);
     });
 
@@ -94,7 +92,7 @@ const GnbBottomRecorderBar = ({
     recorderPluginRef.current = recorderPlugin;
 
     // console.log('Wavesurfer and RecordPlugin initialized');
-  }, [endMeeting, pauseStreaming, resumeStreaming]);
+  }, []);
 
   // 일시정지/재개
   const handleRecordResumePause = useCallback(() => {
@@ -104,8 +102,11 @@ const GnbBottomRecorderBar = ({
     }
 
     if (isPaused()) {
+      // 재생
       recorderPluginRef.current.resumeRecording();
     } else {
+      // 일시정지
+      pauseCauseRef.current = 'user-pause'; // 일반 일시정지 원인
       recorderPluginRef.current.pauseRecording();
     }
   }, [isPaused]);
@@ -130,14 +131,27 @@ const GnbBottomRecorderBar = ({
   }, [connect]);
 
   // 종료
-  const handleEndRecording = useCallback(() => {
+  const handleEndRecording = useCallback(async () => {
     if (!recorderPluginRef.current) {
       // console.error('[ERR] Recorder plugin is not initialized.');
       return;
     }
 
-    recorderPluginRef.current.stopRecording();
-  }, []);
+    // 먼저 녹음을 잠시 멈추고(무음 전송 방지) 원인을 'ending-confirm'로 표시
+    pauseCauseRef.current = 'ending-confirm'; // 종료 확인 플로우
+    try {
+      recorderPluginRef.current.pauseRecording();
+    } catch {
+      void 0;
+    }
+
+    // 종료 확인 모달 열기 (취소 시 외부에서 resume 이벤트를 쏴줌)
+    try {
+      await onOpenEndMeetingModal();
+    } catch {
+      void 0;
+    }
+  }, [onOpenEndMeetingModal]);
 
   useEffect(() => {
     // 마운트 시 initializeWavesurfer() 1회만 생성
@@ -168,26 +182,34 @@ const GnbBottomRecorderBar = ({
     }
   }, [micStream]);
 
-  // recorder:resume, pause 이벤트 발생시 다시 플레이 or 멈춤
-  // recorder:resume, recorder:pause 수신
+  // 외부 이벤트에 반응
   useEffect(() => {
-    const onExternalEvent = async () => {
-      if (!hasStartedRecording || !recorderPluginRef.current) return;
+    const onExternalEvent = (e: Event) => {
+      if (!recorderPluginRef.current) return;
+      const action = (e as CustomEvent)?.detail?.action as 'pause' | 'resume' | undefined;
+
       try {
-        if (isPaused()) {
-          recorderPluginRef.current.resumeRecording();
-        } else {
-          recorderPluginRef.current.pauseRecording();
+        if (action === 'pause') {
+          pauseCauseRef.current =
+            pauseCauseRef.current === 'none' ? 'user-pause' : pauseCauseRef.current;
+          recorderPluginRef.current.pauseRecording(); // Wavesurfer 녹음 멈춤
+          setIsRecording(false);
+          return;
         }
-      } catch (e) {
-        console.error('onExternalEvent', e);
+        if (action === 'resume') {
+          pauseCauseRef.current = 'none';
+          recorderPluginRef.current.resumeRecording(); // Wavesurfer 녹음 재개
+          setIsRecording(true);
+          return;
+        }
+      } catch (err) {
+        console.error('recorder event error', err);
       }
     };
-    window.addEventListener('recorder', onExternalEvent);
-    return () => {
-      window.removeEventListener('recorder', onExternalEvent);
-    };
-  }, [hasStartedRecording, isRecording, isPaused]);
+
+    window.addEventListener('recorder', onExternalEvent as EventListener);
+    return () => window.removeEventListener('recorder', onExternalEvent as EventListener);
+  }, []);
 
   return (
     <div className="w-656pxr h-68pxr rounded-100pxr border-stroke-200/70 px-16pxr flex flex-row items-center border bg-white">

@@ -2,9 +2,13 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
+import { useRouter } from 'next/navigation';
+
 import useEndMeetingMinutes from '@api/meeting/post/mutations/useEndMeetingMinutes';
 
 import { ToastType } from '@common/types/toast.types';
+
+import { ROUTES } from '@common/constants/routes.constants';
 
 import { useToastActions } from '@common/hooks/stores/useToastStore';
 
@@ -31,35 +35,41 @@ const useMeetingSocket = ({
   onMicStream,
   sendAudio = true,
 }: UseMeetingSocketParams) => {
+  const router = useRouter();
   const { addToast } = useToastActions();
   const { openEndMeetingModal, openMmLoadingModal, closeEndMeetingModal, closeMmLoadingModal } =
     useMeetingModalActions();
 
+  // ===== 상태
+  const [speeches, setSpeeches] = useState<Speech[]>(() => initialTranscripts);
+  const [connected, setConnected] = useState(false);
+
+  // ===== refs
   // segmentId → 배열 인덱스 매핑
   const indexMapRef = useRef(new Map<number, number>());
-
-  // WS URL memo
-  const wsUrl = useMemo(
-    () => `${process.env.NEXT_PUBLIC_WEB_SOCKET_URL}/${meetingId}`,
-    [meetingId],
-  );
-  // const wsUrl = useMemo(() => `${process.env.NEXT_PUBLIC_WEB_SOCKET_URL}`, []);
-
-  // 연결 상태 변수
-  const isOpenOrConnecting = (ws?: WebSocket | null) =>
-    !!ws && (ws.readyState === WebSocket.OPEN || ws.readyState === WebSocket.CONNECTING);
-  const isConnectingRef = useRef(false);
-  const [connected, setConnected] = useState(false);
   const wsRef = useRef<WebSocket | null>(null);
   const micCtlRef = useRef<MicController | null>(null);
+  const isConnectingRef = useRef(false);
+
+  // 회의 종료 뮤테이션
   const { mutateAsync: endMeetingMutate, isPending: isEnding } = useEndMeetingMinutes(
     workspaceId,
     meetingId,
   );
 
-  const [speeches, setSpeeches] = useState<Speech[]>(() => initialTranscripts);
+  // ===== 유틸
+  // WS URL memo
+  const wsUrl = useMemo(
+    () => `${process.env.NEXT_PUBLIC_WEB_SOCKET_URL}/${meetingId}`,
+    [meetingId],
+  );
+  // const wsUrl = useMemo(() => `${process.env.NEXT_PUBLIC_WEB_SOCKET_URL}`, []); // 테스트용
 
-  // ---- 초기 transcripts 병합
+  // 연결 상태 변수
+  const isOpenOrConnecting = (ws?: WebSocket | null) =>
+    !!ws && (ws.readyState === WebSocket.OPEN || ws.readyState === WebSocket.CONNECTING);
+
+  // ===== 초기 transcripts 병합
   // 초기/리셋 시
   useEffect(() => {
     // 맵 재구성
@@ -75,9 +85,12 @@ const useMeetingSocket = ({
       for (const s of initialTranscripts) if (!seen.has(s.segmentId)) merged.push(s);
       return merged;
     });
-  }, [meetingId, initialTranscripts]);
 
-  // ---- 상태 업데이트 도우미들
+    // confirm 모달 닫음 보장
+    closeEndMeetingModal();
+  }, [meetingId, initialTranscripts, closeEndMeetingModal]);
+
+  // ===== 상태 업데이트 도우미들 - 서버 메시지 처리
   /**
    * utterance upsert
    */
@@ -114,7 +127,7 @@ const useMeetingSocket = ({
     });
   }, []);
 
-  // ---- 서버 메시지 파서(한 곳)
+  // 서버 메시지 파서
   const handleInbound = useCallback(
     (ev: MessageEvent) => {
       try {
@@ -166,7 +179,7 @@ const useMeetingSocket = ({
     [setQuestionsFor, upsertSpeech],
   );
 
-  // ---- 운영 핸들러(오픈 후 한 번만 세팅)
+  // ===== 런타임 핸들러(오픈 후 한 번만 세팅)
   const attachRuntimeHandlers = useCallback(
     (ws: WebSocket) => {
       ws.onmessage = handleInbound;
@@ -175,6 +188,20 @@ const useMeetingSocket = ({
       };
       ws.onclose = async (evt) => {
         setConnected(false);
+
+        // 1) 서버에 회의 종료 요청
+        try {
+          // confirm 모달 닫음
+          closeEndMeetingModal();
+          openMmLoadingModal(); // 호출 전에 열기
+          await endMeetingMutate({ meetingId });
+        } catch {
+          void 0;
+        } finally {
+          closeMmLoadingModal(); // 항상 닫기
+        }
+
+        // 2) 로컬 자원 정리
         try {
           await micCtlRef.current?.stop();
         } catch {
@@ -186,6 +213,13 @@ const useMeetingSocket = ({
         } catch {
           void 0;
         }
+        wsRef.current = null;
+        setSpeeches([]);
+
+        // 회의록 화면으로 이동
+        // 회의 화면으로 다시 못 가게 replace 사용
+        router.replace(ROUTES.AI_MEETING_MANAGER.MINUTES(workspaceId, meetingId));
+
         if (process.env.NODE_ENV !== 'production') {
           console.warn('[WS] close', {
             code: evt.code,
@@ -195,10 +229,21 @@ const useMeetingSocket = ({
         }
       };
     },
-    [addToast, handleInbound, onMicStream],
+    [
+      addToast,
+      handleInbound,
+      onMicStream,
+      closeEndMeetingModal,
+      endMeetingMutate,
+      meetingId,
+      openMmLoadingModal,
+      closeMmLoadingModal,
+      workspaceId,
+      router,
+    ],
   );
 
-  // connect - Promise 써서 열림 보장까지 resolve
+  // ===== connect - Promise 써서 열림 보장까지 resolve
   const connect = useCallback(
     () =>
       new Promise<void>((resolve, reject) => {
@@ -234,31 +279,7 @@ const useMeetingSocket = ({
               micCtlRef.current = await startMicAndPipeToWebSocket(ws);
               const stream = micCtlRef.current?.getStream?.();
               if (stream && onMicStream) {
-                // 라이브 있으면
-                const isLive = () => stream.getTracks().some((t) => t.readyState === 'live');
-                if (isLive()) onMicStream(stream);
-                else {
-                  const [track] = stream.getAudioTracks();
-                  if (track) {
-                    const onUnmute = () => {
-                      if (isLive()) onMicStream(stream);
-                      track.removeEventListener('unmute', onUnmute);
-                    };
-                    track.addEventListener('unmute', onUnmute, { once: true });
-                  }
-                }
-                // ended 감지 → UI에 알림(null)
-                for (const t of stream.getTracks()) {
-                  const onEnded = () => {
-                    try {
-                      onMicStream(null);
-                    } catch {
-                      void 0;
-                    }
-                    t.removeEventListener('ended', onEnded);
-                  };
-                  t.addEventListener('ended', onEnded);
-                }
+                onMicStream(stream);
               }
             }
             resolve();
@@ -294,83 +315,93 @@ const useMeetingSocket = ({
     [attachRuntimeHandlers, onMicStream, sendAudio, wsUrl],
   );
 
-  // --- 외부 ui에서 쓸 recording controls
+  // ===== 외부 ui에서 쓸 recording controls
   const pauseStreaming = useCallback(() => {
     if (!sendAudio) return;
-    micCtlRef.current?.pause();
+    micCtlRef.current?.pause(); // 전송만 멈춤(트랙은 유지)
     console.log('pauseStreaming');
   }, [sendAudio]);
+
   const resumeStreaming = useCallback(async () => {
     if (!sendAudio) return;
-    const ws = wsRef.current;
-    // WS 미오픈이면 그냥 리턴(외부에서 connect 먼저 호출하도록)
-    if (!ws || ws.readyState !== WebSocket.OPEN) return;
-    const current = micCtlRef.current;
-    const stream = current?.getStream?.();
-    const isLive = !!stream && stream.getTracks().some((t) => t.readyState === 'live');
-    if (!current || !isLive) {
-      // 마이크가 죽었으면 파이프라인 재시작
-      try {
-        await current?.stop();
-      } catch {
-        void 0;
-      }
-      micCtlRef.current = await startMicAndPipeToWebSocket(ws);
-      const newStream = micCtlRef.current?.getStream?.();
-      if (newStream && onMicStream) onMicStream(newStream);
-      return;
-    }
-    current.resume();
+    micCtlRef.current?.resume();
     console.log('resumeStreaming');
-  }, [onMicStream, sendAudio]);
+  }, [sendAudio]);
+
   const isPaused = useCallback(() => micCtlRef.current?.isPaused() ?? false, []);
 
-  // ---- 회의 종료
+  // ===== 회의 종료
   // 모달 열기
   const onOpenEndMeetingModal = useCallback(async () => {
+    // 커스텀 이벤트 발생시켜 GnbLeftRecoderBar랑 동기화
+    window.dispatchEvent(new CustomEvent('recorder', { detail: { action: 'pause' } }));
     try {
-      window.dispatchEvent(new CustomEvent('recorder'));
+      pauseStreaming(); // 모달 열릴 때 전송 일시정지
       // endmeetingModal 열기
       openEndMeetingModal();
     } catch (e) {
       console.error(e);
     }
-  }, [openEndMeetingModal]);
+  }, [pauseStreaming, openEndMeetingModal]);
 
   // 모달에서 확인 눌렀을때
   const endMeeting = useCallback(async () => {
-    // 서버에 종료 요청 → 서버가 WS 닫음
-    await endMeetingMutate({ meetingId });
-    // 회의록 생성 로딩 모달 열기
-    // isEnding일 동안에만
-    if (isEnding) {
-      openMmLoadingModal();
-    } else closeMmLoadingModal();
-
-    // 회의록 생성 모달도 닫음
+    // confirm 모달 닫음
     closeEndMeetingModal();
 
+    try {
+      openMmLoadingModal();
+      // 서버에 종료 요청 → 서버가 WS 닫음
+      await endMeetingMutate({ meetingId });
+    } finally {
+      closeMmLoadingModal();
+    }
+
+    try {
+      wsRef.current?.close(1000, 'ended-by-user');
+    } catch {
+      void 0;
+    }
     wsRef.current = null;
+
+    try {
+      await micCtlRef.current?.stop();
+    } catch {
+      void 0;
+    }
+    micCtlRef.current = null;
+    try {
+      onMicStream?.(null);
+    } catch {
+      void 0;
+    }
 
     setConnected(false);
     setSpeeches([]);
+
+    // 회의록 화면으로 이동
+    // 회의 화면으로 다시 못 가게 replace 사용
+    router.replace(ROUTES.AI_MEETING_MANAGER.MINUTES(workspaceId, meetingId));
   }, [
     meetingId,
-    isEnding,
     endMeetingMutate,
     openMmLoadingModal,
     closeMmLoadingModal,
     closeEndMeetingModal,
+    onMicStream,
+    router,
+    workspaceId,
   ]);
 
   // 모달에서 취소 눌렀을때
   const cancelEndMeeting = useCallback(async () => {
-    // UI(RecordPlugin)에게 재개 지시
-    window.dispatchEvent(new CustomEvent('recorder'));
+    // 커스텀 이벤트 발생시켜 GnbLeftRecoderBar랑 동기화
+    window.dispatchEvent(new CustomEvent('recorder', { detail: { action: 'resume' } }));
+    resumeStreaming();
     closeEndMeetingModal();
-  }, [closeEndMeetingModal]);
+  }, [resumeStreaming, closeEndMeetingModal]);
 
-  // ---- sendAudio가 꺼질 때 즉시 업스트림 중단 및 UI 동기화
+  // ===== sendAudio가 꺼질 때 즉시 업스트림 중단 및 UI 동기화
   useEffect(() => {
     if (!sendAudio && micCtlRef.current) {
       (async () => {
@@ -389,7 +420,51 @@ const useMeetingSocket = ({
     }
   }, [onMicStream, sendAudio]);
 
-  // ---- 언마운트 정리
+  // ===== 음량 감지 (isLoading 계산)
+  const [voiceDetected, setVoiceDetected] = useState(false);
+  const isLoading = !isPaused() && voiceDetected;
+
+  useEffect(() => {
+    const stream = micCtlRef.current?.getStream?.();
+    if (!stream) return;
+
+    console.log(voiceDetected);
+
+    const ac = new AudioContext();
+    const src = ac.createMediaStreamSource(stream);
+    const analyser = ac.createAnalyser();
+    analyser.fftSize = 256;
+    src.connect(analyser);
+
+    const data = new Uint8Array(analyser.fftSize);
+    let rafId = 0;
+
+    const tick = () => {
+      analyser.getByteTimeDomainData(data);
+      let sum = 0;
+      for (let i = 0; i < data.length; i++) {
+        const v = data[i] - 128;
+        sum += v * v;
+      }
+      const rms = Math.sqrt(sum / data.length);
+      setVoiceDetected(rms > 5); // 필요시 튜닝
+      rafId = requestAnimationFrame(tick);
+    };
+    tick();
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      try {
+        src.disconnect();
+        analyser.disconnect();
+        ac.close();
+      } catch {
+        void 0;
+      }
+    };
+  }, [connected, voiceDetected]);
+
+  // ===== 언마운트 정리
   useEffect(() => {
     return () => {
       try {
@@ -418,6 +493,7 @@ const useMeetingSocket = ({
     onOpenEndMeetingModal,
     endMeeting,
     cancelEndMeeting,
+    isLoading,
   };
 };
 

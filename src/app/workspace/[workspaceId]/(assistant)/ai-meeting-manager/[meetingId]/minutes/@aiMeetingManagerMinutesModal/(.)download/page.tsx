@@ -18,7 +18,6 @@ import useDownloadDocument from '@common/hooks/useDownloadDocument';
 
 import ModalLayout from '@common/components/layouts/ModalLayout/ModalLayout.client';
 import DownloadModal from '@common/components/modals/DownloadModal/DownloadModal.client';
-import ProgressModal from '@common/components/modals/ProgressModal/ProgressModal.client';
 
 const DownloadMeetingMinutesModalPage = () => {
   const router = useRouter();

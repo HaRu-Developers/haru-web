@@ -10,6 +10,8 @@ import { SpeechPanelProps } from './SpeechPanel.types';
 const SpeechPanel = ({ speeches, pageType, meetingStartTime }: SpeechPanelProps) => {
   const isMeetingPage = pageType === AiMeetingPageType.MEETING;
 
+  const noSpeeches = !isMeetingPage && speeches.length === 0;
+
   return (
     <div
       className={clsx(
@@ -19,17 +21,21 @@ const SpeechPanel = ({ speeches, pageType, meetingStartTime }: SpeechPanelProps)
           : 'pt-10pxr h-[calc(100dvh_-_var(--gnb-top-height)_-_var(--meeting-header-height)_-_var(--tab-height))]',
       )}
     >
-      {speeches.map((sp) => (
-        <SpeechItem
-          key={sp.segmentId}
-          speechId={sp.segmentId}
-          text={sp.text}
-          speakerId={sp.speakerId}
-          questions={sp.aiQuestions}
-          startTime={sp.startTime}
-          meetingStartTime={meetingStartTime}
-        />
-      ))}
+      {noSpeeches ? (
+        <p className="px-28pxr py-18pxr text-b2-rg text-gray-300">회의 음성 기록이 없습니다.</p>
+      ) : (
+        speeches.map((sp) => (
+          <SpeechItem
+            key={sp.segmentId}
+            speechId={sp.segmentId}
+            text={sp.text}
+            speakerId={sp.speakerId}
+            questions={sp.aiQuestions}
+            startTime={sp.startTime}
+            meetingStartTime={meetingStartTime}
+          />
+        ))
+      )}
     </div>
   );
 };

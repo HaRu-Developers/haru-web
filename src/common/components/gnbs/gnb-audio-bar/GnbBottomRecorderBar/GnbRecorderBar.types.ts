@@ -3,7 +3,7 @@ export interface GnbBottomRecorderBarProps {
   isEnding: boolean;
   isPaused: () => boolean;
   connect: () => Promise<void>;
-  endMeeting: () => Promise<void>;
+  onOpenEndMeetingModal: () => Promise<void>;
   pauseStreaming: () => void;
   resumeStreaming: () => void;
 }

@@ -1,9 +1,10 @@
 'use client';
 
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { useRouter } from 'next/navigation';
 
+import { useInviteMembersMutation } from '@api/on-boarding/post/mutations/useInviteMemberMutation';
 import useInstagram from '@api/sns-event-assistant/get/queries/useInstagram';
 import useFetchWorkspaceDetail from '@api/workspace/get/queries/useFetchWorkspaceDetail';
 import useEditWorkspaceDetail from '@api/workspace/patch/mutations/useEditWorkspaceDetail';
@@ -39,12 +40,15 @@ const WorkspaceSettingsMenu = ({ workspaceId }: WorkspaceSettingsMenuProps) => {
   const { title: workspaceTitle, imageUrl, members } = useWorkspaceInfo();
   const { mutate: editWorkspaceDetail } = useEditWorkspaceDetail(workspaceId);
   const [title, setTitle] = useState<string>(workspaceExtra?.title ?? workspaceTitle); // 워크스페이스 수정하고 바로 반영하지 않기 위해 사용
-  const { addToast } = useToastActions();
-  const { setTitle: setWorkspaceTitle, setImageUrl } = useWorkspaceActions();
+  const { setTitle: setWorkspaceTitle, setImageUrl, setMembers } = useWorkspaceActions();
   const { extra: instagram } = useInstagram(workspaceId);
+  const { addToast } = useToastActions();
+  const { mutate: inviteMembers } = useInviteMembersMutation();
+
   const handleAddWorkspace = () => {
     router.push(ROUTES.ONBOARDING);
   };
+
   const handleSave = useCallback(() => {
     // 서버에 프로필 수정 요청 api
     editWorkspaceDetail(
@@ -104,12 +108,44 @@ const WorkspaceSettingsMenu = ({ workspaceId }: WorkspaceSettingsMenuProps) => {
   const handleInvite = (emails: string[]) => {
     // 초대 버튼 클릭 시 호출 됩니다. -> 이메일 목록 반환
     // 이메일 목록은 여기서 반환되고 기존 이메일 목록은 제거됩니다.
-    console.log('초대할 이메일 목록:', emails);
+    if (!workspaceId) {
+      return;
+    }
+
+    inviteMembers(
+      {
+        workspaceId,
+        emails,
+      },
+      {
+        onSuccess: () => {
+          addToast({
+            text: '팀원이 성공적으로 초대되었습니다.',
+            type: ToastType.SUCCESS,
+            duration: 2000,
+          });
+        },
+        onError: () => {
+          addToast({
+            text: '팀원 초대에 실패했습니다.',
+            type: ToastType.ERROR,
+            duration: 2000,
+          });
+        },
+      },
+    );
   };
   const handleClickWorkspaceImage = () => {
     console.log('워크스페이스 프로필 이미지 클릭');
   };
 
+  useEffect(() => {
+    if (workspaceExtra) {
+      setTitle(workspaceExtra.title);
+      setImageUrl(workspaceExtra.imageUrl);
+      setMembers(workspaceExtra.members || []);
+    }
+  }, [workspaceExtra, setImageUrl, setMembers]);
   return (
     <div className="px-35pxr py-24pxr scrollbar-component gap-y-24pxr flex h-full w-full flex-col overflow-y-auto">
       <CommonText type={CommonTextType.T4_BD_BLACK} text="워크스페이스 기본 정보" />
@@ -168,10 +204,7 @@ const WorkspaceSettingsMenu = ({ workspaceId }: WorkspaceSettingsMenuProps) => {
 
         {/* 팀원 목록 */}
         <div className="gap-y-8pxr mt-16pxr flex flex-col">
-          <CommonText
-            type={CommonTextType.CAP1_RG_GRAY_200}
-            text={`${workspaceTitle} 워크스페이스 팀원`}
-          />
+          <CommonText type={CommonTextType.CAP1_RG_GRAY_200} text={`${title} 워크스페이스 팀원`} />
 
           {/* 팀원 카드 컴포넌트 */}
           <div className="gap-8pxr flex flex-row flex-wrap">

@@ -9,8 +9,6 @@ import { CrossIconsState } from '@icons/CrossIcons/CrossIcons.types';
 
 import useLogout from '@api/user/hooks/mutations/useLogout';
 
-import { ROUTES } from '@common/constants/routes.constants';
-
 import { useUserActions } from '@common/hooks/stores/useUserStore';
 
 import useFetchUserDetail from '@/api/user/get/queries/useFetchUserDetail';

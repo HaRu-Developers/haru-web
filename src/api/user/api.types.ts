@@ -19,3 +19,9 @@ export interface PasswordCheckRequestDto {
 export interface PasswordCheckResponseDto {
   isMatched: boolean;
 }
+
+export interface UserListFromEmailRequestDto {
+  email: string;
+}
+
+export type UserListFromEmailResponseDto = User[];

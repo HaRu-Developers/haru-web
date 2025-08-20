@@ -60,6 +60,7 @@ const queryKeys = createQueryKeyStore({
     userInfo: null, // TODO: ??
     // 매개변수가 있는 키는 함수로 정의합니다.
     detail: () => ['user', 'detail'],
+    email: (email: string) => ['user', 'email', email],
     edit: () => ['user', 'edit'],
   },
 

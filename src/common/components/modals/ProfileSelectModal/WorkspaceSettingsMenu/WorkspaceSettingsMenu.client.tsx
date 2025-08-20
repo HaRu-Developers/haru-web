@@ -2,10 +2,8 @@
 
 import { useCallback, useState } from 'react';
 
-import { useRouter } from 'next/navigation';
-
-import { useLinkInstagramMutation } from '@api/on-boarding/post/mutations/useLinkInstagramMutation';
 import useInstagram from '@api/sns-event-assistant/get/queries/useInstagram';
+import useFetchWorkspaceDetail from '@api/workspace/get/queries/useFetchWorkspaceDetail';
 import useEditWorkspaceDetail from '@api/workspace/patch/mutations/useEditWorkspaceDetail';
 
 import { ToastType } from '@common/types/toast.types';
@@ -34,9 +32,10 @@ const WorkspaceSettingsMenu = ({ workspaceId }: WorkspaceSettingsMenuProps) => {
   const [value, setValue] = useState<string>('');
   const [emails, setEmails] = useState<string[]>([]);
   const [image, setImage] = useState<File>(); // 워크스페이스 프로필 이미지 변경 시 사용
+  const { extra: workspaceExtra } = useFetchWorkspaceDetail(workspaceId); // 워크스페이스 정보 가져오기
   const { title: workspaceTitle, imageUrl, members } = useWorkspaceInfo();
-  const { mutate: editWorkspaceDetail } = useEditWorkspaceDetail();
-  const [title, setTitle] = useState<string>(workspaceTitle || ''); // 워크스페이스 수정하고 바로 반영하지 않기 위해 사용
+  const { mutate: editWorkspaceDetail } = useEditWorkspaceDetail(workspaceId);
+  const [title, setTitle] = useState<string>(workspaceExtra?.title ?? workspaceTitle); // 워크스페이스 수정하고 바로 반영하지 않기 위해 사용
   const { addToast } = useToastActions();
   const { setTitle: setWorkspaceTitle, setImageUrl } = useWorkspaceActions();
   const { extra: instagram } = useInstagram(workspaceId);
@@ -116,8 +115,8 @@ const WorkspaceSettingsMenu = ({ workspaceId }: WorkspaceSettingsMenuProps) => {
         <div className="gap-y-8pxr flex flex-col">
           <CommonText type={CommonTextType.CAP1_RG_GRAY_300} text="워크스페이스 대표 사진" />
           <ChangableWorkspaceImage
-            title={workspaceTitle}
-            initialPreview={imageUrl}
+            title={title}
+            initialPreview={workspaceExtra?.imageUrl ?? imageUrl}
             onFileChange={(file) => setImage(file)}
           />
         </div>

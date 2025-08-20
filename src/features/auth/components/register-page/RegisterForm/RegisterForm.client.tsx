@@ -55,7 +55,7 @@ const RegisterForm = () => {
 
   const registerFormSchema = z
     .strictObject({
-      email: z.email('유효하지 않은 이메일 입니다.').refine(() => isAvailableEmail, {
+      email: z.email('유효하지 않은 이메일 입니다.').refine(() => isAvailableEmail !== false, {
         error: '이미 사용 중인 이메일 입니다.',
         path: ['duplicateEmail'],
       }),

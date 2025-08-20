@@ -300,6 +300,7 @@ interface BaseQuestionOnPost {
   /** 질문의 고유 ID */
   questionId: string;
 }
+
 /**
  * 경운 제작본 : 질문 유형(type)에 따라 구조가 달라지는 질문 객체 타입 (Discriminated Union)
  */
@@ -307,6 +308,7 @@ export type SurveyQuestionTypeOnPost =
   | (BaseQuestionOnPost & {
       /** 질문 유형: 객관식 */
       type: TeamMoodTrackerSurveyQuestionType.MULTIPLE_CHOICE;
+      // 객관식이라 단일 string 입니다
       multipleChoiceId: string;
     })
   | (BaseQuestionOnPost & {

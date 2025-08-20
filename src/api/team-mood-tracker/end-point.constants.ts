@@ -8,7 +8,7 @@ export const MOOD_TRACKER_API_ENDPOINTS = {
   CREATE_SURVEY: (workspaceId: string) => `mood-trackers/workspaces/${workspaceId}`,
   SEND_EMAIL: (moodTrackerHashedId: string) => `/mood-trackers/${moodTrackerHashedId}/emails`,
   SUBMIT_SURVEY: (moodTrackerHashedId: string) => `/mood-trackers/${moodTrackerHashedId}/answer`,
-  SURVEY_BASIC_INFO: (moodTrackerHashedId: string) => `/mood-trackers/${moodTrackerHashedId}`,
+  SURVEY_BASIC_INFO: (moodTrackerHashedId: string) => `/mood-trackers/${moodTrackerHashedId}/bases`,
 } as const;
 
 export const TEAM_MOOD_TRACKER_PAGE_ROUTES = {

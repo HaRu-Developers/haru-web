@@ -9,11 +9,14 @@ export const submitSurvey = async (data: {
   moodTrackerHashedId: string;
   surveyQuestion: SurveyQuestionTypeOnPost[];
 }) => {
+  const requestBody = {
+    answers: data.surveyQuestion,
+  };
   const response = await defaultApi<BaseResponseDto<object>>(
     MOOD_TRACKER_API_ENDPOINTS.SUBMIT_SURVEY(data.moodTrackerHashedId),
     {
       method: 'POST',
-      body: JSON.stringify(data.surveyQuestion),
+      body: JSON.stringify(requestBody),
       auth: true,
     },
   );

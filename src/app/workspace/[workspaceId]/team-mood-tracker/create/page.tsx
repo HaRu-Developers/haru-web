@@ -12,8 +12,8 @@ import { ROUTES } from '@common/constants/routes.constants';
 import FileCreatedInfo from '@common/components/FileCreatedInfo/FileCreatedInfo.client';
 import GnbTop from '@common/components/gnbs/GnbTop/GnbTop.client';
 import InputFileTitle from '@common/components/inputs/InputFileTitle/InputFileTitle.client';
-import InputSurvey from '@common/components/inputs/input-survey/InputSurvey/InputSurvey.client';
-import { SurveyVisibility } from '@common/components/inputs/input-survey/types/input-survey.common.types';
+import InputSurveyQuestion from '@common/components/inputs/input-survey/InputSurvey/InputSurvey.client';
+import { SurveySituation } from '@common/components/inputs/input-survey/types/input-survey.common.types';
 
 import WriteCompleteButton from '@buttons/30px/WriteCompleteButton/WriteCompleteButton.client';
 import AddQuestionButton from '@buttons/56px/AddQuestionButton/AddQuestionButton.client';
@@ -46,7 +46,7 @@ const CreateSurveyPage = () => {
       title: pageQuery.title,
       description: pageQuery.description,
       dueDate: pageQuery.dueDate,
-      visibility: pageQuery.visibility as SurveyVisibility, // PUBLIC 또는 PRIVATE
+      visibility: pageQuery.visibility as SurveySituation, // PUBLIC 또는 PRIVATE
       questions: transferQuestionListToApiFormat(questionList),
     };
 
@@ -105,7 +105,7 @@ const CreateSurveyPage = () => {
         {/*설문 문항들*/}
         <div className="gap-y-14pxr flex flex-col items-center">
           {questionList.map((question, index) => {
-            return <InputSurvey key={index} {...question} {...handlerSet(index)} />;
+            return <InputSurveyQuestion key={index} {...question} handlers={handlerSet(index)} />;
           })}
         </div>
       </div>

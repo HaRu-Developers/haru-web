@@ -3,10 +3,10 @@
 import { useViewSurveyQuestion } from '@api/team-mood-tracker/get/queries/useViewSurveyQuestion';
 
 import SurveyInfo from '@common/components/box-text/SurveyInfo/SurveyInfo.server';
-import InputSurvey from '@common/components/inputs/input-survey/InputSurvey/InputSurvey.client';
+import InputSurveyQuestion from '@common/components/inputs/input-survey/InputSurvey/InputSurvey.client';
 import {
   InputSurveyQuestionType,
-  SurveyVisibility,
+  SurveySituation,
 } from '@common/components/inputs/input-survey/types/input-survey.common.types';
 
 import { TeamMoodTrackerSurveyQuestionType } from '@features/team-mood-tracker/constants/question.constants';
@@ -53,12 +53,12 @@ const TeamMoodSurveyQuestionSection = ({
               break;
           }
           return (
-            <InputSurvey
+            <InputSurveyQuestion
               key={question.questionId}
-              title={question.questionTitle}
-              type={question.type as unknown as InputSurveyQuestionType}
-              options={options}
-              visibility={SurveyVisibility.PUBLIC}
+              questionTitle={question.questionTitle}
+              questionType={question.type as unknown as InputSurveyQuestionType}
+              multipleOrCheckboxOptions={options}
+              surveyComponentUsingSituation={SurveySituation.PUBLIC}
             />
           );
         })}

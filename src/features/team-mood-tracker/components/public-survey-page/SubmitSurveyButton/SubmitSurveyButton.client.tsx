@@ -10,8 +10,8 @@ const SubmitSurveyButton = ({ onClick, disabled }: ButtonsCommonProps) => {
       onClick={onClick}
       disabled={disabled}
       className={clsx(
-        'text-bt3-sb w-76pxr h-30pxr rounded-100pxr flex items-center justify-center bg-gray-600 text-black',
-        disabled ? 'bg-gray-100 text-white' : 'bg-gray-500 text-white',
+        'text-bt3-sb w-76pxr h-30pxr rounded-100pxr flex items-center justify-center',
+        disabled ? 'bg-gray-500 text-white' : 'bg-gray-100 text-white',
       )}
     >
       답변 제출

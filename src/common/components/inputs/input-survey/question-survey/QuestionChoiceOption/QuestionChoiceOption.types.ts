@@ -1,10 +1,10 @@
-import { SurveyVisibility } from '../../types/input-survey.common.types';
+import { SurveySituation } from '../../types/input-survey.common.types';
 
 export interface QuestionChoiceOptionProps {
   index: number;
   option: string;
-  visibility?: SurveyVisibility;
+  visibility?: SurveySituation;
   isSelected?: boolean;
-  onChange?: (index: number, value: string) => void;
+  onOptionNameChange?: (index: number, value: string) => void;
   onCheck?: (index: number) => void;
 }

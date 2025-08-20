@@ -1,15 +1,20 @@
 import { useState } from 'react';
 
-import { InputSurveyProps } from '@common/components/inputs/input-survey/InputSurvey/InputSurvey.types';
+import {
+  InputSurveyQuestionHandlers,
+  InputSurveyQuestionProps,
+} from '@common/components/inputs/input-survey/InputSurvey/InputSurvey.types';
 import {
   InputSurveyQuestionType,
-  SurveyVisibility,
+  SurveySituation,
 } from '@common/components/inputs/input-survey/types/input-survey.common.types';
 
 import { surveyDefaultQuestions } from '@features/team-mood-tracker/utils/create-survey.utils';
 
-export const useCreateSurveyQuestionList = () => {
-  const [questionList, setQuestionList] = useState<InputSurveyProps[]>([...surveyDefaultQuestions]);
+export const useCreateSurveyQuestionList = (isCreating: boolean = true) => {
+  const defaultQuestionList = isCreating ? surveyDefaultQuestions : [];
+
+  const [questionList, setQuestionList] = useState<InputSurveyQuestionProps[]>(defaultQuestionList);
 
   /**
    * questionList에 설문을 추가하기 위한 함수
@@ -17,15 +22,15 @@ export const useCreateSurveyQuestionList = () => {
    * 내용은 비어있되, 마지막에 있는 문항과 동일한 type으로 추가합니다.
    */
   const handleAddQuestion = () => {
-    const newQuestion: InputSurveyProps = {
-      title: '',
-      placeholder: '문항의 제목을 입력하세요.',
-      visibility: SurveyVisibility.PRIVATE, // 설문 생성 시에는 PRIVATE로 설정
-      type: questionList[questionList.length - 1].type, // 마지막으로 선택된 타입을 사용
-      options: [''],
-      isMandatory: false,
-      isEtc: false,
-      description: '',
+    const newQuestion: InputSurveyQuestionProps = {
+      questionTitle: '',
+      questionTitlePlaceholder: '문항의 제목을 입력하세요.',
+      surveyComponentUsingSituation: SurveySituation.PRIVATE, // 설문 생성 시에는 PRIVATE로 설정
+      questionType: questionList[questionList.length - 1].questionType, // 마지막으로 선택된 타입을 사용
+      multipleOrCheckboxOptions: [''],
+      isQuestionMandatory: false,
+      // isQuestionHaveEtcChoice: false, // BE 미구현 주석 처리
+      subjectiveQuestionDescription: '',
     };
     setQuestionList((prev) => [...prev, newQuestion]);
   };
@@ -39,8 +44,8 @@ export const useCreateSurveyQuestionList = () => {
    */
   const handleQuestionPropertyChange = (
     index: number,
-    field: keyof InputSurveyProps,
-    value: InputSurveyProps[keyof InputSurveyProps],
+    field: keyof InputSurveyQuestionProps,
+    value: InputSurveyQuestionProps[keyof InputSurveyQuestionProps],
   ) => {
     setQuestionList((prev) => {
       const updatedQuestions = [...prev];
@@ -56,15 +61,20 @@ export const useCreateSurveyQuestionList = () => {
    * InputSurvey 컴포넌트에 제공할 Question 관련 handler set
    * @param index questionList의 인덱스
    */
-  const handlerSet = (index: number) => {
+  const handlerSet = (index: number): InputSurveyQuestionHandlers => {
     return {
-      onMovingBarClick: () => console.log('Moving bar clicked for question', index),
-      onTitleChange: (title: string) => handleQuestionPropertyChange(index, 'title', title),
-      onTypeChange: (type: InputSurveyQuestionType) =>
-        handleQuestionPropertyChange(index, 'type', type),
-      onToggle: () =>
-        handleQuestionPropertyChange(index, 'isMandatory', !questionList[index].isMandatory),
-      onDelete: () =>
+      onTopMovingBarClick: () => console.log('Moving bar clicked for question', index),
+      onQuestionTitleChange: (title: string) =>
+        handleQuestionPropertyChange(index, 'questionTitle', title),
+      onQuestionTypeChange: (type: InputSurveyQuestionType) =>
+        handleQuestionPropertyChange(index, 'questionType', type),
+      onIsMandatoryToggle: () =>
+        handleQuestionPropertyChange(
+          index,
+          'isQuestionMandatory',
+          !questionList[index].isQuestionMandatory,
+        ),
+      onQuestionDelete: () =>
         setQuestionList((prev) => {
           if (prev.length <= 1) {
             alert('최소 하나의 문항은 있어야 합니다.');
@@ -72,13 +82,12 @@ export const useCreateSurveyQuestionList = () => {
           }
           return prev.filter((_, i) => i !== index);
         }),
-      onOptionChange: (options: string[]) =>
-        handleQuestionPropertyChange(index, 'options', options),
-      onDescriptionChange: (description: string) =>
-        handleQuestionPropertyChange(index, 'description', description),
-      onEtcChange: (isEtc: boolean) => handleQuestionPropertyChange(index, 'isEtc', isEtc),
-      onCheck: (checkedOptions: string[]) => {
-        console.log('Checked options for question', index, checkedOptions);
+      onOptionListChange: (options: string[]) =>
+        handleQuestionPropertyChange(index, 'multipleOrCheckboxOptions', options),
+      onSubjectiveQuestionResponseChange: (description: string) =>
+        handleQuestionPropertyChange(index, 'subjectiveQuestionDescription', description),
+      onQuestionOptionCheck: (checkedOptionIndexList: number[]) => {
+        console.log('Checked options for question', index, checkedOptionIndexList);
       },
       // 체크박스 선택 이벤트 핸들러
     };

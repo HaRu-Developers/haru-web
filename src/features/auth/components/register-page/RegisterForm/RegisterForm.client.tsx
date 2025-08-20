@@ -50,6 +50,23 @@ const RegisterForm = () => {
     });
   };
 
+  const passwordCheckEqualsPassword = (): OnboardingState => {
+    if (!password || !confirmPassword) {
+      return OnboardingState.DEFAULT;
+    }
+    return password === confirmPassword ? OnboardingState.APPROVAL : OnboardingState.ERROR;
+  };
+
+  const passwordCheckMessage = (state: OnboardingState) => {
+    if (state === OnboardingState.DEFAULT) {
+      return undefined;
+    } else if (state === OnboardingState.APPROVAL) {
+      return '비밀번호가 일치합니다.';
+    } else if (state === OnboardingState.ERROR) {
+      return '비밀번호가 일치하지 않습니다.';
+    }
+  };
+
   /**
    * 회원가입 가능 여부를 판단하는 로직
    *
@@ -107,6 +124,8 @@ const RegisterForm = () => {
         inputValue={confirmPassword}
         placeholder="동일한 비밀번호를 한 번 더 입력해 주세요"
         onChange={setConfirmPassword}
+        state={passwordCheckEqualsPassword()}
+        message={passwordCheckMessage(passwordCheckEqualsPassword())}
         type={OnboardingType.HIDE}
       />
       {/* 동의 버튼들 - 서비스이용약관, 개인정보처리방침, 마케팅정보수신 동의 (이거만 선택) */}

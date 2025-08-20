@@ -2,10 +2,12 @@
 
 import { useEffect, useState } from 'react';
 
+import { useSearchParams } from 'next/navigation';
+
 import * as z from 'zod';
 
 import { useCheckEmailDuplication } from '@api/user/hooks/mutations/useCheckEmailDuplication';
-import { useRegister } from '@api/user/hooks/mutations/useRegister';
+import { useSignupAndLoginMutation } from '@api/user/hooks/mutations/useRegisterAndLogin';
 
 import { ToastType } from '@common/types/toast.types';
 
@@ -39,7 +41,11 @@ const RegisterForm = () => {
 
   const [isAvailableEmail, setIsAvailableEmail] = useState<boolean | null>(null);
 
-  const { mutate: register } = useRegister();
+  const { mutate: register } = useSignupAndLoginMutation();
+  const searchParams = useSearchParams();
+
+  // useRegister 훅 대신 새로운 통합 훅을 사용합니다.
+  // 이 훅은 성공 시 자동으로 로그인 처리 및 페이지 이동까지 담당합니다.
   const { mutate: checkEmailDuplication } = useCheckEmailDuplication({
     onAvailable: () => setIsAvailableEmail(true),
     onUnavailable: () => setIsAvailableEmail(false),
@@ -131,12 +137,17 @@ const RegisterForm = () => {
     }
 
     const requestData = registerFormValid.data;
+    // URL에서 'token' 쿼리 파라미터 값을 읽어옵니다. 초대 링크가 아니면 null이 됩니다.
+    const token = searchParams.get('token');
 
+    // 통합 회원가입 함수를 호출합니다.
+    // 폼 데이터와 함께 token 값을 전달하여, 초대 가입인지 일반 가입인지 서버에 알려줍니다.
     register({
       email: requestData.email,
       name: requestData.name,
       password: requestData.password,
       marketingAgreed: requestData.termsAgreeState.marketingConsent,
+      token: token || undefined, // token이 null이면 undefined로 전달
     });
   };
 

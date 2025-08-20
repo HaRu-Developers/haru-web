@@ -1,12 +1,15 @@
 'use client';
 
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 
 import { SurveyQuestionTypeOnPost } from '@api/team-mood-tracker/apis.types';
 import { useViewSurveyQuestion } from '@api/team-mood-tracker/get/queries/useViewSurveyQuestion';
 
 import InputSurveyQuestion from '@common/components/inputs/input-survey/InputSurvey/InputSurvey.client';
-import { InputSurveyQuestionType } from '@common/components/inputs/input-survey/types/input-survey.common.types';
+import {
+  InputSurveyQuestionType,
+  SurveySituation,
+} from '@common/components/inputs/input-survey/types/input-survey.common.types';
 
 import { TeamMoodTrackerSurveyQuestionType } from '@features/team-mood-tracker/constants/question.constants';
 
@@ -34,17 +37,21 @@ const ParticipateInQuestions = ({
   }
 
   const surveyQuestionList = surveyQuestionResponse.questionList;
+
   /**
+   * API 응답 내에서 questionIndex를 받아서, 해당 질문의 optionListIndex에 따라서 optionId를 반환해줍니다.
    * optionList 에서 index에 따라 optionId를 반환해줍니다.
    */
-  const getChoiceIdByOptionIndex = (index: number) => {
-    const question = surveyQuestionList[index];
+  const getChoiceIdByOptionIndex = (questionIndex: number, optionListIndex: number) => {
+    const question = surveyQuestionList[questionIndex];
+
     if (question.type === TeamMoodTrackerSurveyQuestionType.MULTIPLE_CHOICE) {
-      return question.multipleChoiceList[index].multipleChoiceId;
+      return question.multipleChoiceList[optionListIndex].multipleChoiceId;
     } else if (question.type === TeamMoodTrackerSurveyQuestionType.CHECKBOX_CHOICE) {
-      return question.checkboxChoiceList[index].checkboxChoiceId; // 첫 번째 체크박스 선택지의 ID를 반환
+      return question.checkboxChoiceList[optionListIndex].checkboxChoiceId; // 첫 번째 체크박스 선택지의 ID를 반환
     }
-    return 'INVALID_CHOICE_ID'; // 잘못된 선택지 ID
+    throw new Error(`Invalid question type: ${optionListIndex} ${question.type}`);
+    // return 'INVALID_CHOICE_ID'; // 잘못된 선택지 ID
   };
 
   /**
@@ -98,7 +105,7 @@ const ParticipateInQuestions = ({
     });
   };
 
-  const handleQuestionOptionClick = (questionId: string, indexList: number[]) => {
+  const handleQuestionOptionClick = (questionId: string, optionIndexList: number[]) => {
     setSurveyUserResponse((prev) => {
       const updatedUserResponses = [...prev];
 
@@ -107,18 +114,23 @@ const ParticipateInQuestions = ({
         (response) => response.questionId === questionId,
       );
 
-      // API 응답에서 questionId에 해당하는 질문의 타입을 가져옵니다.
-      const questionType = surveyQuestionList.find(
+      const questionIndex = surveyQuestionList.findIndex(
         (question) => question.questionId === questionId,
-      )?.type;
-      // 만약 해당 questionId가 없는 경우를 대비합니다.
-      if (!questionType) {
-        console.error(`Question with ID ${questionId} not found.`);
+      );
+
+      // 만약 해당 questionId가 surveyQuestionList에 없다면, 에러를 출력하고 반환합니다. (그러면 안됨)
+      if (questionIndex === -1) {
+        console.error(`Question with ID ${questionId} not found in surveyQuestionList.`);
         return updatedUserResponses;
       }
 
+      // API 응답에서 questionId에 해당하는 질문의 타입을 가져옵니다.
+      const questionType = surveyQuestionList[questionIndex].type;
+
       // 사용자가 선택을 취소한 경우, 빈 배열이 되는 것에 유의하여야 합니다.
-      const userSelectedOptionList = indexList.map((index) => getChoiceIdByOptionIndex(index));
+      const userSelectedOptionList = optionIndexList.map((index) =>
+        getChoiceIdByOptionIndex(questionIndex, index),
+      );
 
       /**
        * 사용자가 선택한 옵션이 없는 경우 (선택을 취소한 경우)
@@ -222,6 +234,7 @@ const ParticipateInQuestions = ({
             questionTitlePlaceholder="현재 문항에 제목이 존재하지 않습니다."
             questionType={singleQuestion.type as unknown as InputSurveyQuestionType}
             multipleOrCheckboxOptions={options}
+            surveyComponentUsingSituation={SurveySituation.PARTICIPATING_SURVEY}
             isQuestionMandatory={singleQuestion.isMandatory}
             handlers={surveyQuestionHandlerSet(singleQuestion.questionId)}
           />

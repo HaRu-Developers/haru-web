@@ -48,8 +48,8 @@ const QuestionChoiceOption = ({
         value={optionName}
         placeholder={`옵션 ${questionIndex + 1}`}
         onChange={(e) => onOptionNameChange?.(questionIndex, e.target.value)}
-        // 설문에 참여하고 있는 경우가 아니라면 readOnly로 설정합니다.
-        readOnly={!isParticipatingSurvey}
+        // 설문에 참여하고 있는 경우에는 readOnly로 설정합니다.
+        readOnly={isParticipatingSurvey}
       />
     </div>
   );

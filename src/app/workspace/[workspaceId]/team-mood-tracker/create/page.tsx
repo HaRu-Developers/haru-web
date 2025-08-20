@@ -82,7 +82,8 @@ const CreateSurveyPage = () => {
       <div className="border-stroke-200 flex w-full justify-center border-b-1">
         {/*상단 제목 + 생성자 + 설문 문항 생성 / 작성 완료*/}
         <div className="w-668pxr mt-24pxr flex flex-col items-start">
-          <InputFileTitle value={pageQuery.title} />
+          {/* InputFileTitle을 쓰는 것은 오버아키텍쳐링으로 판단되므로 span으로 구현 */}
+          <span className="text-t1-sb text-black">{pageQuery.title}</span>
           {/*설문 정보*/}
           <div className="text-cap2-md mt-14pxr">
             <FileCreatedInfo

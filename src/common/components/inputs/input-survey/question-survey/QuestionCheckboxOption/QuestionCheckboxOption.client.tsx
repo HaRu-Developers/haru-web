@@ -54,8 +54,8 @@ const QuestionCheckboxOption = ({
         onChange={(e) => onOptionNameChange?.(questionIndex, e.target.value)}
         // 기타 옵션이거나 설문 참여 상황에서는 수정을 막습니다
         // 였는데~ BE에서 기타에 대한 구현이 안되어 있는 관계로 스킵합니다..
-        // 설문에 참여하고 있는 경우가 아니라면 readOnly로 설정합니다.
-        readOnly={!isParticipatingSurvey}
+        // 설문에 참여하고 있는 경우에는 readOnly로 설정합니다.
+        readOnly={isParticipatingSurvey}
       />
     </div>
   );

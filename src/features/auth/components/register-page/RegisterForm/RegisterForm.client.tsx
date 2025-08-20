@@ -53,15 +53,28 @@ const RegisterForm = () => {
 
   const { addToast } = useToastActions();
 
+  const ALERT_MESSAGES = {
+    INVALID_FORM: '정보를 올바르게 입력해 주세요.',
+    PASSWORD_MISMATCH: '비밀번호가 일치하지 않습니다.',
+    PASSWORD_MATCH: '비밀번호가 일치합니다.',
+    PASSWORD_AVAILABLE: '사용 가능한 비밀번호입니다.',
+    PASSWORD_UNSAFE: '비밀번호는 8자 이상이어야 합니다.',
+    EMAIL_IN_USE: '이미 사용 중인 이메일입니다.',
+    EMAIL_INVALID: '유효하지 않은 이메일입니다.',
+    EMAIL_AVAILABLE: '사용 가능한 이메일입니다.',
+    REQUIRED_TERMS: '필수 약관에 동의해 주세요.',
+    NAME_REQUIRED: '이름을 입력해 주세요.',
+  };
+
   const registerFormSchema = z
     .strictObject({
-      email: z.email('유효하지 않은 이메일 입니다.').refine(() => isAvailableEmail !== false, {
-        error: '이미 사용 중인 이메일 입니다.',
+      email: z.email(ALERT_MESSAGES.EMAIL_INVALID).refine(() => isAvailableEmail !== false, {
+        error: ALERT_MESSAGES.EMAIL_IN_USE,
         path: ['duplicateEmail'],
       }),
-      name: z.string().min(1, '이름을 입력해 주세요.'),
-      password: z.string().min(8, '비밀번호는 8자 이상이어야 합니다.'),
-      confirmPassword: z.string().min(8, '비밀번호는 8자 이상이어야 합니다.'),
+      name: z.string().min(1, ALERT_MESSAGES.NAME_REQUIRED),
+      password: z.string().min(8, ALERT_MESSAGES.PASSWORD_UNSAFE),
+      confirmPassword: z.string().min(8, ALERT_MESSAGES.PASSWORD_UNSAFE),
       termsAgreeState: z
         .strictObject({
           serviceTerms: z.boolean(),
@@ -69,11 +82,11 @@ const RegisterForm = () => {
           marketingConsent: z.boolean(), // 마케팅 정보 수신 동의는 선택 사항
         })
         .refine((state) => state.serviceTerms && state.privacyPolicy, {
-          error: '필수 약관에 동의해 주세요.',
+          error: ALERT_MESSAGES.REQUIRED_TERMS,
         }),
     })
     .refine((data) => data.password === data.confirmPassword, {
-      error: '비밀번호가 일치하지 않습니다.',
+      error: ALERT_MESSAGES.PASSWORD_MISMATCH,
       path: ['confirmPassword'],
     });
 
@@ -100,11 +113,11 @@ const RegisterForm = () => {
     if (result.success) {
       state = OnboardingState.APPROVAL;
       if (field === 'email') {
-        message = '사용 가능한 이메일 입니다.';
+        message = ALERT_MESSAGES.EMAIL_AVAILABLE;
       } else if (field === 'password') {
-        message = '사용 가능한 비밀번호 입니다.';
+        message = ALERT_MESSAGES.PASSWORD_AVAILABLE;
       } else if (field === 'confirmPassword') {
-        message = '비밀번호가 일치합니다.';
+        message = ALERT_MESSAGES.PASSWORD_MATCH;
       }
     } else {
       state = OnboardingState.ERROR;
@@ -124,15 +137,15 @@ const RegisterForm = () => {
       formData.termsAgreeState,
     ).success;
 
-    if (!isRequiredTermsAgreed) {
+    if (!registerFormValid.success) {
       return addToast({
         type: ToastType.ERROR,
-        text: '필수 약관에 동의해 주세요.',
+        text: ALERT_MESSAGES.INVALID_FORM,
       });
-    } else if (!registerFormValid.success) {
+    } else if (!isRequiredTermsAgreed) {
       return addToast({
         type: ToastType.ERROR,
-        text: '정보를 올바르게 입력해 주세요.',
+        text: ALERT_MESSAGES.REQUIRED_TERMS,
       });
     }
 

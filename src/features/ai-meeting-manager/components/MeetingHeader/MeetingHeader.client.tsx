@@ -27,6 +27,7 @@ const MeetingHeader = ({ editingScopeRef }: MeetingHeaderProps) => {
   const searchParams = useSearchParams();
   const leftTab = searchParams.get('leftTab');
   const isVoiceLogTab = leftTab === LeftTabType.MEETING_VOICE_LOG;
+  const isProceedingTab = leftTab === LeftTabType.MEETING_PROCEEDING;
 
   const { extra: meetingMinutesDetail, isFetching } = useFetchMeetingMinutesDetail(meetingId);
   const { mutate: editMeetingMinutesTitle, isPending } = useEditMeetingMinutesTitle(meetingId);
@@ -76,6 +77,7 @@ const MeetingHeader = ({ editingScopeRef }: MeetingHeaderProps) => {
         onClick={onClick}
         commitTick={commitTick}
         cancelTick={cancelTick}
+        isProceedingTab={isProceedingTab}
       />
       <FileCreatedInfo
         isLoading={isLoading}

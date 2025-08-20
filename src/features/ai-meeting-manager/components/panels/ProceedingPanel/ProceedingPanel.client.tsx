@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { useParams } from 'next/navigation';
 
@@ -11,8 +11,6 @@ import { equalIgnoringLineEndings } from '@common/utils/equal-ignoring-line-endi
 
 import { EditorType } from '@features/ai-meeting-manager/types/edit.types';
 
-import parseProceeding from '@features/ai-meeting-manager/utils/parse-proceeding.utils';
-
 import {
   useEditActions,
   useEditInfo,
@@ -20,7 +18,9 @@ import {
 
 import ProceedingDoc from './ProceedingDoc/ProceedingDoc.client';
 import ProceedingDocSkeleton from './ProceedingDoc/ProceedingDocSkeleton.client';
+import ProceedingEditor from './ProceedingEditor/ProceedingEditor.client';
 import { ProceedingPanelProps } from './ProceedingPanel.types';
+import { parseProceeding } from './ProceedingPanel.utils';
 
 const ProceedingPanel = ({ editingScopeRef }: ProceedingPanelProps) => {
   const { meetingId } = useParams<{ meetingId: string }>();
@@ -34,19 +34,19 @@ const ProceedingPanel = ({ editingScopeRef }: ProceedingPanelProps) => {
 
   const { mutate: saveProceeding, isPending } = useEditMeetingMinutesProceeding(meetingId);
 
+  // 뷰 모드에서 사용할 섹션(고정 렌더)
+  const sections = useMemo(() => parseProceeding(serverContent), [serverContent]);
+
+  // draft(raw) 관리
   const [draft, setDraft] = useState(serverContent);
-
-  const lastActionRef = useRef<'none' | 'save' | 'cancel'>('none');
-  const prevCommitRef = useRef(commitTick);
-  const prevCancelRef = useRef(cancelTick);
-
-  // 내용을 객체로 만듦
-  const sections = parseProceeding(serverContent);
-
-  // 서버 값 → draft 동기화 (편집 중이 아닐 때만)
   useEffect(() => {
     if (!isEditing) setDraft(serverContent);
   }, [serverContent, isEditing]);
+
+  // commit/cancel tick 구독
+  // const lastActionRef = useRef<'none' | 'save' | 'cancel'>('none');
+  const prevCommitRef = useRef(commitTick);
+  const prevCancelRef = useRef(cancelTick);
 
   // 저장 로직 (origin: commit | auto)
   const doSave = useCallback(() => {
@@ -91,57 +91,20 @@ const ProceedingPanel = ({ editingScopeRef }: ProceedingPanelProps) => {
     doCancel();
   }, [cancelTick, isEditing, doCancel]);
 
-  // 키 바인딩: Shift+Enter만 줄바꿈 허용 / Enter 저장 / Esc 취소
-  const onKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    // IME 조합 중이면 Enter 무시
-    if (e.nativeEvent?.isComposing) return;
-
-    if (e.key === 'Enter') {
-      if (e.shiftKey) return; // 줄바꿈 허용
-      // Enter(또는 Cmd/Ctrl+Enter) → 저장
-      e.preventDefault();
-      lastActionRef.current = 'save';
-      (e.currentTarget as HTMLTextAreaElement).blur(); // blur에서 auto 저장 경로
-      return;
-    }
-    if (e.key === 'Escape') {
-      e.preventDefault();
-      lastActionRef.current = 'cancel';
-      (e.currentTarget as HTMLTextAreaElement).blur();
-    }
-  };
-
-  // blur: 커밋 진행 중이면 무시 (중복 방지)
-  const onBlur = (e: React.FocusEvent<HTMLTextAreaElement>) => {
-    // 같은 편집 스코프 내부 이동은 무시
-    const next = e.relatedTarget as Node | null;
-    if (next && editingScopeRef?.current?.contains(next)) return;
-
-    if (lastActionRef.current === 'save') {
-      doSave();
-    } else if (lastActionRef.current === 'cancel') {
-      doCancel();
-    } else {
-      // 바깥 클릭 자동 저장
-      doSave();
-    }
-    lastActionRef.current = 'none';
-  };
+  // 에디터에서 변경 시 draft 갱신
+  const handleEditorChange = useCallback((raw: string) => {
+    setDraft(raw);
+  }, []);
 
   return (
     <section className="px-32pxr py-12pxr flex w-full shrink-0 items-start">
       {isEditing ? (
-        <div className="max-w-1096pxr w-full">
-          <textarea
-            className="scrollbar-page rounded-6pxr text-b2-rg focus:border-stroke-selected min-h-300pxr w-full resize-none border border-gray-400 bg-white p-3 text-black outline-none focus:border-2"
-            value={draft}
-            onChange={(e) => setDraft(e.target.value)}
-            onKeyDown={onKeyDown}
-            onBlur={onBlur}
-            placeholder="마크다운으로 회의 진행 내용을 작성하세요"
-            disabled={isPending}
-          />
-        </div>
+        <ProceedingEditor
+          value={draft}
+          onChange={(raw) => handleEditorChange(raw)}
+          editingScopeRef={editingScopeRef}
+          disabled={isPending}
+        />
       ) : isFetching ? (
         <ProceedingDocSkeleton />
       ) : (

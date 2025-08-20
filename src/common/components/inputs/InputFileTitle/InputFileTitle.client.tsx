@@ -22,6 +22,7 @@ const InputFileTitle = ({
   noPadding = false,
   commitTick,
   cancelTick,
+  isProceedingTab = false,
 }: InputFileTitleProps) => {
   const [inputValue, setInputValue] = useState<string>(value);
   /**
@@ -82,11 +83,29 @@ const InputFileTitle = ({
     // IME 조합 중이면 Enter 무시
     if (e.nativeEvent?.isComposing) return;
 
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      lastActionRef.current = 'save';
-      (e.currentTarget as HTMLInputElement).blur(); // blur에서 저장
-    } else if (e.key === 'Escape') {
+    if (isProceedingTab) {
+      // Enter = (저장 아님) 무시, Cmd/Ctrl+Enter = 저장, Esc = 취소
+      if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+        // Cmd/Ctrl+Enter → 저장
+        e.preventDefault();
+        lastActionRef.current = 'save';
+        (e.currentTarget as HTMLInputElement).blur();
+        return;
+      }
+      if (e.key === 'Enter') {
+        // 단독 Enter는 폼 submit 방지용으로만 막고, 저장은 하지 않음
+        e.preventDefault();
+        return;
+      }
+    } else {
+      // 기타 일반 컴포넌트에서 사용시 Enter가 저장
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        lastActionRef.current = 'save';
+        (e.currentTarget as HTMLInputElement).blur(); // blur에서 저장
+      }
+    }
+    if (e.key === 'Escape') {
       e.preventDefault();
       lastActionRef.current = 'cancel';
       (e.currentTarget as HTMLInputElement).blur(); // blur에서 취소 처리

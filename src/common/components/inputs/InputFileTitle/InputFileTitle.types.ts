@@ -18,4 +18,5 @@ export interface InputFileTitleProps {
   onMode?: (mode: InputFileTitleMode) => void;
   commitTick?: number; // 저장 신호 (증가할 때만 반응)
   cancelTick?: number; // 취소 신호 (증가할 때만 반응)
+  isProceedingTab?: boolean;
 }

@@ -69,6 +69,9 @@ const InputInviteMember = ({
     if (e.key === 'Enter') {
       e.preventDefault();
       handleAddEmail(value);
+    } else if (e.key === 'Backspace' && value.length === 0 && emails.length > 0) {
+      const lastEmail = emails[emails.length - 1];
+      handleRemoveEmail(lastEmail);
     }
   };
 
@@ -85,14 +88,18 @@ const InputInviteMember = ({
       <div className="flex w-full flex-col gap-1">
         <div
           className={clsx(
-            'h-min-48pxr rounded-9pxr py-9pxr flex w-full shrink-0 items-center justify-between gap-2.5 px-3.5',
+            'rounded-9pxr py-9pxr flex w-full shrink-0 items-center justify-between gap-2.5 px-3.5',
             {
               'border-stroke-100 border': !isFocused,
               'border-stroke-selected border-2': isFocused,
             },
           )}
         >
-          <div className={clsx('flex w-full flex-wrap gap-2')}>
+          <div
+            className={clsx(
+              'max-h-120pxr scrollbar-component flex w-full max-w-full flex-wrap gap-2 overflow-x-auto overflow-y-auto',
+            )}
+          >
             {emails.map((email) => (
               <EmailChip key={email} email={email} onRemove={handleRemoveEmail} />
             ))}

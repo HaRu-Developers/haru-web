@@ -2,15 +2,22 @@
 
 import { useCallback, useState } from 'react';
 
+import { useRouter } from 'next/navigation';
+
+import { useLinkInstagramMutation } from '@api/on-boarding/post/mutations/useLinkInstagramMutation';
+import useInstagram from '@api/sns-event-assistant/get/queries/useInstagram';
 import useEditWorkspaceDetail from '@api/workspace/patch/mutations/useEditWorkspaceDetail';
 
 import { ToastType } from '@common/types/toast.types';
+
+import { ROUTES } from '@common/constants/routes.constants';
 
 import { useToastActions } from '@common/hooks/stores/useToastStore';
 import { useWorkspaceActions, useWorkspaceInfo } from '@common/hooks/stores/useWorkspcaeStore';
 
 import ChangableWorkspaceImage from '@common/components/ChangableWorkspaceImage/ChangableWorkspaceImage.client';
 import AddWorkspaceButton from '@common/components/buttons/30px/AddWorkspaceButton/AddWorkspaceButton.client';
+import SocialConnectButton from '@common/components/buttons/30px/SocialConnectButton/SocialConnectButton.client';
 import SaveButton from '@common/components/buttons/38px/SaveButton/SaveButton.client';
 import InputInviteMember from '@common/components/inputs/input-invite-member/InputInviteMember/InputInviteMember.client';
 
@@ -21,7 +28,6 @@ import { WorkspaceSettingsMenuProps } from './WorkspaceSettingsMenu.types';
 
 /**
  * 설정 - 워크스페이스 세팅 설정
- * 수정 api 응답 받을 때 도메인없이 와서 bucket 변수 임시로 해놓았습니다..
  */
 const WorkspaceSettingsMenu = ({ workspaceId }: WorkspaceSettingsMenuProps) => {
   // 내부적으로 처리 되서 반환 됩니다.
@@ -33,14 +39,14 @@ const WorkspaceSettingsMenu = ({ workspaceId }: WorkspaceSettingsMenuProps) => {
   const [title, setTitle] = useState<string>(workspaceTitle || ''); // 워크스페이스 수정하고 바로 반영하지 않기 위해 사용
   const { addToast } = useToastActions();
   const { setTitle: setWorkspaceTitle, setImageUrl } = useWorkspaceActions();
-  const bucket = 'https://haru-it-bucket.s3.ap-northeast-2.amazonaws.com';
+  const { extra: instagram } = useInstagram(workspaceId);
   const handleSave = useCallback(() => {
     // 서버에 프로필 수정 요청 api
     editWorkspaceDetail(
       { title, image, workspaceId },
       {
         onSuccess: (data) => {
-          setImageUrl(`${bucket}${data.result.imageUrl}`);
+          setImageUrl(data.result.imageUrl);
           setWorkspaceTitle(data.result.title);
           addToast({
             text: `워크스페이스가 성공적으로 수정되었습니다.`,
@@ -58,6 +64,24 @@ const WorkspaceSettingsMenu = ({ workspaceId }: WorkspaceSettingsMenuProps) => {
       },
     );
   }, [editWorkspaceDetail, title, image]);
+
+  const handleConnectInstagram = () => {
+    // 1. .env.local 파일에서 클라이언트 ID 가져오기
+    const clientId = process.env.NEXT_PUBLIC_INSTAGRAM_CLIENT_ID;
+
+    // 2. 리디렉션 URI
+    const redirectUri = `${window.location.origin}${ROUTES.PROFILE.INSTAGRAM_CALLBACK}`;
+
+    // 3. 인스타그램에 요청할 권한 범위 설정
+    const scope =
+      'instagram_business_basic,instagram_business_manage_messages,instagram_business_manage_comments,instagram_business_content_publish,instagram_business_manage_insights';
+
+    // 4. 최종 인증 URL 생성
+    const authUrl = `https://www.instagram.com/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${scope}&force_reauth=true`;
+
+    // 5. 생성된 URL로 사용자를 이동시킴
+    window.location.href = authUrl;
+  };
 
   const handleValueChange = (value: string) => {
     // 입력 되는 값 반환 합니다.
@@ -161,9 +185,38 @@ const WorkspaceSettingsMenu = ({ workspaceId }: WorkspaceSettingsMenuProps) => {
           </div>
         </div>
       </div>
-
+      {/* 구분선 */}
+      <hr className="border-stroke-200 w-full" />
+      {/* SNS 연동 영역 */}
+      <div className="flex flex-col">
+        <CommonText type={CommonTextType.T5_SB_BLACK} text="SNS 연동" />
+        {/* 연동된 인스타 계정 */}
+        <CommonText
+          type={CommonTextType.CAP1_RG_GRAY_200}
+          text="연동된 Instagram 계정"
+          className="mt-12pxr mb-8pxr"
+        />
+        {/* <연동헤제 + 계정변경 OR 연동하기 버튼 배경 없어서 그냥 넣음*/}
+        {instagram?.instagramAccountName ? (
+          <div className="gap-y-8pxr flex flex-col">
+            <span className="border-stroke-200 rounded-4pxr px-10pxr text-b3-rg py-7pxr flex w-full cursor-default items-start justify-start border bg-[#F8F8FA] text-gray-400">
+              @{instagram.instagramAccountName}
+            </span>
+            <div className="gap-x-12pxr flex flex-row items-center justify-start">
+              <button
+                className="text-cap1-md text-gray-200 underline"
+                onClick={handleConnectInstagram}
+              >
+                계정 변경
+              </button>
+            </div>
+          </div>
+        ) : (
+          <SocialConnectButton onClick={handleConnectInstagram} />
+        )}
+      </div>
       {/* 저장하기 버튼 */}
-      <SaveButton className="my-26pxr" onClick={handleSave} />
+      <SaveButton className="mt-24pxr mb-36pxr" onClick={handleSave} />
     </div>
   );
 };

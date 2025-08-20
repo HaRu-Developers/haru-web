@@ -43,13 +43,7 @@ const ProfileSelectModal = () => {
       case ProfileSelectModalMenuState.WORKSPACE_SETTING:
         return <WorkspaceSettingsMenu workspaceId={workspaceId} />;
       case ProfileSelectModalMenuState.PROFILE_SETTING:
-        return (
-          <ProfileSettingMenu
-            workspaceId={workspaceId}
-            email={user?.email || ''}
-            instagramAccount="thejeewon" // 임시
-          />
-        );
+        return <ProfileSettingMenu workspaceId={workspaceId} email={user?.email || ''} />;
       default:
         return null;
     }

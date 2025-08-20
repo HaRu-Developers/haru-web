@@ -40,6 +40,7 @@ const queryKeys = createQueryKeyStore({
     detail: (snsEventId: string) => [snsEventId],
     list: (workspaceId: string) => [workspaceId, 'list'],
     download: (snsEventId: string) => [snsEventId, 'list', 'download'],
+    instagram: (workspaceId: string) => [workspaceId, 'instagram'],
   },
 
   moodTracker: {

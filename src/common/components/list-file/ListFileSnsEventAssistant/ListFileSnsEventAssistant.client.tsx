@@ -2,6 +2,8 @@
 
 import { useParams } from 'next/navigation';
 
+import { format } from 'date-fns';
+
 import { FeaturedFileIconsState } from '@icons/FeaturedFileIcons/FeaturedFileIcons.types';
 
 import BaseListFile from '../BaseListFile/BaseListFile.client';
@@ -19,6 +21,8 @@ const ListFileSnsEventAssistant = ({
   onCheckToggle,
 }: ListFileSnsEventAssistantProps) => {
   const { workspaceId } = useParams<{ workspaceId: string }>();
+  const subtitle = format(new Date(updatedAt), 'yyyy년 M월 d일, h:mm a');
+
   const rightContent = (
     <div className="gap-30pxr pr-32pxr flex items-center">
       <div className="w-90pxr flex items-center justify-center">
@@ -34,7 +38,7 @@ const ListFileSnsEventAssistant = ({
     <BaseListFile
       id={snsEventId}
       title={title}
-      subtitle={updatedAt.toString()}
+      subtitle={subtitle}
       href={`/workspace/${workspaceId}/sns-event-assistant/${snsEventId}`}
       fileIconState={FeaturedFileIconsState.SIZE_24_SNS_ASSISTANT_FILE}
       isCheckMode={isCheckMode}

@@ -1,5 +1,7 @@
 'use client';
 
+import { format } from 'date-fns';
+
 import { FeaturedFileIconsState } from '@icons/FeaturedFileIcons/FeaturedFileIcons.types';
 
 import { FileType } from '@common/types/file-type.enum';
@@ -24,10 +26,13 @@ const ListFileTeamMoodTracker = ({
 }: ListFileTeamMoodTrackerProps) => {
   const { workspaceId } = useWorkspaceId();
 
+  const subtitle = format(new Date(createdAt), 'yyyy년 M월 d일, h:mm a');
+  const formatDueDate = format(new Date(dueDate), 'yyyy. M. d');
+
   const rightContent = (
     <div className="text-b3-rg gap-30pxr pr-32pxr flex items-center">
       <div className="w-90pxr flex items-center justify-center">
-        {dueDate && <span className="text-b3-rg text-gray-200">{dueDate}</span>}
+        {dueDate && <span className="text-b3-rg text-gray-200">{formatDueDate}</span>}
       </div>
       <div className="w-90pxr flex items-center justify-center">
         {respondentsNum !== undefined && <HumanIconWithText text={respondentsNum} />}
@@ -39,7 +44,7 @@ const ListFileTeamMoodTracker = ({
     <BaseListFile
       id={surveyId}
       title={title}
-      subtitle={createdAt}
+      subtitle={subtitle}
       href={ROUTES.DETAIL_DOCUMENTS_DEFAULT[FileType.TEAM_MOOD_TRACKER](workspaceId, surveyId)}
       fileIconState={FeaturedFileIconsState.SIZE_24_TEAM_MOOD_FILE}
       isCheckMode={isCheckMode}

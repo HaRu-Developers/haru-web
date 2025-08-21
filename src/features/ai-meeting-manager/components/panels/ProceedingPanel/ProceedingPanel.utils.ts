@@ -1,5 +1,7 @@
 import type { ProceedingSection } from '@features/ai-meeting-manager/types/proceeding.types';
 
+type FocusFn = (key: string, toEnd?: boolean) => void;
+
 const H_RE = /^\s*(\d+)\.\s+(.*)$/; // "1. 제목"
 const LI_RE = /^\s*[-]\s+(.*)$/; // "- 항목"
 
@@ -94,4 +96,14 @@ export const createLastEnterTracker = (): LastEnterTracker => {
 export const isLastItem = (secs: ProceedingSection[], secIdx: number, itemIdx: number): boolean => {
   const items = secs[secIdx]?.items ?? [];
   return itemIdx === items.length - 1;
+};
+
+// ---- 방향키로 포커스
+// 커서 위치 유틸
+export const isAtHead = (el: HTMLInputElement) => el.selectionStart === 0 && el.selectionEnd === 0;
+export const isAtTail = (el: HTMLInputElement) => {
+  const len = el.value.length;
+  const s = el.selectionStart ?? 0;
+  const e = el.selectionEnd ?? 0;
+  return s === len && e === len;
 };

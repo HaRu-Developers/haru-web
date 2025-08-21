@@ -29,7 +29,7 @@ const MeetingHeader = ({ editingScopeRef }: MeetingHeaderProps) => {
   const isVoiceLogTab = leftTab === LeftTabType.MEETING_VOICE_LOG;
   const isProceedingTab = leftTab === LeftTabType.MEETING_PROCEEDING;
 
-  const { extra: meetingMinutesDetail, isFetching } = useFetchMeetingMinutesDetail(meetingId);
+  const { extra: meetingMinutesDetail, isLoading } = useFetchMeetingMinutesDetail(meetingId);
   const { mutate: editMeetingMinutesTitle, isPending } = useEditMeetingMinutesTitle(meetingId);
   const { editing, commitTick, cancelTick } = useEditInfo();
   const { setEditing } = useEditActions();
@@ -61,8 +61,6 @@ const MeetingHeader = ({ editingScopeRef }: MeetingHeaderProps) => {
   const onClick = useCallback(() => {
     if (isVoiceLogTab) setEditing(EditorType.TITLE, true);
   }, [isVoiceLogTab, setEditing]);
-
-  const isLoading = isFetching || isPending;
 
   return (
     <h2 className="pt-24pxr px-32pxr gap-y-16pxr flex h-[var(--meeting-header-height)] w-full flex-col">

@@ -24,7 +24,7 @@ import { parseProceeding } from './ProceedingPanel.utils';
 
 const ProceedingPanel = ({ editingScopeRef }: ProceedingPanelProps) => {
   const { meetingId } = useParams<{ meetingId: string }>();
-  const { extra: meetingMinutesDetail, isFetching } = useFetchMeetingMinutesDetail(meetingId);
+  const { extra: meetingMinutesDetail, isLoading } = useFetchMeetingMinutesDetail(meetingId);
   const serverContent = meetingMinutesDetail?.proceeding ?? '';
 
   // 전역 편집/커밋/취소 tick 구독
@@ -105,7 +105,7 @@ const ProceedingPanel = ({ editingScopeRef }: ProceedingPanelProps) => {
           editingScopeRef={editingScopeRef}
           disabled={isPending}
         />
-      ) : isFetching ? (
+      ) : isLoading ? (
         <ProceedingDocSkeleton />
       ) : (
         <ProceedingDoc sections={sections} />

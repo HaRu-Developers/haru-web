@@ -19,7 +19,6 @@ import {
  * @param {string} params.title - 수정할 제목
  */
 const editMeetingMinutesTitle = async ({ meetingId, title }: EditMeetingMinutesTitleParams) => {
-  console.log(title, '로 변경 호출');
   const response = await defaultApi<BaseResponseDto<EditMeetingMinutesResponse>>(
     MEETING_API_ENDPOINTS.EDIT_MEETING_MINUTES_TITLE(meetingId),
     {

@@ -4,6 +4,10 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import clsx from 'clsx';
 
+import { EditorType } from '@features/ai-meeting-manager/types/edit.types';
+
+import { useEditActions } from '@features/ai-meeting-manager/hooks/stores/useEditStore';
+
 import { InputFileTitleMode, InputFileTitleProps } from './InputFileTitle.types';
 import InputFileTitleSkeleton from './InputFileTitleSkeleton.client';
 
@@ -36,6 +40,8 @@ const InputFileTitle = ({
    */
   const prevCommitRef = useRef(commitTick);
   const prevCancelRef = useRef(cancelTick);
+
+  const { setEditing } = useEditActions();
 
   // 서버 값 → 로컬 값 동기화 (편집 중이 아닐 때만)
   useEffect(() => {
@@ -118,6 +124,12 @@ const InputFileTitle = ({
     // 포커스가 같은 편집 스코프 안으로 이동하면 저장/종료하지 않음
     const next = e.relatedTarget as Node | null;
     if (next && editingScopeRef?.current?.contains(next)) return;
+
+    // isProceedingTab에서 제목 포커스 풀리면 edit 모드 다 false로
+    if (isProceedingTab) {
+      setEditing(EditorType.PROCEEDING, false);
+      setEditing(EditorType.TITLE, false);
+    }
 
     // 값이 바뀌었는지
     const changed = inputValue !== value;

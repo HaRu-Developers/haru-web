@@ -90,6 +90,7 @@ const useOnboardingStore = create<OnboardingStoreState>()(
               state.step = OnboardingStep.NAME;
               state.name = '';
               state.image = null;
+              state.workspaceId = '';
               state.emails = [];
               state.isInstagramConnected = false;
               state.instagramAccountName = '';

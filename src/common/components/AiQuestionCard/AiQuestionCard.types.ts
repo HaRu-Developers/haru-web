@@ -1,5 +1,5 @@
 export interface AiQuestionCardProps {
   aiRecommendQuestion: string;
   userAnswer: string;
-  speechId: string;
+  segmentId: number;
 }

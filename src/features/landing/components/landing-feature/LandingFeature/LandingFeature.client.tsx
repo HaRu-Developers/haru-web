@@ -33,6 +33,7 @@ const LandingFeature = ({ className, onClick }: LandingFeatureProps) => {
         className={clsx('h-141pxr', {
           'animate-fade-in-up-and-delay': titleInView,
         })}
+        isTyping={true}
       />
 
       <div className="flex w-full flex-col">

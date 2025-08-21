@@ -22,6 +22,7 @@ interface AuthStoreState {
     setRefreshToken: (refreshToken: string) => void;
     setWorkspaceIdList: (workspaceIdList: string[]) => void;
     clearTokens: () => void;
+    clearUser: () => void;
   };
 }
 
@@ -75,6 +76,11 @@ const useAuthStore = create<AuthStoreState>()(
                 state.user.accessToken = undefined;
                 state.user.refreshToken = undefined;
               }
+            });
+          },
+          clearUser: () => {
+            set((state) => {
+              state.user = null;
             });
           },
         },

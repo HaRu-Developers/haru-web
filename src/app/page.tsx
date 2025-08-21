@@ -1,7 +1,9 @@
-import RootRedirectHandler from '@features/main-page/RootRedirectHandler/RootRedirectHandler.client';
+import { redirect } from 'next/navigation';
+
+import { ROUTES } from '@common/constants/routes.constants';
 
 const RootPage = () => {
-  return <RootRedirectHandler />;
+  redirect(ROUTES.LANDING);
 };
 
 export default RootPage;

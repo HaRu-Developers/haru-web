@@ -5,7 +5,7 @@ import { useCallback } from 'react';
 import { useParams, useSearchParams } from 'next/navigation';
 
 import useFetchMeetingMinutesDetail from '@api/meeting/get/queries/useFetchMeetingMinutesDetail';
-import useEditMeetingMinutesTitle from '@api/meeting/patch/queries/useEditMeetingMinutesTitle';
+import useEditMeetingMinutesTitle from '@api/meeting/patch/mutations/useEditMeetingMinutesTitle';
 
 import FileCreatedInfo from '@common/components/FileCreatedInfo/FileCreatedInfo.client';
 import { ImageSize } from '@common/components/images/types/images.common.types';
@@ -27,6 +27,7 @@ const MeetingHeader = ({ editingScopeRef }: MeetingHeaderProps) => {
   const searchParams = useSearchParams();
   const leftTab = searchParams.get('leftTab');
   const isVoiceLogTab = leftTab === LeftTabType.MEETING_VOICE_LOG;
+  const isProceedingTab = leftTab === LeftTabType.MEETING_PROCEEDING;
 
   const { extra: meetingMinutesDetail, isFetching } = useFetchMeetingMinutesDetail(meetingId);
   const { mutate: editMeetingMinutesTitle, isPending } = useEditMeetingMinutesTitle(meetingId);
@@ -68,7 +69,6 @@ const MeetingHeader = ({ editingScopeRef }: MeetingHeaderProps) => {
       <InputFileTitle
         isLoading={isLoading}
         value={title}
-        noPadding
         mode={inputFileTitleMode}
         onCancel={onCancel}
         onSave={onSave}
@@ -76,6 +76,7 @@ const MeetingHeader = ({ editingScopeRef }: MeetingHeaderProps) => {
         onClick={onClick}
         commitTick={commitTick}
         cancelTick={cancelTick}
+        isProceedingTab={isProceedingTab}
       />
       <FileCreatedInfo
         isLoading={isLoading}

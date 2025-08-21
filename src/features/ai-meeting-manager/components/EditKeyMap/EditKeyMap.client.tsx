@@ -14,7 +14,7 @@ import { EditKeyMapProps } from './EditKeyMap.types';
 /**
  * “키보드 입력 → 저장/취소 의도”를 표준화하는 컨트롤러
  *
- * 스코프 안에서 Enter/Escape 같은 키 입력을 가로채서 저장(commit)/취소(cancel) ‘의도’만 브로드캐스트하고,
+ * 스코프 안에서 Cmd/Ctrml + Enter/Escape 같은 키 입력을 가로채서 저장(commit)/취소(cancel) ‘의도’만 브로드캐스트하고,
  * 실제 저장/취소는 각 컴포넌트(제목 인풋, 본문 textarea)가 commitTick/cancelTick 변화를 감지해 실행함
  */
 const EditKeymap = ({ editingScopeRef }: EditKeyMapProps) => {
@@ -30,9 +30,9 @@ const EditKeymap = ({ editingScopeRef }: EditKeyMapProps) => {
       // 편집 중이 아니면 무시
       if (!anyEditing) return;
 
-      // Shift+Enter는 줄바꿈 허용
-      // Enter (또는 Ctrl/Cmd+Enter)는 저장에 사용
-      if (e.key === 'Enter' && (e.ctrlKey || e.metaKey || !e.shiftKey)) {
+      // Enter는 줄바꿈
+      // Ctrl/Cmd + Enter는 저장에 사용
+      if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
         e.preventDefault();
         requestCommit(); // 저장 신호 증가
       } else if (e.key === 'Escape') {

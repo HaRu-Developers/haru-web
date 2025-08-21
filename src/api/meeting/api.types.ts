@@ -1,4 +1,4 @@
-import { BaseResponseDto } from '@common/types/api.common.types';
+import { DownloadFormat } from '@common/types/download.enum.types';
 
 import { Speech } from '@features/ai-meeting-manager/types/meeting.types';
 
@@ -170,10 +170,31 @@ export interface MeetingMinutesSpeechQuestionDTO {
 
 // ========== 회의록 다운로드 링크 ==========
 /**
- * 회의록 다운로드 링크 응답 DTO
+ * 회의록 다운로드 요청 DTO
  *
- * @property {string} downloadLink - 다운로드 링크
+ * @property {string} meetingId
+ * @property {DownloadFormat} format - 다운로드할 파일 포맷
+ */
+export interface MeetingMinutesDownloadLinkRequestDTO {
+  meetingId: string;
+  format: DownloadFormat;
+}
+
+/**
+ * 회의록 실제 파일 URL 응답 DTO
+ *
+ * @property {string} downloadLink - 실제 파일 URL
  */
 export interface MeetingMinutesDownloadLinkResponseDTO {
   downloadLink: string;
+}
+
+// ========== 회의록 음성 링크 ==========
+/**
+ * 회의록 음성 링크 응답 DTO
+ *
+ * @property {string} voiceLink - 음성 링크
+ */
+export interface MeetingMinutesVoiceLinkResponseDTO {
+  voiceLink: string;
 }

@@ -30,7 +30,9 @@ const LandingTeam = ({ className }: LandingTeamProps) => {
         title2="HaRu"
         title3="를 소개합니다!"
         description="당신의 하루를 위해, 팀 HaRu가 모였습니다."
-        className="h-104pxr items-center"
+        className={clsx('h-104pxr items-center', {
+          'animate-fade-in-up-and-delay': titleInView,
+        })}
       />
       <div className="gap-21pxr grid grid-cols-3" ref={descriptionRef}>
         <TeamLayout

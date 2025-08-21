@@ -8,7 +8,7 @@ const Toaster = () => {
   const { toastList } = useToastInfo();
 
   return (
-    <div className="bottom-20pxr right-20pxr w-300pxr gap-30pxr fixed z-1 flex flex-col items-end">
+    <div className="bottom-20pxr right-20pxr w-300pxr gap-30pxr fixed z-99 flex flex-col items-end">
       {toastList.map((toast) => (
         <Toast key={toast.key} toast={toast} />
       ))}

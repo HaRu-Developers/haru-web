@@ -24,6 +24,7 @@
     "@sentry/nextjs": "^9.42.1",
     "@tanstack/react-query": "^5.83.0",
     "@tanstack/react-query-devtools": "^5.84.1",
+    "@vercel/speed-insights": "^1.2.0",
     "@wavesurfer/react": "^1.0.11",
     "chart.js": "^4.5.0",
     "clsx": "^2.1.1",

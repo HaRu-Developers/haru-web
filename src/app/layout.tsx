@@ -3,11 +3,14 @@ import React from 'react';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import clsx from 'clsx';
 
 import '@styles/globals.css';
 
 import Toaster from '@common/components/toast/Toaster/Toaster.client';
+
+import WebVitals from '@app/_components/web-vitals';
 
 import QueryClientProviders from './query-client-providers';
 
@@ -33,6 +36,8 @@ const RootLayout = ({
   return (
     <html lang="ko">
       <body className={clsx('scrollbar-page flex min-h-screen flex-col', pretendard.variable)}>
+        <WebVitals />
+        <SpeedInsights />
         <QueryClientProviders>
           <div id="modal" />
           {children}

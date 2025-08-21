@@ -5,6 +5,7 @@ onlyBuiltDependencies:
   - '@evilmartians/lefthook'
   - '@sentry/cli'
   - '@tailwindcss/oxide'
+  - '@vercel/speed-insights'
   - core-js-pure
   - esbuild
   - sharp

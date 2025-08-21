@@ -8,12 +8,16 @@ import { useParams, useRouter } from 'next/navigation';
 import { DownloadFormat } from '@api/team-mood-tracker/apis.types';
 import { useDownloadReportQuery } from '@api/team-mood-tracker/get/queries/useDownloadReport';
 
-// ✅ 2. 다운로드 훅과 관련 타입을 import 합니다.
+import { ToastType } from '@common/types/toast.types';
 
+import { useToastActions } from '@common/hooks/stores/useToastStore';
+
+// ✅ 2. 다운로드 훅과 관련 타입을 import 합니다.
 import ModalLayout from '@common/components/layouts/ModalLayout/ModalLayout.client';
 import DownloadModal from '@common/components/modals/DownloadModal/DownloadModal.client';
 
 const DownloadModalPage = () => {
+  const { addToast } = useToastActions();
   const router = useRouter();
   // ✅ 3. URL에서 moodTrackerHashedId를 가져옵니다.
   const { moodTrackerHashedId } = useParams<{ moodTrackerHashedId?: string }>();
@@ -38,7 +42,10 @@ const DownloadModalPage = () => {
       },
       onError: (error) => {
         // 실패 시: 에러 알림
-        alert(`다운로드에 실패했습니다: ${error.message}`);
+        addToast({
+          text: `다운로드에 실패했습니다: ${error.message}`,
+          type: ToastType.ERROR,
+        });
         setEnabled(false); // 쿼리 재실행 방지를 위해 비활성화
       },
     },

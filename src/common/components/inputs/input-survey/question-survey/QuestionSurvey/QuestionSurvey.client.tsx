@@ -5,8 +5,6 @@ import { v4 as uuidv4 } from 'uuid';
 import {
   useAddSurveyQuestionOption,
   useGetSurveyQuestionById,
-  useSetCheckedOptionList,
-  useSetSurveyQuestionOption,
   useSurveySituation,
 } from '@features/team-mood-tracker/hooks/stores/useSurveyQuestionStore';
 

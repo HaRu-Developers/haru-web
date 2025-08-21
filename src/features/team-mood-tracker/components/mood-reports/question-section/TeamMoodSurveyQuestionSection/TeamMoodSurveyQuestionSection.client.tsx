@@ -31,7 +31,7 @@ const TeamMoodSurveyQuestionSection = ({
   const setSituation = useSetSurveyComponentUsingSituation();
 
   useEffect(() => {
-    setSituation(SurveySituation.PARTICIPATING_SURVEY);
+    setSituation(SurveySituation.VIEW_SURVEY_QUESTIONS);
   }, [setSituation]);
 
   const [isApiDataApplied, setIsApiDataApplied] = useState<boolean>(false);

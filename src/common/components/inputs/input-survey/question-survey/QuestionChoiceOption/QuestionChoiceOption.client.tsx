@@ -6,6 +6,7 @@ import { clsx } from 'clsx';
 
 import CheckboxIcons from '@icons/CheckboxIcons/CheckboxIcons';
 import { CheckboxIconsState } from '@icons/CheckboxIcons/CheckboxIcons.types';
+import WarningIcon from '@icons/WarningIcon/WarningIcon.server';
 
 import {
   useGetSurveyQuestionById,
@@ -110,13 +111,7 @@ const QuestionOption = ({ questionId, optionId }: QuestionOptionProps) => {
   };
 
   return (
-    <div
-      key={questionId}
-      className={clsx(
-        'group gap-6pxr rounded-4pxr flex w-full items-center border',
-        !isOptionValid ? 'border-system-red' : 'border-transparent',
-      )}
-    >
+    <div key={questionId} className={clsx('group gap-6pxr rounded-4pxr flex w-full items-center')}>
       <div onClick={handleClick}>
         <CheckboxIcons
           state={iconState()}
@@ -128,8 +123,9 @@ const QuestionOption = ({ questionId, optionId }: QuestionOptionProps) => {
       </div>
       <input
         className={clsx(
-          'text-b3-rg text-black outline-none select-none',
+          'text-b4-rg h-22pxr w-full border-b text-black outline-none select-none',
           !isParticipatingSurvey && 'cursor-default',
+          !isOptionValid ? 'border-system-red' : 'border-transparent',
         )}
         value={currentOption.content}
         placeholder={`옵션 ${optionList.indexOf(currentOption) + 1}`}
@@ -137,10 +133,20 @@ const QuestionOption = ({ questionId, optionId }: QuestionOptionProps) => {
         // 설문을 생성하는 경우를 제외하고는 readOnly로 설정합니다.
         readOnly={!isCreatingSurvey}
       />
-      <OptionDeleteButton
-        className="ml-auto hidden group-hover:flex"
-        onClick={() => removeQuestionOption(questionId, optionId)}
-      />
+      {situation === SurveySituation.CREATING_SURVEY && !isOptionValid ? (
+        <div className="group">
+          <WarningIcon className="flex group-hover:hidden" />
+          <OptionDeleteButton
+            className="ml-auto hidden group-hover:flex"
+            onClick={() => removeQuestionOption(questionId, optionId)}
+          />
+        </div>
+      ) : (
+        <OptionDeleteButton
+          className="ml-auto hidden group-hover:flex"
+          onClick={() => removeQuestionOption(questionId, optionId)}
+        />
+      )}
     </div>
   );
 };

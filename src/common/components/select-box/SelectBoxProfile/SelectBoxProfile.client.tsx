@@ -61,7 +61,13 @@ const SelectBoxProfile = ({ isOpen, setIsOpen }: SelectBoxProfileProps) => {
                   </div>
                 </div>
               )}
-              <HeaderButtons onSettingClick={onOpenSettings} onAddMemberClick={onOpenSettings} />
+              {workspaceId && (
+                <HeaderButtons
+                  disabled={!workspaceId}
+                  onSettingClick={onOpenSettings}
+                  onAddMemberClick={onOpenSettings}
+                />
+              )}
             </div>
 
             <div className="bg-stroke-200 h-px w-full"></div>

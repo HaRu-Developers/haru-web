@@ -12,7 +12,7 @@ const RecentDocumentsSection = ({ workspaceId }: RecentDocumentsSectionProps) =>
   return (
     <>
       <h4 className="text-cap1-md mt-12pxr mb-6pxr ml-12pxr cursor-default text-gray-400">
-        recent
+        Recents
       </h4>
       <div className="w-210pxr flex flex-col items-start gap-1">
         {isFetching &&

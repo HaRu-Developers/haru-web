@@ -29,6 +29,8 @@ const OnBoardingPage = () => {
     }
   };
 
+  // TODO: on page leave, set step to default state
+
   return (
     <div className="flex">
       <WorkSpaceOnBoarding />

@@ -22,13 +22,15 @@ const FooterButtons = () => {
 
   return (
     <div className="flex w-full items-center justify-between">
+      {/* Profile Modal 좌측 '프로필 설정' 버튼 */}
       <Link
-        href={ROUTES.MODAL.SETTING.BASE(workspaceId)}
+        href={workspaceId ? ROUTES.MODAL.SETTING.BASE(workspaceId) : '#'}
         className="border-stroke-200 gap-3pxr rounded-7pxr flex h-7 items-center justify-center border border-solid bg-white px-2 py-1.5"
       >
         <ProfileDropdownIcons state={ProfileDropdownIconsState.PROFILE} />
         <span className="text-cap1-md text-gray-300">프로필 설정</span>
       </Link>
+      {/* Profile Modal 우측 '로그아웃' 버튼 */}
       <button onClick={handleLogout} className="gap-3pxr flex items-center">
         <ProfileDropdownIcons state={ProfileDropdownIconsState.LOGOUT} />
         <span

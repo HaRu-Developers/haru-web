@@ -1,5 +1,5 @@
 /**
- * InputSurvey 컴포넌트가 어떤 상황에 쓰이는지를 구분해줍니다.
+ * InputSurveyQuestion 컴포넌트가 어떤 상황에 쓰이는지를 구분해줍니다.
  *
  * PUBLIC : 문항 조회 및 설문 참여 시
  *

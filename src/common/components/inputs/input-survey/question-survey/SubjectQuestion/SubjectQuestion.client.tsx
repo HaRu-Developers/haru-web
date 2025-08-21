@@ -2,15 +2,28 @@
 
 import { useEffect, useRef } from 'react';
 
+import {
+  useGetSurveyQuestionById,
+  useSetSubjectiveQuestionResponse,
+  useSurveySituation,
+} from '@features/team-mood-tracker/hooks/stores/useSurveyQuestionStore';
+
 import { SurveySituation } from '../../types/input-survey.common.types';
 import { SubjectQuestionProps } from './SubjectQuestion.types';
 
-const SubjectQuestion = ({
-  subjectiveQuestionResponse,
-  surveyComponentUsingSituation,
-  onSubjectiveQuestionResponseChange,
-}: SubjectQuestionProps) => {
+const SubjectQuestion = ({ questionId }: SubjectQuestionProps) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const handleSubjectiveQuestionResponseChange = useSetSubjectiveQuestionResponse();
+  const situation = useSurveySituation();
+
+  const getSurveyQuestionById = useGetSurveyQuestionById();
+  const question = getSurveyQuestionById(questionId);
+  // assurance guard
+  if (!question) {
+    throw new Error('WRONG QUESTION ID'); // 질문이 없을 경우 렌더링하지 않음
+  }
+  const { subjectiveQuestionDescription } = question;
 
   const handleResize = () => {
     const el = textareaRef.current;
@@ -21,25 +34,25 @@ const SubjectQuestion = ({
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    onSubjectiveQuestionResponseChange?.(e.target.value);
+    handleSubjectiveQuestionResponseChange(questionId, e.target.value);
     handleResize();
   };
 
   useEffect(() => {
     handleResize();
-  }, [subjectiveQuestionResponse]);
+  }, [subjectiveQuestionDescription]);
 
   return (
     <textarea
       ref={textareaRef}
-      value={subjectiveQuestionResponse}
+      value={subjectiveQuestionDescription}
       placeholder="주관식 내용을 입력해주세요."
       rows={1}
       onInput={handleResize}
       onChange={handleChange}
       className="min-h-18pxr text-b3-rg w-full resize-none overflow-hidden outline-none"
       // 설문조사에 응하고 있지 않다면, readOnly가 되도록 합니다.
-      readOnly={surveyComponentUsingSituation !== SurveySituation.PARTICIPATING_SURVEY}
+      readOnly={situation !== SurveySituation.PARTICIPATING_SURVEY}
     />
   );
 };

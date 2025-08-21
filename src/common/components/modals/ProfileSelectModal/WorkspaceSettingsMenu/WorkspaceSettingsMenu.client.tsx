@@ -79,9 +79,9 @@ const WorkspaceSettingsMenu = ({ workspaceId }: WorkspaceSettingsMenuProps) => {
   const handleConnectInstagram = () => {
     // 1. .env.local 파일에서 클라이언트 ID 가져오기
     const clientId = process.env.NEXT_PUBLIC_INSTAGRAM_CLIENT_ID;
-
-    // 2. 리디렉션 URI
-    const redirectUri = `${window.location.origin}${ROUTES.MODAL.SETTING.INSTAGRAM_CALLBACK(workspaceId)}`;
+    
+    // 2. 리디렉션 URI /가 두개 들어갈까봐 일단 바꿔봄
+    const redirectUri = `${window.location.origin}/workspace/instagram-callback`;
 
     // 3. 인스타그램에 요청할 권한 범위 설정
     const scope =
@@ -144,6 +144,7 @@ const WorkspaceSettingsMenu = ({ workspaceId }: WorkspaceSettingsMenuProps) => {
   useEffect(() => {
     if (workspaceId) {
       setWorkspaceId(workspaceId);
+      console.log('워크스페이스 ID가 변경되었습니다:', workspaceId);
     }
   }, [workspaceId]);
 

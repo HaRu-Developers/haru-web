@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import clsx from 'clsx';
 
@@ -39,7 +39,7 @@ const InputInviteMember = ({
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onValueChange?.(e.target.value);
   };
-  const usersEmails = users?.map((user) => user.email) ?? [];
+  const usersEmails = useMemo(() => users?.map((user) => user.email) ?? [], [users]);
   const handleAddEmail = (newValue: string) => {
     const trimmed = newValue.trim();
     // 입력값이 비어있거나 유효하지 않은 이메일인 경우

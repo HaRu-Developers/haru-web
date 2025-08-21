@@ -25,7 +25,7 @@ const EmailTag = ({ value, emails = [], state = 0, onClick }: EmailTagProps) => 
     >
       <div
         className={clsx(
-          'rounded-6pxr mix-h-32pxr flex cursor-pointer items-center gap-1.5 self-stretch px-2.5 py-1.5 hover:bg-gray-600',
+          'rounded-6pxr min-h-32pxr flex cursor-pointer items-center gap-1.5 self-stretch px-2.5 py-1.5 hover:bg-gray-600',
           {
             'bg-gray-600': state === 0,
           },
@@ -39,7 +39,7 @@ const EmailTag = ({ value, emails = [], state = 0, onClick }: EmailTagProps) => 
         <div
           key={index}
           className={clsx(
-            'rounded-6pxr mix-h-32pxr flex cursor-pointer items-center gap-1.5 self-stretch px-2.5 py-1.5 hover:bg-gray-600',
+            'rounded-6pxr min-h-32pxr flex cursor-pointer items-center gap-1.5 self-stretch px-2.5 py-1.5 hover:bg-gray-600',
             {
               'bg-gray-600': state === index + 1,
             },

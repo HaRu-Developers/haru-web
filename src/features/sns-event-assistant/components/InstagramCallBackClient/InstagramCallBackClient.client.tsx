@@ -58,7 +58,7 @@ const InstagramCallBackClient = () => {
         },
       },
     );
-  }, [searchParams, workspaceId, router, linkInstagram, showOnboardingToast]);
+  }, [searchParams, workspaceId, router, linkInstagram, showOnboardingToast, queryClient]);
 
   // 이 페이지는 사용자에게 보이지 않으므로 간단한 로딩 표시만 함
   // 추후 스타일링 필요 (?)

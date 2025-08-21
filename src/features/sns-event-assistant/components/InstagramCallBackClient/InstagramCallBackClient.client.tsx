@@ -23,11 +23,12 @@ const InstagramCallBackClient = () => {
   const { workspaceId } = useWorkspaceIdStore();
   const { showOnboardingToast } = useOnboardingToastActions();
   const { mutate: linkInstagram } = useLinkInstagramMutation();
-
+  
   useEffect(() => {
     // ✅ 1. workspaceId가 아직 복원되지 않았다면, 아무것도 하지 않고 실행을 종료
     //    상태가 복원되어 workspaceId가 생기면, 이 useEffect는 다시 실행됩니다.
     if (!workspaceId) {
+      console.error('workspaceId 없음');
       return;
     }
 

@@ -14,7 +14,7 @@ const DownloadButton = ({ onClick, ...props }: ButtonsCommonProps) => {
   return (
     <button
       className={clsx(
-        'text-bt3-sb inline-flex h-[30px] w-[96px] items-center justify-center gap-x-[4px] rounded-[100px] bg-gray-100 py-[6px] pr-[14px] pl-[12px] text-white',
+        'text-bt3-sb h-30pxr w-96pxr gap-x-4pxr rounded-100pxr py-6pxr pr-14pxr pl-12pxr inline-flex items-center justify-center bg-gray-100 text-white',
       )}
       onClick={onClick}
       {...props}

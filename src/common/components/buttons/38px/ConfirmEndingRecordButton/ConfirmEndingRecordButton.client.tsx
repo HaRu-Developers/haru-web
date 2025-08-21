@@ -15,7 +15,7 @@ const ConfirmEndingRecordButton = ({
   return (
     <button
       className={clsx(
-        'text-bt1-sb border-stroke-200 inline-flex h-[38px] w-[300px] items-center justify-center rounded-[7px] border bg-white px-[16px] py-[12px] hover:bg-gray-600',
+        'text-bt1-sb border-stroke-200 h-38pxr w-300pxr rounded-7pxr px-16pxr py-12pxr inline-flex items-center justify-center border bg-white hover:bg-gray-600',
         isEndingRecord ? 'text-primary' : 'text-gray-100',
       )}
       onClick={onClick}

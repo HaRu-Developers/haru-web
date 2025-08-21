@@ -11,7 +11,7 @@ const DeleteButton = ({ onClick, disabled, loading, loadingText, ...props }: Del
   return (
     <button
       className={clsx(
-        'text-bt1-sb border-stroke-200 text-system-red inline-flex h-[38px] w-[128px] items-center justify-center rounded-[7px] border bg-white px-[16px] py-[12px] hover:bg-gray-600',
+        'text-bt1-sb border-stroke-200 text-system-red h-38pxr w-128pxr rounded-7pxr px-16pxr py-12pxr inline-flex items-center justify-center border bg-white hover:bg-gray-600',
         (disabled || loading) && 'text-black',
       )}
       onClick={onClick}

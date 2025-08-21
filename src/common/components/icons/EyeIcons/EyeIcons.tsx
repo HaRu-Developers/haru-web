@@ -10,9 +10,9 @@ import { EyeIconsState } from './EyeIcons.types';
 const EyeIcons = ({ state, className }: IconsCommonProps<EyeIconsState>) => {
   switch (state) {
     case EyeIconsState.CLOSED:
-      return <ClosedEyeIcon className={clsx('h-[20px] w-[20px]', className)} />;
+      return <ClosedEyeIcon className={clsx('h-20pxr w-20pxr', className)} />;
     case EyeIconsState.OPENED:
-      return <OpenedEyeIcon className={clsx('h-[20px] w-[20px]', className)} />;
+      return <OpenedEyeIcon className={clsx('h-20pxr w-20pxr', className)} />;
     default:
       return null;
   }

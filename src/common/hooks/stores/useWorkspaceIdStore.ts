@@ -9,4 +9,4 @@ export const useWorkspaceIdStore = () =>
     })),
   );
 
-export const useWorkspaIdActions = () => WorkspaceIdStoreState((state) => state.actions);
+export const useWorkspaceIdActions = () => WorkspaceIdStoreState((state) => state.actions);

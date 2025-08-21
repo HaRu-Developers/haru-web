@@ -26,7 +26,7 @@ import CommonText from '../../CommonText/CommonText.client';
 import { CommonTextType } from '../../CommonText/CommonText.types';
 import TeammateCard from '../TeammateCard/TeammateCard.client';
 import { WorkspaceSettingsMenuProps } from './WorkspaceSettingsMenu.types';
-import { useWorkspaIdActions } from '@common/hooks/stores/useWorkspaceIdStore';
+import { useWorkspaceIdActions } from '@common/hooks/stores/useWorkspaceIdStore';
 
 /**
  * 설정 - 워크스페이스 세팅 설정
@@ -38,7 +38,7 @@ const WorkspaceSettingsMenu = ({ workspaceId }: WorkspaceSettingsMenuProps) => {
   const [emails, setEmails] = useState<string[]>([]);
   const [image, setImage] = useState<File>(); // 워크스페이스 프로필 이미지 변경 시 사용
   const { extra: workspaceExtra } = useFetchWorkspaceDetail(workspaceId); // 워크스페이스 정보 가져오기
-  const { setWorkspaceId } = useWorkspaIdActions();
+  const { setWorkspaceId } = useWorkspaceIdActions();
   const { title: workspaceTitle, imageUrl, members } = useWorkspaceInfo();
   const { mutate: editWorkspaceDetail } = useEditWorkspaceDetail(workspaceId);
   const [title, setTitle] = useState<string>(workspaceExtra?.title ?? workspaceTitle); // 워크스페이스 수정하고 바로 반영하지 않기 위해 사용
@@ -146,7 +146,7 @@ const WorkspaceSettingsMenu = ({ workspaceId }: WorkspaceSettingsMenuProps) => {
       setWorkspaceId(workspaceId);
       console.log('워크스페이스 ID가 변경되었습니다:', workspaceId);
     }
-  }, [workspaceId]);
+  }, [workspaceId, setWorkspaceId]);
 
   useEffect(() => {
     if (workspaceExtra) {

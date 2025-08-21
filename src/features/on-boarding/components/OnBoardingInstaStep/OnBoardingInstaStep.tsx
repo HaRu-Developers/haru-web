@@ -11,6 +11,7 @@ import { SkipForNowButtonType } from '@common/components/buttons/diverse-size/Sk
 
 import {
   useInstagramConnection,
+  useOnboardingActions,
   useOnboardingWorkspaceId,
 } from '@features/on-boarding/hooks/stores/useOnBoardingStore';
 
@@ -18,6 +19,8 @@ import { WORKSPACES_ON_BOARDING_API_ENDPOINTS } from '@/api/on-boarding/api-end-
 
 const OnBoardingInstaStep = () => {
   const router = useRouter();
+
+  const { reset } = useOnboardingActions();
 
   const isConnected = useInstagramConnection();
   const workspaceId = useOnboardingWorkspaceId();
@@ -48,6 +51,8 @@ const OnBoardingInstaStep = () => {
       console.error('워크스페이스 정보가 없어 시작할 수 없습니다. 온보딩을 다시 진행해주세요.');
       router.push(ROUTES.ONBOARDING);
     }
+
+    reset();
   };
 
   return (

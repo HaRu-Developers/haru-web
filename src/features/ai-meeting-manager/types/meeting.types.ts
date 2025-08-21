@@ -30,9 +30,32 @@ export interface Speech {
 export type WsInbound =
   | {
       type: 'utterance';
-      data: { segmentId: number; speakerId: string; text: string; startTime: string };
+      data: { speechId: number; speakerId: string; text: string; startTime: string };
     }
   | {
       type: 'ai_questions';
-      data: { segmentId: number; questions: Array<string> };
+      data: { speechId: number; questions: Array<string> };
     };
+
+/**
+ * UI 용 질문 정보
+ *
+ * @property {number} id - 질문의 고유 ID
+ * @property {string} segmentId - 발화 구간의 고유 ID
+ * @property {string} text - 질문 내용
+ */
+export interface UiQuestion {
+  id: number;
+  segmentId: number;
+  text: string;
+}
+
+/**
+ * 플레이이바 조작으로 발화 포커스를 하기 위한
+ * 시작, 끝 시간 매핑 타입
+ */
+export interface FocusSegment {
+  segmentId: number;
+  startMs: number;
+  endMs: number;
+}

@@ -9,19 +9,23 @@ import { useFocusMapActions } from '@features/ai-meeting-manager/hooks/stores/us
 
 import { AiQuestionCardProps } from './AiQuestionCard.types';
 
-const AiQuestionCard = ({ aiRecommendQuestion, userAnswer, speechId }: AiQuestionCardProps) => {
+const AiQuestionCard = ({ aiRecommendQuestion, userAnswer, segmentId }: AiQuestionCardProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const { registerQuestionRef, unregisterQuestionRef, focusSpeech } = useFocusMapActions();
 
   useEffect(() => {
-    registerQuestionRef(speechId, ref.current);
-    return () => unregisterQuestionRef(speechId, ref.current as HTMLDivElement);
-  }, [speechId, registerQuestionRef, unregisterQuestionRef]);
+    const node = ref.current;
+    if (!node) return;
+    registerQuestionRef(segmentId, node);
+    return () => unregisterQuestionRef(segmentId, node);
+  }, [segmentId, registerQuestionRef, unregisterQuestionRef]);
   return (
     <div
       ref={ref}
-      onClick={() => focusSpeech(speechId, { flashMs: 1200 })}
-      data-speech-id={speechId}
+      onClick={() => {
+        focusSpeech(segmentId);
+      }}
+      data-speech-id={segmentId}
       className="border-stroke-200 w-110 cursor-pointer rounded-xl border bg-white px-5 pt-5 pb-4.5 hover:bg-gray-600"
     >
       <div className="mb-3 inline-flex items-start gap-3">
@@ -32,7 +36,7 @@ const AiQuestionCard = ({ aiRecommendQuestion, userAnswer, speechId }: AiQuestio
         <div className="text-t6-sb text-black">{aiRecommendQuestion}</div>
       </div>
 
-      <div className="text-cap2-rg rounded-3pxr py-5pxr ml-9 overflow-hidden bg-gray-600 px-2 text-ellipsis whitespace-nowrap text-gray-200">
+      <div className="text-cap2-rg rounded-3pxr py-5pxr ml-9 truncate bg-gray-600 px-2 text-gray-200">
         {userAnswer}
       </div>
     </div>

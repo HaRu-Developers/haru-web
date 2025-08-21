@@ -5,4 +5,6 @@ export interface IconButtonProps {
   children: ReactNode;
   className?: string;
   ariaLabel?: string;
+  isLoading?: boolean;
+  disabled?: boolean;
 }

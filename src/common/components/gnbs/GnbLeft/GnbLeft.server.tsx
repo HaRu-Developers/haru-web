@@ -1,25 +1,13 @@
 'use client';
 
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-
-// import { type DehydratedState, HydrationBoundary } from '@tanstack/react-query';
 
 import HaruLogoIcons from '@icons/logos/HaruLogoIcons/HaruLogoIcons';
 import { HaruLogoIconsState } from '@icons/logos/HaruLogoIcons/HaruLogoIcons.types';
 
-// import { fetchUserDetail } from '@api/user/get/apis/fetchUserDetail';
-// import fetchMyWorkspaces from '@api/workspace/get/apis/fetchMyWorkspaces';
-// import fetchRecentDocuments from '@api/workspace/get/apis/fetchRecentDocuments';
-// import fetchWorkspaceDetail from '@api/workspace/get/apis/fetchWorkspaceDetail';
-
 import { GnbLeftNavItems } from '@common/constants/gnbs.constants';
 import { ROUTES } from '@common/constants/routes.constants';
-
-// import queryKeys from '@common/constants/query-key.constants';
-
-// import { isWorkspaceNotFound } from '@common/errors/guards.utils';
-
-// import { getDehydratedState } from '@common/utils/dehydrate';
 
 import { GnbLeftProps } from './GnbLeft.types';
 import NavItem from './NavItem/NavItem.client';
@@ -85,11 +73,14 @@ const GnbLeft = ({ workspaceId }: GnbLeftProps) => {
 
   return (
     <div className="border-stroke-200 p-16pxr flex w-60 shrink-0 flex-col border-r border-solid">
-      <HaruLogoIcons
-        state={HaruLogoIconsState.MIXED}
-        className="w-99pxr h-24pxr mb-8pxr mt-5pxr ml-5pxr"
-      />
+      <Link href={ROUTES.WORKSPACE_MAIN()} className="inline-block w-fit">
+        <HaruLogoIcons
+          state={HaruLogoIconsState.MIXED}
+          className="w-99pxr h-24pxr mb-8pxr mt-5pxr ml-5pxr"
+        />
+      </Link>
       {/* <HydrationBoundary state={dehydratedState}> */}
+      {/* 워크스페이스 프로필, 내부 모달을 여는 것도 해당 컴포넌트에 책임이 있음 (워크스페이스 목록 등) */}
       <WorkSpaceProfile workspaceId={workspaceId} />
       <div className="gap-16pxr flex flex-col">
         <div className="rounded-10pxr flex flex-col items-start gap-2 self-stretch">

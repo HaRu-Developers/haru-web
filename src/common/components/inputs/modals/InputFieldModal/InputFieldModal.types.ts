@@ -4,5 +4,6 @@ export interface InputFieldModalProps {
   value: string;
   type?: string; // Optional type for the input field, default is "text"
   onChange: (value: string) => void;
+  disabled?: boolean;
   className?: string; // Optional className for additional styling
 }

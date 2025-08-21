@@ -6,6 +6,7 @@ export type MicController = {
   pause: () => void;
   resume: () => void;
   isPaused: () => boolean;
+  getStream: () => MediaStream;
 };
 
 /**
@@ -31,9 +32,12 @@ export const startMicAndPipeToWebSocket = async (ws: WebSocket): Promise<MicCont
   const src = ac.createMediaStreamSource(stream);
   const node = new AudioWorkletNode(ac, 'Resample16kProcessor');
 
+  node.connect(ac.destination);
+
   let paused = false;
 
-  const FRAME_SAMPLES = 320;
+  // 640 샘플(=1280B), 20ms @ 16kHz, 2 Bytes 정밀도
+  const FRAME_SAMPLES = 640;
   const q: number[] = [];
   const toI16 = (f: number) => {
     const s = Math.max(-1, Math.min(1, f));
@@ -45,13 +49,15 @@ export const startMicAndPipeToWebSocket = async (ws: WebSocket): Promise<MicCont
     // 일시정지 상태거나 ws가 열려있지 않으면 리턴
     if (paused || ws.readyState !== WebSocket.OPEN) return;
     const f32 = e.data;
+
     // 들어온 Float32 샘플을 toI16으로 Int16로 변환, 큐 q에 쌓음
     for (let i = 0; i < f32.length; i++) q.push(toI16(f32[i]));
-    // FRAME_SAMPLES(320) 이상 쌓일 때마다 Int16Array(320)로 잘라 ws.send(frame.buffer) 전송
+    // 640 샘플이 쌓일 때마다 한 프레임(1280B) 전송 → 약 25fps
     while (q.length >= FRAME_SAMPLES) {
       const frame = new Int16Array(FRAME_SAMPLES);
       for (let i = 0; i < FRAME_SAMPLES; i++) frame[i] = q[i];
       q.splice(0, FRAME_SAMPLES);
+
       ws.send(frame.buffer);
     }
   };
@@ -69,6 +75,8 @@ export const startMicAndPipeToWebSocket = async (ws: WebSocket): Promise<MicCont
     },
     // 송신 막음 여부
     isPaused: () => paused,
+    // 스트림 반환
+    getStream: () => stream,
     // 핸들러 해제, 노드 연결 해제, 트랙 stop, 컨텍스트 close()까지 깔끔 종료
     stop: async () => {
       try {

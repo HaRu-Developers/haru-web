@@ -1,6 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
-
-import { ToastType } from '@common/types/toast.types';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import queryKeys from '@common/constants/query-key.constants';
 
@@ -12,10 +10,19 @@ import endMeetingMinutes from '../apis/endMeetingMinutes';
  *
  * - 내부적으로 `endMeetingMinutes` API 함수를 호출합니다.
  */
-const useEndMeetingMinutes = (meetingId: string) => {
+const useEndMeetingMinutes = (workspaceId: string, meetingId: string) => {
+  const queryClient = useQueryClient();
+
+  const detailKey = queryKeys.meetings.detail(meetingId).queryKey;
+
   return useMutation({
     mutationKey: queryKeys.meetings.end(meetingId).queryKey,
     mutationFn: (data: meetingIdRequestDto) => endMeetingMinutes(data),
+    onSuccess: async () => {
+      // 회의록 디테일 다시 호출
+      // proceeding
+      await queryClient.invalidateQueries({ queryKey: detailKey });
+    },
   });
 };
 

@@ -2,6 +2,7 @@ import { useRouter } from 'next/navigation';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
+import { getUserInfo } from '@api/user/apis/get/get-user-info';
 import { signupAndLogin } from '@api/user/apis/post/login-register-refresh';
 import { LoginResponseDto, SignupAndLoginRequestDto } from '@api/user/types/api.types';
 
@@ -18,7 +19,7 @@ import { useAuthStoreActions } from '@features/auth/hooks/useAuthStore';
 export const useSignupAndLoginMutation = () => {
   const queryClient = useQueryClient();
   const router = useRouter();
-  const { setAccessToken, setRefreshToken } = useAuthStoreActions();
+  const { setAccessToken, setRefreshToken, setUser } = useAuthStoreActions();
 
   return useMutation<LoginResponseDto, ApiError, SignupAndLoginRequestDto>({
     mutationFn: (variables) => signupAndLogin(variables),
@@ -27,14 +28,19 @@ export const useSignupAndLoginMutation = () => {
      * onSuccess 콜백에 'variables' 파라미터를 추가합니다.
      * variables는 mutate 함수에 전달된 SignupAndLoginRequestDto 객체입니다.
      */
-    onSuccess: (data, variables) => {
+    onSuccess: async (data, variables) => {
       // --- 공통 성공 로직 ---
       // 서버로부터 받은 토큰을 Zustand 스토어에 저장합니다.
       setAccessToken(data.accessToken);
       setRefreshToken(data.refreshToken);
 
       // 사용자 정보 쿼리를 무효화하여 최신 정보로 갱신합니다.
-      queryClient.invalidateQueries(queryKeys.user.detail());
+      await queryClient.invalidateQueries(queryKeys.user.detail());
+      const userInfo = await queryClient.fetchQuery({
+        queryKey: queryKeys.user.detail().queryKey,
+        queryFn: getUserInfo,
+      });
+      setUser(userInfo.result);
 
       // --- 분기 처리 로직 ---
       // mutate 함수에 전달된 'token'의 존재 여부를 확인합니다.

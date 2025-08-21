@@ -10,7 +10,11 @@ import { IndividualIconsState } from '@icons/IndividualIcons/IndividualIcons.typ
 import { acceptedTypes, maxSize } from './FileDropZone.constants';
 import { FileDropzoneProps } from './FileDropzone.types';
 
-const FileDropzone = ({ onFileChange, initialFile = null }: FileDropzoneProps) => {
+const FileDropzone = ({
+  onFileChange,
+  initialFile = null,
+  disabled = false,
+}: FileDropzoneProps) => {
   const [file, setFile] = useState<File | null>(initialFile);
   const [dragActive, setDragActive] = useState<boolean>(false);
   const [hasUploaded, setHasUploaded] = useState<boolean>(false);
@@ -93,9 +97,10 @@ const FileDropzone = ({ onFileChange, initialFile = null }: FileDropzoneProps) =
       onDragLeave={handleDrag}
       onDrop={handleDrop}
       className={clsx(
-        'w-534pxr h-166pxr rounded-12pxr gap-y-8pxr flex cursor-pointer flex-col items-center justify-center bg-[#F8F8FA]',
+        'w-534pxr h-166pxr rounded-12pxr gap-y-8pxr flex flex-col items-center justify-center bg-[#F8F8FA]',
         !!errorMessage && 'border-system-red border-2',
         dragActive && 'border-2 border-blue-500 bg-blue-50',
+        disabled ? 'disabled-style' : 'cursor-pointer',
       )}
     >
       {/* 숨겨진 파일 인풋 */}

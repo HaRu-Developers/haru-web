@@ -15,7 +15,18 @@ import { TeamMoodReportTabType } from '../../report-section/TeamMoodReportTab/Te
 import TeamMoodAnswerNoneContentSection from '../TeamMoodAnswerNoneContentSection/TeamMoodAnswerNoneContentSection.server';
 import { TeamMoodAnswerChartSectionProps } from './TeamMoodAnswerChartSection.types';
 
-const PIE_CHART_COLORS = ['#E65787', '#5E8BFF', '#FFD66C', '#84D1B6', '#B28DFF']; // 임시 색상
+const PIE_CHART_COLORS = [
+  '#E65787',
+  '#E6578766', // 40%
+  '#E6578733', // 20%
+  '#27998DB3', // 70%
+  '#6664E3B3', // 70%
+  '#89A4BBB3', // 70%
+  '#007AFF66', // 40%
+  '#27998D66', // 40%
+  '#6664E366', // 40%
+  '#89A4BB66', // 40%
+];
 
 const TeamMoodAnswerChartSection = ({
   moodTrackerHashedId,

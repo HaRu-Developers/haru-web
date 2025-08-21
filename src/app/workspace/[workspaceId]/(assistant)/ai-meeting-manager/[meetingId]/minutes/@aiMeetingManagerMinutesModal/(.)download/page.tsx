@@ -6,7 +6,7 @@ import { useParams, useRouter } from 'next/navigation';
 
 import useFetchMeetingMinutesDownloadLink from '@api/meeting/get/queries/useFetchMeetingMinutesDownloadLink';
 
-import { Format } from '@common/types/download.enum.types';
+import { DownloadFormat } from '@common/types/download.enum.types';
 import { ToastType } from '@common/types/toast.types';
 
 import { API_ERROR_CODES } from '@common/constants/api-error-codes.constants';
@@ -52,11 +52,11 @@ const DownloadMeetingMinutesModalPage = () => {
   });
 
   const handlePdfDownload = useCallback(() => {
-    startDownload(Format.PDF);
+    startDownload(DownloadFormat.PDF);
   }, [startDownload]);
 
   const handleWordDownload = useCallback(() => {
-    startDownload(Format.DOCX);
+    startDownload(DownloadFormat.DOCX);
   }, [startDownload]);
 
   return (

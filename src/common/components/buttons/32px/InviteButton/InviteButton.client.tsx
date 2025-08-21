@@ -11,7 +11,7 @@ const InviteButton = ({ className, onClick, disabled, isPending, ...props }: Inv
   return (
     <button
       className={clsx(
-        'text-bt2-sb bg-primary inline-flex h-[32px] w-[46px] items-center justify-center rounded-[6px] px-[11px] py-[8px] whitespace-nowrap text-white',
+        'text-bt2-sb bg-primary h-32pxr w-46pxr rounded-6pxr px-11pxr py-8pxr inline-flex items-center justify-center whitespace-nowrap text-white',
         {
           'bg-primary-inactive cursor-not-allowed': disabled || isPending,
         },

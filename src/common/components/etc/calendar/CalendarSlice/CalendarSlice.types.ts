@@ -7,5 +7,4 @@ export interface CalendarSliceProps {
   isToday?: boolean; // 오늘 날짜 강조 여부 -> storybook 때문에 사용
   isSecondRowOrBelow?: boolean; // 두 번째 줄 이상인지 여부 -> storybook 때문에 사용
   isNotLastColumn?: boolean; // 첫 번째 줄인지 여부 -> storybook 때문에 사용
-  onFileClick?: (fileId: number) => void; // 파일 클릭 이벤트 핸들러
 }

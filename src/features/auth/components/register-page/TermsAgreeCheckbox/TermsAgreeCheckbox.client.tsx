@@ -5,11 +5,13 @@ import Link from 'next/link';
 import CheckboxIcons from '@icons/CheckboxIcons/CheckboxIcons';
 import { CheckboxIconsState } from '@icons/CheckboxIcons/CheckboxIcons.types';
 
+import { ROUTES } from '@common/constants/routes.constants';
+
 import { TermsAgreeState } from './TermsAgreeCheckbox.types';
 
 interface TermsAgreeCheckboxProps {
   termsAgreeState: TermsAgreeState;
-  setTermsAgreeState: React.Dispatch<React.SetStateAction<TermsAgreeState>>;
+  setTermsAgreeState: (state: TermsAgreeState) => void;
 }
 
 const TermsAgreeCheckbox = ({ termsAgreeState, setTermsAgreeState }: TermsAgreeCheckboxProps) => {
@@ -20,10 +22,11 @@ const TermsAgreeCheckbox = ({ termsAgreeState, setTermsAgreeState }: TermsAgreeC
   };
 
   const toggleState = (key: keyof TermsAgreeState) => {
-    setTermsAgreeState((prev) => ({
-      ...prev,
-      [key]: !prev[key],
-    }));
+    const newTermsState = {
+      ...termsAgreeState,
+      [key]: !termsAgreeState[key],
+    };
+    setTermsAgreeState(newTermsState);
   };
 
   const toggleAll = () => {
@@ -55,7 +58,7 @@ const TermsAgreeCheckbox = ({ termsAgreeState, setTermsAgreeState }: TermsAgreeC
           <CheckboxIcons state={checkboxState(termsAgreeState.serviceTerms)} />
         </button>
         <div>
-          <Link href="#" className="text-cap1-md text-audio-bar">
+          <Link href={ROUTES.MODAL.TERMS.SERVICE} className="text-cap1-md text-audio-bar">
             서비스이용약관
           </Link>
           <span className="text-cap1-md text-black">&nbsp;동의 (필수)</span>
@@ -67,7 +70,7 @@ const TermsAgreeCheckbox = ({ termsAgreeState, setTermsAgreeState }: TermsAgreeC
           <CheckboxIcons state={checkboxState(termsAgreeState.privacyPolicy)} />
         </button>
         <div>
-          <Link href="#" className="text-cap1-md text-audio-bar">
+          <Link href={ROUTES.MODAL.TERMS.PRIVACY} className="text-cap1-md text-audio-bar">
             개인정보처리방침{' '}
           </Link>
           <span className="text-cap1-md text-black">&nbsp;동의 (필수)</span>
@@ -80,7 +83,7 @@ const TermsAgreeCheckbox = ({ termsAgreeState, setTermsAgreeState }: TermsAgreeC
         </button>
 
         <div>
-          <Link href="#" className="text-cap1-md text-audio-bar">
+          <Link href={ROUTES.MODAL.TERMS.MARKETING} className="text-cap1-md text-audio-bar">
             마케팅정보수신{' '}
           </Link>
           <span className="text-cap1-md text-black">&nbsp;동의 (선택)</span>

@@ -11,8 +11,8 @@ const RosterList = ({ items, hasLeftBorder = false, startIndex = 0 }: RosterList
           const rowNumber = startIndex + index + 1;
           return (
             <RosterDataField
-              key={item.userId + index}
-              userId={item.userId}
+              key={item.account + index}
+              userId={item.account}
               index={index}
               rowNumber={rowNumber}
               hasLeftBorder={hasLeftBorder}

@@ -1,3 +1,5 @@
+'use client';
+
 import clsx from 'clsx';
 
 import HaruLogoIcons from '@icons/logos/HaruLogoIcons/HaruLogoIcons';

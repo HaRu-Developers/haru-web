@@ -1,9 +1,9 @@
 import { useCallback } from 'react';
 
-import { Format } from '@common/types/download.enum.types';
+import { DownloadFormat } from '@common/types/download.enum.types';
 
 type UseDownloadDocumentParams = {
-  getLink: (format: Format) => Promise<string>; // 링크받는 함수
+  getLink: (format: DownloadFormat) => Promise<string>; // 링크받는 함수
   onDone?: () => void; // 새창 연 후 처리
   onError?: (err: unknown) => void;
 };
@@ -13,7 +13,7 @@ type UseDownloadDocumentParams = {
  */
 const useDownloadDocument = ({ getLink, onDone, onError }: UseDownloadDocumentParams) => {
   const startDownload = useCallback(
-    async (format: Format) => {
+    async (format: DownloadFormat) => {
       try {
         const link = await getLink(format);
         // 새 탭 열기

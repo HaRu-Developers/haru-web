@@ -48,4 +48,8 @@ export class ApiError<T extends ApiErrorBody = ApiErrorBody> extends Error {
       rawText: this.rawText,
     };
   }
+
+  isTeamMoodTrackerSurveyBeforeDueDate() {
+    return this.code === 'MOODTRACKER4005';
+  }
 }

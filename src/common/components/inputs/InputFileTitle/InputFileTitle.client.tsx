@@ -19,7 +19,6 @@ const InputFileTitle = ({
   onMode,
   onClick,
   editingScopeRef,
-  noPadding = false,
   commitTick,
   cancelTick,
   isProceedingTab = false,
@@ -83,6 +82,7 @@ const InputFileTitle = ({
     // IME 조합 중이면 Enter 무시
     if (e.nativeEvent?.isComposing) return;
 
+    // ai-meeting-manager isProceedingTab에선
     if (isProceedingTab) {
       // Enter = (저장 아님) 무시, Cmd/Ctrl+Enter = 저장, Esc = 취소
       if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
@@ -139,7 +139,6 @@ const InputFileTitle = ({
   };
 
   // 가로 padding
-  const px = noPadding ? 'px-0' : 'px-2';
 
   return isLoading ? (
     <InputFileTitleSkeleton />
@@ -153,9 +152,9 @@ const InputFileTitle = ({
       onBlur={handleBlur}
       onClick={onClick}
       className={clsx(
-        'w-676pxr h-36pxr rounded-4pxr text-t1-sb flex items-center bg-white py-0.5 text-black outline-none focus:outline-none',
-        px,
-        { 'border-stroke-100 border': mode === InputFileTitleMode.EDITABLE },
+        'w-692pxr h-36pxr rounded-4pxr text-t1-sb flex items-center border bg-white px-2 py-0.5 text-black outline-none focus:outline-none',
+        { 'border-stroke-100 px-2': mode === InputFileTitleMode.EDITABLE },
+        { 'border-transparent hover:bg-gray-600': mode === InputFileTitleMode.DEFAULT },
       )}
       readOnly={mode !== InputFileTitleMode.EDITABLE}
       autoFocus={mode === InputFileTitleMode.EDITABLE}

@@ -21,6 +21,11 @@ export const ROUTES = {
   ROOT: '/',
   LANDING: '/landing',
   WORKSPACE_MAIN: (workspaceId?: BigintString) => `/workspace/${workspaceId ?? ''}`,
+  DOCUMENT_DELETE_CONFIRMED: (workspaceId: string, fileType: FileType) => {
+    if (fileType === FileType.TEAM_MOOD_TRACKER) {
+      return `/workspace/${workspaceId}/team-mood-tracker?deleteConfirmed=true`;
+    }
+  },
   // ===== ai-meeting-manager 관련 =====
   AI_MEETING_MANAGER: {
     BASE: (workspaceId: BigintString) => `/workspace/${workspaceId}/ai-meeting-manager`,
@@ -32,8 +37,15 @@ export const ROUTES = {
       `/workspace/${workspaceId}/ai-meeting-manager/${meetingId}/minutes`,
   },
   //  ===== sns event assistant 관련 =====
-  SNS_EVENT_ASSISTANT: (workspaceId: BigintString) =>
-    `/workspace/${workspaceId}/sns-event-assistant`,
+  SNS_EVENT_ASSISTANT: {
+    MAIN: (workspaceId: BigintString) => `/workspace/${workspaceId}/sns-event-assistant`,
+    DETAIL: (workspaceId: string, snsEventId: string, type?: string) =>
+      `/workspace/${workspaceId}/sns-event-assistant/${snsEventId}${type ? `?type=${type}` : ''}`,
+    CREATE: (workspaceId: string) => `/workspace/${workspaceId}/sns-event-assistant/creating-event`,
+    DELETE: (workspaceId: string) => `/workspace/${workspaceId}/sns-event-assistant/delete`,
+    DOWNLOAD: (workspaceId: string, snsEventId: string, type?: string) =>
+      `/workspace/${workspaceId}/sns-event-assistant/${snsEventId}/download${type ? `?type=${type}` : ''}`,
+  },
   TEAM_MOOD_TRACKER: {
     MAIN: (workspaceId: BigintString) => `/workspace/${workspaceId}/team-mood-tracker`,
     DOCUMENT_PREFIX: (workspaceId: BigintString) =>
@@ -54,8 +66,11 @@ export const ROUTES = {
     [FileType.SNS_EVENT_ASSISTANT]: (workspaceId: BigintString, documentId: BigintString) =>
       `/workspace/${workspaceId}/sns-event-assistant/${documentId}?type=participant`,
 
-    [FileType.TEAM_MOOD_TRACKER]: (workspaceId: BigintString, documentId: BigintString) =>
-      `/workspace/${workspaceId}/team-mood-tracker/survey/${documentId}?type=TEAM_MOOD_REPORT`,
+    [FileType.TEAM_MOOD_TRACKER]: (
+      workspaceId: BigintString,
+      documentId: BigintString,
+      documentType = 'TEAM_MOOD_REPORT',
+    ) => `/workspace/${workspaceId}/team-mood-tracker/survey/${documentId}?type=${documentType}`,
   },
 
   AUTH: {
@@ -69,6 +84,14 @@ export const ROUTES = {
   NOT_FOUND: '/404', // 실제로 없는 주소
 
   MODAL: {
+    GENERAL: {
+      CONFIRM_DELETE: (workspaceId: string, fileType?: string, redirectUrlOnConfirm?: string) => {
+        const params = [];
+        if (fileType) params.push(`fileType=${fileType}`);
+        if (redirectUrlOnConfirm) params.push(`redirect=${redirectUrlOnConfirm}`);
+        return `/workspace/${workspaceId}/confirm-delete${params.length ? `?${params.join('&')}` : ''}`;
+      },
+    },
     AUTH: {
       AFTER_REGISTER: {
         INVITED_REGISTER: '/auth/after-register?invited=true',
@@ -106,14 +129,9 @@ export const ROUTES = {
       },
     },
     TERMS: {
-      PRIVACY: (workspaceId?: string) =>
-        workspaceId
-          ? `/workspace/${workspaceId}/terms?type=${TermsType.PRIVACY}`
-          : `/workspace/terms?type=${TermsType.PRIVACY}`,
-      SERVICE: (workspaceId?: string) =>
-        workspaceId
-          ? `/workspace/${workspaceId}/terms?type=${TermsType.SERVICE}`
-          : `/workspace/terms?type=${TermsType.SERVICE}`,
+      PRIVACY: `/terms?type=${TermsType.PRIVACY}`,
+      SERVICE: `/terms?type=${TermsType.SERVICE}`,
+      MARKETING: `/terms?type=${TermsType.MARKETING}`,
     },
   },
 } as const;

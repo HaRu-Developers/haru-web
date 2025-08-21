@@ -2,8 +2,6 @@ import { createQueryKeyStore } from '@lukemorales/query-key-factory';
 
 import { DownloadFormat } from '@api/team-mood-tracker/apis.types';
 
-import { Format } from '@common/types/download.enum.types';
-
 import { TermsType } from '@common/components/modals/terms/TermsModal.types';
 
 // 도메인(기능)별로 키를 그룹화합니다.
@@ -31,7 +29,7 @@ const queryKeys = createQueryKeyStore({
     detail: (meetingId: string) => ['meetingMinutes', 'detail', meetingId],
     list: (workspaceId: string) => ['meetingMinutes', 'list', workspaceId],
     delete: (workspaceId: string) => ['meetings', 'delete', workspaceId],
-    downloadLink: (meetingId: string, format: Format) => [
+    downloadLink: (meetingId: string, format: DownloadFormat) => [
       'meetingMinutes',
       'downloadLink',
       meetingId,
@@ -53,13 +51,16 @@ const queryKeys = createQueryKeyStore({
 
   moodTracker: {
     all: null,
+    question: (moodTrackerHashedId: string) => ['moodTracker', moodTrackerHashedId, 'question'],
     detail: (moodTrackerHashedId: string) => [moodTrackerHashedId],
     report: (moodTrackerHashedId: string) => [moodTrackerHashedId, 'report'],
+    reportList: (workspaceId: string) => [workspaceId, 'reportList'],
     downloadLink: (moodTrackerHashedId: string, format: DownloadFormat) => [
       moodTrackerHashedId,
       'download',
       format,
     ],
+    surveyBasicInfo: (moodTrackerHashedId: string) => [moodTrackerHashedId, 'surveyBasicInfo'],
   },
 
   user: {

@@ -9,6 +9,7 @@
 @import './token/markdown.css';
 @import './custom-style.css';
 @import './animation.css';
+@import './token/animation-delay.css';
 
 @layer base {
   * {

@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/nextjs';
 
-import TitleDisplay from '@features/landing/components/landing-banner/TitleDisplay/TitleDisplay.server';
+import TitleDisplay from '@features/landing/components/landing-banner/TitleDisplay/TitleDisplay.client';
 
 const meta: Meta<typeof TitleDisplay> = {
   title: 'features/landing/landing-banner/TitleDisplay',

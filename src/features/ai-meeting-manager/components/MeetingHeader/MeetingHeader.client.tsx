@@ -69,7 +69,6 @@ const MeetingHeader = ({ editingScopeRef }: MeetingHeaderProps) => {
       <InputFileTitle
         isLoading={isLoading}
         value={title}
-        noPadding
         mode={inputFileTitleMode}
         onCancel={onCancel}
         onSave={onSave}

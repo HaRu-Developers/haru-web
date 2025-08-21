@@ -1,4 +1,4 @@
-import { Format } from '@common/types/download.enum.types';
+import { DownloadFormat } from '@common/types/download.enum.types';
 
 import { Speech } from '@features/ai-meeting-manager/types/meeting.types';
 
@@ -173,11 +173,11 @@ export interface MeetingMinutesSpeechQuestionDTO {
  * 회의록 다운로드 요청 DTO
  *
  * @property {string} meetingId
- * @property {Format} format - 다운로드할 파일 포맷
+ * @property {DownloadFormat} format - 다운로드할 파일 포맷
  */
 export interface MeetingMinutesDownloadLinkRequestDTO {
   meetingId: string;
-  format: Format;
+  format: DownloadFormat;
 }
 
 /**

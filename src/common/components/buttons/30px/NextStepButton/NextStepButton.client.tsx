@@ -18,7 +18,7 @@ const NextStepButton = ({
   return (
     <button
       className={clsx(
-        'text-bt2-sb bg-primary inline-flex h-[30px] w-[87px] items-center justify-center rounded-[6px] px-[12px] py-[5px] text-white',
+        'text-bt2-sb bg-primary h-30pxr w-87pxr rounded-6pxr px-12pxr py-5pxr inline-flex items-center justify-center text-white',
         (disabled || loading) && 'bg-primary-inactive',
         className,
       )}

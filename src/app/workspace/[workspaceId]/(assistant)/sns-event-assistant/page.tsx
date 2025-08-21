@@ -23,12 +23,14 @@ const SnsEventAssistantDefaultPage = async ({
   const { snsGnbTab } = await searchParams;
 
   const formattedSnsGnbTab = parseEnumOr404(snsGnbTab, SnsGnbTabType, SnsGnbTabType.ALL_EVENTS);
+
   return (
     <section>
       <GnbTop section={GnbSection.SNS_EVENT_ASSISTANT} current={formattedSnsGnbTab} />
       <div className="assistant-wrapper">
         {formattedSnsGnbTab === SnsGnbTabType.ALL_EVENTS ? (
           <>
+            {/* 전체 이벤트 */}
             {/* cta 부분 */}
             {getCtaDescription(FileType.SNS_EVENT_ASSISTANT)}
             <TextCtaWrapper workspaceId={workspaceId} fileType={FileType.SNS_EVENT_ASSISTANT} />
@@ -38,6 +40,7 @@ const SnsEventAssistantDefaultPage = async ({
           </>
         ) : (
           <>
+            {/* SNS 링크 관리 부분 */}
             {/* 리스트 부분 */}
             {getListTitle(SNS_EVENT_ASSISTANT_LINK)}
             <ListHeader fileType={SNS_EVENT_ASSISTANT_LINK} />

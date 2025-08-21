@@ -1,4 +1,5 @@
 export interface TeamMoodReportContentSectionProps {
-  suggestionList: string[];
-  report: string;
+  moodTrackerHashedId: string;
+  workspaceId: string;
+  respondentsNum: number;
 }

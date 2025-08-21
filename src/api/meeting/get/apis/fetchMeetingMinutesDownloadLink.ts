@@ -13,7 +13,7 @@ import {
  *
  * @param {meetingIdRequestDto} params - 요청 파라미터
  * @param {string} params.meetingId - 회의록을 조회할 meeting ID
- * @param {Format} params.format - 다운로드할 회의록 포맷
+ * @param {DownloadFormat} params.format - 다운로드할 회의록 포맷
  */
 const fetchMeetingMinutesDownloadLink = async ({
   meetingId,

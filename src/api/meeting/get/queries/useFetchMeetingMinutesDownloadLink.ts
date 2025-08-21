@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useRef } from 'react';
 
 import { ApiErrorBody } from '@common/types/api.common.types';
-import { Format } from '@common/types/download.enum.types';
+import { DownloadFormat } from '@common/types/download.enum.types';
 
 import queryKeys from '@common/constants/query-key.constants';
 
@@ -16,12 +16,12 @@ import fetchMeetingMinutesDownloadLink from '../apis/fetchMeetingMinutesDownload
  * 특정 회의록 다운로드 링크 가져오는 훅
  */
 const useFetchMeetingMinutesDownloadLink = (meetingId: string) => {
-  // const [fmt, setFmt] = useState<Format | null>(null);
-  const fmtRef = useRef<Format | null>(null);
+  const fmtRef = useRef<DownloadFormat | null>(null);
 
   // 형식을 키에 넣지 말고 'DYNAMIC' 같은 센티널로 고정
   const key = useMemo(
-    () => queryKeys.meetings.downloadLink(meetingId, 'DYNAMIC' as unknown as Format).queryKey,
+    () =>
+      queryKeys.meetings.downloadLink(meetingId, 'DYNAMIC' as unknown as DownloadFormat).queryKey,
     [meetingId],
   );
 
@@ -46,7 +46,7 @@ const useFetchMeetingMinutesDownloadLink = (meetingId: string) => {
   });
 
   const getLink = useCallback(
-    async (format: Format) => {
+    async (format: DownloadFormat) => {
       if (!meetingId) throw new Error('getDownloadLink: Invalid meetingId');
       fmtRef.current = format;
       const { data, error } = await query.refetch();

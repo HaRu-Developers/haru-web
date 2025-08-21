@@ -19,7 +19,7 @@ const IndicatorIcons = ({ state }: IconsCommonProps<IndicatorIconsState>) => {
   switch (state) {
     case IndicatorIconsState.BAR_STEP_1:
       return (
-        <div className="flex items-center justify-center gap-x-[7px]">
+        <div className="gap-x-7pxr flex items-center justify-center">
           <BarIndicator />
           <BarIndicator disabled />
           <BarIndicator disabled />
@@ -27,7 +27,7 @@ const IndicatorIcons = ({ state }: IconsCommonProps<IndicatorIconsState>) => {
       );
     case IndicatorIconsState.BAR_STEP_2:
       return (
-        <div className="flex items-center justify-center gap-x-[7px]">
+        <div className="gap-x-7pxr flex items-center justify-center">
           <BarIndicator />
           <BarIndicator />
           <BarIndicator disabled />
@@ -35,7 +35,7 @@ const IndicatorIcons = ({ state }: IconsCommonProps<IndicatorIconsState>) => {
       );
     case IndicatorIconsState.BAR_STEP_3:
       return (
-        <div className="flex items-center justify-center gap-x-[7px]">
+        <div className="gap-x-7pxr flex items-center justify-center">
           <BarIndicator />
           <BarIndicator />
           <BarIndicator />
@@ -44,13 +44,13 @@ const IndicatorIcons = ({ state }: IconsCommonProps<IndicatorIconsState>) => {
     case IndicatorIconsState.CIRCLE_ENABLED:
       return (
         <div className="flex items-center justify-center">
-          <div className="bg-primary h-[11px] w-[11px] rounded-[100px]" />
+          <div className="bg-primary h-11pxr w-11pxr rounded-100pxr" />
         </div>
       );
     case IndicatorIconsState.CIRCLE_DISABLED:
       return (
         <div className="flex items-center justify-center">
-          <div className="h-[11px] w-[11px] rounded-[100px] bg-[#E6578733]" />
+          <div className="h-11pxr w-11pxr rounded-100pxr bg-[#E6578733]" />
         </div>
       );
     default:

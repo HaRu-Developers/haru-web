@@ -48,6 +48,7 @@ const QuestionOption = ({ questionId, optionId }: QuestionOptionProps) => {
   const handleClick = () => {
     // 설문에 참여하고 있지 않다면 클릭 이벤트를 무시합니다.
     if (!isParticipatingSurvey) return;
+
     if (questionType === InputSurveyQuestionType.CHECKBOX) {
       if (checkedOptionList.includes(currentOption)) {
         handleQuestionOptionCheck(
@@ -133,20 +134,26 @@ const QuestionOption = ({ questionId, optionId }: QuestionOptionProps) => {
         // 설문을 생성하는 경우를 제외하고는 readOnly로 설정합니다.
         readOnly={!isCreatingSurvey}
       />
-      {situation === SurveySituation.CREATING_SURVEY && !isOptionValid ? (
-        <div className="group">
-          <WarningIcon className="flex group-hover:hidden" />
+      {/* 설문 생성 중일 때 */}
+      {situation === SurveySituation.CREATING_SURVEY ? (
+        !isOptionValid ? (
+          // 설문 생성 중이고, 옵션이 유효하지 않은 경우
+          <div className="group">
+            <WarningIcon className="flex group-hover:hidden" />
+            <OptionDeleteButton
+              className="ml-auto hidden group-hover:flex"
+              onClick={() => removeQuestionOption(questionId, optionId)}
+            />
+          </div>
+        ) : (
+          // 설문 생성 중이고, 옵션이 유효한 경우
           <OptionDeleteButton
             className="ml-auto hidden group-hover:flex"
             onClick={() => removeQuestionOption(questionId, optionId)}
           />
-        </div>
-      ) : (
-        <OptionDeleteButton
-          className="ml-auto hidden group-hover:flex"
-          onClick={() => removeQuestionOption(questionId, optionId)}
-        />
-      )}
+        )
+      ) : // 설문을 참여중이지 않은 다른 모든 상태
+      null}
     </div>
   );
 };

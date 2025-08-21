@@ -193,7 +193,7 @@ export const surveyQuestionStore = create<SurveyStoreState & SurveyStoreActions>
        */
       resetQuestionsAndCreatingSurveySituation: () => {
         set({
-          questions: [defaultSurveyQuestion()],
+          questions: [...presetSurveyQuestions],
           surveyComponentUsingSituation: SurveySituation.CREATING_SURVEY,
         });
       },
@@ -423,6 +423,9 @@ export const surveyQuestionStore = create<SurveyStoreState & SurveyStoreActions>
         const q = get().getQuestionById(questionId);
         if (!q) {
           throw new Error(`Question with ID ${questionId} does not exist.`);
+        }
+        if (!q.isQuestionMandatory) {
+          return true; // 필수 문항이 아니면 항상 유효
         }
         // 각 문항이 유효한지 검사
         if (q.questionType === InputSurveyQuestionType.CHOICE) {

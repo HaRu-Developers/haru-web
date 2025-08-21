@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 
 import { ROUTES } from '@common/constants/routes.constants';
 
-import ProtectChildren from '@features/auth/components/protect-routes/ProtectAuthPagesFromLoggedInUser/ProtectAuthPagesFromLoggedInUser.client';
+import ProtectChildren from '@features/auth/components/protect-routes/ProtectChildren/ProtectChildren.client';
 
 const RootRedirectHandler = () => {
   const router = useRouter();

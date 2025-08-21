@@ -13,7 +13,7 @@ import TeamMoodTrackerPageSkeleton from '@features/team-mood-tracker/components/
 const ProtectChildren = ({
   children,
   protectMode,
-  whiteList = [],
+  whitelist = [],
   handleBlockedAccess,
 }: {
   children?: React.ReactNode;
@@ -25,7 +25,7 @@ const ProtectChildren = ({
    * @false 로그인한 사용자는 접근할 수 없는 페이지
    */
   protectMode: boolean;
-  whiteList?: string[];
+  whitelist?: string[];
   handleBlockedAccess?: () => void;
 }) => {
   const pathName = usePathname();
@@ -41,13 +41,25 @@ const ProtectChildren = ({
   const [isMounted, setIsMounted] = useState<boolean>(false);
 
   const isUserAuthenticated = !!user?.accessToken;
-  const isBlockedAccess = protectMode ? !isUserAuthenticated : isUserAuthenticated;
+  // 1. 현재 경로가 화이트리스트에 있는지 먼저 확인합니다.
+  const isWhitelisted = whitelist.includes(pathName);
+
+  // 2. 화이트리스트에 없다면, 그때 protectMode에 따라 접근 차단 여부를 결정합니다.
+  const isBlockedAccess = isWhitelisted
+    ? false // 화이트리스트에 있으면 절대 차단하지 않음
+    : protectMode
+      ? !isUserAuthenticated // protectMode: true => 로그인 안 한 사용자 차단
+      : isUserAuthenticated; // protectMode: false => 로그인 한 사용자 차단
 
   // 2. 컴포넌트가 클라이언트에서 마운트되면 isMounted를 true로 설정
   useEffect(() => {
-    console.log(pathName);
     setIsMounted(true);
   }, []);
+
+  useEffect(() => {
+    console.log('[PROTECT_ROUTE] CURRENT PATH :', pathName);
+    console.log('[PROTECT_ROUTE] IS IN WHITELIST :', whitelist.includes(pathName), whitelist);
+  }, [pathName, whitelist]);
 
   useEffect(() => {
     if (!isMounted) {
@@ -75,11 +87,6 @@ const ProtectChildren = ({
       }
     }
   }, [clearUser, handleBlockedAccess, isBlockedAccess, isMounted, protectMode, router]);
-
-  if (whiteList.includes(pathName)) {
-    // 화이트리스트에 포함된 경로는 보호하지 않음
-    return <>{children}</>;
-  }
 
   if (!isMounted || isBlockedAccess) {
     return (

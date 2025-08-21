@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-import ProtectChildren from '@features/auth/components/protect-routes/ProtectAuthPagesFromLoggedInUser/ProtectAuthPagesFromLoggedInUser.client';
+import ProtectChildren from '@features/auth/components/protect-routes/ProtectChildren/ProtectChildren.client';
 
 export const metadata: Metadata = {
   title: '메인 페이지 - HaRu',

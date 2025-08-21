@@ -13,7 +13,7 @@ import { CalendarSectionProps } from './CalendarSection.types';
 
 const CalendarSection = ({ workspaceId }: CalendarSectionProps) => {
   const router = useRouter();
-  if (!workspaceId || Number.isNaN(workspaceId)) {
+  if (!workspaceId) {
     router.replace(ROUTES.NOT_FOUND);
   }
   const { currentDate, setCurrentDate } = useCalendarStore();

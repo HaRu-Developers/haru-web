@@ -1,3 +1,3 @@
 export interface CalendarSectionProps {
-  workspaceId: number;
+  workspaceId: string;
 }

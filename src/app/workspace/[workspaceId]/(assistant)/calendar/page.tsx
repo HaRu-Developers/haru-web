@@ -9,7 +9,7 @@ const CalendarPage = async ({ params }: workspaceIdTypes) => {
   const { workspaceId } = await params;
   return (
     <div className="mt-36pxr">
-      <CalendarSection workspaceId={Number(workspaceId)} />;
+      <CalendarSection workspaceId={workspaceId} />;
     </div>
   );
 };

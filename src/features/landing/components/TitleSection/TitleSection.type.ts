@@ -6,4 +6,5 @@ export interface TitleSectionProps {
   description?: string;
   isSpacing?: boolean;
   className?: string;
+  isTyping?: boolean;
 }

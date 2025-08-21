@@ -10,7 +10,8 @@ import { CopyButtonProps } from './CopyButton.types';
  * link이 제공되지 않으면 현재 URL을 복사합니다.
  */
 const CopyButton = ({ link, onClick, className, isHoverable = true }: CopyButtonProps) => {
-  const handleClick = () => {
+  const handleClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
     if (link) {
       navigator.clipboard.writeText(link);
     } else {

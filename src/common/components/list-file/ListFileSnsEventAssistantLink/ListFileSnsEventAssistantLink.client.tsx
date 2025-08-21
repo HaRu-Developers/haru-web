@@ -8,8 +8,12 @@ import { FeaturedFileIconsState } from '@icons/FeaturedFileIcons/FeaturedFileIco
 
 import { ROUTES } from '@common/constants/routes.constants';
 
-import BaseListFile from '../BaseListFile/BaseListFile.client';
 import { ListFileSnsEventAssistantLinkProps } from './ListFileSnsEventAssistantLink.types';
+import LinkBaseListFile from '../LinkBaseListFile/LinkBaseListFile.client';
+import LinkText from '@features/sns-event-assistant/components/LinkText/LinkText.client';
+import CopyButton from '@features/sns-event-assistant/components/CopyButton/CopyButton.client';
+import { useToastActions } from '@common/hooks/stores/useToastStore';
+import { ToastType } from '@common/types/toast.types';
 
 const ListFileSnsEventAssistantLink = ({
   snsEventId,
@@ -18,23 +22,24 @@ const ListFileSnsEventAssistantLink = ({
   snsLink,
 }: ListFileSnsEventAssistantLinkProps) => {
   const { workspaceId } = useParams<{ workspaceId: string }>();
+  const { addToast } = useToastActions();
+  const handleCopy = () => {
+    addToast({
+      type: ToastType.SUCCESS,
+      text: '링크가 복사되었습니다.',
+      duration: 2000,
+    });
+  };
+  
   const rightContent = (
     <div className="text-b3-rg w-330pxr gap-3pxr flex cursor-pointer items-center">
-      <FeatureTabIcons state={FeatureTabIconsState.COPY} className="mr-1pxr" />
-      <a
-        href={snsLink}
-        target="_blank"
-        rel="noopener noreferrer"
-        onClick={(e) => e.stopPropagation()}
-        className="text-b3-rg flex cursor-pointer items-center text-black hover:underline"
-      >
-        {snsLink}
-      </a>
+      <CopyButton link={snsLink} isHoverable={false} onClick={handleCopy} />
+      <LinkText text={snsLink} />
     </div>
   );
 
   return (
-    <BaseListFile
+    <LinkBaseListFile
       id={snsEventId}
       title={title}
       subtitle={updatedAt}

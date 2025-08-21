@@ -2,8 +2,11 @@ import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   images: {
-    domains: ['haru-it-bucket.s3.ap-northeast-2.amazonaws.com'], // 이미지 서버에서 받을 때 문제 생겨서 추가했습니다
     remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'haru-it-bucket.s3.ap-northeast-2.amazonaws.com',
+      },
       {
         protocol: 'https',
         hostname: 'picsum.photos',

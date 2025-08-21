@@ -47,8 +47,8 @@ const createChartConfig = (
         },
         y: {
           grid: { display: false },
-          ticks: { display: false },
-          // ticks: { font: { size: 14 }, color: '#111' },
+
+          ticks: { font: { size: 14 }, color: '#111' },
           // 이후 왼쪽에 데이터 레이블을 표기할 수 있을 수도 있으니, 주석처리 해두었습니다.
           border: {
             display: true,

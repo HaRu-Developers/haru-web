@@ -55,6 +55,7 @@ export const ROUTES = {
       data: CreateNewTeamMoodTrackerModalOnNextStepProps,
     ) =>
       `/workspace/${workspaceId}/team-mood-tracker/create?title=${data.title}&description=${data.description}&dueDate=${data.dueDate.toISOString()}&visibility=${data.visibility}`,
+    PARTICIPATE_SURVEY: (moodTrackerHashedId: string) => `/survey/${moodTrackerHashedId}`,
   },
   CALENDAR: (workspaceId: BigintString) => `/workspace/${workspaceId}/calendar`,
 

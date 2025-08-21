@@ -16,11 +16,11 @@ const QuestionOptions = ({ questionId }: QuestionOptionsProps) => {
   const { multipleOrCheckboxOptions: optionList } = question;
 
   return (
-    <>
+    <div className="gap-y-12pxr flex flex-col">
       {optionList.map((option) => (
         <QuestionOption key={option.id} questionId={questionId} optionId={option.id} />
       ))}
-    </>
+    </div>
   );
 };
 

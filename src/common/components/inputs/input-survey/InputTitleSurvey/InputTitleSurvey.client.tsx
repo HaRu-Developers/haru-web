@@ -48,8 +48,8 @@ const InputSurveyQuestionTitle = ({ questionId, className }: InputSurveyQuestion
     >
       <input
         className={clsx('w-full self-stretch text-black placeholder-gray-400 outline-none', {
-          'text-b1-rg': !questionTitle, // 제목이 없을 떄 (placeholder) 의 타이포그래피
-          'text-t5-sb': questionTitle, // 제목이 있을 떄 (입력 중일 때) 의 타이포그래피
+          'text-b1-rg': !questionTitle, // 제목이 없을 때 (placeholder) 의 타이포그래피
+          'text-t5-sb': questionTitle, // 제목이 있을 때 (입력 중일 때) 의 타이포그래피
           'cursor-default': !isCreatingSurvey,
         })}
         value={questionTitle}

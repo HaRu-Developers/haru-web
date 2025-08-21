@@ -81,3 +81,31 @@ export const useTransferQuestionsToCreateSurveyRequestFormat = () => {
 export const useTransferQuestionsToParticipateSurveyRequestFormat = () => {
   return surveyQuestionStore((state) => state.transferQuestionsToParticipateSurveyRequestFormat);
 };
+
+export const useIsSurveyResponseValid = () => {
+  return surveyQuestionStore((state) => state.isSurveyResponseValidWhenParticipating);
+};
+
+export const useIsCreatedSurveyValid = () => {
+  return surveyQuestionStore((state) => state.isCreatedSurveyValid);
+};
+
+export const useIsDuplicateOptionInQuestion = () => {
+  return surveyQuestionStore((state) => state.isDuplicateOptionInQuestion);
+};
+
+export const useIsQuestionValid = () => {
+  return surveyQuestionStore((state) => state.isQuestionValid);
+};
+
+export const useResetQuestionsAndCreatingSurveySituation = () => {
+  return surveyQuestionStore((state) => state.resetQuestionsAndCreatingSurveySituation);
+};
+
+export const useIsQuestionTitleEmptyOrHaveEmptyOptions = () => {
+  return surveyQuestionStore((state) => state.isQuestionHasTitleAndValidOptions);
+};
+
+export const useIsQuestionResponseValidWhenParticipating = () => {
+  return surveyQuestionStore((state) => state.isQuestionResponseValidWhenParticipating);
+};

@@ -2,13 +2,23 @@
 
 import { useEffect, useState } from 'react';
 
+import { useParams, useSearchParams } from 'next/navigation';
+
 import { useViewSurveyQuestion } from '@api/team-mood-tracker/get/queries/useViewSurveyQuestion';
+
+import { ToastType } from '@common/types/toast.types';
+
+import { ROUTES } from '@common/constants/routes.constants';
+
+import { useToastActions } from '@common/hooks/stores/useToastStore';
+import { useMoodTrackerHashedId } from '@common/hooks/useMoodTrackerHashedId';
 
 import SurveyInfo from '@common/components/box-text/SurveyInfo/SurveyInfo.server';
 import InputSurveyQuestion from '@common/components/inputs/input-survey/InputSurveyQuestion/InputSurveyQuestion.client';
 import { SurveySituation } from '@common/components/inputs/input-survey/types/input-survey.common.types';
 
 import {
+  useResetQuestionsAndCreatingSurveySituation,
   useSetQuestionsFromApiFormat,
   useSetSurveyComponentUsingSituation,
   useSurveyQuestion,
@@ -20,21 +30,27 @@ import TeamMoodReportTab from '../../report-section/TeamMoodReportTab/TeamMoodRe
 import { TeamMoodReportTabType } from '../../report-section/TeamMoodReportTab/TeamMoodReportTab.types';
 import { TeamMoodSurveyQuestionSectionProps } from './TeamMoodSurveyQuestionSection.types';
 
-const TeamMoodSurveyQuestionSection = ({
-  moodTrackerHashedId,
-  respondentsNum,
-}: TeamMoodSurveyQuestionSectionProps) => {
+const TeamMoodSurveyQuestionSection = ({ respondentsNum }: TeamMoodSurveyQuestionSectionProps) => {
+  const { moodTrackerHashedId } = useMoodTrackerHashedId();
   const { data, isLoading } = useViewSurveyQuestion(moodTrackerHashedId);
   const setQuestionsFromApi = useSetQuestionsFromApiFormat();
   const questions = useSurveyQuestion();
+  const resetQuestions = useResetQuestionsAndCreatingSurveySituation();
 
   const setSituation = useSetSurveyComponentUsingSituation();
 
   useEffect(() => {
-    setSituation(SurveySituation.PARTICIPATING_SURVEY);
+    setSituation(SurveySituation.VIEW_SURVEY_QUESTIONS);
   }, [setSituation]);
 
+  useEffect(() => {
+    return () => {
+      resetQuestions();
+    };
+  }, []);
+
   const [isApiDataApplied, setIsApiDataApplied] = useState<boolean>(false);
+  const { addToast } = useToastActions();
 
   useEffect(() => {
     if (!isApiDataApplied && !isLoading && data) {
@@ -44,6 +60,22 @@ const TeamMoodSurveyQuestionSection = ({
       setIsApiDataApplied(true);
     }
   }, [data, isApiDataApplied, isLoading, setQuestionsFromApi]);
+
+  const handleCopyClick = async () => {
+    // 링크 클릭 시, 설문조사 목록 페이지로 이동합니다.
+    if (!moodTrackerHashedId) {
+      throw new Error('Mood Tracker Hashed ID is required to participate in the survey.');
+    }
+
+    await navigator.clipboard.writeText(
+      `${window.location.origin}${ROUTES.TEAM_MOOD_TRACKER.PARTICIPATE_SURVEY(moodTrackerHashedId)}`,
+    );
+
+    addToast({
+      text: '설문조사 참여 링크가 클립보드에 복사되었습니다.',
+      type: ToastType.SUCCESS,
+    });
+  };
 
   return (
     <>
@@ -57,7 +89,7 @@ const TeamMoodSurveyQuestionSection = ({
               [TeamMoodReportTabType.ANSWER_SUMMARY]: respondentsNum,
               [TeamMoodReportTabType.SURVEY_LIST]: 0,
             }}
-            // handleLinkClick={handleLinkClick} -> 구현 되어 있지 않음
+            handleFileClick={handleCopyClick}
           />
         </div>
       </div>

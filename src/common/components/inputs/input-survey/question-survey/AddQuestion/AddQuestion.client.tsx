@@ -13,7 +13,7 @@ const AddQuestion = ({
   // isQuestionHaveEtcChoice,
 }: AddQuestionProps) => {
   return (
-    <div className="gap-6pxr text-b3-rg flex items-center self-stretch">
+    <div className="mt-12pxr gap-x-6pxr flex items-center self-stretch">
       {/* 질문 타입에 따라서 아이콘 렌더링을 해줍니다. */}
       <CheckboxIcons
         state={
@@ -23,7 +23,7 @@ const AddQuestion = ({
         }
         className="cursor-pointer select-none"
       />
-      <span className="cursor-pointer text-gray-400" onClick={onOptionAddClick}>
+      <span className="text-b4-rg cursor-pointer text-gray-400" onClick={onOptionAddClick}>
         옵션 추가
       </span>
 

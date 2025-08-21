@@ -6,8 +6,11 @@ import { PublicOrPrivate } from '@api/team-mood-tracker/apis.types';
 import { useCreateSurvey } from '@api/team-mood-tracker/post/mutations/useCreateSurvey';
 
 import { GnbSection } from '@common/types/gnbs.types';
+import { ToastType } from '@common/types/toast.types';
 
 import { ROUTES } from '@common/constants/routes.constants';
+
+import { useToastActions } from '@common/hooks/stores/useToastStore';
 
 import FileCreatedInfo from '@common/components/FileCreatedInfo/FileCreatedInfo.client';
 import GnbTop from '@common/components/gnbs/GnbTop/GnbTop.client';
@@ -19,6 +22,7 @@ import AddQuestionButton from '@buttons/56px/AddQuestionButton/AddQuestionButton
 import { useUser } from '@features/auth/hooks/useAuthStore';
 import {
   useAddSurveyQuestion,
+  useIsCreatedSurveyValid,
   useSurveyQuestion,
   useTransferQuestionsToCreateSurveyRequestFormat,
 } from '@features/team-mood-tracker/hooks/stores/useSurveyQuestionStore';
@@ -37,8 +41,10 @@ const CreateSurveyPage = () => {
   const getQuestions = useSurveyQuestion();
   const addQuestions = useAddSurveyQuestion();
   const getQuestionsToApiFormat = useTransferQuestionsToCreateSurveyRequestFormat();
+  const isCreatedSurveyValid = useIsCreatedSurveyValid();
 
   const user = useUser(); // 파일 생성자는 현재 로그인한 사용자입니다.
+  const { addToast } = useToastActions();
 
   const onCreateSurveyRequest = () => {
     router.push(ROUTES.MODAL.TEAM_MOOD_TRACKER.REQUEST_SURVEY_CREATION(workspaceId));
@@ -48,6 +54,21 @@ const CreateSurveyPage = () => {
   });
 
   const handleWriteComplete = () => {
+    if (!isCreatedSurveyValid()) {
+      addToast({
+        type: ToastType.ERROR,
+        text: '올바르지 않은 형식의 설문입니다.',
+      });
+      addToast({
+        type: ToastType.ERROR,
+        text: '질문이나 선택지는 비어있을 수 없습니다.',
+      });
+      addToast({
+        type: ToastType.ERROR,
+        text: '중복된 선택지는 허용되지 않습니다.',
+      });
+      return;
+    }
     const transferDueDateIntoKstTime = (date: string) => {
       // 페이지에서 입력받은 dueDate는 UTC 기준이므로, KST로 변환합니다.
       const utcDate = new Date(date);
@@ -80,7 +101,10 @@ const CreateSurveyPage = () => {
         onError: (err) => {
           router.back();
           const errMsg = `설문 생성에 실패했습니다: ${err.message}`;
-          alert(errMsg);
+          addToast({
+            text: errMsg,
+            type: ToastType.ERROR,
+          });
           throw new Error(errMsg);
         },
       },
@@ -108,7 +132,7 @@ const CreateSurveyPage = () => {
           {/*설문 문항 생성 / 작성 완료 버튼*/}
           <div className="mt-23pxr mb-13pxr flex w-full flex-row items-center justify-between">
             <CreateSurveyQuestionButton />
-            <WriteCompleteButton onClick={handleWriteComplete} />
+            <WriteCompleteButton disabled={!isCreatedSurveyValid()} onClick={handleWriteComplete} />
           </div>
         </div>
       </div>

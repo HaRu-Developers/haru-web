@@ -5,9 +5,6 @@ import { v4 as uuidv4 } from 'uuid';
 import {
   useAddSurveyQuestionOption,
   useGetSurveyQuestionById,
-  useSetCheckedOptionList,
-  useSetSubjectiveQuestionResponse,
-  useSetSurveyQuestionOption,
   useSurveySituation,
 } from '@features/team-mood-tracker/hooks/stores/useSurveyQuestionStore';
 
@@ -18,10 +15,8 @@ import SubjectQuestion from '../SubjectQuestion/SubjectQuestion.client';
 import { QuestionSurveyProps } from './QuestionSurvey.types';
 
 const QuestionSurvey = ({ questionId }: QuestionSurveyProps) => {
-  const handleOptionListChange = useSetSurveyQuestionOption();
   const handleAddOption = useAddSurveyQuestionOption();
   const getSurveyQuestionById = useGetSurveyQuestionById();
-  const handleQuestionOptionCheck = useSetCheckedOptionList();
   const situation = useSurveySituation();
   const question = getSurveyQuestionById(questionId);
   // assurance guard
@@ -29,7 +24,7 @@ const QuestionSurvey = ({ questionId }: QuestionSurveyProps) => {
     throw new Error('WRONG QUESTION ID'); // 질문이 없을 경우 렌더링하지 않음
   }
 
-  const { questionType, multipleOrCheckboxOptions: optionList } = question;
+  const { questionType } = question;
 
   /**
    * 질문에 새로운 옵션을 추가합니다.

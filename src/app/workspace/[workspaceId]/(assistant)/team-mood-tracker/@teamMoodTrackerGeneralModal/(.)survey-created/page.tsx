@@ -24,8 +24,6 @@ const SurveyCreatedModal = () => {
   const { mutate: sendEmail } = useSendEmail();
   const { addToast } = useToastActions();
 
-  console.log('SurveyCreatedModal rendered');
-
   const query = useSearchParams();
   const moodTrackerHashedId = query.get('moodTrackerHashedId') || '';
   const surveyLink = `https://haru.it.kr/survey/${moodTrackerHashedId}`;

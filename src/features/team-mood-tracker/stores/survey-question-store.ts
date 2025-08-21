@@ -72,23 +72,101 @@ interface SurveyStoreActions {
   transferQuestionsToCreateSurveyRequestFormat: () => CreateSurveyQuestion[];
   setQuestionsFromApiFormat: (questions: GetSurveyQuestionListResponseDto) => void;
   transferQuestionsToParticipateSurveyRequestFormat: () => SurveyQuestionTypeOnPost[];
+  isSurveyResponseValidWhenParticipating: () => boolean;
+  isQuestionResponseValidWhenParticipating: (questionId: string) => boolean;
+  isCreatedSurveyValid: () => boolean;
+  isDuplicateOptionInQuestion: (questionId: string, optionId: string) => boolean;
+  isQuestionValid: (questionId: string) => boolean;
+  isQuestionHasTitleAndValidOptions: (questionId: string) => boolean;
+  resetQuestionsAndCreatingSurveySituation: () => void;
 }
+
+const defaultSurveyQuestion = (): SurveyQuestion => ({
+  id: uuidv4(),
+  questionTitle: '',
+  questionTitlePlaceholder: '문항의 제목을 입력하세요.',
+  questionType: InputSurveyQuestionType.CHOICE,
+  multipleOrCheckboxOptions: [{ id: uuidv4(), content: '' }],
+  isQuestionMandatory: false,
+  checkedOptionList: [],
+  subjectiveQuestionDescription: '',
+});
+
+const presetSurveyQuestions: SurveyQuestion[] = [
+  {
+    id: uuidv4(),
+    questionTitle: '팀의 분위기를 어떻게 느끼시나요?',
+    questionTitlePlaceholder: '문항의 제목을 입력하세요.',
+    questionType: InputSurveyQuestionType.CHOICE,
+    multipleOrCheckboxOptions: [
+      { id: uuidv4(), content: '매우 만족' },
+      { id: uuidv4(), content: '만족' },
+      { id: uuidv4(), content: '보통' },
+      { id: uuidv4(), content: '불만족' },
+      { id: uuidv4(), content: '매우 불만족' },
+    ],
+    isQuestionMandatory: false,
+    checkedOptionList: [],
+    subjectiveQuestionDescription: '',
+  },
+  {
+    id: uuidv4(),
+    questionTitle: '이번 달 업무 분배에 대한 만족도를 선택해 주세요.',
+    questionTitlePlaceholder: '문항의 제목을 입력하세요.',
+    questionType: InputSurveyQuestionType.CHOICE,
+    multipleOrCheckboxOptions: [
+      { id: uuidv4(), content: '매우 만족' },
+      { id: uuidv4(), content: '만족' },
+      { id: uuidv4(), content: '보통' },
+      { id: uuidv4(), content: '불만족' },
+      { id: uuidv4(), content: '매우 불만족' },
+    ],
+    isQuestionMandatory: false,
+    checkedOptionList: [],
+    subjectiveQuestionDescription: '',
+  },
+  {
+    id: uuidv4(),
+    questionTitle: '이번 달에 가장 자주 느낀 감정은 무엇인가요?',
+    questionTitlePlaceholder: '문항의 제목을 입력하세요.',
+    questionType: InputSurveyQuestionType.CHOICE,
+    multipleOrCheckboxOptions: [
+      { id: uuidv4(), content: '성취감' },
+      { id: uuidv4(), content: '즐거움' },
+      { id: uuidv4(), content: '피곤함' },
+      { id: uuidv4(), content: '불안감' },
+      { id: uuidv4(), content: '답답함' },
+      { id: uuidv4(), content: '만족감' },
+      { id: uuidv4(), content: '지루함' },
+    ],
+    isQuestionMandatory: false,
+    checkedOptionList: [],
+    subjectiveQuestionDescription: '',
+  },
+  {
+    id: uuidv4(),
+    questionTitle: '이번 달에 가장 도움이 된 팀 활동이나 이벤트가 있었다면 무엇인가요?',
+    questionTitlePlaceholder: '문항의 제목을 입력하세요.',
+    questionType: InputSurveyQuestionType.CHOICE,
+    multipleOrCheckboxOptions: [
+      { id: uuidv4(), content: '정기 회의' },
+      { id: uuidv4(), content: '온라인 코어 타임' },
+      { id: uuidv4(), content: '친목 활동 (회식, MT 등)' },
+      { id: uuidv4(), content: '위클리 스크럼' },
+      { id: uuidv4(), content: '데일리 스크럼' },
+      { id: uuidv4(), content: '만족감' },
+      { id: uuidv4(), content: 'KPT 회고' },
+    ],
+    isQuestionMandatory: false,
+    checkedOptionList: [],
+    subjectiveQuestionDescription: '',
+  },
+];
 
 export const surveyQuestionStore = create<SurveyStoreState & SurveyStoreActions>()(
   devtools(
     immer((set, get) => ({
-      questions: [
-        {
-          id: uuidv4(),
-          questionTitle: '',
-          questionTitlePlaceholder: '문항의 제목을 입력하세요.',
-          questionType: InputSurveyQuestionType.CHOICE,
-          multipleOrCheckboxOptions: [{ id: uuidv4(), content: '' }],
-          isQuestionMandatory: false,
-          checkedOptionList: [],
-          subjectiveQuestionDescription: '',
-        },
-      ],
+      questions: [...presetSurveyQuestions],
       surveyComponentUsingSituation: SurveySituation.CREATING_SURVEY,
 
       /**
@@ -110,25 +188,24 @@ export const surveyQuestionStore = create<SurveyStoreState & SurveyStoreActions>
         return question.id;
       },
 
+      /**
+       * 질문 목록을 초기화하고, Situation을 CREATING_SURVEY로 설정합니다.
+       */
+      resetQuestionsAndCreatingSurveySituation: () => {
+        set({
+          questions: [...presetSurveyQuestions],
+          surveyComponentUsingSituation: SurveySituation.CREATING_SURVEY,
+        });
+      },
+
       // TODO: 추가되는 질문의 type를 마지막 질문으로 변경
+
       /**
        * 새로운 질문을 추가합니다.
        */
       addQuestion: () =>
         set((state) => ({
-          questions: [
-            ...state.questions,
-            {
-              id: uuidv4(),
-              questionTitle: '',
-              questionTitlePlaceholder: '문항의 제목을 입력하세요.',
-              questionType: InputSurveyQuestionType.CHOICE,
-              multipleOrCheckboxOptions: [{ id: uuidv4(), content: '' }],
-              isQuestionMandatory: false,
-              checkedOptionList: [],
-              subjectiveQuestionDescription: '',
-            },
-          ],
+          questions: [...state.questions, defaultSurveyQuestion()],
         })),
 
       /**
@@ -184,6 +261,9 @@ export const surveyQuestionStore = create<SurveyStoreState & SurveyStoreActions>
           ),
         })),
 
+      /**
+       * questionId에 있는 optionId를 제거합니다.
+       */
       removeOption: (questionId, optionId) =>
         set((state) => ({
           questions: state.questions.map((q) =>
@@ -238,6 +318,9 @@ export const surveyQuestionStore = create<SurveyStoreState & SurveyStoreActions>
           ),
         })),
 
+      /**
+       * questionId에 해당하는 질문의 타입을 설정합니다.
+       */
       setQuestionType: (questionId, questionType) =>
         set((state) => ({
           questions: state.questions.map((q) =>
@@ -247,6 +330,9 @@ export const surveyQuestionStore = create<SurveyStoreState & SurveyStoreActions>
 
       getQuestionById: (questionId) => get().questions.find((q) => q.id === questionId) || null,
 
+      /**
+       * 설문 생성 시에 사용 : 저장되어 있는 설문을 설문 생성 API Request 형식에 맞게 변환합니다.
+       */
       transferQuestionsToCreateSurveyRequestFormat: () => {
         const questions: CreateSurveyQuestion[] = get().questions.map((q) => ({
           title: q.questionTitle,
@@ -258,6 +344,9 @@ export const surveyQuestionStore = create<SurveyStoreState & SurveyStoreActions>
         return questions;
       },
 
+      /**
+       * API Reponse로 받은 questionList를 SurveyQuestion 형식으로 변환합니다.
+       */
       setQuestionsFromApiFormat: (apiData) => {
         const questions = apiData.questionList;
         const formatted = questions.map((q) => {
@@ -286,32 +375,153 @@ export const surveyQuestionStore = create<SurveyStoreState & SurveyStoreActions>
         set({ questions: formatted });
       },
 
+      /**
+       * 사용자가 설문에 참여한 데이터를 API Request 형식에 맞게 변환합니다.
+       */
       transferQuestionsToParticipateSurveyRequestFormat: () => {
-        const questions: SurveyQuestionTypeOnPost[] = get().questions.map((q) => {
-          if (q.questionType === InputSurveyQuestionType.CHOICE) {
-            return {
-              questionId: q.id,
-              type: TeamMoodTrackerSurveyQuestionType.MULTIPLE_CHOICE,
-              multipleChoiceId: q.checkedOptionList.map((opt) => opt.id)[0],
-            };
-          } else if (q.questionType === InputSurveyQuestionType.CHECKBOX) {
-            return {
-              questionId: q.id,
-              type: TeamMoodTrackerSurveyQuestionType.CHECKBOX_CHOICE,
-              checkboxChoiceIdList: q.checkedOptionList.map((opt) => opt.id),
-            };
-          } else if (q.questionType === InputSurveyQuestionType.SUBJECT) {
-            return {
-              questionId: q.id,
-              type: TeamMoodTrackerSurveyQuestionType.SUBJECTIVE,
-              subjectiveAnswer: q.subjectiveQuestionDescription,
-            };
-          } else {
-            throw new Error('FUCKED UP QUESTION TYPE');
-          }
-        });
+        return get()
+          .questions.map((q) => {
+            if (q.questionType === InputSurveyQuestionType.CHOICE) {
+              const trimmedChoiceList = q.checkedOptionList.map((opt) => opt.id);
+              if (trimmedChoiceList.length === 0) return null;
+              return {
+                questionId: q.id,
+                type: TeamMoodTrackerSurveyQuestionType.MULTIPLE_CHOICE,
+                multipleChoiceId: trimmedChoiceList[0],
+              };
+            } else if (q.questionType === InputSurveyQuestionType.CHECKBOX) {
+              return {
+                questionId: q.id,
+                type: TeamMoodTrackerSurveyQuestionType.CHECKBOX_CHOICE,
+                checkboxChoiceIdList: q.checkedOptionList.map((opt) => opt.id),
+              };
+            } else if (q.questionType === InputSurveyQuestionType.SUBJECT) {
+              // 주관식 문항에서 답변이 비어있는 경우 생략
+              if (q.subjectiveQuestionDescription.trim() === '') return null;
+              return {
+                questionId: q.id,
+                type: TeamMoodTrackerSurveyQuestionType.SUBJECTIVE,
+                subjectiveAnswer: q.subjectiveQuestionDescription,
+              };
+            } else {
+              throw new Error('FUCKED UP QUESTION TYPE');
+            }
+          })
+          .filter((q) => q !== null) as SurveyQuestionTypeOnPost[];
+      },
 
-        return questions;
+      /**
+       * 사용자가 설문에 참여할 때, 해당 응답이 유효한지 확인합니다.
+       */
+      isSurveyResponseValidWhenParticipating: () => {
+        return get()
+          .questions.filter((q) => q.isQuestionMandatory) // 필수 문항에 대해서 검사
+          .every((q) => get().isQuestionResponseValidWhenParticipating(q.id));
+      },
+
+      isQuestionResponseValidWhenParticipating: (questionId: string) => {
+        const q = get().getQuestionById(questionId);
+        if (!q) {
+          throw new Error(`Question with ID ${questionId} does not exist.`);
+        }
+        if (!q.isQuestionMandatory) {
+          return true; // 필수 문항이 아니면 항상 유효
+        }
+        // 각 문항이 유효한지 검사
+        if (q.questionType === InputSurveyQuestionType.CHOICE) {
+          return q.checkedOptionList.length > 0; // 객관식 문항은 선택된 옵션이 있어야 함
+        } else if (q.questionType === InputSurveyQuestionType.CHECKBOX) {
+          return q.checkedOptionList.length > 0; // 체크박스 문항은 하나 이상의 선택된 옵션이 있어야 함
+        } else if (q.questionType === InputSurveyQuestionType.SUBJECT) {
+          return q.subjectiveQuestionDescription.trim() !== ''; // 주관식 문항은 답변이 있어야 함
+        }
+        return false;
+      },
+
+      /**
+       * 현재 list 안에 있는 모든 질문이 유효한지 검토합니다.
+       */
+      isCreatedSurveyValid: () => {
+        return get().questions.every((q) => {
+          return get().isQuestionValid(q.id);
+        });
+      },
+
+      /**
+       * 주어진 questionId에서, optionId에 해당하는 것과 동일한 옵션이 question 내에 존재하는지 확인합니다.
+       */
+      isDuplicateOptionInQuestion: (questionId: string, optionId: string) => {
+        const question = get().getQuestionById(questionId);
+        if (!question) {
+          throw new Error(`Question with ID ${questionId} does not exist.`);
+        }
+
+        if (
+          question.questionType === InputSurveyQuestionType.CHOICE ||
+          question.questionType === InputSurveyQuestionType.CHECKBOX
+        ) {
+          const value = question.multipleOrCheckboxOptions.filter((opt) => opt.id === optionId)[0];
+          if (!value.content) return false;
+          // 하나라도 같으면 false를 반환
+          return question.multipleOrCheckboxOptions.some(
+            (option) => option.id !== value.id && option.content === value.content,
+          );
+        }
+
+        return false; // 주관식 문항은 옵션이 없으므로 항상 유효
+      },
+
+      /**
+       * 주어진 질문 ID에 대한 질문이 유효한지 확인합니다.
+       *
+       * 질문의 제목이 비어있지 않은지 & 옵션 중에 비어있는 항목이 있는지 & 옵션 중에 중복이 있는지
+       */
+      isQuestionValid: (questionId: string) => {
+        const q = get().getQuestionById(questionId);
+        if (!q) {
+          throw new Error(`Question with ID ${questionId} does not exist.`);
+        }
+
+        if (
+          q.questionType === InputSurveyQuestionType.CHOICE ||
+          q.questionType === InputSurveyQuestionType.CHECKBOX
+        ) {
+          return (
+            // 질문 제목이 비어 있지 않고
+            get().isQuestionHasTitleAndValidOptions(questionId) &&
+            // 옵션이 비어 있지 않음
+            q.multipleOrCheckboxOptions.every(
+              (options) => !get().isDuplicateOptionInQuestion(q.id, options.id),
+            )
+          ); // 다지선다형 문항은 제목과 옵션이 비어 있지 않아야 함
+        } else if (q.questionType === InputSurveyQuestionType.SUBJECT) {
+          return q.questionTitle.trim() !== ''; // 주관식 문항은 제목이 있어야 함
+        }
+
+        return false; // 기타 문항은 유효하지 않음
+      },
+
+      // 질문 제목이 비어 있거나 옵션이 비어 있는지 확인하는 함수
+      isQuestionHasTitleAndValidOptions: (questionId: string) => {
+        const q = get().getQuestionById(questionId);
+        if (!q) {
+          throw new Error(`Question with ID ${questionId} does not exist.`);
+        }
+
+        if (
+          q.questionType === InputSurveyQuestionType.CHOICE ||
+          q.questionType === InputSurveyQuestionType.CHECKBOX
+        ) {
+          return (
+            q.questionTitle.trim() !== '' &&
+            q.multipleOrCheckboxOptions.length > 0 &&
+            q.multipleOrCheckboxOptions.every((options) => options.content !== '')
+          ); // 다지선다형 문항은 제목과 옵션이 비어 있지 있어야 함
+        } else if (q.questionType === InputSurveyQuestionType.SUBJECT) {
+          return q.questionTitle.trim() !== ''; // 주관식 문항은 제목이 있어야 함
+        }
+
+        return false; // 기타 문항은 유효하지 않음
       },
     })),
     { name: 'SurveyQuestionStore' },

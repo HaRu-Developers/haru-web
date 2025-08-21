@@ -16,8 +16,10 @@ import { OnboardingToastType } from '@features/on-boarding/types/OnboardingToast
 import { useOnboardingToastActions } from '@features/on-boarding/hooks/stores/useOnboardingToastStore';
 
 import { useLinkInstagramMutation } from '@/api/on-boarding/post/mutations/useLinkInstagramMutation';
+import { InstagramRedirectType } from '@common/types/instagram.enum.types';
 
 const InstagramCallBackClient = () => {
+  const instagramRedirectType = InstagramRedirectType.WORKSPACE;
   const router = useRouter();
   const queryClient = useQueryClient();
   const searchParams = useSearchParams();
@@ -44,7 +46,7 @@ const InstagramCallBackClient = () => {
     }
 
     linkInstagram(
-      { workspaceId: workspaceId, code },
+      { workspaceId, instagramRedirectType, code },
       {
         onSuccess: (data) => {
           // 1. 연동 시 쿼리 클라이언트 제거

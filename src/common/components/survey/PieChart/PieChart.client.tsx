@@ -24,7 +24,11 @@ const PieChart = ({ data, title }: PieChartProps) => {
       chartInstanceRef.current.destroy();
     }
 
-    const config = getPieChartConfig(data);
+    const config = getPieChartConfig({
+      labels: data.chartLabels,
+      values: data.chartValues,
+      colors: data.chartColors,
+    });
 
     chartInstanceRef.current = new Chart(ctx, config);
 
@@ -35,15 +39,15 @@ const PieChart = ({ data, title }: PieChartProps) => {
 
   return (
     <ChartContainer title={title}>
-      <div className="flex h-60 w-75 items-start">
+      <div className="flex min-w-75 items-start">
         <canvas ref={chartRef} />
       </div>
-      <div className="mt-5 flex justify-center gap-x-3">
-        {data.labels.map((label, index) => (
+      <div className="mt-5 flex flex-wrap justify-start gap-x-3">
+        {data.legendLabels.map((label, index) => (
           <div key={label} className="flex items-center gap-2">
             <span
-              className="h-3.5 w-3.5 rounded-full"
-              style={{ backgroundColor: data.colors[index] }}
+              className="h-3.5 w-3.5 flex-shrink-0 rounded-full"
+              style={{ backgroundColor: data.legendColors[index] }}
             />
             <span className="text-cap1-rg text-black">{label}</span>
           </div>

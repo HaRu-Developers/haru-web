@@ -61,7 +61,7 @@ const QuestionOption = ({ questionId, optionId }: QuestionOptionProps) => {
   };
 
   const optionNameChange = (value: string) => {
-    if (isCreatingSurvey) return; // 설문을 생성하는 상황이 아닐 경우 변경하지 않습니다.
+    if (!isCreatingSurvey) return; // 설문을 생성하는 상황이 아닐 경우 변경하지 않습니다.
     handleOptionListChange(
       questionId,
       optionList.map((option) => {

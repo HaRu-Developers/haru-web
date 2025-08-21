@@ -72,6 +72,9 @@ interface SurveyStoreActions {
   transferQuestionsToCreateSurveyRequestFormat: () => CreateSurveyQuestion[];
   setQuestionsFromApiFormat: (questions: GetSurveyQuestionListResponseDto) => void;
   transferQuestionsToParticipateSurveyRequestFormat: () => SurveyQuestionTypeOnPost[];
+  isSurveyResponseValid: () => boolean;
+  isCreatedSurveyValid: () => boolean;
+  isDuplicateOptionInQuestion: (questionId: string, optionId: string) => boolean;
 }
 
 export const surveyQuestionStore = create<SurveyStoreState & SurveyStoreActions>()(
@@ -287,31 +290,91 @@ export const surveyQuestionStore = create<SurveyStoreState & SurveyStoreActions>
       },
 
       transferQuestionsToParticipateSurveyRequestFormat: () => {
-        const questions: SurveyQuestionTypeOnPost[] = get().questions.map((q) => {
-          if (q.questionType === InputSurveyQuestionType.CHOICE) {
-            return {
-              questionId: q.id,
-              type: TeamMoodTrackerSurveyQuestionType.MULTIPLE_CHOICE,
-              multipleChoiceId: q.checkedOptionList.map((opt) => opt.id)[0],
-            };
-          } else if (q.questionType === InputSurveyQuestionType.CHECKBOX) {
-            return {
-              questionId: q.id,
-              type: TeamMoodTrackerSurveyQuestionType.CHECKBOX_CHOICE,
-              checkboxChoiceIdList: q.checkedOptionList.map((opt) => opt.id),
-            };
-          } else if (q.questionType === InputSurveyQuestionType.SUBJECT) {
-            return {
-              questionId: q.id,
-              type: TeamMoodTrackerSurveyQuestionType.SUBJECTIVE,
-              subjectiveAnswer: q.subjectiveQuestionDescription,
-            };
-          } else {
-            throw new Error('FUCKED UP QUESTION TYPE');
-          }
-        });
+        return get()
+          .questions.map((q) => {
+            if (q.questionType === InputSurveyQuestionType.CHOICE) {
+              const trimmedChoiceList = q.checkedOptionList.map((opt) => opt.id);
+              if (trimmedChoiceList.length === 0) return null;
+              return {
+                questionId: q.id,
+                type: TeamMoodTrackerSurveyQuestionType.MULTIPLE_CHOICE,
+                multipleChoiceId: trimmedChoiceList[0],
+              };
+            } else if (q.questionType === InputSurveyQuestionType.CHECKBOX) {
+              return {
+                questionId: q.id,
+                type: TeamMoodTrackerSurveyQuestionType.CHECKBOX_CHOICE,
+                checkboxChoiceIdList: q.checkedOptionList.map((opt) => opt.id),
+              };
+            } else if (q.questionType === InputSurveyQuestionType.SUBJECT) {
+              // 주관식 문항에서 답변이 비어있는 경우 생략
+              if (q.subjectiveQuestionDescription.trim() === '') return null;
+              return {
+                questionId: q.id,
+                type: TeamMoodTrackerSurveyQuestionType.SUBJECTIVE,
+                subjectiveAnswer: q.subjectiveQuestionDescription,
+              };
+            } else {
+              throw new Error('FUCKED UP QUESTION TYPE');
+            }
+          })
+          .filter((q) => q !== null) as SurveyQuestionTypeOnPost[];
+      },
 
-        return questions;
+      isSurveyResponseValid: () => {
+        return get()
+          .questions.filter((q) => q.isQuestionMandatory) // 필수 문항에 대해서 검사
+          .every((q) => {
+            // 각 문항이 유효한지 검사
+            if (q.questionType === InputSurveyQuestionType.CHOICE) {
+              return q.checkedOptionList.length > 0; // 객관식 문항은 선택된 옵션이 있어야 함
+            } else if (q.questionType === InputSurveyQuestionType.CHECKBOX) {
+              return q.checkedOptionList.length > 0; // 체크박스 문항은 하나 이상의 선택된 옵션이 있어야 함
+            } else if (q.questionType === InputSurveyQuestionType.SUBJECT) {
+              return q.subjectiveQuestionDescription.trim() !== ''; // 주관식 문항은 답변이 있어야 함
+            }
+            return false;
+          });
+      },
+
+      isCreatedSurveyValid: () => {
+        return get().questions.every((q) => {
+          // 각 문항이 유효한지 검사
+          if (
+            q.questionType === InputSurveyQuestionType.CHOICE ||
+            q.questionType === InputSurveyQuestionType.CHECKBOX
+          ) {
+            return (
+              q.questionTitle.trim() !== '' &&
+              q.multipleOrCheckboxOptions.length > 0 &&
+              q.multipleOrCheckboxOptions.every((options) => options.content !== '')
+            ); // 다지선다형 문항은 제목과 옵션이 비어 있지 있어야 함
+          } else if (q.questionType === InputSurveyQuestionType.SUBJECT) {
+            return q.questionTitle.trim() !== ''; // 주관식 문항은 제목이 있어야 함
+          }
+          return false;
+        });
+      },
+
+      isDuplicateOptionInQuestion: (questionId: string, optionId: string) => {
+        const question = get().getQuestionById(questionId);
+        if (!question) {
+          throw new Error(`Question with ID ${questionId} does not exist.`);
+        }
+
+        if (
+          question.questionType === InputSurveyQuestionType.CHOICE ||
+          question.questionType === InputSurveyQuestionType.CHECKBOX
+        ) {
+          const value = question.multipleOrCheckboxOptions.filter((opt) => opt.id === optionId)[0];
+          if (!value.content) return false;
+          // 하나라도 같으면 false를 반환
+          return question.multipleOrCheckboxOptions.some(
+            (option) => option.id !== value.id && option.content === value.content,
+          );
+        }
+
+        return false; // 주관식 문항은 옵션이 없으므로 항상 유효
       },
     })),
     { name: 'SurveyQuestionStore' },

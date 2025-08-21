@@ -7,14 +7,8 @@ import SelectBoxOption from '@common/components/select-box/SelectBoxOption/Selec
 
 import {
   useGetSurveyQuestionById,
-  useRemoveSurveyQuestion,
-  useSetCheckedOptionList,
-  useSetSubjectiveQuestionResponse,
-  useSetSurveyQuestionOption,
-  useSetSurveyQuestionTitle,
   useSetSurveyQuestionType,
   useSurveySituation,
-  useToggleIsQuestionMandatory,
 } from '@features/team-mood-tracker/hooks/stores/useSurveyQuestionStore';
 
 import QuestionSurvey from '../question-survey/QuestionSurvey/QuestionSurvey.client';
@@ -28,13 +22,7 @@ const InputSurveyQuestion = ({ questionId }: InputSurveyQuestionProps) => {
     { state: InputSurveyQuestionType.SUBJECT, label: '주관식 질문' },
   ];
 
-  const handleQuestionTitleChange = useSetSurveyQuestionTitle();
   const handleQuestionTypeChange = useSetSurveyQuestionType();
-  const handleToggleIsMandatory = useToggleIsQuestionMandatory();
-  const handleQuestionDelete = useRemoveSurveyQuestion();
-  const handleOptionListChange = useSetSurveyQuestionOption();
-  const handleSubjectiveQuestionResponseChange = useSetSubjectiveQuestionResponse();
-  const handleQuestionOptionCheck = useSetCheckedOptionList();
   const situation = useSurveySituation();
 
   const getSurveyQuestionById = useGetSurveyQuestionById();
@@ -44,14 +32,7 @@ const InputSurveyQuestion = ({ questionId }: InputSurveyQuestionProps) => {
     throw new Error('WRONG QUESTION ID'); // 질문이 없을 경우 렌더링하지 않음
   }
 
-  const {
-    questionTitle,
-    questionTitlePlaceholder,
-    questionType,
-    multipleOrCheckboxOptions = [''],
-    subjectiveQuestionDescription,
-    isQuestionMandatory = false,
-  } = question;
+  const { questionType } = question;
 
   /**
    * 설문조사 질문 타입 변경 핸들러

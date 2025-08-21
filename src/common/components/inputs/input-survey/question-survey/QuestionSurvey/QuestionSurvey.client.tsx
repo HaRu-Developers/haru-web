@@ -29,7 +29,7 @@ const QuestionSurvey = ({ questionId }: QuestionSurveyProps) => {
     throw new Error('WRONG QUESTION ID'); // 질문이 없을 경우 렌더링하지 않음
   }
 
-  const { questionType, multipleOrCheckboxOptions: optionList } = question;
+  const { questionType } = question;
 
   /**
    * 질문에 새로운 옵션을 추가합니다.

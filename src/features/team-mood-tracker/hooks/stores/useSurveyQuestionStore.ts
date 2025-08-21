@@ -81,3 +81,15 @@ export const useTransferQuestionsToCreateSurveyRequestFormat = () => {
 export const useTransferQuestionsToParticipateSurveyRequestFormat = () => {
   return surveyQuestionStore((state) => state.transferQuestionsToParticipateSurveyRequestFormat);
 };
+
+export const useIsSurveyResponseValid = () => {
+  return surveyQuestionStore((state) => state.isSurveyResponseValid);
+};
+
+export const useIsCreatedSurveyValid = () => {
+  return surveyQuestionStore((state) => state.isCreatedSurveyValid);
+};
+
+export const useIsDuplicateOptionInQuestion = () => {
+  return surveyQuestionStore((state) => state.isDuplicateOptionInQuestion);
+};

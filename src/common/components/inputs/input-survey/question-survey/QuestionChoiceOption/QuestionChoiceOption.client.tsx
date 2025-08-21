@@ -1,5 +1,7 @@
 'use client';
 
+import { useState } from 'react';
+
 import { clsx } from 'clsx';
 
 import CheckboxIcons from '@icons/CheckboxIcons/CheckboxIcons';
@@ -7,19 +9,26 @@ import { CheckboxIconsState } from '@icons/CheckboxIcons/CheckboxIcons.types';
 
 import {
   useGetSurveyQuestionById,
+  useIsDuplicateOptionInQuestion,
+  useRemoveSurveyQuestionOption,
   useSetCheckedOptionList,
   useSetSurveyQuestionOption,
   useSurveySituation,
 } from '@features/team-mood-tracker/hooks/stores/useSurveyQuestionStore';
 
+import OptionDeleteButton from '@features/team-mood-tracker/components/create-survey-page/OptionDeleteButton/OptionDeleteButton.client';
+
 import { InputSurveyQuestionType, SurveySituation } from '../../types/input-survey.common.types';
 import { QuestionOptionProps } from './QuestionChoiceOption.types';
 
 const QuestionOption = ({ questionId, optionId }: QuestionOptionProps) => {
+  const [isOptionValid, setIsOptionValid] = useState<boolean>(true);
   const situation = useSurveySituation();
   const getSurveyQuestionById = useGetSurveyQuestionById();
   const handleQuestionOptionCheck = useSetCheckedOptionList();
   const handleOptionListChange = useSetSurveyQuestionOption();
+  const removeQuestionOption = useRemoveSurveyQuestionOption();
+  const checkDuplicateOption = useIsDuplicateOptionInQuestion();
   const question = getSurveyQuestionById(questionId);
   // assurance guard
   if (!question) {
@@ -89,8 +98,25 @@ const QuestionOption = ({ questionId, optionId }: QuestionOptionProps) => {
     throw new Error('WRONG QUESTION TYPE'); // 잘못된 질문 타입
   };
 
+  const handleOptionNameChange = (value: string) => {
+    optionNameChange(value);
+    // value가 없을 떄는 무조건 valid여야 함
+    if (!value) {
+      return setIsOptionValid(true);
+    }
+    setIsOptionValid(!checkDuplicateOption(questionId, optionId));
+
+    console.log('isOptionValid:', !checkDuplicateOption(questionId, optionId));
+  };
+
   return (
-    <div key={questionId} className="gap-6pxr flex items-center">
+    <div
+      key={questionId}
+      className={clsx(
+        'group gap-6pxr rounded-4pxr flex w-full items-center border',
+        !isOptionValid ? 'border-system-red' : 'border-transparent',
+      )}
+    >
       <div onClick={handleClick}>
         <CheckboxIcons
           state={iconState()}
@@ -107,9 +133,13 @@ const QuestionOption = ({ questionId, optionId }: QuestionOptionProps) => {
         )}
         value={currentOption.content}
         placeholder={`옵션 ${optionList.indexOf(currentOption) + 1}`}
-        onChange={(e) => optionNameChange(e.target.value)}
+        onChange={(e) => handleOptionNameChange(e.target.value)}
         // 설문을 생성하는 경우를 제외하고는 readOnly로 설정합니다.
         readOnly={!isCreatingSurvey}
+      />
+      <OptionDeleteButton
+        className="ml-auto hidden group-hover:flex"
+        onClick={() => removeQuestionOption(questionId, optionId)}
       />
     </div>
   );

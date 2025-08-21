@@ -7,6 +7,8 @@ import { ListHeaderProps } from './ListHeader.types';
  * 리스트 컬럼명 부분
  */
 const ListHeader = ({ fileType }: ListHeaderProps) => {
+  // TODO: 이건 뭐에요?
+
   const getCtaDescription = (fileType: ExtendedFileType) => {
     switch (fileType) {
       case FileType.AI_MEETING_MANAGER:

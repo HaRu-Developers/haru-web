@@ -117,11 +117,9 @@ export const useModifyMoodTrackerTitleMutation = () => {
      * 해당 훅이 사용되는 페이지에서 낙관적 업데이트를 극대화 하기 위해 주석처리합니다.
      */
 
-    /*onSettled: (data, error, variables) => {
-      // 6. detail 키를 무효화합니다.
-      //    이 키는 report 키의 상위 키이므로, surveyResponse와 reportResponse 데이터 모두를 서버로부터 다시 불러와 데이터 정합성을 100% 보장합니다.
-      queryClient.invalidateQueries(queryKeys.moodTracker.detail(variables.moodTrackerHashedId));
+    onSettled: (data, error, variables) => {
+      // GNB Left reload - 최신화
+      queryClient.invalidateQueries(queryKeys.workspaces.recentDocuments(workspaceId));
     },
-    */
   });
 };

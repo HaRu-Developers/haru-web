@@ -11,7 +11,7 @@ const CompleteSelectButton = ({ onClick, ...props }: ButtonsCommonProps) => {
   return (
     <button
       className={clsx(
-        'text-bt2-sb bg-primary inline-flex h-[32px] w-[75px] items-center justify-center rounded-[6px] px-[12px] py-[8px] text-white',
+        'text-bt2-sb bg-primary h-32pxr w-75pxr rounded-6pxr px-12pxr py-8pxr inline-flex items-center justify-center text-white',
       )}
       onClick={onClick}
       {...props}

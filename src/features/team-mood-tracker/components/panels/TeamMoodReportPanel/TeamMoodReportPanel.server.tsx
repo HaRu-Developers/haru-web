@@ -1,4 +1,5 @@
-import { TeamMoodReportTabType } from '../../tabs/TeamMoodReportTab/TeamMoodReportTab.types';
+import { TeamMoodReportTabType } from '@features/team-mood-tracker/components/mood-reports/report-section/TeamMoodReportTab/TeamMoodReportTab.types';
+
 import { TeamMoodReportPanelProps } from './TeamMoodReportPanel.types';
 import AnswerSummary from './components/AnswerSummary/AnswerSummary.server';
 import SurveyList from './components/SurveyList/SurveyList.server';

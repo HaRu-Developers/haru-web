@@ -8,38 +8,24 @@ import Typed from 'typed.js';
 import { TitleSectionProps } from './TitleSection.type';
 
 const TitleSection = forwardRef<HTMLDivElement, TitleSectionProps>(
-  ({ title1, title2, title3, inView, description, isSpacing = false, className }, ref) => {
+  ({ title1, title2, title3, inView, description, isSpacing = false, className, isTyping = false }, ref) => {
     const el1 = useRef(null);
     const el2 = useRef(null);
     const el3 = useRef(null);
-    const el4 = useRef(null);
 
     useEffect(() => {
       let typed1: Typed | undefined;
       let typed2: Typed | undefined;
       let typed3: Typed | undefined;
-      let typed4: Typed | undefined;
 
       if (inView) {
-        const createTyped4 = () => {
-          if (el4.current && description) {
-            typed4 = new Typed(el4.current, {
-              strings: [description],
-              typeSpeed: 20,
-            });
-          }
-        };
-
         const createTyped3 = () => {
           if (el3.current && title3) {
             typed3 = new Typed(el3.current, {
               strings: [title3],
               cursorChar: '',
               typeSpeed: 30,
-              onComplete: createTyped4,
             });
-          } else {
-            createTyped4();
           }
         };
 
@@ -72,7 +58,6 @@ const TitleSection = forwardRef<HTMLDivElement, TitleSectionProps>(
         if (typed1) typed1.destroy();
         if (typed2) typed2.destroy();
         if (typed3) typed3.destroy();
-        if (typed4) typed4.destroy();
       };
     }, [inView, title1, title2, title3, description]);
 
@@ -84,15 +69,15 @@ const TitleSection = forwardRef<HTMLDivElement, TitleSectionProps>(
             'flex-row': !isSpacing,
           })}
         >
-          {title1 && <span className="mr-10pxr text-black" ref={el1}></span>}
+          {title1 && <span className="mr-10pxr text-black" ref={isTyping ? el1 : undefined}>{isTyping ? null : title1}</span>}
           <div>
-            {title2 && <span className="text-primary" ref={el2}></span>}
-            {title3 && <span ref={el3}></span>}
+            {title2 && <span className="text-primary" ref={isTyping ? el2 : undefined}>{isTyping ? null : title2}</span>}
+            {title3 && <span ref={isTyping ? el3 : undefined}>{isTyping ? null : title3}</span>}
           </div>
         </div>
         {description && (
           <div className="text-t4-rg text-gray-200">
-            <span ref={el4}></span>
+            <span>{description}</span>
           </div>
         )}
       </div>

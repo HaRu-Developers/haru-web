@@ -1,3 +1,5 @@
+import { Suspense } from 'react';
+
 import GoogleLoginButton from '@common/components/buttons/48px/GoogleLoginButton/GoogleLoginButton.client';
 
 import DdoneunDivider from '@features/auth/components/DdoneunDivider/DdoneunDivider.server';
@@ -15,7 +17,10 @@ const RegisterPage = () => {
       {/* 또는 */}
       <DdoneunDivider className="my-24pxr" />
       {/* 폼 : 이메일, 이름, 비밀번호, 비밀번호 확인 */}
-      <RegisterForm />
+      {/* 추후 fallback은 스켈레톤으로 대체 해도 됨 */}
+      <Suspense fallback={<div>로딩중...</div>}>
+        <RegisterForm />
+      </Suspense>
       {/* 로그인 페이지 이동 버튼 */}
       <AlreadyHaveAccountButton />
     </div>

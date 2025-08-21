@@ -15,7 +15,7 @@ const LandingIntroduction = ({ className }: LandingIntroductionProps) => {
   const titleContainClass = 'pb-20pxr border-stroke-200 flex w-full justify-between border-b';
   const blackTextClass = 'text-t5-sb text-black';
   const grayTextClass = 'text-gray-200 text-b2-rg';
-  const { ref: titleRef, inView: titleInView } = useInView({ triggerOnce: true, threshold: 0.1 });
+  const { ref: titleRef, inView: titleInView } = useInView({ triggerOnce: true, threshold: 0.4 });
   const { ref: descriptionRef, inView: descriptionInview } = useInView({
     triggerOnce: true,
     threshold: 0.4,
@@ -32,11 +32,13 @@ const LandingIntroduction = ({ className }: LandingIntroductionProps) => {
         inView={titleInView}
         title2="HaRu"
         title3="는 무슨 뜻인가요?"
-        className="h-64pxr"
+        className={clsx('h-64pxr animate-delay-0 opacity-0', {
+          'animate-fade-in-up-and-delay': titleInView,
+        })}
       />
       <div className="flex" ref={descriptionRef}>
         <div
-          className={clsx('mr-52pxr w-322pxr animate-delay-0 opacity-0', meanContainClass, {
+          className={clsx('mr-52pxr w-322pxr animate-delay-100 opacity-0', meanContainClass, {
             'animate-fade-in-up-and-delay': descriptionInview,
           })}
         >

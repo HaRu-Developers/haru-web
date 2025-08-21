@@ -1,4 +1,4 @@
-import { notFound, useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
@@ -8,6 +8,7 @@ import { ApiErrorBody } from '@common/types/api.common.types';
 
 import { API_ERROR_CODES } from '@common/constants/api-error-codes.constants';
 import queryKeys from '@common/constants/query-key.constants';
+import { ROUTES } from '@common/constants/routes.constants';
 
 import { ApiError } from '@common/errors/ApiError';
 
@@ -20,8 +21,11 @@ import { UpdateSnsEvent } from '../apis/update-sns-event';
  * @param {string} mutationVariables.title - 수정할 새로운 이벤트 제목입니다.
  */
 const useUpdateSnsEventMutation = () => {
+  const router = useRouter();
+
   const queryClient = useQueryClient();
   const { snsEventId } = useParams<{ snsEventId: string }>();
+
   return useMutation<
     unknown, // TData
     ApiError<ApiErrorBody>, // TError
@@ -35,7 +39,7 @@ const useUpdateSnsEventMutation = () => {
     },
     onError: (error) => {
       if (error.code === API_ERROR_CODES.SNS_EVENT.NOT_FOUND) {
-        notFound();
+        router.replace(ROUTES.NOT_FOUND);
       }
     },
   });

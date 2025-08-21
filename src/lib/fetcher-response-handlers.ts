@@ -65,6 +65,8 @@ export const handleResponseError = async (
   if (contentType?.includes('application/json')) {
     try {
       responseBody = JSON.parse(rawText) as ApiErrorBody;
+      // TODO: DELETE IN PROD
+      console.log('[FETCHER_HANDLER] API Error Response:', responseBody);
     } catch {
       // 파싱 실패시 문자열 유지
     }

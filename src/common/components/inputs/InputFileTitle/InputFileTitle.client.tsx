@@ -130,9 +130,9 @@ const InputFileTitle = ({
       onBlur={handleBlur}
       onClick={onClick}
       className={clsx(
-        'w-692pxr h-36pxr rounded-4pxr border px-2 text-t1-sb flex items-center bg-white py-0.5 text-black outline-none focus:outline-none',
+        'w-692pxr h-36pxr rounded-4pxr text-t1-sb flex items-center border bg-white px-2 py-0.5 text-black outline-none focus:outline-none',
         { 'border-stroke-100 px-2': mode === InputFileTitleMode.EDITABLE },
-        { 'hover:bg-gray-600 border-transparent': mode === InputFileTitleMode.DEFAULT },
+        { 'border-transparent hover:bg-gray-600': mode === InputFileTitleMode.DEFAULT },
       )}
       readOnly={mode !== InputFileTitleMode.EDITABLE}
       autoFocus={mode === InputFileTitleMode.EDITABLE}

@@ -8,17 +8,47 @@ import LandingBannerIcons from '@icons/LandingBannerIcons/LandingBannerIcons';
 import { LandingBannerIconsState } from '@icons/LandingBannerIcons/LandingBannerIcons.types';
 
 const TitleDisplay = () => {
-  const el = useRef<HTMLSpanElement>(null);
-
+  const el1 = useRef<HTMLSpanElement>(null);
+  const el2 = useRef<HTMLSpanElement>(null);
+  const el3 = useRef<HTMLSpanElement>(null);
+  
   useEffect(() => {
-    if (el.current) {
-      const typed = new Typed(el.current, {
+    let typed1: Typed | undefined;
+    let typed2: Typed | undefined;
+    let typed3: Typed | undefined;
+
+    const createTyped3 = () => {
+      if (el3.current) {
+        typed3 = new Typed(el3.current, {
+          strings: ['HaRu'],
+          cursorChar: '',
+          typeSpeed: 30,
+        });
+      }
+    }
+
+    const createTyped2 = () => {
+      if (el2.current) {
+        typed2 = new Typed(el2.current, {
+          strings: ['운영 관리 플랫폼,'],
+          cursorChar: '',
+          typeSpeed: 30,
+          onComplete: createTyped3,
+        });
+      }
+    }
+
+    if (el1.current) {
+      typed1 = new Typed(el1.current, {
         strings: ['소규모 팀을 위한 All-In-One'],
         cursorChar: '',
         typeSpeed: 30,
+        onComplete: createTyped2,
       });
       return () => {
-        typed.destroy();
+        if (typed1) typed1.destroy();
+        if (typed2) typed2.destroy();
+        if (typed3) typed3.destroy();
       };
     }
   }, []);
@@ -29,12 +59,11 @@ const TitleDisplay = () => {
         state={LandingBannerIconsState.UNDERBAR}
         className="top-76pxr ml-435pxr animate-clip-path-left absolute"
       />
-      <span className="h-84pxr text-black" ref={el}></span>
+      <span className="h-84pxr text-black" ref={el1}></span>
       <div>
-        <span className="animate-fade-in-color animate-delay-300 text-black">
-          운영 관리 플랫폼,{' '}
+        <span className="text-black" ref={el2}>
         </span>
-        <span className="text-primary animate-fade-in-color animate-delay-500">Haru</span>
+        <span className="pl-8pxr text-primary" ref={el3}></span>
       </div>
     </div>
   );

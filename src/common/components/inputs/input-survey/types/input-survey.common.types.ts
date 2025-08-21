@@ -1,7 +1,17 @@
-export enum SurveyVisibility {
-  // 벡엔드와 동일
-  PUBLIC = 'PUBLIC',
-  PRIVATE = 'PRIVATE',
+/**
+ * InputSurvey 컴포넌트가 어떤 상황에 쓰이는지를 구분해줍니다.
+ *
+ * PUBLIC : 문항 조회 및 설문 참여 시
+ *
+ * PRIVATE : 질문 생성 시
+ */
+export enum SurveySituation {
+  // 문항 조회 및 설문 참여 시
+  PARTICIPATING_SURVEY = 'PARTICIPATING_SURVEY',
+  // 질문 생성 시
+  CREATING_SURVEY = 'CREATING_SURVEY',
+  // 질문 조회 시
+  VIEW_SURVEY_QUESTIONS = 'VIEW_SURVEY_QUESTIONS',
 }
 
 export enum InputSurveyQuestionType {

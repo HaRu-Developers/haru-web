@@ -2,8 +2,6 @@ import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 
-import { useGetUserInfo } from '@api/user/hooks/queries/useGetUserInfo';
-
 // TODO: BE 구현 후에 Optional 전부 제거하기
 interface User {
   id?: string;

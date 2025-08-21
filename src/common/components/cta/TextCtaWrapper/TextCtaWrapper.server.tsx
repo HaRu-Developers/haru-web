@@ -18,7 +18,7 @@ const TextCtaWrapper = ({ fileType, workspaceId }: TextCtaWrapperProps) => {
   }
 
   return href ? (
-    <Link href={href}>
+    <Link href={href} className="inline-block w-fit">
       <TextCta type={fileType} disabled={false} />
     </Link>
   ) : (

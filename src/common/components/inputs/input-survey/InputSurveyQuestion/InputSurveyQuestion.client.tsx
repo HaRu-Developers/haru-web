@@ -71,7 +71,7 @@ const InputSurveyQuestion = ({ questionId }: InputSurveyQuestionProps) => {
         ? isQuestionResponseValid(questionId)
         : true;
 
-  console.log('isQuestionStatusValid', isQuestionStatusValid);
+  // console.log('isQuestionStatusValid', isQuestionStatusValid);
 
   const getSurveyQuestionById = useGetSurveyQuestionById();
   const question = getSurveyQuestionById(questionId);

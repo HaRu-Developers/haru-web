@@ -92,10 +92,81 @@ const defaultSurveyQuestion = (): SurveyQuestion => ({
   subjectiveQuestionDescription: '',
 });
 
+const presetSurveyQuestions: SurveyQuestion[] = [
+  {
+    id: uuidv4(),
+    questionTitle: '팀의 분위기를 어떻게 느끼시나요?',
+    questionTitlePlaceholder: '문항의 제목을 입력하세요.',
+    questionType: InputSurveyQuestionType.CHOICE,
+    multipleOrCheckboxOptions: [
+      { id: uuidv4(), content: '매우 만족' },
+      { id: uuidv4(), content: '만족' },
+      { id: uuidv4(), content: '보통' },
+      { id: uuidv4(), content: '불만족' },
+      { id: uuidv4(), content: '매우 불만족' },
+    ],
+    isQuestionMandatory: false,
+    checkedOptionList: [],
+    subjectiveQuestionDescription: '',
+  },
+  {
+    id: uuidv4(),
+    questionTitle: '이번 달 업무 분배에 대한 만족도를 선택해 주세요.',
+    questionTitlePlaceholder: '문항의 제목을 입력하세요.',
+    questionType: InputSurveyQuestionType.CHOICE,
+    multipleOrCheckboxOptions: [
+      { id: uuidv4(), content: '매우 만족' },
+      { id: uuidv4(), content: '만족' },
+      { id: uuidv4(), content: '보통' },
+      { id: uuidv4(), content: '불만족' },
+      { id: uuidv4(), content: '매우 불만족' },
+    ],
+    isQuestionMandatory: false,
+    checkedOptionList: [],
+    subjectiveQuestionDescription: '',
+  },
+  {
+    id: uuidv4(),
+    questionTitle: '이번 달에 가장 자주 느낀 감정은 무엇인가요?',
+    questionTitlePlaceholder: '문항의 제목을 입력하세요.',
+    questionType: InputSurveyQuestionType.CHOICE,
+    multipleOrCheckboxOptions: [
+      { id: uuidv4(), content: '성취감' },
+      { id: uuidv4(), content: '즐거움' },
+      { id: uuidv4(), content: '피곤함' },
+      { id: uuidv4(), content: '불안감' },
+      { id: uuidv4(), content: '답답함' },
+      { id: uuidv4(), content: '만족감' },
+      { id: uuidv4(), content: '지루함' },
+    ],
+    isQuestionMandatory: false,
+    checkedOptionList: [],
+    subjectiveQuestionDescription: '',
+  },
+  {
+    id: uuidv4(),
+    questionTitle: '이번 달에 가장 도움이 된 팀 활동이나 이벤트가 있었다면 무엇인가요?',
+    questionTitlePlaceholder: '문항의 제목을 입력하세요.',
+    questionType: InputSurveyQuestionType.CHOICE,
+    multipleOrCheckboxOptions: [
+      { id: uuidv4(), content: '정기 회의' },
+      { id: uuidv4(), content: '온라인 코어 타임' },
+      { id: uuidv4(), content: '친목 활동 (회식, MT 등)' },
+      { id: uuidv4(), content: '위클리 스크럼' },
+      { id: uuidv4(), content: '데일리 스크럼' },
+      { id: uuidv4(), content: '만족감' },
+      { id: uuidv4(), content: 'KPT 회고' },
+    ],
+    isQuestionMandatory: false,
+    checkedOptionList: [],
+    subjectiveQuestionDescription: '',
+  },
+];
+
 export const surveyQuestionStore = create<SurveyStoreState & SurveyStoreActions>()(
   devtools(
     immer((set, get) => ({
-      questions: [defaultSurveyQuestion()],
+      questions: [...presetSurveyQuestions],
       surveyComponentUsingSituation: SurveySituation.CREATING_SURVEY,
 
       /**
@@ -369,7 +440,7 @@ export const surveyQuestionStore = create<SurveyStoreState & SurveyStoreActions>
        */
       isCreatedSurveyValid: () => {
         return get().questions.every((q) => {
-          get().isQuestionValid(q.id);
+          return get().isQuestionValid(q.id);
         });
       },
 
@@ -419,7 +490,7 @@ export const surveyQuestionStore = create<SurveyStoreState & SurveyStoreActions>
             q.multipleOrCheckboxOptions.every(
               (options) => !get().isDuplicateOptionInQuestion(q.id, options.id),
             )
-          ); // 다지선다형 문항은 제목과 옵션이 비어 있지 있어야 함
+          ); // 다지선다형 문항은 제목과 옵션이 비어 있지 않아야 함
         } else if (q.questionType === InputSurveyQuestionType.SUBJECT) {
           return q.questionTitle.trim() !== ''; // 주관식 문항은 제목이 있어야 함
         }

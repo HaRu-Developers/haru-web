@@ -101,7 +101,10 @@ const CreateSurveyPage = () => {
         onError: (err) => {
           router.back();
           const errMsg = `설문 생성에 실패했습니다: ${err.message}`;
-          alert(errMsg);
+          addToast({
+            text: errMsg,
+            type: ToastType.ERROR,
+          });
           throw new Error(errMsg);
         },
       },

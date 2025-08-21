@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 
-import { CreateNewSurveyRequestDto, PublicOrPrivate } from '@api/team-mood-tracker/apis.types';
+import { PublicOrPrivate } from '@api/team-mood-tracker/apis.types';
 import { useCreateSurvey } from '@api/team-mood-tracker/post/mutations/useCreateSurvey';
 
 import { GnbSection } from '@common/types/gnbs.types';
@@ -11,17 +11,17 @@ import { ROUTES } from '@common/constants/routes.constants';
 
 import FileCreatedInfo from '@common/components/FileCreatedInfo/FileCreatedInfo.client';
 import GnbTop from '@common/components/gnbs/GnbTop/GnbTop.client';
-import InputFileTitle from '@common/components/inputs/InputFileTitle/InputFileTitle.client';
-import InputSurveyQuestion from '@common/components/inputs/input-survey/InputSurvey/InputSurvey.client';
-import { SurveySituation } from '@common/components/inputs/input-survey/types/input-survey.common.types';
+import InputSurveyQuestion from '@common/components/inputs/input-survey/InputSurveyQuestion/InputSurveyQuestion.client';
 
 import WriteCompleteButton from '@buttons/30px/WriteCompleteButton/WriteCompleteButton.client';
 import AddQuestionButton from '@buttons/56px/AddQuestionButton/AddQuestionButton.client';
 
-import { transferQuestionListToApiFormat } from '@features/team-mood-tracker/utils/create-survey.utils';
-
 import { useUser } from '@features/auth/hooks/useAuthStore';
-import { useCreateSurveyQuestionList } from '@features/team-mood-tracker/hooks/useCreateSurveyQuestionList';
+import {
+  useAddSurveyQuestion,
+  useSurveyQuestion,
+  useTransferQuestionsToCreateSurveyRequestFormat,
+} from '@features/team-mood-tracker/hooks/stores/useSurveyQuestionStore';
 import { useGetSurveyInfoInUrl } from '@features/team-mood-tracker/hooks/useGetSurveyInfoInUrl';
 
 import CreateSurveyQuestionButton from '@features/team-mood-tracker/components/create-survey-page/CreateSurveyQuestionButton/CreateSurveyQuestionButton.client';
@@ -30,7 +30,13 @@ const CreateSurveyPage = () => {
   const router = useRouter();
 
   const { workspaceId, pageQuery } = useGetSurveyInfoInUrl();
-  const { questionList, handleAddQuestion, handlerSet } = useCreateSurveyQuestionList();
+  // const { questionList, handleAddQuestion } = useCreateSurveyQuestionList();
+
+  // const setQuestions = useSetSurveyQuestions();
+
+  const getQuestions = useSurveyQuestion();
+  const addQuestions = useAddSurveyQuestion();
+  const getQuestionsToApiFormat = useTransferQuestionsToCreateSurveyRequestFormat();
 
   const user = useUser(); // 파일 생성자는 현재 로그인한 사용자입니다.
 
@@ -50,18 +56,16 @@ const CreateSurveyPage = () => {
       return utcDate.toISOString(); // ISO 형식으로 반환
     };
 
-    const surveyData: CreateNewSurveyRequestDto = {
-      title: pageQuery.title,
-      description: pageQuery.description,
-      dueDate: transferDueDateIntoKstTime(pageQuery.dueDate),
-      visibility: pageQuery.visibility as PublicOrPrivate, // PUBLIC 또는 PRIVATE
-      questions: transferQuestionListToApiFormat(questionList),
-    };
-
     requestCreateNewSurvey(
       {
         workspaceId,
-        surveyData,
+        surveyData: {
+          title: pageQuery.title,
+          description: pageQuery.description,
+          dueDate: transferDueDateIntoKstTime(pageQuery.dueDate),
+          visibility: pageQuery.visibility as PublicOrPrivate,
+          questions: getQuestionsToApiFormat(),
+        },
       },
       {
         onSuccess: (data) => {
@@ -110,11 +114,11 @@ const CreateSurveyPage = () => {
       </div>
       {/*여기부터 본문*/}
       <div className="w-668pxr mt-26pxr flex flex-col items-center">
-        <AddQuestionButton onClick={handleAddQuestion} className="mb-16pxr" />
+        <AddQuestionButton onClick={addQuestions} className="mb-16pxr" />
         {/*설문 문항들*/}
         <div className="gap-y-14pxr flex flex-col items-center">
-          {questionList.map((question, index) => {
-            return <InputSurveyQuestion key={index} {...question} handlers={handlerSet(index)} />;
+          {getQuestions.map((question, index) => {
+            return <InputSurveyQuestion key={index} questionId={question.id} />;
           })}
         </div>
       </div>

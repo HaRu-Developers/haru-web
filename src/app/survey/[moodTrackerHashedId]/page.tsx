@@ -15,6 +15,8 @@ import { useMoodTrackerHashedId } from '@common/hooks/useMoodTrackerHashedId';
 import FileCreatedInfo from '@common/components/FileCreatedInfo/FileCreatedInfo.client';
 import SurveyInfo from '@common/components/box-text/SurveyInfo/SurveyInfo.server';
 
+import { useTransferQuestionsToParticipateSurveyRequestFormat } from '@features/team-mood-tracker/hooks/stores/useSurveyQuestionStore';
+
 import MoveToHaRuLandingPageButton from '@features/team-mood-tracker/components/public-survey-page/MoveToHaRuLandingPageButton/MoveToHaRuLandingPageButton.client';
 import ParticipateInQuestions from '@features/team-mood-tracker/components/public-survey-page/ParticipateInQuestions/ParticipateInQuestions.client';
 import SubmitSurveyButton from '@features/team-mood-tracker/components/public-survey-page/SubmitSurveyButton/SubmitSurveyButton.client';
@@ -22,10 +24,6 @@ import TeamMoodTrackerFilePageSectionSkeleton from '@features/team-mood-tracker/
 
 // 공개된, 설문조사 응답 페이지 입니다.
 const PublicSurveyPage = () => {
-  /**
-   * 사용자의 응답을 기록해두는 state 입니다.
-   */
-  const [surveyUserResponse, setSurveyUserResponse] = useState<SurveyQuestionTypeOnPost[]>([]);
   const [isSurveySubmitted, setIsSurveySubmitted] = useState<boolean>(false);
 
   const router = useRouter();
@@ -35,6 +33,7 @@ const PublicSurveyPage = () => {
 
   const { data: surveyBasicInfo, isFetching: isFetchingSurveyBasicInfo } =
     useSurveyBasicInfo(moodTrackerHashedId);
+  const surveyQuestionApiFormat = useTransferQuestionsToParticipateSurveyRequestFormat();
 
   // 스켈레톤
   if (isFetchingSurveyBasicInfo || !surveyBasicInfo) {
@@ -45,7 +44,7 @@ const PublicSurveyPage = () => {
 
   const onSurveySubmit = () => {
     // 설문 제출 로직을 여기에 구현합니다.
-    submitSurvey({ moodTrackerHashedId, surveyQuestion: surveyUserResponse });
+    submitSurvey({ moodTrackerHashedId, surveyQuestion: surveyQuestionApiFormat() });
     console.log('설문이 제출되었습니다.');
   };
 
@@ -79,10 +78,7 @@ const PublicSurveyPage = () => {
           content={`응답이 성공적으로 제출되었습니다.\n소중한 시간을 내어 주셔서 감사합니다.`}
         />
       ) : (
-        <ParticipateInQuestions
-          moodTrackerHashedId={moodTrackerHashedId}
-          setSurveyUserResponse={setSurveyUserResponse}
-        />
+        <ParticipateInQuestions moodTrackerHashedId={moodTrackerHashedId} />
       )}
     </div>
   );

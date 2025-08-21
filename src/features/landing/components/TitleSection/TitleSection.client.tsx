@@ -8,7 +8,10 @@ import Typed from 'typed.js';
 import { TitleSectionProps } from './TitleSection.type';
 
 const TitleSection = forwardRef<HTMLDivElement, TitleSectionProps>(
-  ({ title1, title2, title3, inView, description, isSpacing = false, className, isTyping = false }, ref) => {
+  (
+    { title1, title2, title3, inView, description, isSpacing = false, className, isTyping = false },
+    ref,
+  ) => {
     const el1 = useRef(null);
     const el2 = useRef(null);
     const el3 = useRef(null);
@@ -69,9 +72,17 @@ const TitleSection = forwardRef<HTMLDivElement, TitleSectionProps>(
             'flex-row': !isSpacing,
           })}
         >
-          {title1 && <span className="mr-10pxr text-black" ref={isTyping ? el1 : undefined}>{isTyping ? null : title1}</span>}
+          {title1 && (
+            <span className="mr-10pxr text-black" ref={isTyping ? el1 : undefined}>
+              {isTyping ? null : title1}
+            </span>
+          )}
           <div>
-            {title2 && <span className="text-primary" ref={isTyping ? el2 : undefined}>{isTyping ? null : title2}</span>}
+            {title2 && (
+              <span className="text-primary" ref={isTyping ? el2 : undefined}>
+                {isTyping ? null : title2}
+              </span>
+            )}
             {title3 && <span ref={isTyping ? el3 : undefined}>{isTyping ? null : title3}</span>}
           </div>
         </div>

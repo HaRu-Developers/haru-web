@@ -14,6 +14,7 @@ import { ToastType } from '@common/types/toast.types';
 import { ROUTES } from '@common/constants/routes.constants';
 
 import { useToastActions } from '@common/hooks/stores/useToastStore';
+import { useWorkspaceIdActions } from '@common/hooks/stores/useWorkspaceIdStore';
 import { useWorkspaceActions, useWorkspaceInfo } from '@common/hooks/stores/useWorkspcaeStore';
 
 import ChangableWorkspaceImage from '@common/components/ChangableWorkspaceImage/ChangableWorkspaceImage.client';
@@ -26,7 +27,6 @@ import CommonText from '../../CommonText/CommonText.client';
 import { CommonTextType } from '../../CommonText/CommonText.types';
 import TeammateCard from '../TeammateCard/TeammateCard.client';
 import { WorkspaceSettingsMenuProps } from './WorkspaceSettingsMenu.types';
-import { useWorkspaceIdActions } from '@common/hooks/stores/useWorkspaceIdStore';
 
 /**
  * 설정 - 워크스페이스 세팅 설정
@@ -79,7 +79,7 @@ const WorkspaceSettingsMenu = ({ workspaceId }: WorkspaceSettingsMenuProps) => {
   const handleConnectInstagram = () => {
     // 1. .env.local 파일에서 클라이언트 ID 가져오기
     const clientId = process.env.NEXT_PUBLIC_INSTAGRAM_CLIENT_ID;
-    
+
     // 2. 리디렉션 URI /가 두개 들어갈까봐 일단 바꿔봄
     const redirectUri = `${window.location.origin}/workspace/instagram-callback`;
 

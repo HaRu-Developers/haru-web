@@ -7,11 +7,14 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ApiDocument } from '@api/workspace/api.types';
 
 import { ApiErrorBody } from '@common/types/api.common.types';
+import { ToastType } from '@common/types/toast.types';
 
 import { API_ERROR_CODES } from '@common/constants/api-error-codes.constants';
 import queryKeys from '@common/constants/query-key.constants';
 
 import { ApiError } from '@common/errors/ApiError';
+
+import { useToastActions } from '@common/hooks/stores/useToastStore';
 
 import { ModifyMoodTrackerTitleRequestDto, SurveyBaseInfoResponseDto } from '../../apis.types';
 import { ModifyMoodTrackerTitle } from '../apis/modify-title';
@@ -32,13 +35,20 @@ import { ModifyMoodTrackerTitle } from '../apis/modify-title';
 export const useModifyMoodTrackerTitleMutation = () => {
   const queryClient = useQueryClient();
   const { workspaceId } = useParams<{ workspaceId: string }>();
+  const { addToast } = useToastActions();
 
   const handleError = useCallback((error: ApiError<ApiErrorBody>) => {
     if (error.code === API_ERROR_CODES.MOOD_TRACKER.MODIFY_NOT_ALLOWED) {
-      alert('수정할 권한이 없습니다.'); // TODO: Toast 메시지로 변경
+      addToast({
+        text: '수정할 권한이 없습니다.',
+        type: ToastType.ERROR,
+      });
       return;
     }
-    alert('제목 수정 중 오류가 발생했습니다.');
+    addToast({
+      text: `제목 수정 중 오류가 발생했습니다: ${error.message}`,
+      type: ToastType.ERROR,
+    });
     console.error('API Error:', error.message);
   }, []);
 
@@ -105,7 +115,10 @@ export const useModifyMoodTrackerTitleMutation = () => {
       if (error instanceof ApiError) {
         handleError(error);
       } else {
-        alert('예상치 못한 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+        addToast({
+          text: '예상치 못한 오류가 발생했습니다. 잠시 후 다시 시도해주세요.',
+          type: ToastType.ERROR,
+        });
         console.error('알 수 없는 에러 발생:', error);
       }
     },

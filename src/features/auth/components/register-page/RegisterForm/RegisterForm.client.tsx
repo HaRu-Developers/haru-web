@@ -69,12 +69,12 @@ const RegisterForm = () => {
   const registerFormSchema = z
     .strictObject({
       email: z.email(ALERT_MESSAGES.EMAIL_INVALID).refine(() => isAvailableEmail !== false, {
-        error: ALERT_MESSAGES.EMAIL_IN_USE,
+        message: ALERT_MESSAGES.EMAIL_IN_USE,
         path: ['duplicateEmail'],
       }),
       name: z.string().min(1, ALERT_MESSAGES.NAME_REQUIRED),
       password: z.string().min(8, ALERT_MESSAGES.PASSWORD_UNSAFE),
-      confirmPassword: z.string().min(8, ALERT_MESSAGES.PASSWORD_UNSAFE),
+      confirmPassword: z.string(),
       termsAgreeState: z
         .strictObject({
           serviceTerms: z.boolean(),
@@ -82,18 +82,20 @@ const RegisterForm = () => {
           marketingConsent: z.boolean(), // 마케팅 정보 수신 동의는 선택 사항
         })
         .refine((state) => state.serviceTerms && state.privacyPolicy, {
-          error: ALERT_MESSAGES.REQUIRED_TERMS,
+          message: ALERT_MESSAGES.REQUIRED_TERMS,
         }),
     })
     .refine((data) => data.password === data.confirmPassword, {
-      error: ALERT_MESSAGES.PASSWORD_MISMATCH,
+      message: ALERT_MESSAGES.PASSWORD_MISMATCH,
       path: ['confirmPassword'],
     });
 
   type RegisterFormData = z.infer<typeof registerFormSchema>;
 
   const registerFormValid = registerFormSchema.safeParse(formData);
+  console.log(registerFormValid);
 
+  // TODO: 이 더러운 코드를 수정할 필요가 있습니다
   const validateField = (
     field: keyof RegisterFormData,
     value: RegisterFormData[keyof RegisterFormData],
@@ -104,6 +106,16 @@ const RegisterForm = () => {
         message: undefined,
       };
     }
+
+    if (field === 'confirmPassword') {
+      // confirmPassword는 별도의 검증 로직이 필요하지 않음
+      const isPasswordMatch = formData.password === value;
+      return {
+        state: isPasswordMatch ? OnboardingState.APPROVAL : OnboardingState.ERROR,
+        message: isPasswordMatch ? ALERT_MESSAGES.PASSWORD_MATCH : ALERT_MESSAGES.PASSWORD_MISMATCH,
+      };
+    }
+
     const fieldSchema = registerFormSchema.shape[field];
     const result = fieldSchema.safeParse(value);
 
@@ -116,8 +128,6 @@ const RegisterForm = () => {
         message = ALERT_MESSAGES.EMAIL_AVAILABLE;
       } else if (field === 'password') {
         message = ALERT_MESSAGES.PASSWORD_AVAILABLE;
-      } else if (field === 'confirmPassword') {
-        message = ALERT_MESSAGES.PASSWORD_MATCH;
       }
     } else {
       state = OnboardingState.ERROR;
@@ -196,7 +206,7 @@ const RegisterForm = () => {
         title="비밀번호"
         inputValue={formData.password}
         placeholder="비밀번호를 입력해 주세요"
-        onChange={(password) => setFormData({ ...formData, password })}
+        onChange={(password) => setFormData((prev) => ({ ...prev, password }))}
         {...validateField('password', formData.password)}
         type={OnboardingType.HIDE}
       />
@@ -204,7 +214,7 @@ const RegisterForm = () => {
         title="비밀번호 확인"
         inputValue={formData.confirmPassword}
         placeholder="동일한 비밀번호를 한 번 더 입력해 주세요"
-        onChange={(confirmPassword) => setFormData({ ...formData, confirmPassword })}
+        onChange={(confirmPassword) => setFormData((prev) => ({ ...prev, confirmPassword }))}
         {...validateField('confirmPassword', formData.confirmPassword)}
         type={OnboardingType.HIDE}
       />

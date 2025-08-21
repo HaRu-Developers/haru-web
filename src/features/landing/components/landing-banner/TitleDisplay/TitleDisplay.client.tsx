@@ -11,7 +11,7 @@ const TitleDisplay = () => {
   const el1 = useRef<HTMLSpanElement>(null);
   const el2 = useRef<HTMLSpanElement>(null);
   const el3 = useRef<HTMLSpanElement>(null);
-  
+
   useEffect(() => {
     let typed1: Typed | undefined;
     let typed2: Typed | undefined;
@@ -25,7 +25,7 @@ const TitleDisplay = () => {
           typeSpeed: 30,
         });
       }
-    }
+    };
 
     const createTyped2 = () => {
       if (el2.current) {
@@ -36,7 +36,7 @@ const TitleDisplay = () => {
           onComplete: createTyped3,
         });
       }
-    }
+    };
 
     if (el1.current) {
       typed1 = new Typed(el1.current, {
@@ -61,8 +61,7 @@ const TitleDisplay = () => {
       />
       <span className="h-84pxr text-black" ref={el1}></span>
       <div>
-        <span className="text-black" ref={el2}>
-        </span>
+        <span className="text-black" ref={el2}></span>
         <span className="pl-8pxr text-primary" ref={el3}></span>
       </div>
     </div>

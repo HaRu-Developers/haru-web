@@ -5,8 +5,10 @@ import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import useCreateSnsEventDownloadMutation from '@api/sns-event-assistant/post/mutations/useCreateSnsEventDownloadMutation';
 
 // import useSnsEventListDownload from '@api/sns-event-assistant/get/queries/useSnsEventListDownload';
-
 import { DownloadFormat, SnsEventAssistantListType } from '@common/types/download.enum.types';
+import { ToastType } from '@common/types/toast.types';
+
+import { useToastActions } from '@common/hooks/stores/useToastStore';
 
 import DownloadModal from '@common/components/modals/DownloadModal/DownloadModal.client';
 
@@ -16,6 +18,8 @@ const DownloadModalClient = () => {
   const router = useRouter();
   const { snsEventId } = useParams<{ snsEventId: string }>();
   const searchParams = useSearchParams();
+
+  const { addToast } = useToastActions();
   const listType =
     (searchParams.get('type') as SnsEventAssistantListType) ||
     SnsEventAssistantListType.PARTICIPANT;
@@ -54,7 +58,10 @@ const DownloadModalClient = () => {
           window.open(data.result.downloadLink, '_blank');
         },
         onError: (error) => {
-          alert(`다운로드에 실패했습니다: ${error.message}`);
+          addToast({
+            text: `다운로드에 실패했습니다: ${error.message}`,
+            type: ToastType.ERROR,
+          });
         },
       },
     );

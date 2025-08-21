@@ -37,7 +37,7 @@ const LandingNecessity = ({ className }: LandingNecessityProps) => {
           ref={descriptionRef}
           inView={descriptionInView}
           state={LandingNecessityIconsState.GRAPH}
-          title="운영자 수작업 부담 감소" 
+          title="운영자 수작업 부담 감소"
           description={
             '기존에 수작업으로 이루어지던 작업을 자동화하여 운영자의 부담을 획기적으로 줄여줍니다.\n 또한, 팀의 운영에 필요한 작업들을 신속하게 처리하여 전체 업무 진행 속도를 높여줍니다.'
           }

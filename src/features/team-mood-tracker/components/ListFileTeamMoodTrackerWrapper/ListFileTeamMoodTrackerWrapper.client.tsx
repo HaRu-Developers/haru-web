@@ -25,6 +25,7 @@ const ListFileTeamMoodTrackerWrapper = () => {
   const { workspaceId } = useWorkspaceId();
   const searchParams = useSearchParams();
   const router = useRouter();
+  const [isCheckMode, setIsCheckMode] = useState<boolean>(false);
 
   const {
     data: teamMoodTrackerReportList,
@@ -55,7 +56,9 @@ const ListFileTeamMoodTrackerWrapper = () => {
     );
   };
 
-  const isCheckMode = selectedReports.length > 0;
+  useEffect(() => {
+    setIsCheckMode(selectedReports.length > 0);
+  }, [selectedReports.length]);
 
   const isCheckedReport = (currentReportId: string) =>
     selectedReports.map((id) => id === currentReportId).includes(true);
@@ -78,6 +81,8 @@ const ListFileTeamMoodTrackerWrapper = () => {
       selectedReports.forEach((reportId) => {
         deleteSingleReport(reportId);
       });
+
+      setSelectedReports([]);
     }
   }, [searchParams, router, selectedReports, deleteSingleReport, refetchReportList]);
 
@@ -116,7 +121,7 @@ const ListFileTeamMoodTrackerWrapper = () => {
         ))
       ) : (
         <div className="w-658pxr h-440pxr relative">
-          <Image src={notFoundImage} alt="404 이미지" fill />
+          <span className="text-b2-sb text-gray-300">내 팀 분위기 리포트가 없습니다.</span>
         </div>
       )}
     </>

@@ -347,7 +347,10 @@ export const surveyQuestionStore = create<SurveyStoreState & SurveyStoreActions>
             return (
               q.questionTitle.trim() !== '' &&
               q.multipleOrCheckboxOptions.length > 0 &&
-              q.multipleOrCheckboxOptions.every((options) => options.content !== '')
+              q.multipleOrCheckboxOptions.every(
+                (options) =>
+                  options.content !== '' && !get().isDuplicateOptionInQuestion(q.id, options.id),
+              )
             ); // 다지선다형 문항은 제목과 옵션이 비어 있지 있어야 함
           } else if (q.questionType === InputSurveyQuestionType.SUBJECT) {
             return q.questionTitle.trim() !== ''; // 주관식 문항은 제목이 있어야 함

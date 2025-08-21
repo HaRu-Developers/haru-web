@@ -6,7 +6,6 @@ import {
   useAddSurveyQuestionOption,
   useGetSurveyQuestionById,
   useSetCheckedOptionList,
-  useSetSubjectiveQuestionResponse,
   useSetSurveyQuestionOption,
   useSurveySituation,
 } from '@features/team-mood-tracker/hooks/stores/useSurveyQuestionStore';
@@ -18,10 +17,8 @@ import SubjectQuestion from '../SubjectQuestion/SubjectQuestion.client';
 import { QuestionSurveyProps } from './QuestionSurvey.types';
 
 const QuestionSurvey = ({ questionId }: QuestionSurveyProps) => {
-  const handleOptionListChange = useSetSurveyQuestionOption();
   const handleAddOption = useAddSurveyQuestionOption();
   const getSurveyQuestionById = useGetSurveyQuestionById();
-  const handleQuestionOptionCheck = useSetCheckedOptionList();
   const situation = useSurveySituation();
   const question = getSurveyQuestionById(questionId);
   // assurance guard

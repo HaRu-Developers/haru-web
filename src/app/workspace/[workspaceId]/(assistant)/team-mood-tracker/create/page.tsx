@@ -55,10 +55,19 @@ const CreateSurveyPage = () => {
 
   const handleWriteComplete = () => {
     if (!isCreatedSurveyValid()) {
-      return addToast({
+      addToast({
         type: ToastType.ERROR,
-        text: '질문에 제목이나 옵션이 비어있습니다.',
+        text: '올바르지 않은 형식의 설문입니다.',
       });
+      addToast({
+        type: ToastType.ERROR,
+        text: '질문이나 선택지는 비어있을 수 없습니다.',
+      });
+      addToast({
+        type: ToastType.ERROR,
+        text: '중복된 선택지는 허용되지 않습니다.',
+      });
+      return;
     }
     const transferDueDateIntoKstTime = (date: string) => {
       // 페이지에서 입력받은 dueDate는 UTC 기준이므로, KST로 변환합니다.

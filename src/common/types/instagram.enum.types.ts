@@ -1,4 +1,4 @@
-export enum InstagramCallbackLocation {
+export enum InstagramRedirectType {
   ONBOARDING = 'ONBOARDING',
   WORKSPACE = 'WORKSPACE',
 }

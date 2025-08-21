@@ -15,10 +15,10 @@ import {
 import { useOnboardingToastActions } from '@features/on-boarding/hooks/stores/useOnboardingToastStore';
 
 import { useLinkInstagramMutation } from '@/api/on-boarding/post/mutations/useLinkInstagramMutation';
-import { InstagramCallbackLocation } from '@common/types/instagram.enum.types';
+import { InstagramRedirectType } from '@common/types/instagram.enum.types';
 
 const OnBoardingCallBackClient = () => {
-  const location = InstagramCallbackLocation.ONBOARDING;
+  const instagramRedirectType = InstagramRedirectType.ONBOARDING;
   const router = useRouter();
   const searchParams = useSearchParams();
   const workspaceId = useOnboardingWorkspaceId(); // Zustand에서 workspaceId 가져오기
@@ -45,7 +45,7 @@ const OnBoardingCallBackClient = () => {
     }
 
     linkInstagram(
-      { workspaceId: workspaceId, location, code },
+      { workspaceId: workspaceId, instagramRedirectType, code },
       {
         onSuccess: (data) => {
           // 1. 연동 성공 상태 업데이트

@@ -14,12 +14,13 @@ import { OnboardingToastType } from '@features/on-boarding/types/OnboardingToast
 import { useOnboardingToastActions } from '@features/on-boarding/hooks/stores/useOnboardingToastStore';
 
 import { useLinkInstagramMutation } from '@/api/on-boarding/post/mutations/useLinkInstagramMutation';
+import { useWorkspaceIdStore } from '@common/hooks/stores/useWorkspaceIdStore';
 
 const InstagramCallBackClient = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
   const searchParams = useSearchParams();
-  const { workspaceId } = useParams<{ workspaceId: string }>();
+  const { workspaceId } = useWorkspaceIdStore();
   const { showOnboardingToast } = useOnboardingToastActions();
   const { mutate: linkInstagram } = useLinkInstagramMutation();
 

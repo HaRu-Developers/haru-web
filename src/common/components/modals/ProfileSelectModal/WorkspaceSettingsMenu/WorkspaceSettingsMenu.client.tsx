@@ -26,6 +26,7 @@ import CommonText from '../../CommonText/CommonText.client';
 import { CommonTextType } from '../../CommonText/CommonText.types';
 import TeammateCard from '../TeammateCard/TeammateCard.client';
 import { WorkspaceSettingsMenuProps } from './WorkspaceSettingsMenu.types';
+import { useWorkspaceIdActions } from '@common/hooks/stores/useWorkspaceIdStore';
 
 /**
  * 설정 - 워크스페이스 세팅 설정
@@ -37,6 +38,7 @@ const WorkspaceSettingsMenu = ({ workspaceId }: WorkspaceSettingsMenuProps) => {
   const [emails, setEmails] = useState<string[]>([]);
   const [image, setImage] = useState<File>(); // 워크스페이스 프로필 이미지 변경 시 사용
   const { extra: workspaceExtra } = useFetchWorkspaceDetail(workspaceId); // 워크스페이스 정보 가져오기
+  const { setWorkspaceId } = useWorkspaceIdActions();
   const { title: workspaceTitle, imageUrl, members } = useWorkspaceInfo();
   const { mutate: editWorkspaceDetail } = useEditWorkspaceDetail(workspaceId);
   const [title, setTitle] = useState<string>(workspaceExtra?.title ?? workspaceTitle); // 워크스페이스 수정하고 바로 반영하지 않기 위해 사용
@@ -77,9 +79,9 @@ const WorkspaceSettingsMenu = ({ workspaceId }: WorkspaceSettingsMenuProps) => {
   const handleConnectInstagram = () => {
     // 1. .env.local 파일에서 클라이언트 ID 가져오기
     const clientId = process.env.NEXT_PUBLIC_INSTAGRAM_CLIENT_ID;
-
-    // 2. 리디렉션 URI
-    const redirectUri = `${window.location.origin}${ROUTES.MODAL.SETTING.INSTAGRAM_CALLBACK(workspaceId)}`;
+    
+    // 2. 리디렉션 URI /가 두개 들어갈까봐 일단 바꿔봄
+    const redirectUri = `${window.location.origin}/workspace/instagram-callback`;
 
     // 3. 인스타그램에 요청할 권한 범위 설정
     const scope =
@@ -138,6 +140,13 @@ const WorkspaceSettingsMenu = ({ workspaceId }: WorkspaceSettingsMenuProps) => {
   const handleClickWorkspaceImage = () => {
     console.log('워크스페이스 프로필 이미지 클릭');
   };
+
+  useEffect(() => {
+    if (workspaceId) {
+      setWorkspaceId(workspaceId);
+      console.log('워크스페이스 ID가 변경되었습니다:', workspaceId);
+    }
+  }, [workspaceId, setWorkspaceId]);
 
   useEffect(() => {
     if (workspaceExtra) {

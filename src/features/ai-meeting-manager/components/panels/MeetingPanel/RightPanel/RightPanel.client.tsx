@@ -17,9 +17,11 @@ import { RightTabType } from './RightPanel.types';
 const RightPanel = ({
   questionsForUI,
   speechTextById,
+  isMeetingPage,
 }: {
   questionsForUI: UiQuestion[];
   speechTextById: Record<number, string>;
+  isMeetingPage: boolean;
 }) => {
   // console.log({
   //   questionsForUI,
@@ -60,7 +62,7 @@ const RightPanel = ({
             ))}
           </div>
         )}
-        {isFetching && <AiQuestionCardSkeleton />}
+        {isFetching && isMeetingPage && <AiQuestionCardSkeleton />}
       </div>
     </section>
   );

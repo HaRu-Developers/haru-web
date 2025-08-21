@@ -19,12 +19,12 @@ const GnbBottomRecorderBar = ({
   isPaused,
   connect,
   onOpenEndMeetingModal,
+  pauseStreaming,
+  resumeStreaming,
 }: GnbBottomRecorderBarProps) => {
   const recorderWsRef = useRef<WaveSurfer | null>(null);
   const recorderPluginRef = useRef<RecordPlugin | null>(null);
   const recorderContainerRef = useRef<HTMLDivElement | null>(null);
-  // 왜 멈췄는지 추적: 일반 일시정지 vs 종료 확인
-  const pauseCauseRef = useRef<'none' | 'user-pause' | 'ending-confirm'>('none');
 
   const [hasStartedRecording, setHasStartedRecording] = useState<boolean>(false);
   const [isRecording, setIsRecording] = useState<boolean>(false);
@@ -71,7 +71,7 @@ const GnbBottomRecorderBar = ({
 
     recorderPlugin.on('record-end', () => {
       // 서버/브라우저의 강제 종료 케이스
-      setIsRecording(false);
+      setIsRecording(false); // 아이콘 변경
     });
 
     recorderPlugin.on('record-progress', (progress: number) => {
@@ -79,7 +79,6 @@ const GnbBottomRecorderBar = ({
     });
 
     recorderPlugin.on('record-resume', () => {
-      pauseCauseRef.current = 'none'; // 원인 무관
       setIsRecording(true);
     });
 
@@ -103,13 +102,14 @@ const GnbBottomRecorderBar = ({
 
     if (isPaused()) {
       // 재생
-      recorderPluginRef.current.resumeRecording();
+      recorderPluginRef.current.resumeRecording(); // ui
+      resumeStreaming(); // ws
     } else {
       // 일시정지
-      pauseCauseRef.current = 'user-pause'; // 일반 일시정지 원인
-      recorderPluginRef.current.pauseRecording();
+      recorderPluginRef.current.pauseRecording(); // ui
+      pauseStreaming(); // ws
     }
-  }, [isPaused]);
+  }, [isPaused, resumeStreaming, pauseStreaming]);
 
   // 녹음 시작
   const handleStartRecording = useCallback(async () => {
@@ -137,10 +137,10 @@ const GnbBottomRecorderBar = ({
       return;
     }
 
-    // 먼저 녹음을 잠시 멈추고(무음 전송 방지) 원인을 'ending-confirm'로 표시
-    pauseCauseRef.current = 'ending-confirm'; // 종료 확인 플로우
+    // 먼저 녹음을 잠시 멈추고(무음 전송 방지)
     try {
-      recorderPluginRef.current.pauseRecording();
+      recorderPluginRef.current.pauseRecording(); // ui
+      pauseStreaming(); // ws
     } catch {
       void 0;
     }
@@ -151,7 +151,7 @@ const GnbBottomRecorderBar = ({
     } catch {
       void 0;
     }
-  }, [onOpenEndMeetingModal]);
+  }, [onOpenEndMeetingModal, pauseStreaming]);
 
   useEffect(() => {
     // 마운트 시 initializeWavesurfer() 1회만 생성
@@ -190,14 +190,11 @@ const GnbBottomRecorderBar = ({
 
       try {
         if (action === 'pause') {
-          pauseCauseRef.current =
-            pauseCauseRef.current === 'none' ? 'user-pause' : pauseCauseRef.current;
           recorderPluginRef.current.pauseRecording(); // Wavesurfer 녹음 멈춤
           setIsRecording(false);
           return;
         }
         if (action === 'resume') {
-          pauseCauseRef.current = 'none';
           recorderPluginRef.current.resumeRecording(); // Wavesurfer 녹음 재개
           setIsRecording(true);
           return;

@@ -1,4 +1,9 @@
 /**
+ * Level 측정에 쓸 callback
+ */
+export type LevelCallback = (rms: number, paused: boolean) => void;
+
+/**
  * playbar에서 쓸 Mic Controller
  */
 export type MicController = {
@@ -7,6 +12,7 @@ export type MicController = {
   resume: () => void;
   isPaused: () => boolean;
   getStream: () => MediaStream;
+  subscribeLevel: (cb: LevelCallback) => () => void;
 };
 
 /**
@@ -44,11 +50,25 @@ export const startMicAndPipeToWebSocket = async (ws: WebSocket): Promise<MicCont
     return s < 0 ? (s * 0x8000) | 0 : (s * 0x7fff) | 0;
   };
 
+  // 레벨 구독자 관리
+  const levelSubs = new Set<LevelCallback>();
+
   // Worklet이 보내는 Float32Array(길이 320) 프레임을 받는 핸들러
   node.port.onmessage = (e: MessageEvent<Float32Array>) => {
     // 일시정지 상태거나 ws가 열려있지 않으면 리턴
     if (paused || ws.readyState !== WebSocket.OPEN) return;
     const f32 = e.data;
+
+    // 레벨 계산(16k 다운샘플 프레임 기준)
+    let sum = 0;
+    for (let i = 0; i < f32.length; i++) sum += f32[i] * f32[i];
+    const rms = Math.sqrt(sum / f32.length);
+
+    // 레벨 구독자에게 알림 (paused 포함)
+    levelSubs.forEach((cb) => cb(rms, paused));
+
+    // 전송은 일시정지면 스킵
+    if (paused || ws.readyState !== WebSocket.OPEN) return;
 
     // 들어온 Float32 샘플을 toI16으로 Int16로 변환, 큐 q에 쌓음
     for (let i = 0; i < f32.length; i++) q.push(toI16(f32[i]));
@@ -64,6 +84,12 @@ export const startMicAndPipeToWebSocket = async (ws: WebSocket): Promise<MicCont
 
   src.connect(node);
 
+  // 반환 컨트롤러
+  const subscribeLevel = (cb: LevelCallback) => {
+    levelSubs.add(cb);
+    return () => levelSubs.delete(cb);
+  };
+
   return {
     // 송신을 막음
     pause: () => {
@@ -77,6 +103,7 @@ export const startMicAndPipeToWebSocket = async (ws: WebSocket): Promise<MicCont
     isPaused: () => paused,
     // 스트림 반환
     getStream: () => stream,
+    subscribeLevel,
     // 핸들러 해제, 노드 연결 해제, 트랙 stop, 컨텍스트 close()까지 깔끔 종료
     stop: async () => {
       try {

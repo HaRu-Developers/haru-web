@@ -2,14 +2,22 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 
+import clsx from 'clsx';
+
+import { EditorType } from '@features/ai-meeting-manager/types/edit.types';
 import type { ProceedingSection } from '@features/ai-meeting-manager/types/proceeding.types';
+
+import { useEditActions } from '@features/ai-meeting-manager/hooks/stores/useEditStore';
 
 import {
   createLastEnterTracker,
   enterKeyForItem,
+  isAtHead,
+  isAtTail,
   isLastItem,
   keyOfItem,
   keyOfTitle,
+  normalizeSections,
   parseProceeding,
   stringifyProceeding,
 } from '../ProceedingPanel.utils';
@@ -21,12 +29,30 @@ const ProceedingEditor = ({
   editingScopeRef,
   disabled,
 }: ProceedingEditorProps) => {
+  const { setEditing } = useEditActions();
   // 서버에서 준 문자열을 객체로 변환해 저장하기 - 동기화
   // 내부 상태: 항상 최소 1 섹션, 섹션당 최소 1 불렛 보장
   const [sections, setSections] = useState<ProceedingSection[]>(() => parseProceeding(value));
   useEffect(() => {
     setSections(parseProceeding(value));
   }, [value]);
+
+  const emit = useCallback(
+    (next: ProceedingSection[]) => {
+      const norm = normalizeSections(next);
+      onChange?.(stringifyProceeding(norm), norm);
+    },
+    [onChange],
+  );
+
+  //  sections 커밋 후에만 부모 onChange 호출
+  useEffect(() => {
+    if (!pendingEmitRef.current) return; // 외부(value) 동기화로 바뀐 경우는 무시
+    pendingEmitRef.current = false;
+    emit(sections);
+  }, [sections, emit]);
+
+  const pendingEmitRef = useRef(false); // 내부 변경 플래그
 
   // 입력 DOM ref 저장소
   const refs = useRef<Map<string, HTMLInputElement | null>>(new Map());
@@ -48,33 +74,22 @@ const ProceedingEditor = ({
   // 더블 엔터 트래커
   const enterTracker = useRef(createLastEnterTracker());
 
-  // 상위 콜백 emit
-  const emit = useCallback(
-    (next: ProceedingSection[]) => {
-      const norm = next.map((s) => ({ ...s, items: s.items.length ? s.items : [''] }));
-      onChange?.(stringifyProceeding(norm), norm);
-    },
-    [onChange],
-  );
-
   // 섹션/아이템 변경 헬퍼
   const setSectionsAndEmit = useCallback(
     (updater: (prev: ProceedingSection[]) => ProceedingSection[]) => {
       setSections((prev) => {
-        const next = updater(prev).map((s) => ({
-          ...s,
-          items: s.items.length ? s.items : [''], // 섹션 당 최소 1 불렛 보장
-        }));
-        emit(next);
+        const next = normalizeSections(updater(prev));
+        pendingEmitRef.current = true; // 내부 변경 표시
         return next;
       });
     },
-    [emit],
+    [],
   );
 
   // 변경 로직
   const updateTitle = useCallback(
     (secIdx: number, val: string) => {
+      console.log(val);
       setSectionsAndEmit((prev) => prev.map((s, i) => (i === secIdx ? { ...s, title: val } : s)));
     },
     [setSectionsAndEmit],
@@ -153,7 +168,41 @@ const ProceedingEditor = ({
     (e: React.KeyboardEvent<HTMLInputElement>, secIdx: number) => {
       if (e.nativeEvent.isComposing) return;
 
-      // Enter: 아래 새 불렛 생성 + 포커스
+      // ===== 방향키 네비게이션
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        // 같은 섹션 첫 불렛으로 이동 (커서는 맨 앞)
+        focus(keyOfItem(secIdx, 0), false);
+        enterTracker.current.reset();
+        return;
+      }
+      if (e.key === 'ArrowUp') {
+        if (secIdx > 0) {
+          e.preventDefault();
+          // 이전 섹션 마지막 불렛으로 이동 (커서는 맨 뒤)
+          focus(keyOfItem(secIdx - 1, Number.POSITIVE_INFINITY), true);
+          enterTracker.current.reset();
+          return;
+        }
+      }
+      if (e.key === 'ArrowLeft' && isAtHead(e.currentTarget)) {
+        if (secIdx > 0) {
+          e.preventDefault();
+          // 이전 섹션 마지막 불렛
+          focus(keyOfItem(secIdx - 1, Number.POSITIVE_INFINITY), true);
+          enterTracker.current.reset();
+          return;
+        }
+      }
+      if (e.key === 'ArrowRight' && isAtTail(e.currentTarget)) {
+        e.preventDefault();
+        // 같은 섹션 첫 불렛
+        focus(keyOfItem(secIdx, 0), false);
+        enterTracker.current.reset();
+        return;
+      }
+
+      // ===== Enter: 아래 새 불렛 생성 + 포커스
       if (e.key === 'Enter') {
         e.preventDefault();
         setSectionsAndEmit((prev) =>
@@ -164,7 +213,7 @@ const ProceedingEditor = ({
         return;
       }
 
-      // Backspace at head: 이전 섹션 마지막 불렛으로 포커스 + 현재 섹션 삭제
+      // ===== Backspace at head: 이전 섹션 마지막 불렛으로 포커스 + 현재 섹션 삭제
       if (e.key === 'Backspace') {
         const el = e.currentTarget;
         const atHead = el.selectionStart === 0 && el.selectionEnd === 0;
@@ -183,13 +232,68 @@ const ProceedingEditor = ({
   const onItemKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>, secIdx: number, itemIdx: number) => {
       if (e.nativeEvent.isComposing) return;
+
+      const el = e.currentTarget;
+      const lastItemIdx = sections[secIdx].items.length - 1;
+
+      // ===== 방향키 네비게이션
+      if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (itemIdx > 0) {
+          // 같은 섹션 이전 불렛 (커서 뒤)
+          focus(keyOfItem(secIdx, itemIdx - 1), true);
+        } else {
+          // 섹션 제목으로
+          focus(keyOfTitle(secIdx), true);
+        }
+        enterTracker.current.reset();
+        return;
+      }
+
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        if (itemIdx < lastItemIdx) {
+          // 같은 섹션 다음 불렛 (커서 앞)
+          focus(keyOfItem(secIdx, itemIdx + 1), false);
+        } else if (secIdx < sections.length - 1) {
+          // 다음 섹션 제목으로
+          focus(keyOfTitle(secIdx + 1), false);
+        }
+        enterTracker.current.reset();
+        return;
+      }
+
+      if (e.key === 'ArrowLeft' && isAtHead(el)) {
+        e.preventDefault();
+        if (itemIdx > 0) {
+          focus(keyOfItem(secIdx, itemIdx - 1), true);
+        } else {
+          // 첫 불렛의 맨 앞 -> 섹션 제목
+          focus(keyOfTitle(secIdx), true);
+        }
+        enterTracker.current.reset();
+        return;
+      }
+
+      if (e.key === 'ArrowRight' && isAtTail(el)) {
+        e.preventDefault();
+        if (itemIdx < lastItemIdx) {
+          focus(keyOfItem(secIdx, itemIdx + 1), false);
+        } else if (secIdx < sections.length - 1) {
+          focus(keyOfTitle(secIdx + 1), false);
+        }
+        enterTracker.current.reset();
+        return;
+      }
+
+      // ===== enter
       const key = enterKeyForItem(sections, secIdx, itemIdx);
 
       if (e.key === 'Enter') {
         e.preventDefault();
 
         const curVal = (e.currentTarget as HTMLInputElement).value;
-        const empty = curVal.trim() === '';
+        const empty = curVal === '';
 
         // "마지막 불렛"에서 "연속 두 번 Enter" → 새 섹션
         if (isLastItem(sections, secIdx, itemIdx) && enterTracker.current.isDoubleEnter(key)) {
@@ -208,6 +312,7 @@ const ProceedingEditor = ({
         return;
       }
 
+      // ===== backspace
       if (e.key === 'Backspace') {
         const el = e.currentTarget;
         const atHead = el.selectionStart === 0 && el.selectionEnd === 0;
@@ -219,25 +324,32 @@ const ProceedingEditor = ({
         }
       }
 
-      // 다른 키 입력 → 더블 Enter 상태 리셋
+      // ==== 기타 → 더블 Enter 상태 리셋
       enterTracker.current.reset();
     },
     [deleteItemAndFocusPrev, focus, insertItemBelow, sections, setSectionsAndEmit],
   );
 
-  // blur: 스코프 밖 이탈 여부만 판단(실제 저장/취소는 Panel에서)
+  // blur: 스코프 밖 이탈
   const onBlur = useCallback(
     (e: React.FocusEvent<HTMLInputElement>) => {
       const next = e.relatedTarget as Node | null;
       if (next && editingScopeRef?.current?.contains(next)) return;
-      // 여기서는 아무 것도 안 함: Panel이 처리
+
+      // 편집 모드 모두 끄기
+      setEditing(EditorType.PROCEEDING, false);
+      setEditing(EditorType.TITLE, false);
     },
-    [editingScopeRef],
+    [setEditing, editingScopeRef],
   );
 
   return (
     <div
-      className="max-w-1096pxr p-20pxr rounded-10pxr w-full bg-gray-700"
+      // 임시 높이 잡아둠
+      className={clsx(
+        'p-20pxr rounded-10pxr scrollbar-component h-950pxr min-h-0 w-full overflow-y-auto bg-gray-600',
+        disabled ? 'disabled-style' : '',
+      )}
       aria-disabled={disabled}
     >
       {sections.map((sec, secIdx) => (
@@ -247,7 +359,7 @@ const ProceedingEditor = ({
             <div className="w-24pxr text-right select-none">{secIdx + 1}.</div>
             <input
               ref={setRef(keyOfTitle(secIdx))}
-              className="rounded-6pxr p-8pxr text-b2-rg flex-1 outline-none focus:outline-none"
+              className="rounded-6pxr p-8pxr text-t4-bd flex-1 outline-none focus:outline-none"
               value={sec.title}
               onChange={(e) => updateTitle(secIdx, e.target.value)}
               onKeyDown={(e) => onTitleKeyDown(e, secIdx)}

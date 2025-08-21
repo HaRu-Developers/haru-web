@@ -3,6 +3,9 @@ import type { ProceedingSection } from '@features/ai-meeting-manager/types/proce
 const H_RE = /^\s*(\d+)\.\s+(.*)$/; // "1. 제목"
 const LI_RE = /^\s*[-]\s+(.*)$/; // "- 항목"
 
+export const normalizeSections = (list: ProceedingSection[]) =>
+  list.map((s) => ({ ...s, items: s.items.length ? s.items : [''] }));
+
 /**
  * parseProceeding string을 ProceedingSection 형태로 바꾸는 함수
  */
@@ -16,13 +19,13 @@ export const parseProceeding = (raw: string) => {
     if (h) {
       // 섹션 시작
       if (cur) out.push(cur);
-      cur = { title: h[2].trim(), items: [] }; // 번호는 버리고 제목만
+      cur = { title: h[2], items: [] }; // 번호는 버리고 제목만
       continue;
     }
     const li = LI_RE.exec(line);
     if (li && cur) {
       // 항목 추가
-      cur.items.push(li[1].trim());
+      cur.items.push(li[1]);
       continue;
     }
     // 빈 줄/기타는 무시
@@ -94,4 +97,14 @@ export const createLastEnterTracker = (): LastEnterTracker => {
 export const isLastItem = (secs: ProceedingSection[], secIdx: number, itemIdx: number): boolean => {
   const items = secs[secIdx]?.items ?? [];
   return itemIdx === items.length - 1;
+};
+
+// ---- 방향키로 포커스
+// 커서 위치 유틸
+export const isAtHead = (el: HTMLInputElement) => el.selectionStart === 0 && el.selectionEnd === 0;
+export const isAtTail = (el: HTMLInputElement) => {
+  const len = el.value.length;
+  const s = el.selectionStart ?? 0;
+  const e = el.selectionEnd ?? 0;
+  return s === len && e === len;
 };

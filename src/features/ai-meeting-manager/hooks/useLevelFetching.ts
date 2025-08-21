@@ -1,124 +1,134 @@
 import { useEffect, useRef } from 'react';
 
-interface Params {
-  micStream: MediaStream | null;
-  isPaused: () => boolean;
-  setIsFetching: (v: boolean) => void;
-}
+import type { MicController } from '../utils/capture-and-send.utils';
+import { useSpeechQuestionActions } from './stores/useSpeechQuestionStore';
 
-// 단일 임계치 + on/off 디바운스
-const THRESH = 3.0; // 소리 감지 임계치 (rms)
-const ON_DELAY_MS = 50; // 켜질 때 지연(짧게)
-const OFF_DELAY_MS = 200; // 꺼질 때 지연(조금 길게)
+const THRESH_ON = 0.025; // 이 값 이상이면 켜질 후보가 됨
+const THRESH_OFF = 0.018; // 이 값 이하면 꺼짐
+const ON_DELAY_MS = 60; // 켜질 때 디바운스
+const OFF_DELAY_MS = 250; // 꺼질 때 디바운스
+const ALPHA = 0.8; // EMA(지수이동평균) 스무딩 계수
 
-const useLevelFetching = ({ micStream, isPaused, setIsFetching }: Params) => {
+const useMicLevelFetching = (micCtlRef: React.MutableRefObject<MicController | null>) => {
+  const { setIsFetching } = useSpeechQuestionActions();
   const onTimer = useRef<number | null>(null);
   const offTimer = useRef<number | null>(null);
-  const currentRef = useRef<boolean>(false); // 현재 전송상태(켜짐/꺼짐)
+  const currentRef = useRef(false);
+  const emaRef = useRef(0);
+  const subscribedRef = useRef(false);
 
   useEffect(() => {
-    // 일시정지면 즉시 끄고 종료
-    if (isPaused()) {
-      if (onTimer.current) clearTimeout(onTimer.current);
-      if (offTimer.current) clearTimeout(offTimer.current);
-      currentRef.current = false;
-      setIsFetching(false);
-      return;
-    }
-    if (!micStream || micStream.getAudioTracks().length === 0) return;
-
-    const ac = new (window.AudioContext || window.webkitAudioContext)();
-    const src = ac.createMediaStreamSource(micStream);
-    const analyser = ac.createAnalyser();
-    analyser.fftSize = 256;
-    src.connect(analyser);
-
-    const data = new Uint8Array(analyser.fftSize);
     let raf = 0;
+    let unsub: (() => void) | null = null;
+
+    const clearOn = () => {
+      if (onTimer.current) {
+        clearTimeout(onTimer.current);
+        onTimer.current = null;
+      }
+    };
+    const clearOff = () => {
+      if (offTimer.current) {
+        clearTimeout(offTimer.current);
+        offTimer.current = null;
+      }
+    };
+    const clearAll = () => {
+      clearOn();
+      clearOff();
+    };
 
     const setOn = () => {
       if (!currentRef.current) {
         currentRef.current = true;
+        console.debug('[level] => ON (setIsFetching(true))');
         setIsFetching(true);
       }
     };
     const setOff = () => {
       if (currentRef.current) {
         currentRef.current = false;
+        console.debug('[level] => OFF (setIsFetching(false))');
         setIsFetching(false);
       }
     };
 
-    const tick = () => {
-      analyser.getByteTimeDomainData(data);
-      let sum = 0;
-      for (let i = 0; i < data.length; i++) {
-        const v = data[i] - 128;
-        sum += v * v;
+    const attach = () => {
+      const mic = micCtlRef.current;
+      if (!mic) {
+        raf = requestAnimationFrame(attach); // 준비될 때까지 한 프레임 뒤에 재시도
+        return;
       }
-      const rms = Math.sqrt(sum / data.length);
+      if (subscribedRef.current) return;
 
-      // on/off 디바운스
-      if (rms > THRESH) {
-        if (offTimer.current) {
-          clearTimeout(offTimer.current);
-          offTimer.current = null;
+      console.debug('[level] attaching subscribeLevel');
+      subscribedRef.current = true;
+
+      unsub = mic.subscribeLevel((rmsRaw, paused) => {
+        console.debug(
+          '[level]',
+          { paused, rmsRaw: +rmsRaw.toFixed(4), ema: +emaRef.current.toFixed(4) },
+          {
+            onTimer: !!onTimer.current,
+            offTimer: !!offTimer.current,
+            fetching: currentRef.current,
+          },
+        );
+
+        if (paused) {
+          clearAll();
+          setOff();
+          return;
         }
-        if (!currentRef.current && !onTimer.current) {
-          onTimer.current = window.setTimeout(() => {
-            onTimer.current = null;
-            setOn();
-          }, ON_DELAY_MS);
+
+        emaRef.current = ALPHA * emaRef.current + (1 - ALPHA) * rmsRaw;
+        const rms = emaRef.current;
+
+        if (!currentRef.current) {
+          if (rms >= THRESH_ON) {
+            if (!onTimer.current) {
+              onTimer.current = window.setTimeout(() => {
+                onTimer.current = null;
+                setOn();
+                clearOff();
+              }, ON_DELAY_MS);
+            }
+          } else {
+            if (onTimer.current) {
+              clearTimeout(onTimer.current);
+              onTimer.current = null;
+            }
+          }
+        } else {
+          if (rms < THRESH_OFF) {
+            if (!offTimer.current) {
+              offTimer.current = window.setTimeout(() => {
+                offTimer.current = null;
+                setOff();
+                clearOn();
+              }, OFF_DELAY_MS);
+            }
+          } else {
+            clearOff();
+          }
         }
-      } else {
-        if (onTimer.current) {
-          clearTimeout(onTimer.current);
-          onTimer.current = null;
-        }
-        if (currentRef.current && !offTimer.current) {
-          offTimer.current = window.setTimeout(() => {
-            offTimer.current = null;
-            setOff();
-          }, OFF_DELAY_MS);
-        }
+      });
+
+      if (mic.isPaused()) {
+        clearAll();
+        setOff();
       }
-
-      raf = requestAnimationFrame(tick);
     };
-    tick();
 
-    const [track] = micStream.getAudioTracks();
-    const onEnded = () => {
-      if (raf) cancelAnimationFrame(raf);
-      try {
-        src.disconnect();
-        analyser.disconnect();
-        ac.close();
-      } catch {
-        void 0;
-      }
-      if (onTimer.current) clearTimeout(onTimer.current);
-      if (offTimer.current) clearTimeout(offTimer.current);
-      onTimer.current = offTimer.current = null;
-      setOff();
-    };
-    track?.addEventListener('ended', onEnded);
+    attach();
 
     return () => {
       if (raf) cancelAnimationFrame(raf);
-      try {
-        src.disconnect();
-        analyser.disconnect();
-        ac.close();
-      } catch {
-        void 0;
-      }
-      track?.removeEventListener('ended', onEnded);
-      if (onTimer.current) clearTimeout(onTimer.current);
-      if (offTimer.current) clearTimeout(offTimer.current);
-      onTimer.current = offTimer.current = null;
+      if (unsub) unsub();
+      subscribedRef.current = false;
+      clearAll();
     };
-  }, [micStream, isPaused, setIsFetching]);
+  }, [micCtlRef, setIsFetching]);
 };
 
-export default useLevelFetching;
+export default useMicLevelFetching;

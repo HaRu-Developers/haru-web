@@ -16,8 +16,7 @@ import { Question, Speech, WsInbound } from '../types/meeting.types';
 import { type MicController, startMicAndPipeToWebSocket } from '../utils/capture-and-send.utils';
 import { ensureQuestionObjects, mergeQuestions } from '../utils/meeting-format.utils';
 import { useMeetingModalActions } from './stores/useMeetingModalStore';
-import { useSpeechQuestionActions } from './stores/useSpeechQuestionStore';
-import useLevelFetching from './useLevelFetching';
+import useMicLevelFetching from './useLevelFetching';
 
 /**
  * 훅 param 타입
@@ -38,7 +37,6 @@ const useMeetingSocket = ({
   sendAudio = true,
 }: UseMeetingSocketParams) => {
   const router = useRouter();
-  const { setIsFetching } = useSpeechQuestionActions();
   const { addToast } = useToastActions();
   const { openEndMeetingModal, openMmLoadingModal, closeEndMeetingModal, closeMmLoadingModal } =
     useMeetingModalActions();
@@ -46,8 +44,6 @@ const useMeetingSocket = ({
   // ===== 상태
   const [speeches, setSpeeches] = useState<Speech[]>(() => initialTranscripts);
   const [connected, setConnected] = useState(false);
-  // 레벨 감지용 micStream state
-  const [levelStream, setLevelStream] = useState<MediaStream | null>(null);
 
   // ===== refs
   // segmentId → 배열 인덱스 매핑
@@ -209,8 +205,6 @@ const useMeetingSocket = ({
         // 2) 로컬 자원 정리
         try {
           await micCtlRef.current?.stop();
-          // 레벨 감지용 state 업데이트
-          setLevelStream(null);
         } catch {
           void 0;
         }
@@ -288,7 +282,6 @@ const useMeetingSocket = ({
               if (stream && onMicStream) {
                 onMicStream(stream);
               }
-              setLevelStream(stream); // 마이크 준비됨 트리거
             }
             resolve();
           } catch (e) {
@@ -326,28 +319,26 @@ const useMeetingSocket = ({
   // ===== 외부 ui에서 쓸 recording controls
   const pauseStreaming = useCallback(() => {
     if (!sendAudio) return;
-    micCtlRef.current?.pause(); // 전송만 멈춤(트랙은 유지)
-    console.log('pauseStreaming');
+    micCtlRef.current?.pause(); // 전송만 멈춤(트랙(ui)은 유지)
   }, [sendAudio]);
 
   const resumeStreaming = useCallback(async () => {
     if (!sendAudio) return;
     micCtlRef.current?.resume();
-    console.log('resumeStreaming');
   }, [sendAudio]);
 
   const isPaused = useCallback(() => micCtlRef.current?.isPaused() ?? false, []);
 
-  // ===== 음량 감지 (isFetching 계산)
-  useLevelFetching({ micStream: levelStream, isPaused, setIsFetching });
+  // ===== 음량 감지 (isFetching 설정)
+  useMicLevelFetching(micCtlRef);
 
   // ===== 회의 종료
   // 모달 열기
   const onOpenEndMeetingModal = useCallback(async () => {
-    // 커스텀 이벤트 발생시켜 GnbLeftRecoderBar랑 동기화
+    // 커스텀 이벤트 발생시켜 GnbLeftRecoderBar랑 동기화 - ui
     window.dispatchEvent(new CustomEvent('recorder', { detail: { action: 'pause' } }));
     try {
-      pauseStreaming(); // 모달 열릴 때 전송 일시정지
+      pauseStreaming(); // 모달 열릴 때 ws 전송 일시정지
       // endmeetingModal 열기
       openEndMeetingModal();
     } catch (e) {
@@ -377,7 +368,6 @@ const useMeetingSocket = ({
 
     try {
       await micCtlRef.current?.stop();
-      setLevelStream(null);
     } catch {
       void 0;
     }
@@ -407,10 +397,10 @@ const useMeetingSocket = ({
 
   // 모달에서 취소 눌렀을때
   const cancelEndMeeting = useCallback(async () => {
-    // 커스텀 이벤트 발생시켜 GnbLeftRecoderBar랑 동기화
+    // 커스텀 이벤트 발생시켜 GnbLeftRecoderBar랑 동기화 - ui 멈추기
     window.dispatchEvent(new CustomEvent('recorder', { detail: { action: 'resume' } }));
-    resumeStreaming();
-    closeEndMeetingModal();
+    resumeStreaming(); // ws 다시 전송
+    closeEndMeetingModal(); // 모달 닫기
   }, [resumeStreaming, closeEndMeetingModal]);
 
   // ===== sendAudio가 꺼질 때 즉시 업스트림 중단 및 UI 동기화
@@ -419,7 +409,6 @@ const useMeetingSocket = ({
       (async () => {
         try {
           await micCtlRef.current?.stop();
-          setLevelStream(null);
         } catch {
           void 0;
         }
@@ -444,7 +433,6 @@ const useMeetingSocket = ({
       wsRef.current = null;
       try {
         micCtlRef.current?.stop();
-        setLevelStream(null); // 레벨 감지 중단 트리거
       } catch {
         void 0;
       }

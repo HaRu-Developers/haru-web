@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
-import { useParams, useRouter } from 'next/navigation';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 
 import CrossIcons from '@icons/CrossIcons/CrossIcons';
 import { CrossIconsState } from '@icons/CrossIcons/CrossIcons.types';
@@ -15,7 +15,7 @@ import useFetchUserDetail from '@/api/user/get/queries/useFetchUserDetail';
 
 import CommonText from '../CommonText/CommonText.client';
 import { CommonTextType } from '../CommonText/CommonText.types';
-import { ProfileSelectModalMenuState } from './ProfileSelectModal.types';
+import { ProfileSelectModalMenuState, ProfileTabState } from './ProfileSelectModal.types';
 import { ProfileSelectModalMenuButton } from './ProfileSelectModalMenuButton/ProfileSelectModalMenuButton.client';
 import ProfileSettingMenu from './ProfileSettingMenu/ProfileSettingMenu.client';
 import WorkspaceSettingsMenu from './WorkspaceSettingsMenu/WorkspaceSettingsMenu.client';
@@ -23,9 +23,13 @@ import WorkspaceSettingsMenu from './WorkspaceSettingsMenu/WorkspaceSettingsMenu
 const ProfileSelectModal = () => {
   const router = useRouter();
   const { workspaceId } = useParams<{ workspaceId: string }>();
-  const [selectedMenu, setSelectedMenu] = useState<ProfileSelectModalMenuState>(
-    ProfileSelectModalMenuState.WORKSPACE_SETTING,
-  );
+  const tab = useSearchParams().get('tab') as ProfileTabState | null;
+  const tabMap = {
+    [ProfileTabState.WORKSPACE]: ProfileSelectModalMenuState.WORKSPACE_SETTING,
+    [ProfileTabState.PROFILE]: ProfileSelectModalMenuState.PROFILE_SETTING,
+  };
+  const tabState = tabMap[tab || ProfileTabState.WORKSPACE];
+  const [selectedMenu, setSelectedMenu] = useState<ProfileSelectModalMenuState>(tabState);
   const { setName } = useUserActions(); // 지금은 설정이지만 gnb 자체에서 해도 될 듯
 
   const { extra: user } = useFetchUserDetail();
@@ -43,13 +47,7 @@ const ProfileSelectModal = () => {
       case ProfileSelectModalMenuState.WORKSPACE_SETTING:
         return <WorkspaceSettingsMenu workspaceId={workspaceId} />;
       case ProfileSelectModalMenuState.PROFILE_SETTING:
-        return (
-          <ProfileSettingMenu
-            workspaceId={workspaceId}
-            email={user?.email || ''}
-            instagramAccount="thejeewon" // 임시
-          />
-        );
+        return <ProfileSettingMenu workspaceId={workspaceId} email={user?.email || ''} />;
       default:
         return null;
     }

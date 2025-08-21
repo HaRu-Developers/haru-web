@@ -1,14 +1,19 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import clsx from 'clsx';
 
+import useGetUserListFromEmail from '@api/user/get/queries/useGetUserListFromEmail';
+
 import { isValidEmail } from '@common/utils/valid-email.utils';
+
+import useDebounce from '@common/hooks/useDebounce';
 
 import InviteButton from '@common/components/buttons/32px/InviteButton/InviteButton.client';
 import EmailChip from '@common/components/inputs/input-invite-member/emails/EmailChip/EmailChip.client';
 import EmailTag from '@common/components/inputs/input-invite-member/emails/EmailTag/EmailTag.client';
+import { CONFIG } from '@common/components/modals/SearchModal/SearchModal.types';
 
 import { InputInviteMemberProps } from './InputInviteMember.types';
 
@@ -28,11 +33,13 @@ const InputInviteMember = ({
   className,
 }: InputInviteMemberProps) => {
   const [isFocused, setIsFocused] = useState<boolean>(false);
-
+  const [selectedIndex, setSelectedIndex] = useState<number>(0);
+  const debouncedSearchQuery = useDebounce(value.trim(), CONFIG.SEARCH_DEBOUNCE_MS);
+  const { extra: users } = useGetUserListFromEmail(debouncedSearchQuery);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onValueChange?.(e.target.value);
   };
-
+  const usersEmails = useMemo(() => users?.map((user) => user.email) ?? [], [users]);
   const handleAddEmail = (newValue: string) => {
     const trimmed = newValue.trim();
     // 입력값이 비어있거나 유효하지 않은 이메일인 경우
@@ -66,9 +73,37 @@ const InputInviteMember = ({
   };
 
   const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    // 추천 이메일 목록이 있는지 확인
+    const hasSuggestions = usersEmails && usersEmails.length > 0;
+
     if (e.key === 'Enter') {
       e.preventDefault();
-      handleAddEmail(value);
+      // 1. 추천 항목이 선택된 경우 (selectedIndex > 0)
+      if (hasSuggestions && selectedIndex > 0) {
+        // 선택된 인덱스는 1부터 시작하므로 -1을 해줘야 배열 인덱스와 일치
+        const emailToAdd = usersEmails[selectedIndex - 1];
+        handleAddEmail(emailToAdd);
+      }
+      // 2. 추천 항목이 선택되지 않고 입력된 이메일을 추가하려는 경우
+      else {
+        // 현재 입력된 이메일 값을 추가
+        handleAddEmail(value);
+      }
+      // 추가 후 selectedIndex 초기화
+      setSelectedIndex(0);
+    } else if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      setSelectedIndex((prevIndex) =>
+        // 추천 목록의 마지막 항목을 넘지 않도록
+        hasSuggestions && prevIndex < usersEmails.length ? prevIndex + 1 : prevIndex,
+      );
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      setSelectedIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : 0));
+    } else if (e.key === 'Backspace' && value.length === 0 && emails.length > 0) {
+      // 이미 추가된 이메일 칩을 지우는 로직
+      const lastEmail = emails[emails.length - 1];
+      handleRemoveEmail(lastEmail);
     }
   };
 
@@ -85,14 +120,18 @@ const InputInviteMember = ({
       <div className="flex w-full flex-col gap-1">
         <div
           className={clsx(
-            'h-min-48pxr rounded-9pxr py-9pxr flex w-full shrink-0 items-center justify-between gap-2.5 px-3.5',
+            'rounded-9pxr py-9pxr flex w-full shrink-0 items-center justify-between gap-2.5 px-3.5',
             {
               'border-stroke-100 border': !isFocused,
               'border-stroke-selected border-2': isFocused,
             },
           )}
         >
-          <div className={clsx('flex w-full flex-wrap gap-2')}>
+          <div
+            className={clsx(
+              'max-h-120pxr scrollbar-component flex w-full max-w-full flex-wrap gap-2 overflow-x-auto overflow-y-auto',
+            )}
+          >
             {emails.map((email) => (
               <EmailChip key={email} email={email} onRemove={handleRemoveEmail} />
             ))}
@@ -114,7 +153,14 @@ const InputInviteMember = ({
             isPending={isInviting}
           />
         </div>
-        {value.trim() && <EmailTag value={value} onClick={handleAddEmail} />}
+        {value.trim() && (
+          <EmailTag
+            value={value}
+            onClick={handleAddEmail}
+            emails={usersEmails}
+            state={selectedIndex}
+          />
+        )}
       </div>
     </div>
   );

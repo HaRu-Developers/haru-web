@@ -170,3 +170,21 @@ export interface UseSnsEventAssistantListDownloadOptions {
   onSuccess?: (data: GetSnsEventAssistantListDownloadResponseDto) => void;
   onError?: (error: ApiError<ApiErrorBody>) => void;
 }
+
+/**
+ * 인스타 정보 조회  Request 데이터 전송 객체 (DTO).
+ * 워크스페이스 ID를 포함합니다.
+ * 인스타 그램이 현재 벡엔드에서 SNS 이벤트로 되어있어서 생성
+ * 추후에 Workspace로 변경할 수도 있음
+ */
+export type GetInstagramRequestDto = WorkspaceId;
+
+/**
+ * 인스타 정보 조회 Response 데이터 전송 객체 (DTO).
+ * @property {string} instagramAccountName - 인스타그램 이름.
+ * 인스타 그램이 현재 벡엔드에서 SNS 이벤트로 되어있어서 생성
+ * 추후에 Workspace로 변경할 수도 있음
+ */
+export interface GetInstagramResponseDto {
+  instagramAccountName: string;
+}

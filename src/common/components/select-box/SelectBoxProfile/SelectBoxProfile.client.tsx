@@ -25,8 +25,7 @@ const SelectBoxProfile = ({ isOpen, setIsOpen }: SelectBoxProfileProps) => {
   if (!isOpen) return null;
 
   const onOpenSettings = () => {
-    setIsOpen(false); // select box profile 닫기
-    router.push(ROUTES.MODAL.SETTING.BASE(workspaceId));
+    router.push(ROUTES.MODAL.SETTING.WORKSPACE_SETTING(workspaceId));
   };
 
   return (

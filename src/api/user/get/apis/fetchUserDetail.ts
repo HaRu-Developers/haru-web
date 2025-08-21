@@ -7,7 +7,7 @@ import { USER_API_ENDPOINTS } from '../../end-point.constants';
 
 export const fetchUserDetail = async () => {
   const response = await defaultApi<BaseResponseDto<fetchUserResponseDto>>(
-    USER_API_ENDPOINTS.USER_DETAIL(),
+    USER_API_ENDPOINTS.USER_DETAIL,
     {
       method: 'GET',
       auth: true,

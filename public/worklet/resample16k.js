@@ -1,10 +1,11 @@
 class Resample16kProcessor extends AudioWorkletProcessor {
   constructor() {
+    super();
     this.buffer = [];
     this.phase = 0; // 출력 16k 타임라인 상의 위치
     this.inRate = sampleRate;
     this.outRate = 16000;
-    this.step = this.outRate / this.inRate; // 입력 1샘플 당 출력에서 전진하는 양
+    this.step = this.inRate / this.outRate; // 입력 1샘플 당 출력에서 전진하는 양
     this.prev = 0;
   }
 
@@ -24,11 +25,11 @@ class Resample16kProcessor extends AudioWorkletProcessor {
       while (this.phase <= 1.0) {
         const y = this.prev + (mono - this.prev) * this.phase;
         this.buffer.push(y);
-        // 320 넘으면 보냄
-        if (this.buffer.length >= 320) {
-          const frame = new Float32Array(320);
-          for (let j = 0; j < 320; j++) frame[j] = this.buffer[j];
-          this.buffer = this.buffer.slice(320);
+        // 640 넘으면 보냄
+        if (this.buffer.length >= 640) {
+          const frame = new Float32Array(640);
+          for (let j = 0; j < 640; j++) frame[j] = this.buffer[j];
+          this.buffer = this.buffer.slice(640);
           this.port.postMessage(frame);
         }
         this.phase += this.step;
@@ -40,5 +41,4 @@ class Resample16kProcessor extends AudioWorkletProcessor {
   }
 }
 
-// Resample16kProcessor로 메인 스레드에서 노드를 생성할 수 있게
 registerProcessor('Resample16kProcessor', Resample16kProcessor);

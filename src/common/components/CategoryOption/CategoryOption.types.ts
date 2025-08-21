@@ -6,4 +6,5 @@ export interface CategoryOptionProps {
   className?: string;
   ariaLabel?: string;
   disabled?: boolean;
+  isLoading?: boolean;
 }

@@ -31,13 +31,9 @@ const DefaultProfileImage = ({
       />
     );
   }
-  // console.log(typeof userId);
 
-  // TODO: 한 글자만 추출
-  // 구글 로그인시 lastName의 한 글자 추출
-  // 일반 로그인시 한 글자 추출
+  // 여기서부터는 name이 string인 상태임
   const initial = name.slice(0, 1);
-  // userId가 ''인 경우 반영
   const hashKey =
     typeof userId === 'string'
       ? userId.trim()

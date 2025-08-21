@@ -108,6 +108,9 @@ export const ROUTES = {
       // 단일 회의 삭제 확인 모달
       CONFIRM_DELETE: (workspaceId: string) =>
         `/workspace/${workspaceId}/ai-meeting-manager/confirm-delete`,
+      // 회의록 다운로드 모달
+      DOWNLOAD: (workspaceId: string, meetingId: string) =>
+        `/workspace/${workspaceId}/ai-meeting-manager/${meetingId}/minutes/download`,
     },
     TEAM_MOOD_TRACKER: {
       CREATE_SURVEY: (workspaceId: BigintString) =>
@@ -121,6 +124,11 @@ export const ROUTES = {
       BASE: (workspaceId: BigintString) => {
         return `/workspace/${workspaceId}/settings`;
       },
+      WORKSPACE_SETTING: (workspaceId: BigintString) =>
+        `/workspace/${workspaceId}/settings?tab=workspace`,
+      PROFILE_SETTING: (workspaceId: BigintString) =>
+        `/workspace/${workspaceId}/settings?tab=profile`,
+      INSTAGRAM_CALLBACK: () => `/workspace/instagram-callback`,
       PASSWORD_CHANGE: (workspaceId: BigintString) => {
         return `/workspace/${workspaceId}/settings/change-password`;
       },

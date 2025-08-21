@@ -24,7 +24,7 @@ const FooterButtons = () => {
     <div className="flex w-full items-center justify-between">
       {/* Profile Modal 좌측 '프로필 설정' 버튼 */}
       <Link
-        href={workspaceId ? ROUTES.MODAL.SETTING.BASE(workspaceId) : '#'}
+        href={workspaceId ? ROUTES.MODAL.SETTING.PROFILE_SETTING(workspaceId) : '#'}
         className="border-stroke-200 gap-3pxr rounded-7pxr flex h-7 items-center justify-center border border-solid bg-white px-2 py-1.5"
       >
         <ProfileDropdownIcons state={ProfileDropdownIconsState.PROFILE} />

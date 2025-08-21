@@ -1,8 +1,13 @@
 'use client';
 
+import { useEffect } from 'react';
+
 import WorkSpaceOnBoarding from '@common/components/onboarding/WorkSpaceOnBoarding/WorkSpaceOnBoarding.server';
 
-import { useOnboardingState } from '@features/on-boarding/hooks/stores/useOnBoardingStore';
+import {
+  useOnboardingActions,
+  useOnboardingState,
+} from '@features/on-boarding/hooks/stores/useOnBoardingStore';
 
 import OnBoardingImageStep from '@features/on-boarding/components/OnBoardingImageStep/OnBoardingImageStep';
 import OnBoardingInstaStep from '@features/on-boarding/components/OnBoardingInstaStep/OnBoardingInstaStep';
@@ -13,6 +18,7 @@ import OnboardingToaster from '@features/on-boarding/components/onboarding-toast
 
 const OnBoardingPage = () => {
   const { step } = useOnboardingState();
+  const { reset } = useOnboardingActions();
 
   const renderStepComponent = () => {
     switch (step) {
@@ -30,6 +36,13 @@ const OnBoardingPage = () => {
   };
 
   // TODO: on page leave, set step to default state
+
+  useEffect(() => {
+    // 이 컴포넌트가 화면에서 사라질 때(unmount) return 안의 함수가 실행됩니다.
+    return () => {
+      reset();
+    };
+  }, [reset]); // reset 함수는 안정적이므로 이 effect는 언마운트 시에만 실행됩니다.
 
   return (
     <div className="flex">

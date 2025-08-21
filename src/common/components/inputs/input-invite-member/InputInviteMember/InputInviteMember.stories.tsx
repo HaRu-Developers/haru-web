@@ -103,7 +103,11 @@ export const pxr534: Story = {
 
 export const pxr414: Story = {
   args: {
-    emails: ['example1@email.com', 'example2@email.com', 'example3@email.com'],
+    emails: [
+      'example1aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@email.com',
+      'example2@email.com',
+      'example3@email.com',
+    ],
     value: 'example4@email.com',
     placeholder: '초대할 팀원을 입력해주세요.',
     onValueChange: (value: string) => console.log(value),

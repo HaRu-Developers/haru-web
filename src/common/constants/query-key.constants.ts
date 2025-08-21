@@ -28,7 +28,14 @@ const queryKeys = createQueryKeyStore({
     create: ['meetingMinutes', 'create'],
     detail: (meetingId: string) => ['meetingMinutes', 'detail', meetingId],
     list: (workspaceId: string) => ['meetingMinutes', 'list', workspaceId],
-    downloadLink: (meetingId: string) => ['meetingMinutes', 'downloadLink', meetingId],
+    delete: (workspaceId: string) => ['meetings', 'delete', workspaceId],
+    downloadLink: (meetingId: string, format: DownloadFormat) => [
+      'meetingMinutes',
+      'downloadLink',
+      meetingId,
+      format,
+    ],
+    voiceLink: (meetingId: string) => ['meetingMinutes', 'voiceLink', meetingId],
     speechQuestion: (meetingId: string) => ['meetingMinutes', 'speechQuestion', meetingId],
     end: (meetingId: string) => ['meetingMinutes', 'end', meetingId],
     editTitle: (meetingId: string) => ['meetingMinutes', 'editTitle', meetingId],
@@ -40,6 +47,7 @@ const queryKeys = createQueryKeyStore({
     detail: (snsEventId: string) => [snsEventId],
     list: (workspaceId: string) => [workspaceId, 'list'],
     download: (snsEventId: string) => [snsEventId, 'list', 'download'],
+    instagram: (workspaceId: string) => [workspaceId, 'instagram'],
   },
 
   moodTracker: {
@@ -62,6 +70,7 @@ const queryKeys = createQueryKeyStore({
     userInfo: null, // TODO: ??
     // 매개변수가 있는 키는 함수로 정의합니다.
     detail: () => ['user', 'detail'],
+    email: (email: string) => ['user', 'email', email],
     edit: () => ['user', 'edit'],
   },
 

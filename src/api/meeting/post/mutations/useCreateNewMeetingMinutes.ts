@@ -29,8 +29,8 @@ const useCreateNewMeetingMinutes = (workspaceId: string) => {
     onSuccess: async () => {
       // 회의록 리스트 다시 호출
       await queryClient.invalidateQueries({ queryKey: listKey });
-      addToast({ text: '회의록이 생성되었습니다.', type: ToastType.SUCCESS });
     },
+
     onError: (_err) => {
       addToast({ text: '회의록이 생성을 실패했습니다.', type: ToastType.ERROR });
     },

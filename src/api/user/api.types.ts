@@ -11,3 +11,17 @@ export interface fetchUpdateUserResquestDto {
 }
 
 export type fetchUserResponseDto = User;
+
+export interface PasswordCheckRequestDto {
+  requestPassword: string;
+}
+
+export interface PasswordCheckResponseDto {
+  isMatched: boolean;
+}
+
+export interface UserListFromEmailRequestDto {
+  email: string;
+}
+
+export type UserListFromEmailResponseDto = User[];

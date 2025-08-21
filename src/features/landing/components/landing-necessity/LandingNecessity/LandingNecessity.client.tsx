@@ -28,8 +28,11 @@ const LandingNecessity = ({ className }: LandingNecessityProps) => {
         title2="HaRu"
         title3="가 왜 필요한가요?"
         description="HaRu는 모든 팀이 더 가치 있는 순간에 집중할 수 있도록 돕습니다."
+        className={clsx('opacity-0', {
+          'animate-fade-in-up-and-delay': titleInView,
+        })}
       />
-      <div className="gap-58pxr flex flex-col">
+      <div className="gap-58pxr flex flex-col" ref={descriptionRef}>
         <SectionLayout
           ref={descriptionRef}
           inView={descriptionInView}

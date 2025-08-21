@@ -1,7 +1,9 @@
 export interface PlayerProgressBarProps {
-  progress: number;
-  currentTime: number;
-  duration: number;
+  progress: number; // 0~100
+  currentTime: number; // sec
+  duration: number; // sec
   onClick: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
-  onSeek: (progress: number) => void;
+  onSeekStart?: () => void;
+  onSeek?: (newProgress: number) => void;
+  onSeekEnd?: (finalProgress: number) => void;
 }

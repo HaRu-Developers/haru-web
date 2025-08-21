@@ -120,7 +120,7 @@ export type FetchMyWorkspacesResponseDto = WorkspaceSummary[];
 export type UpdateWorkspaceResponseDto = WorkspaceDetail;
 
 export interface fetchCalendarResquestDto {
-  workspaceId: number;
+  workspaceId: string;
   start: Date;
   end: Date;
 }

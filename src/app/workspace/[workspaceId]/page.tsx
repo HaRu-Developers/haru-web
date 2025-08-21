@@ -103,11 +103,7 @@ const InnerWorkspaceIdPage = () => {
 
           <div className="mt-74pxr mb-92pxr flex flex-col">
             <div className="mb-20pxr text-t3-bd">내 캘린더</div>
-            {isRecentLoading ? (
-              <CalendarSkeleton />
-            ) : (
-              <CalendarSection workspaceId={Number(workspaceId)} />
-            )}
+            {isRecentLoading ? <CalendarSkeleton /> : <CalendarSection workspaceId={workspaceId} />}
           </div>
         </div>
       </GnbLeftLayout>

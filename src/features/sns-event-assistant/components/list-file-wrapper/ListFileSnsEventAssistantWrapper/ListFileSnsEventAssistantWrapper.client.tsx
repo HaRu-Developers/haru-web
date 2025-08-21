@@ -23,7 +23,7 @@ const ListFileSnsEventAssistantWrapper = () => {
   const { setCheckedList, setIsCheckedMode } = useSnsEventAssistantActions();
   const { checkedList, isCheckedMode } = useSnsEventAssistantInfo();
   const { extra: snsEvent } = useSnsEventList(workspaceId);
-  const hasLists = !!snsEvent?.snsEventList;
+  const hasLists = !!snsEvent?.snsEventList && snsEvent.snsEventList.length > 0;
   const handleCheckToggle = (id: string) => {
     if (checkedList.includes(id)) {
       const newCheckedList = checkedList.filter((checkedId) => checkedId !== id);
@@ -58,9 +58,7 @@ const ListFileSnsEventAssistantWrapper = () => {
           />
         ))
       ) : (
-        <div className="w-658pxr h-440pxr relative">
-          <Image src={notFoundImage} alt="404 이미지" fill />
-        </div>
+        <span className='text-gray-300 text-b2-rg mt-18pxr'>내 이벤트 추첨 기록이 없습니다.</span>
       )}
     </>
   );

@@ -2,10 +2,14 @@
 
 import { useEffect, useRef } from 'react';
 
-import { SurveyVisibility } from '../../types/input-survey.common.types';
+import { SurveySituation } from '../../types/input-survey.common.types';
 import { SubjectQuestionProps } from './SubjectQuestion.types';
 
-const SubjectQuestion = ({ description, visibility, onChange }: SubjectQuestionProps) => {
+const SubjectQuestion = ({
+  subjectiveQuestionResponse,
+  surveyComponentUsingSituation,
+  onSubjectiveQuestionResponseChange,
+}: SubjectQuestionProps) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleResize = () => {
@@ -17,24 +21,25 @@ const SubjectQuestion = ({ description, visibility, onChange }: SubjectQuestionP
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    onChange?.(e.target.value);
+    onSubjectiveQuestionResponseChange?.(e.target.value);
     handleResize();
   };
 
   useEffect(() => {
     handleResize();
-  }, [description]);
+  }, [subjectiveQuestionResponse]);
 
   return (
     <textarea
       ref={textareaRef}
-      value={description}
+      value={subjectiveQuestionResponse}
       placeholder="주관식 내용을 입력해주세요."
       rows={1}
       onInput={handleResize}
       onChange={handleChange}
       className="min-h-18pxr text-b3-rg w-full resize-none overflow-hidden outline-none"
-      readOnly={visibility === SurveyVisibility.PRIVATE}
+      // 설문조사에 응하고 있지 않다면, readOnly가 되도록 합니다.
+      readOnly={surveyComponentUsingSituation !== SurveySituation.PARTICIPATING_SURVEY}
     />
   );
 };

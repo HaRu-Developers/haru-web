@@ -1,6 +1,6 @@
 'use client';
 
-import { notFound } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 // import { type DehydratedState, HydrationBoundary } from '@tanstack/react-query';
 
@@ -13,6 +13,7 @@ import { HaruLogoIconsState } from '@icons/logos/HaruLogoIcons/HaruLogoIcons.typ
 // import fetchWorkspaceDetail from '@api/workspace/get/apis/fetchWorkspaceDetail';
 
 import { GnbLeftNavItems } from '@common/constants/gnbs.constants';
+import { ROUTES } from '@common/constants/routes.constants';
 
 // import queryKeys from '@common/constants/query-key.constants';
 
@@ -37,9 +38,10 @@ const isNumericString = (str: string | null) => {
 };
 
 const GnbLeft = ({ workspaceId }: GnbLeftProps) => {
+  const router = useRouter();
   // NaN이면 not-found.tsx로 이동
   if (!isNumericString(workspaceId)) {
-    notFound();
+    router.replace(ROUTES.NOT_FOUND);
   }
 
   // Server Component에서 prefetch 실행

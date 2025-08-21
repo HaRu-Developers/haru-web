@@ -20,6 +20,8 @@ export const useViewReportResponse = (moodTrackerHashedId: string) => {
     ...queryKeys.moodTracker.report(moodTrackerHashedId),
     queryFn: () => viewReportResponse({ moodTrackerHashedId }),
     enabled: !!moodTrackerHashedId,
+    throwOnError: (err) => !err.isTeamMoodTrackerSurveyBeforeDueDate(),
+    onError: (err) => console.log('ERR ON VIEW REPORT', err.toJSON()),
     // ✅ select 옵션은 API 함수에서 .result를 반환하므로 더 이상 필요하지 않습니다.
   });
 };

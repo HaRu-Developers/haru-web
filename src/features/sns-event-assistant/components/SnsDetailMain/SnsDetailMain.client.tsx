@@ -15,9 +15,10 @@ import FileCreatedInfo from '@common/components/FileCreatedInfo/FileCreatedInfo.
 import InputFileTitle from '@common/components/inputs/InputFileTitle/InputFileTitle.client';
 import { InputFileTitleMode } from '@common/components/inputs/InputFileTitle/InputFileTitle.types';
 
+import { useEditInfo } from '@features/ai-meeting-manager/hooks/stores/useEditStore';
+
 import SnsBodyList from './SnsBodyList/SnsBodyList.client';
 import SnsTopAction from './SnsTopAction/SnsTopAction.client';
-import { useEditInfo } from '@features/ai-meeting-manager/hooks/stores/useEditStore';
 
 interface SnsDetailMainProps {
   snsEventId?: string;
@@ -25,11 +26,7 @@ interface SnsDetailMainProps {
   onTitleSave?: (newTitle: string) => void;
 }
 
-const SnsDetailMain = ({
-  snsEventId,
-  sns,
-  onTitleSave,
-}: SnsDetailMainProps) => {
+const SnsDetailMain = ({ snsEventId, sns, onTitleSave }: SnsDetailMainProps) => {
   const [mode, setMode] = useState<InputFileTitleMode>(InputFileTitleMode.DEFAULT);
   const type = useSearchParams().get('type') as SnsEventAssistantListType;
   const { addToast } = useToastActions();
@@ -51,7 +48,7 @@ const SnsDetailMain = ({
     <>
       {/* 상단 부분 */}
       <div className="border-b-stroke-200 flex w-full flex-col justify-center border-b border-solid bg-white">
-        <div className="mx-auto mt-24pxr">
+        <div className="mt-24pxr mx-auto">
           <InputFileTitle
             value={sns?.title ?? ''}
             onSave={handleSaveTitle}
@@ -62,7 +59,7 @@ const SnsDetailMain = ({
             cancelTick={cancelTick}
           />
         </div>
-        <div className="w-668pxr gap-16pxr mt-24pxr flex flex-col mx-auto">
+        <div className="w-668pxr gap-16pxr mt-24pxr mx-auto flex flex-col">
           <FileCreatedInfo
             name={sns?.creatorName ?? ''}
             userId={sns?.creatorId ?? ''}

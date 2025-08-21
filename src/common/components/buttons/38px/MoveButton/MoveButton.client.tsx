@@ -11,7 +11,7 @@ const MoveButton = ({ onClick, ...props }: ButtonsCommonProps) => {
   return (
     <button
       className={clsx(
-        'text-bt1-sb inline-flex h-[38px] w-[128px] items-center justify-center rounded-[7px] bg-gray-100 px-[16px] py-[12px] text-white',
+        'text-bt1-sb h-38pxr w-128pxr rounded-7pxr px-16pxr py-12pxr inline-flex items-center justify-center bg-gray-100 text-white',
       )}
       {...props}
       onClick={onClick}

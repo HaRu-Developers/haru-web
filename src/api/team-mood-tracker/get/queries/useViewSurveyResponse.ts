@@ -13,11 +13,13 @@ import { viewSurveyResponse } from '@/api/team-mood-tracker/get/apis/view-survey
  * @description 팀 설문 응답 데이터를 조회하는 useQuery 커스텀 훅
  * @param moodTrackerHashedId 조회할 설문의 해시된 ID
  */
-
 export const useViewSurveyResponse = (moodTrackerHashedId: string) => {
   return useAfterQuery<GetViewSurveyResponseDto, ApiError<ApiErrorBody>>({
     ...queryKeys.moodTracker.detail(moodTrackerHashedId),
     queryFn: () => viewSurveyResponse({ moodTrackerHashedId }),
     enabled: !!moodTrackerHashedId,
+    throwOnError: (err) => !err.isTeamMoodTrackerSurveyBeforeDueDate(),
+    onError: (err) =>
+      console.log('ERR ON VIEW SURVEY', err.isTeamMoodTrackerSurveyBeforeDueDate(), err.toJSON()),
   });
 };

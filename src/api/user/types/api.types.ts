@@ -85,3 +85,15 @@ export interface SearchUserResponseDto {
 export interface LogoutRequestDto {
   accessToken: string;
 }
+
+// signupAndLogin
+/**
+ * @deprecated 초대 받은 사용자는 query string의 token 도 함께 넘겨줍니다.
+ */
+export interface SignupAndLoginRequestDto {
+  email: string;
+  password: string;
+  name: string;
+  marketingAgreed: boolean;
+  token?: string;
+}

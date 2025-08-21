@@ -6,12 +6,7 @@ import { CalendarProps } from './Calendar.types';
 /*
  * 캘린더 컴포넌트
  */
-const Calendar = ({
-  startDate,
-  endDate,
-  documents,
-  operatingMonth,
-}: CalendarProps) => {
+const Calendar = ({ startDate, endDate, documents, operatingMonth }: CalendarProps) => {
   const today = new Date();
   const startDateValue = typeof startDate === 'number' ? new Date(startDate) : startDate;
   const endDateValue = typeof endDate === 'number' ? new Date(endDate) : endDate;

@@ -1,9 +1,9 @@
-import { SurveyVisibility } from '../types/input-survey.common.types';
+import { SurveySituation } from '../types/input-survey.common.types';
 
-export interface InputTitleSurveyProps {
+export interface InputSurveyQuestionTitleProps {
   title?: string;
   placeholder?: string;
-  visibility?: SurveyVisibility;
+  visibility?: SurveySituation;
   onChange?: (value: string) => void;
   className?: string;
 }

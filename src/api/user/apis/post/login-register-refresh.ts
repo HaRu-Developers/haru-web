@@ -8,6 +8,7 @@ import {
   LoginResponseDto,
   RefreshAccessTokenRequestDto,
   RefreshAccessTokenResponseDto,
+  SignupAndLoginRequestDto,
   SignupRequestDto,
 } from '@api/user/types/api.types';
 
@@ -65,6 +66,36 @@ export const login = async ({ email, password }: LoginRequestDto) => {
     body: JSON.stringify({
       email,
       password,
+    }),
+  });
+
+  return response.result;
+};
+
+/**
+ * @description 회원가입과 동시에 로그인을 처리하는 API 함수 + 초대를 받은 인원은 token 과 함께 회원가입
+ */
+export const signupAndLogin = async ({
+  email,
+  password,
+  name,
+  marketingAgreed,
+  token,
+}: SignupAndLoginRequestDto) => {
+  let endpoint = AUTH_API_ENDPOINTS.SIGN_UP_AND_LOGIN_IN;
+
+  // 토큰이 존재할 경우에만 쿼리 스트링을 URL에 추가합니다.
+  if (token) {
+    endpoint += `?token=${token}`;
+  }
+
+  const response = await defaultApi<BaseResponseDto<LoginResponseDto>>(endpoint, {
+    method: 'POST',
+    body: JSON.stringify({
+      email,
+      password,
+      name,
+      marketingAgreed,
     }),
   });
 

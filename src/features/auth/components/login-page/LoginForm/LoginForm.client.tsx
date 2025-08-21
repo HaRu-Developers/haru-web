@@ -35,13 +35,13 @@ const LoginForm = () => {
         <InputOnboarding
           title="이메일 주소"
           inputValue={email}
-          placeholder="이메일 주소를 입력해주세요"
+          placeholder="이메일 주소를 입력해 주세요"
           onChange={setEmail}
         />
         <InputOnboarding
           title="비밀번호"
           inputValue={password}
-          placeholder="비밀번호를 입력해주세요"
+          placeholder="비밀번호를 입력해 주세요"
           onChange={setPassword}
           type={OnboardingType.HIDE}
         />

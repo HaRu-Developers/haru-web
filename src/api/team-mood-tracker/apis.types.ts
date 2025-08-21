@@ -19,6 +19,8 @@ export interface MoodTrackerPathParamsDto {
 }
 
 /** 설문 조회 요청 DTO. Path Parameter만 포함합니다. */
+export type GetViewSurveyQuestionRequestDto = MoodTrackerPathParamsDto;
+/** 설문 조회 요청 DTO. Path Parameter만 포함합니다. */
 export type GetViewSurveyRequestDto = MoodTrackerPathParamsDto;
 /** 리포트 조회 요청 DTO. Path Parameter만 포함합니다. */
 export type GetViewReportRequestDto = MoodTrackerPathParamsDto;
@@ -40,6 +42,8 @@ export interface CreateSurveyQuestion {
   options?: string[]; // 선택지 목록, SUBJECTIVE일 경우 제공하지 않음.
 }
 
+export type PublicOrPrivate = 'PUBLIC' | 'PRIVATE';
+
 /**
  * 설문 생성 요청 DTO
  * @description 설문 생성 시 필요한 정보를 담고 있는 DTO입니다.
@@ -54,13 +58,24 @@ export interface CreateNewSurveyRequestDto {
   title: string;
   description: string;
   dueDate: string; // ISO 8601 형식의 날짜 문자열
-  visibility: 'PUBLIC' | 'PRIVATE'; // 공개 여부
+  visibility: PublicOrPrivate; // 공개 여부
   questions: CreateSurveyQuestion[];
 }
 
 // Response DTO
 // Response DTO
 // Response DTO
+
+export interface SurveyBaseInfoResponseDto {
+  workspaceId: string;
+  moodTrackerHashedId: string;
+  title: string;
+  creatorId: string;
+  creatorName: string;
+  updatedAt: string;
+  dueDate: string;
+  respondentsNum: number;
+}
 
 /**
  * 분위기 트래커 관련 API 응답의 공통 기본 DTO
@@ -211,4 +226,123 @@ export interface UseTeamMoodDownloadLinkOptions {
 
 export interface CreateNewSurveyResponseDto {
   moodTrackerHashedId: string; // 생성된 설문의 해싱된 ID
+}
+
+/**
+ * 경운 제작본 : 설문에 있는 질문 목록을 가져올 때 사용합니다.
+ */
+export interface GetSurveyQuestionListResponseDto {
+  workspaceId: string;
+  moodTrackerHashedId: string;
+  title: string;
+  creatorId: string;
+  creatorName: string;
+  updatedAt: string; // ISO 8601 형식의 날짜 문자열
+  dueDate: string; // ISO 8601 형식의 날짜 문자열
+  respondentsNum: number; // 현재까지의 응답자 수
+  description: string; // 설문의 설명
+  questionList: SurveyQuestionTypeOnGet[]; // 설문에 포함된 질문 목록
+}
+
+/**
+ * 경운 제작본 : 모든 질문 유형의 기본 구조
+ */
+interface BaseQuestionOnGet {
+  /** 질문의 고유 ID */
+  questionId: string;
+  /** 질문의 내용 */
+  questionTitle: string;
+  isMandatory: boolean; // 필수 여부
+}
+
+/**
+ * 경운 제작본 : 객관식 문항의 응답 항목
+ */
+export interface SurveyMultipleChoiceItemOnGet {
+  /** 객관식 선택지의 고유 ID */
+  multipleChoiceId: string;
+  /** 선택지의 내용 */
+  content: string;
+}
+
+/**
+ * 경운 제작본 : 복수선택 문항의 응답 항목
+ */
+export interface SurveyCheckboxChoiceItemOnGet {
+  /** 복수선택 선택지의 고유 ID */
+  checkboxChoiceId: string;
+  /** 선택지의 내용 */
+  content: string;
+}
+
+/**
+ * 경운 제작본 : 질문 유형(type)에 따라 구조가 달라지는 질문 객체 타입 (Discriminated Union)
+ */
+export type SurveyQuestionTypeOnGet =
+  | (BaseQuestionOnGet & {
+      /** 질문 유형: 객관식 */
+      type: TeamMoodTrackerSurveyQuestionType.MULTIPLE_CHOICE;
+      /** 객관식 응답 목록 */
+      multipleChoiceList: SurveyMultipleChoiceItemOnGet[];
+    })
+  | (BaseQuestionOnGet & {
+      /** 질문 유형: 복수선택 */
+      type: TeamMoodTrackerSurveyQuestionType.CHECKBOX_CHOICE;
+      /** 복수선택 응답 목록 */
+      checkboxChoiceList: SurveyCheckboxChoiceItemOnGet[];
+    })
+  | (BaseQuestionOnGet & {
+      /** 질문 유형: 주관식 */
+      type: TeamMoodTrackerSurveyQuestionType.SUBJECTIVE;
+      /** 주관식 응답 목록 */
+      isMandatory: boolean; // 필수 여부
+    });
+
+interface BaseQuestionOnPost {
+  /** 질문의 고유 ID */
+  questionId: string;
+}
+
+/**
+ * 경운 제작본 : 질문 유형(type)에 따라 구조가 달라지는 질문 객체 타입 (Discriminated Union)
+ */
+export type SurveyQuestionTypeOnPost =
+  | (BaseQuestionOnPost & {
+      /** 질문 유형: 객관식 */
+      type: TeamMoodTrackerSurveyQuestionType.MULTIPLE_CHOICE;
+      // 객관식이라 단일 string 입니다
+      multipleChoiceId: string;
+    })
+  | (BaseQuestionOnPost & {
+      /** 질문 유형: 복수선택 */
+      type: TeamMoodTrackerSurveyQuestionType.CHECKBOX_CHOICE;
+      checkboxChoiceIdList: string[];
+    })
+  | (BaseQuestionOnPost & {
+      /** 질문 유형: 주관식 */
+      type: TeamMoodTrackerSurveyQuestionType.SUBJECTIVE;
+      subjectiveAnswer: string;
+    });
+
+/**
+ * 설문 응답 제출 Request DTO
+ */
+export interface PostSurveyRequestDto {
+  answers: SurveyQuestionTypeOnPost[];
+}
+
+export interface TeamMoodTrackerReportListItem {
+  /** 해싱된 팀 무드 트래커의 고유 ID */
+  moodTrackerHashedId: string;
+  /** 팀 무드 트래커의 제목 */
+  title: string;
+  // ISO 8601 형식의 날짜 문자열
+  updatedAt: string;
+  // ISO 8601 형식의 날짜 문자열
+  dueDate: string;
+  // 현재까지의 응답자 수
+  respondentsNum: number;
+}
+export interface GetTeamMoodTrackerReportListResponseDto {
+  moodTrackerList: TeamMoodTrackerReportListItem[];
 }

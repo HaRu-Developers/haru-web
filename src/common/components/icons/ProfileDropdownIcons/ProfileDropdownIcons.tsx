@@ -15,13 +15,13 @@ const ProfileDropdownIcons = ({
 }: IconsCommonProps<ProfileDropdownIconsState>) => {
   switch (state) {
     case ProfileDropdownIconsState.LOGOUT:
-      return <LogoutIcon className={clsx('h-[16px] w-[16px]', className)} />;
+      return <LogoutIcon className={clsx('h-16pxr w-16pxr', className)} />;
     case ProfileDropdownIconsState.ADD_PROFILE:
-      return <AddProfileIcon className={clsx('h-[16px] w-[16px]', className)} />;
+      return <AddProfileIcon className={clsx('h-16pxr w-16pxr', className)} />;
     case ProfileDropdownIconsState.PROFILE:
-      return <ProfileIcon className={clsx('h-[16px] w-[16px]', className)} />;
+      return <ProfileIcon className={clsx('h-16pxr w-16pxr', className)} />;
     case ProfileDropdownIconsState.SETTING:
-      return <SettingIcon className={clsx('h-[16px] w-[16px]', className)} />;
+      return <SettingIcon className={clsx('h-16pxr w-16pxr', className)} />;
     default:
       return null;
   }

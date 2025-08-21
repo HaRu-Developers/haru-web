@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 
-import { notFound } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 import { GetSnsEventAssistantListResponseDto } from '@api/sns-event-assistant/api.types';
 
@@ -8,6 +8,7 @@ import { ApiErrorBody } from '@common/types/api.common.types';
 
 import { API_ERROR_CODES } from '@common/constants/api-error-codes.constants';
 import queryKeys from '@common/constants/query-key.constants';
+import { ROUTES } from '@common/constants/routes.constants';
 
 import { ApiError } from '@common/errors/ApiError';
 
@@ -20,11 +21,15 @@ import { GetSnsEventList } from '../apis/get-sns-event-list';
  * @param {string} workspaceId - 이벤트 목록을 조회할 워크스페이스의 고유 ID입니다.
  */
 const useSnsEventList = (workspaceId: string) => {
-  const handleError = useCallback((error: ApiError<ApiErrorBody>) => {
-    if (error.code === API_ERROR_CODES.SNS_EVENT.NOT_FOUND) {
-      notFound(); // Next.js not-found.tsx로 이동
-    }
-  }, []);
+  const router = useRouter();
+  const handleError = useCallback(
+    (error: ApiError<ApiErrorBody>) => {
+      if (error.code === API_ERROR_CODES.SNS_EVENT.NOT_FOUND) {
+        router.replace(ROUTES.NOT_FOUND);
+      }
+    },
+    [router],
+  );
 
   // Hydrate된 데이터가 있어 추가 네트워크 요청 없이 바로 캐시 데이터 사용
   return useAfterQuery<

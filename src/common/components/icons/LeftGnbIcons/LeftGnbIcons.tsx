@@ -14,43 +14,35 @@ import { LeftGnbIconsState } from './LeftGnbIcons.types';
 const LeftGnbIcons = ({ state, className }: IconsCommonProps<LeftGnbIconsState>) => {
   switch (state) {
     case LeftGnbIconsState.AI_MANAGER:
-      return <LeftGnbAiManagerIcon className={clsx('h-[20px] w-[20px] text-black', className)} />;
+      return <LeftGnbAiManagerIcon className={clsx('h-20pxr w-20pxr text-black', className)} />;
     case LeftGnbIconsState.AI_MANAGER_DISABLED:
-      return (
-        <LeftGnbAiManagerIcon className={clsx('h-[20px] w-[20px] text-gray-200', className)} />
-      );
+      return <LeftGnbAiManagerIcon className={clsx('h-20pxr w-20pxr text-gray-200', className)} />;
     case LeftGnbIconsState.HOME:
-      return <LeftGnbHomeIcon className={clsx('h-[20px] w-[20px] text-black', className)} />;
+      return <LeftGnbHomeIcon className={clsx('h-20pxr w-20pxr text-black', className)} />;
     case LeftGnbIconsState.HOME_DISABLED:
-      return <LeftGnbHomeIcon className={clsx('h-[20px] w-[20px] text-gray-200', className)} />;
+      return <LeftGnbHomeIcon className={clsx('h-20pxr w-20pxr text-gray-200', className)} />;
     case LeftGnbIconsState.MY_CALENDAR:
-      return <LeftGnbMyCalendarIcon className={clsx('h-[20px] w-[20px] text-black', className)} />;
+      return <LeftGnbMyCalendarIcon className={clsx('h-20pxr w-20pxr text-black', className)} />;
     case LeftGnbIconsState.MY_CALENDAR_DISABLED:
-      return (
-        <LeftGnbMyCalendarIcon className={clsx('h-[20px] w-[20px] text-gray-200', className)} />
-      );
+      return <LeftGnbMyCalendarIcon className={clsx('h-20pxr w-20pxr text-gray-200', className)} />;
     case LeftGnbIconsState.SNS_ASSISTANT:
-      return (
-        <LeftGnbSnsAssistantIcon className={clsx('h-[20px] w-[20px] text-black', className)} />
-      );
+      return <LeftGnbSnsAssistantIcon className={clsx('h-20pxr w-20pxr text-black', className)} />;
     case LeftGnbIconsState.SNS_ASSISTANT_DISABLED:
       return (
-        <LeftGnbSnsAssistantIcon className={clsx('h-[20px] w-[20px] text-gray-200', className)} />
+        <LeftGnbSnsAssistantIcon className={clsx('h-20pxr w-20pxr text-gray-200', className)} />
       );
     case LeftGnbIconsState.TEAM_MOOD_TRACKER:
       return (
-        <LeftGnbTeamMoodTrackerIcon className={clsx('h-[20px] w-[20px] text-black', className)} />
+        <LeftGnbTeamMoodTrackerIcon className={clsx('h-20pxr w-20pxr text-black', className)} />
       );
     case LeftGnbIconsState.TEAM_MOOD_TRACKER_DISABLED:
       return (
-        <LeftGnbTeamMoodTrackerIcon
-          className={clsx('h-[20px] w-[20px] text-gray-200', className)}
-        />
+        <LeftGnbTeamMoodTrackerIcon className={clsx('h-20pxr w-20pxr text-gray-200', className)} />
       );
     case LeftGnbIconsState.RECENT_FILE:
       return (
         <LeftGnbRecentFileIcon
-          className={clsx('h-[20px] w-[20px] shrink-0 text-gray-200', className)}
+          className={clsx('h-20pxr w-20pxr shrink-0 text-gray-200', className)}
         />
       );
     default:

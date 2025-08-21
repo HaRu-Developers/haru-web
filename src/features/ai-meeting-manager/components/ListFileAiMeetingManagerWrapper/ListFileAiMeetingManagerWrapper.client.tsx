@@ -25,7 +25,7 @@ const ListFileAiMeetingManagerWrapper = ({ workspaceId }: ListFileAiMeetingManag
 
       {/* 로딩 끝났는데도 데이터 없으면 빈 상태 */}
       {!hasMeetingMinutes && !isFetching && (
-        <p className="p-8pxr text-t4-md text-gray-400">회의록이 없습니다.</p>
+        <p className="p-16pxr text-b2-rg text-gray-300">내 AI 회의록이 없습니다.</p>
       )}
 
       {/* 데이터가 있으면 목록 표시 */}

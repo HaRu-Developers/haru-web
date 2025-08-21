@@ -20,14 +20,10 @@ import GnbTop from '@common/components/gnbs/GnbTop/GnbTop.client';
 import FooterLayout from '@common/components/layouts/FooterLayout.server';
 import GnbLeftLayout from '@common/components/layouts/GnbLeftLayout/GnbLeftLayout.server';
 
-import HasNoWorkspace from '@features/team-mood-tracker/components/workspace-main/HasNoWorkspace/HasNoWorkspace.server';
-
 const InnerWorkspaceIdPage = () => {
   const router = useRouter();
   const pathname = usePathname();
   const { workspaceId } = useParams<{ workspaceId: string }>();
-
-  const hasworkSpace = !!workspaceId;
 
   const { data: recentData, isFetching: isRecentLoading } = useViewRecentDocumentsQuery(
     workspaceId ?? '',
@@ -66,63 +62,56 @@ const InnerWorkspaceIdPage = () => {
   };
 
   return (
-    <div>
-      {hasworkSpace ? (
-        <FooterLayout>
-          <GnbLeftLayout workspaceId={workspaceId}>
-            <GnbTop section={GnbSection.MAIN} />
-
-            <div className="flex flex-col items-center">
-              <div className="mb-74pxr flex flex-col">
-                <div className="mt-36pxr mb-16pxr text-t3-bd">새로 시작하기</div>
-                <div className="gap-20pxr md:gap-18pxr flex">
-                  {isRecentLoading
-                    ? Array.from({ length: ctaItems.length }).map((_, index) => (
-                        <ImageCtaSkeleton key={index} />
-                      ))
-                    : ctaItems.map((item, index) => (
-                        <ImageCta key={index} type={item.type} onClick={item.onClick} />
-                      ))}
-                </div>
-              </div>
-
-              <div className="flex flex-col justify-start">
-                <div className="mb-16pxr text-t3-bd w-1030pxr">최근 항목</div>
-                <div className="gap-18pxr md:gap-16pxr min-h-400pxr grid grid-cols-4">
-                  {isRecentLoading ? (
-                    Array.from({ length: 8 }).map((_, index) => <BoxedFileSkeleton key={index} />)
-                  ) : validRecentDocuments.length > 0 ? (
-                    validRecentDocuments.map((file) => (
-                      <BoxedFile
-                        key={file.documentId}
-                        title={file.title}
-                        lastOpened={file.lastOpened}
-                        documentType={file.documentType}
-                        thumbnailUrl={file.thumbnailUrl ?? ''}
-                        onClick={() => handleFileClick(file)}
-                      />
-                    ))
-                  ) : (
-                    <div className="text-b2-rg mt-2pxr text-gray-300">최근 항목이 없습니다.</div>
-                  )}
-                </div>
-              </div>
-
-              <div className="mt-74pxr mb-92pxr flex flex-col">
-                <div className="mb-20pxr text-t3-bd">내 캘린더</div>
-                {isRecentLoading ? (
-                  <CalendarSkeleton />
-                ) : (
-                  <CalendarSection workspaceId={Number(workspaceId)} />
-                )}
-              </div>
+    <FooterLayout>
+      <GnbLeftLayout workspaceId={workspaceId}>
+        <GnbTop section={GnbSection.MAIN} />
+        <div className="flex flex-col items-center">
+          <div className="mb-74pxr flex flex-col">
+            <div className="mt-36pxr mb-16pxr text-t3-bd">새로 시작하기</div>
+            <div className="gap-20pxr md:gap-18pxr flex">
+              {isRecentLoading
+                ? Array.from({ length: ctaItems.length }).map((_, index) => (
+                    <ImageCtaSkeleton key={index} />
+                  ))
+                : ctaItems.map((item, index) => (
+                    <ImageCta key={index} type={item.type} onClick={item.onClick} />
+                  ))}
             </div>
-          </GnbLeftLayout>
-        </FooterLayout>
-      ) : (
-        <HasNoWorkspace />
-      )}
-    </div>
+          </div>
+
+          <div className="flex flex-col justify-start">
+            <div className="mb-16pxr text-t3-bd w-1030pxr">최근 항목</div>
+            <div className="gap-18pxr md:gap-16pxr min-h-400pxr grid grid-cols-4">
+              {isRecentLoading ? (
+                Array.from({ length: 8 }).map((_, index) => <BoxedFileSkeleton key={index} />)
+              ) : validRecentDocuments.length > 0 ? (
+                validRecentDocuments.map((file) => (
+                  <BoxedFile
+                    key={file.documentId}
+                    title={file.title}
+                    lastOpened={file.lastOpened}
+                    documentType={file.documentType}
+                    thumbnailUrl={file.thumbnailUrl ?? ''}
+                    onClick={() => handleFileClick(file)}
+                  />
+                ))
+              ) : (
+                <div className="text-b2-rg mt-2pxr text-gray-300">최근 항목이 없습니다.</div>
+              )}
+            </div>
+          </div>
+
+          <div className="mt-74pxr mb-92pxr flex flex-col">
+            <div className="mb-20pxr text-t3-bd">내 캘린더</div>
+            {isRecentLoading ? (
+              <CalendarSkeleton />
+            ) : (
+              <CalendarSection workspaceId={Number(workspaceId)} />
+            )}
+          </div>
+        </div>
+      </GnbLeftLayout>
+    </FooterLayout>
   );
 };
 

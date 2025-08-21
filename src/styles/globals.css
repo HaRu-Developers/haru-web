@@ -41,6 +41,14 @@
 
     &:disabled {
       cursor: not-allowed;
+      pointer-events: none;
+    }
+  }
+
+  input {
+    &:disabled {
+      cursor: not-allowed;
+      pointer-events: none;
     }
   }
 }

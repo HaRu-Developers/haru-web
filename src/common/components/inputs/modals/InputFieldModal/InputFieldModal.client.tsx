@@ -11,6 +11,7 @@ import { InputFieldModalProps } from './InputFieldModal.types';
  * @param value - 입력 필드 값
  * @param type - 입력 필드 타입 (기본값: 'text')
  * @param onChange - 입력 필드 값 변경 핸들러
+ * @param disabled - 입력 불가 상태
  * @param className - 추가 클래스 이름
  */
 const InputFieldModal = ({
@@ -19,6 +20,7 @@ const InputFieldModal = ({
   value,
   type,
   onChange,
+  disabled = false,
   className,
 }: InputFieldModalProps) => {
   return (
@@ -30,6 +32,7 @@ const InputFieldModal = ({
         placeholder={placeholder}
         value={value}
         onChange={(e) => onChange(e.target.value)}
+        disabled={disabled}
       />
     </div>
   );

@@ -6,9 +6,8 @@ import { AiMeetingPageType } from '@features/ai-meeting-manager/types/page-type.
 
 import LeftTab from '@features/ai-meeting-manager/components/LeftTab/LeftTab.client';
 import MeetingHeader from '@features/ai-meeting-manager/components/MeetingHeader/MeetingHeader.client';
-import ProceedingPanel from '@features/ai-meeting-manager/components/panels/LeftPanel/ProceedingPanel/ProceedingPanel.client';
-import SpeechPanel from '@features/ai-meeting-manager/components/panels/LeftPanel/SpeechPanel/SpeechPanel.client';
-import RightPanel from '@features/ai-meeting-manager/components/panels/RightPanel/RightPanel.client';
+import MeetingPanel from '@features/ai-meeting-manager/components/panels/MeetingPanel/MeetingPanel.client';
+import ProceedingPanel from '@features/ai-meeting-manager/components/panels/ProceedingPanel/ProceedingPanel.client';
 
 import EditKeymap from '../EditKeyMap/EditKeyMap.client';
 import { AiMeetingMinutesContentProps } from './AiMeetingMinutes.types';
@@ -19,7 +18,7 @@ import { AiMeetingMinutesContentProps } from './AiMeetingMinutes.types';
  *
  * useRef 사용으로 인해 클라이언트 컴포넌트 분리함
  */
-const AiMeetingMinutesContent = ({
+const AiMeetingMinutesClient = ({
   formattedLeftTab,
   isVoiceLogTab,
 }: AiMeetingMinutesContentProps) => {
@@ -27,23 +26,20 @@ const AiMeetingMinutesContent = ({
   const editingScopeRef = useRef<HTMLDivElement>(null!);
 
   return (
-    <>
-      <div className="flex">
-        {/* 같은 편집 스코프로 묶음 */}
-        <div className="flex flex-1 flex-col" ref={editingScopeRef}>
+    // 같은 편집 스코프로 묶음 - 수정 모드 위해
+    <section className="flex flex-col" ref={editingScopeRef}>
+      {isVoiceLogTab ? (
+        <MeetingPanel pageType={AiMeetingPageType.MINUTES} leftTab={formattedLeftTab} />
+      ) : (
+        <>
           <EditKeymap editingScopeRef={editingScopeRef} />
           <MeetingHeader editingScopeRef={editingScopeRef} />
           <LeftTab current={formattedLeftTab} />
-          {isVoiceLogTab ? (
-            <SpeechPanel page={AiMeetingPageType.MINUTES} />
-          ) : (
-            <ProceedingPanel editingScopeRef={editingScopeRef} />
-          )}
-        </div>
-        {isVoiceLogTab && <RightPanel />}
-      </div>
-    </>
+          <ProceedingPanel editingScopeRef={editingScopeRef} />
+        </>
+      )}
+    </section>
   );
 };
 
-export default AiMeetingMinutesContent;
+export default AiMeetingMinutesClient;

@@ -326,14 +326,12 @@ const useMeetingSocket = ({
   // ===== 외부 ui에서 쓸 recording controls
   const pauseStreaming = useCallback(() => {
     if (!sendAudio) return;
-    micCtlRef.current?.pause(); // 전송만 멈춤(트랙은 유지)
-    console.log('pauseStreaming');
+    micCtlRef.current?.pause(); // 전송만 멈춤(트랙(ui)은 유지)
   }, [sendAudio]);
 
   const resumeStreaming = useCallback(async () => {
     if (!sendAudio) return;
     micCtlRef.current?.resume();
-    console.log('resumeStreaming');
   }, [sendAudio]);
 
   const isPaused = useCallback(() => micCtlRef.current?.isPaused() ?? false, []);
@@ -344,10 +342,10 @@ const useMeetingSocket = ({
   // ===== 회의 종료
   // 모달 열기
   const onOpenEndMeetingModal = useCallback(async () => {
-    // 커스텀 이벤트 발생시켜 GnbLeftRecoderBar랑 동기화
+    // 커스텀 이벤트 발생시켜 GnbLeftRecoderBar랑 동기화 - ui
     window.dispatchEvent(new CustomEvent('recorder', { detail: { action: 'pause' } }));
     try {
-      pauseStreaming(); // 모달 열릴 때 전송 일시정지
+      pauseStreaming(); // 모달 열릴 때 ws 전송 일시정지
       // endmeetingModal 열기
       openEndMeetingModal();
     } catch (e) {
@@ -407,10 +405,10 @@ const useMeetingSocket = ({
 
   // 모달에서 취소 눌렀을때
   const cancelEndMeeting = useCallback(async () => {
-    // 커스텀 이벤트 발생시켜 GnbLeftRecoderBar랑 동기화
+    // 커스텀 이벤트 발생시켜 GnbLeftRecoderBar랑 동기화 - ui 멈추기
     window.dispatchEvent(new CustomEvent('recorder', { detail: { action: 'resume' } }));
-    resumeStreaming();
-    closeEndMeetingModal();
+    resumeStreaming(); // ws 다시 전송
+    closeEndMeetingModal(); // 모달 닫기
   }, [resumeStreaming, closeEndMeetingModal]);
 
   // ===== sendAudio가 꺼질 때 즉시 업스트림 중단 및 UI 동기화

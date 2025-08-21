@@ -1,6 +1,5 @@
 import { useCallback } from 'react';
 
-import { notFound } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 
 import { ApiErrorBody } from '@common/types/api.common.types';

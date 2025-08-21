@@ -2,13 +2,14 @@
 
 import { useRouter } from 'next/navigation';
 
+import { ROUTES } from '@common/constants/routes.constants';
+
 import useFetchCalendar from '@/api/workspace/get/queries/useFetchCalendar';
 
 import CalendarFull from '../calendar-full/CalendarFull/CalendarFull.client';
 import { useCalendarStore } from '../stores/calendar-store';
 import { getCalendarDates } from '../utils/calendar-date.utils';
 import { CalendarSectionProps } from './CalendarSection.types';
-import { ROUTES } from '@common/constants/routes.constants';
 
 const CalendarSection = ({ workspaceId }: CalendarSectionProps) => {
   const router = useRouter();

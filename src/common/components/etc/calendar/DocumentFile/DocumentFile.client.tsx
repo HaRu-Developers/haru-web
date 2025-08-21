@@ -1,13 +1,15 @@
 'use client';
 
+import { useParams, useRouter } from 'next/navigation';
+
 import FeaturedFileIcons from '@icons/FeaturedFileIcons/FeaturedFileIcons';
 import { FeaturedFileIconsState } from '@icons/FeaturedFileIcons/FeaturedFileIcons.types';
 
 import { FileType } from '@common/types/file-type.enum';
 
-import { DocumentFileProps } from './DocumentFile.types';
-import { useParams, useRouter } from 'next/navigation';
 import { ROUTES } from '@common/constants/routes.constants';
+
+import { DocumentFileProps } from './DocumentFile.types';
 
 /*
  * 문서 파일 컴포넌트

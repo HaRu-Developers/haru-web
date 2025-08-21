@@ -1,6 +1,6 @@
 'use client';
 
-import { notFound, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
@@ -36,6 +36,7 @@ const useCreateSnsEventMutation = (workspaceId: string) => {
   const router = useRouter();
   const { setNewEventInit } = useSnsEventAssistantActions();
   const { addToast } = useToastActions();
+
   return useMutation<
     { result: CreateSnsEventAssistantResponseDto }, // TData
     ApiError<ApiErrorBody>, // TError
@@ -53,7 +54,7 @@ const useCreateSnsEventMutation = (workspaceId: string) => {
     },
     onError: (error) => {
       if (error.code === API_ERROR_CODES.SNS_EVENT.NOT_FOUND) {
-        notFound();
+        router.replace(ROUTES.NOT_FOUND);
       } else {
         router.back();
         if (error.code === API_ERROR_CODES.SNS_EVENT.LINK_NOT_FOUND) {

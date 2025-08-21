@@ -27,14 +27,13 @@ export const Default: Story = {
 
     const mockDocuments: DocumentList[] = [
       {
-        documentId: "1",
+        documentId: '1',
         title: '회의록 - 테스트',
         documentType: FileType.AI_MEETING_MANAGER,
         createdAt: '2025-06-29T00:00:00Z',
       },
     ];
     const [documents, _setDocuments] = useState<DocumentList[]>(mockDocuments);
-
 
     return (
       <CalendarFull

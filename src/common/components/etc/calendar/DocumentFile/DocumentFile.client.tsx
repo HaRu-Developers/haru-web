@@ -10,8 +10,6 @@ import { FileType } from '@common/types/file-type.enum';
 import { ROUTES } from '@common/constants/routes.constants';
 
 import { DocumentFileProps } from './DocumentFile.types';
-import { useParams, useRouter } from 'next/navigation';
-import { ROUTES } from '@common/constants/routes.constants';
 
 /*
  * 문서 파일 컴포넌트

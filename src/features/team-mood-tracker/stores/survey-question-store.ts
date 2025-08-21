@@ -292,13 +292,13 @@ export const surveyQuestionStore = create<SurveyStoreState & SurveyStoreActions>
             return {
               questionId: q.id,
               type: TeamMoodTrackerSurveyQuestionType.MULTIPLE_CHOICE,
-              multipleChoiceId: q.multipleOrCheckboxOptions.map((opt) => opt.id)[0],
+              multipleChoiceId: q.checkedOptionList.map((opt) => opt.id)[0],
             };
           } else if (q.questionType === InputSurveyQuestionType.CHECKBOX) {
             return {
               questionId: q.id,
               type: TeamMoodTrackerSurveyQuestionType.CHECKBOX_CHOICE,
-              checkboxChoiceIdList: q.multipleOrCheckboxOptions.map((opt) => opt.id),
+              checkboxChoiceIdList: q.checkedOptionList.map((opt) => opt.id),
             };
           } else if (q.questionType === InputSurveyQuestionType.SUBJECT) {
             return {

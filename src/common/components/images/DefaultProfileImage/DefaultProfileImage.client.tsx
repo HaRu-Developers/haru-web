@@ -32,12 +32,12 @@ const DefaultProfileImage = ({
     );
   }
 
-  // TODO: 한 글자만 추출
-  // 구글 로그인시 lastName의 한 글자 추출
-  // 일반 로그인시 한 글자 추출
+  // 여기서부터는 name이 string인 상태임
   const initial = name.slice(0, 1);
-  // userId가 ''인 경우 반영
-  const hashKey = userId?.trim() || name?.trim() || 'anonymous';
+  const hashKey =
+    typeof userId === 'string'
+      ? userId.trim()
+      : String(userId ?? '').trim() || name?.trim() || 'anonymous';
   // 같은 사용자면 같은 색상을 가지게
   const colorIndex = hashCode(hashKey) % PROFILE_COLORS.length;
   const backgroundColor = color ?? PROFILE_COLORS[colorIndex];

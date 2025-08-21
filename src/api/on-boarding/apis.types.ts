@@ -11,6 +11,7 @@ export interface InviteMembersRequestDto {
 
 export interface LinkInstagramRequestDto {
   workspaceId: string;
+  instagramRedirectType: string;
   code: string;
 }
 

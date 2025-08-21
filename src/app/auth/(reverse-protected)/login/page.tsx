@@ -1,7 +1,8 @@
 import { Suspense } from 'react';
 
-import GoogleLoginButton from '@common/components/buttons/48px/GoogleLoginButton/GoogleLoginButton.client';
 import LoginOnBoarding from '@common/components/onboarding/LoginOnBoaring/LoginOnBoarding.client';
+
+import GoogleLoginButton from '@buttons/48px/GoogleLoginButton/GoogleLoginButton.client';
 
 import DdoneunDivider from '@features/auth/components/DdoneunDivider/DdoneunDivider.server';
 import HaveNoAccount from '@features/auth/components/login-page/HaveNoAccount/HaveNoAccount.server';

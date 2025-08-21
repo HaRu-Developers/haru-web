@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 
-import GoogleLoginButton from '@common/components/buttons/48px/GoogleLoginButton/GoogleLoginButton.client';
+import GoogleLoginButton from '@buttons/48px/GoogleLoginButton/GoogleLoginButton.client';
 
 import DdoneunDivider from '@features/auth/components/DdoneunDivider/DdoneunDivider.server';
 import AlreadyHaveAccountButton from '@features/auth/components/register-page/AlreadyHaveAccountButton/AlreadyHaveAccountButton.server';

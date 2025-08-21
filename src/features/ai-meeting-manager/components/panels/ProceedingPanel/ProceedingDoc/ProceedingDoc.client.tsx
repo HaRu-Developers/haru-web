@@ -12,7 +12,7 @@ const ProceedingDoc = ({ sections }: { sections: ProceedingSection[] }) => {
   };
 
   return (
-    <div className="md-proceeding">
+    <div className="md-proceeding scrollbar-component h-[calc(100dvh_-_var(--gnb-top-height)_-_var(--meeting-header-height)_-_var(--tab-height)_-_24pxr)] w-full overflow-y-auto">
       {isNoSections(sections) ? (
         <p className="p-16pxr text-b2-rg text-gray-300">회의 진행 내용이 없습니다.</p>
       ) : (

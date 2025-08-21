@@ -42,7 +42,7 @@ const flash = (el: El, opts?: FocusOptions) => {
   el.classList.add(FLASH_CLASS);
   el.scrollIntoView({
     behavior: opts?.behavior ?? 'smooth',
-    block: opts?.block ?? 'center',
+    block: opts?.block ?? 'nearest',
     inline: opts?.inline ?? 'nearest',
   });
   window.setTimeout(() => el.classList.remove(FLASH_CLASS), opts?.flashMs ?? 1000);
@@ -127,29 +127,29 @@ const useFocusMapStore = create<FocusMapState>()(
           set({ activeQuestionSegId: segmentId });
 
           // ===== segmentId에 해당하는 질문 모두 포커스
-          // // 새 플래시 적용
-          // // 연결된 질문 카드들 모두 가져오기
-          // const list = (get().questionRefs.get(segmentId) ?? []).filter(
-          //   (el): el is HTMLElement => !!el,
-          // );
+          // 새 플래시 적용
+          // 연결된 질문 카드들 모두 가져오기
+          const list = (get().questionRefs.get(segmentId) ?? []).filter(
+            (el): el is HTMLElement => !!el,
+          );
 
-          // if (list.length === 0) return;
+          if (list.length === 0) return;
 
-          // const [first, ...rest] = list;
+          const [first, ...rest] = list;
 
-          // // 1) 첫 번째 카드: 스크롤 + 하이라이트
-          // flash(first ?? null, opts);
+          // 1) 첫 번째 카드: 스크롤 + 하이라이트
+          flash(first ?? null, opts);
 
-          // // 2) 나머지 카드: 스크롤 없이 하이라이트만
-          // const ms = opts?.flashMs ?? 1000;
-          // rest.forEach((el) => {
-          //   el.classList.add(FLASH_CLASS);
-          //   window.setTimeout(() => el.classList.remove(FLASH_CLASS), ms);
-          // });
+          // 2) 나머지 카드: 스크롤 없이 하이라이트만
+          const ms = opts?.flashMs ?? 1000;
+          rest.forEach((el) => {
+            el.classList.add(FLASH_CLASS);
+            window.setTimeout(() => el.classList.remove(FLASH_CLASS), ms);
+          });
 
           // ===== segmentId에 해당하는 첫번째 질문만 포커스
-          const el = get().questionRefs.get(segmentId)?.[0] ?? null;
-          flash(el, opts);
+          // const el = get().questionRefs.get(segmentId)?.[0] ?? null;
+          // flash(el, opts);
         },
 
         // 활성화 모두 해제

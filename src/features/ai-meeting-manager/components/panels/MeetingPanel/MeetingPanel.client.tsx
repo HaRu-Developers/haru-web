@@ -117,7 +117,7 @@ const MeetingPanel = ({ pageType, leftTab }: MeetingPanelProps) => {
           {isMeetingPage ? null : <LeftTab current={formattedLeftTab} />}
           <div className="relative">
             <SpeechPanel
-              pageType={pageType}
+              isMeetingPage={isMeetingPage}
               meetingStartTime={meetingStartTime}
               speeches={speeches}
             />
@@ -140,7 +140,11 @@ const MeetingPanel = ({ pageType, leftTab }: MeetingPanelProps) => {
             </div>
           </div>
         </div>
-        <RightPanel questionsForUI={questionsForUI} speechTextById={speechTextById} />
+        <RightPanel
+          isMeetingPage={isMeetingPage}
+          questionsForUI={questionsForUI}
+          speechTextById={speechTextById}
+        />
       </section>
       {(isOpenEndMeetingModal || isOpenMmLoadingModal) && (
         <ModalLayout canClickDimmed={false}>

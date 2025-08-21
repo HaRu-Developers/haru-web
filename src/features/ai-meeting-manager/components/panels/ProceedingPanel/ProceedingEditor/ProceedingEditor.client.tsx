@@ -17,6 +17,7 @@ import {
   isLastItem,
   keyOfItem,
   keyOfTitle,
+  normalizeSections,
   parseProceeding,
   stringifyProceeding,
 } from '../ProceedingPanel.utils';
@@ -29,13 +30,29 @@ const ProceedingEditor = ({
   disabled,
 }: ProceedingEditorProps) => {
   const { setEditing } = useEditActions();
-
   // 서버에서 준 문자열을 객체로 변환해 저장하기 - 동기화
   // 내부 상태: 항상 최소 1 섹션, 섹션당 최소 1 불렛 보장
   const [sections, setSections] = useState<ProceedingSection[]>(() => parseProceeding(value));
   useEffect(() => {
     setSections(parseProceeding(value));
   }, [value]);
+
+  const emit = useCallback(
+    (next: ProceedingSection[]) => {
+      const norm = normalizeSections(next);
+      onChange?.(stringifyProceeding(norm), norm);
+    },
+    [onChange],
+  );
+
+  //  sections 커밋 후에만 부모 onChange 호출
+  useEffect(() => {
+    if (!pendingEmitRef.current) return; // 외부(value) 동기화로 바뀐 경우는 무시
+    pendingEmitRef.current = false;
+    emit(sections);
+  }, [sections, emit]);
+
+  const pendingEmitRef = useRef(false); // 내부 변경 플래그
 
   // 입력 DOM ref 저장소
   const refs = useRef<Map<string, HTMLInputElement | null>>(new Map());
@@ -57,33 +74,22 @@ const ProceedingEditor = ({
   // 더블 엔터 트래커
   const enterTracker = useRef(createLastEnterTracker());
 
-  // 상위 콜백 emit
-  const emit = useCallback(
-    (next: ProceedingSection[]) => {
-      const norm = next.map((s) => ({ ...s, items: s.items.length ? s.items : [''] }));
-      onChange?.(stringifyProceeding(norm), norm);
-    },
-    [onChange],
-  );
-
   // 섹션/아이템 변경 헬퍼
   const setSectionsAndEmit = useCallback(
     (updater: (prev: ProceedingSection[]) => ProceedingSection[]) => {
       setSections((prev) => {
-        const next = updater(prev).map((s) => ({
-          ...s,
-          items: s.items.length ? s.items : [''], // 섹션 당 최소 1 불렛 보장
-        }));
-        emit(next);
+        const next = normalizeSections(updater(prev));
+        pendingEmitRef.current = true; // 내부 변경 표시
         return next;
       });
     },
-    [emit],
+    [],
   );
 
   // 변경 로직
   const updateTitle = useCallback(
     (secIdx: number, val: string) => {
+      console.log(val);
       setSectionsAndEmit((prev) => prev.map((s, i) => (i === secIdx ? { ...s, title: val } : s)));
     },
     [setSectionsAndEmit],
@@ -287,7 +293,7 @@ const ProceedingEditor = ({
         e.preventDefault();
 
         const curVal = (e.currentTarget as HTMLInputElement).value;
-        const empty = curVal.trim() === '';
+        const empty = curVal === '';
 
         // "마지막 불렛"에서 "연속 두 번 Enter" → 새 섹션
         if (isLastItem(sections, secIdx, itemIdx) && enterTracker.current.isDoubleEnter(key)) {
@@ -339,8 +345,9 @@ const ProceedingEditor = ({
 
   return (
     <div
+      // 임시 높이 잡아둠
       className={clsx(
-        'max-w-1096pxr p-20pxr rounded-10pxr w-full bg-gray-700',
+        'p-20pxr rounded-10pxr scrollbar-component h-950pxr min-h-0 w-full overflow-y-auto bg-gray-600',
         disabled ? 'disabled-style' : '',
       )}
       aria-disabled={disabled}

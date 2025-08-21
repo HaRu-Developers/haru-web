@@ -57,8 +57,8 @@ const ProtectChildren = ({
   }, []);
 
   useEffect(() => {
-    console.log('[PROTECT_ROUTE] CURRENT PATH :', pathName);
-    console.log('[PROTECT_ROUTE] IS IN WHITELIST :', whitelist.includes(pathName), whitelist);
+    // console.log('[PROTECT_ROUTE] CURRENT PATH :', pathName);
+    // console.log('[PROTECT_ROUTE] IS IN WHITELIST :', whitelist.includes(pathName), whitelist);
   }, [pathName, whitelist]);
 
   useEffect(() => {
@@ -69,17 +69,17 @@ const ProtectChildren = ({
     if (isBlockedAccess) {
       if (protectMode) {
         // 로그인하지 않은 사용자는 접근할 수 없는 페이지
-        console.log(
-          `[PROTECT_ROUTE] 로그인하지 않은 사용자는 접근할 수 없는 페이지 [ ${window.location.href} ]입니다. 로그인 페이지로 이동합니다.`,
-        );
+        // console.log(
+        //   `[PROTECT_ROUTE] 로그인하지 않은 사용자는 접근할 수 없는 페이지 [ ${window.location.href} ]입니다. 로그인 페이지로 이동합니다.`,
+        // );
         clearUser();
         return router.replace(ROUTES.AUTH.LOGIN);
       } else {
         // 로그인한 사용자는 접근할 수 없는 페이지
         // 로그인한 사용자는 접근할 수 없는 페이지
-        console.log(
-          `[PROTECT_ROUTE] 로그인되어 있는 사용자는 접근할 수 없는 페이지 [ ${window.location.href} ] 입니다. 로그인 페이지로 이동합니다.`,
-        );
+        // console.log(
+        //   `[PROTECT_ROUTE] 로그인되어 있는 사용자는 접근할 수 없는 페이지 [ ${window.location.href} ] 입니다. 로그인 페이지로 이동합니다.`,
+        // );
         if (handleBlockedAccess) {
           return handleBlockedAccess();
         }

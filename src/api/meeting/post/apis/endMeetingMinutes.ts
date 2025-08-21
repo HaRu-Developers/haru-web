@@ -12,7 +12,6 @@ import { meetingIdRequestDto } from '../../api.types';
  * @param {string} params.meetingId - 회의록을 조회할 meeting Id
  */
 export const endMeetingMinutes = async ({ meetingId }: meetingIdRequestDto) => {
-  console.log('endMeetingMinutes');
   const response = await defaultApi<BaseResponseDto<string>>(
     MEETING_API_ENDPOINTS.MEETING_MINUTES_END(meetingId),
     {

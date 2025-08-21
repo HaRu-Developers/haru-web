@@ -1,13 +1,16 @@
 'use client';
 
-import { ROUTES } from '@common/constants/routes.constants';
+import SettingModalPage from '../../@innerWorkspaceIdModal/(.)settings/page';
+import { Suspense } from 'react';
+import MainWithWorkspacePage from '@app/workspace/[workspaceId]/page';
 
-import useStandaloneModalRedirect from '@common/hooks/useStandaloneModalRedirect';
-
-const SettingsStandalonePage = () => {
-  useStandaloneModalRedirect((workspaceId) => ROUTES.WORKSPACE_MAIN(workspaceId));
-
-  return null; // 화면 표시 없음
-};
+const SettingsStandalonePage = () => (
+  <>
+    <Suspense fallback={<div>로딩중...</div>}>
+      <SettingModalPage />
+    </Suspense>
+    <MainWithWorkspacePage />
+  </>
+);
 
 export default SettingsStandalonePage;

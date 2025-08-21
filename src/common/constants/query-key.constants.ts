@@ -16,7 +16,7 @@ const queryKeys = createQueryKeyStore({
     recentDocuments: (workspaceId: string) => [workspaceId, 'recentDocuments'],
     search: (workspaceId: string, title: string) => [workspaceId, 'search', title],
     recentBoxedFiles: (workspaceId: string) => [workspaceId, 'recentBoxedFiles'],
-    calendar: (workspaceId: number, start: Date, end: Date) => [
+    calendar: (workspaceId: string, start: Date, end: Date) => [
       workspaceId,
       'calendar',
       start,

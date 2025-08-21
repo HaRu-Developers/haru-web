@@ -1,6 +1,6 @@
 import { type ChartConfiguration } from 'chart.js';
 
-import { ChartData } from './PieChart.types';
+import { ChartConfigData } from './PieChart.types';
 import createPieDataLabelsPlugin from './pie-chart-plugin';
 
 /**
@@ -9,7 +9,7 @@ import createPieDataLabelsPlugin from './pie-chart-plugin';
  * @returns {ChartConfiguration} Chart.js 설정 객체
  */
 
-const getPieChartConfig = (data: ChartData): ChartConfiguration => {
+const getPieChartConfig = (data: ChartConfigData): ChartConfiguration => {
   const pieDataLabelsPlugin = createPieDataLabelsPlugin();
 
   return {
@@ -29,7 +29,7 @@ const getPieChartConfig = (data: ChartData): ChartConfiguration => {
       responsive: true,
       maintainAspectRatio: false,
       layout: {
-        padding: { top: 50, right: 20, bottom: 20, left: 20 },
+        padding: { top: 50, right: 20, bottom: 50, left: 20 },
       },
       plugins: {
         legend: {

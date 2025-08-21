@@ -28,13 +28,13 @@ const DocumentFile = ({ file }: DocumentFileProps) => {
   const handleClick = () => {
     switch (file.documentType) {
       case FileType.AI_MEETING_MANAGER:
-        router.push(ROUTES.AI_MEETING_MANAGER.MEETING(workspaceId, file.documentId));
+        router.push(ROUTES.DETAIL_DOCUMENTS_DEFAULT.AI_MEETING_MANAGER(workspaceId, file.documentId));
         break;
       case FileType.SNS_EVENT_ASSISTANT:
-        router.push(ROUTES.SNS_EVENT_ASSISTANT.DETAIL(workspaceId, file.documentId));
+        router.push(ROUTES.DETAIL_DOCUMENTS_DEFAULT.SNS_EVENT_ASSISTANT(workspaceId, file.documentId));
         break;
       case FileType.TEAM_MOOD_TRACKER:
-        // TODO: TEAM_MOOD_TRACKER 라우트 구현 후 활성화 - router.push(ROUTES.TEAM_MOOD_TRACKER.MAIN(workspaceId, file?.documentId));
+        router.push(ROUTES.DETAIL_DOCUMENTS_DEFAULT.TEAM_MOOD_TRACKER(workspaceId, file.documentId));
         break;
     }
   };

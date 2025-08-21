@@ -128,8 +128,8 @@ export const ROUTES = {
         `/workspace/${workspaceId}/settings?tab=workspace`,
       PROFILE_SETTING: (workspaceId: BigintString) =>
         `/workspace/${workspaceId}/settings?tab=profile`,
-      INSTAGRAM_CALLBACK: (workspaceId: BigintString) =>
-        `/workspace/${workspaceId}/settings/instagram-callback`,
+      INSTAGRAM_CALLBACK: () =>
+        `/workspace/instagram-callback`,
       PASSWORD_CHANGE: (workspaceId: BigintString) => {
         return `/workspace/${workspaceId}/settings/change-password`;
       },

@@ -121,7 +121,7 @@ const MeetingPanel = ({ pageType, leftTab }: MeetingPanelProps) => {
               meetingStartTime={meetingStartTime}
               speeches={speeches}
             />
-            <div className="bottom-16pxr absolute inset-x-0 z-1 flex justify-center">
+            <div className="absolute inset-x-0 z-1 flex justify-center">
               {isMeetingPage ? (
                 <GnbBottomRecorderBar
                   connect={connect}

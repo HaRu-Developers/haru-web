@@ -121,18 +121,6 @@ const ProceedingEditor = ({
     [focus, setSectionsAndEmit],
   );
 
-  const insertSectionBelow = useCallback(
-    (secIdx: number) => {
-      setSectionsAndEmit((prev) => [
-        ...prev.slice(0, secIdx + 1),
-        { title: '', items: [''] },
-        ...prev.slice(secIdx + 1),
-      ]);
-      setTimeout(() => focus(keyOfTitle(secIdx + 1)), 0);
-    },
-    [focus, setSectionsAndEmit],
-  );
-
   const deleteSectionAndFocusPrevLastItem = useCallback(
     (secIdx: number) => {
       if (secIdx <= 0) return;
@@ -347,7 +335,7 @@ const ProceedingEditor = ({
     <div
       // 임시 높이 잡아둠
       className={clsx(
-        'p-20pxr rounded-10pxr scrollbar-component h-950pxr min-h-0 w-full overflow-y-auto bg-gray-600',
+        'p-20pxr rounded-10pxr scrollbar-component h-[calc(100dvh_-_var(--gnb-top-height)_-_var(--meeting-header-height)_-_var(--tab-height)_-_var(--tab-height))] min-h-0 w-full overflow-y-auto bg-gray-600',
         disabled ? 'disabled-style' : '',
       )}
       aria-disabled={disabled}

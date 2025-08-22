@@ -2,6 +2,8 @@
 
 import type { ProceedingSection } from '@features/ai-meeting-manager/types/proceeding.types';
 
+import ProceedingDocSkeleton from './ProceedingDocSkeleton.client';
+
 const ProceedingDoc = ({ sections }: { sections: ProceedingSection[] }) => {
   // { items: [''], title: "" } 인 상태
   const isBlank = (s: string) => !s;
@@ -12,7 +14,9 @@ const ProceedingDoc = ({ sections }: { sections: ProceedingSection[] }) => {
   };
 
   return (
-    <div className="md-proceeding scrollbar-component h-[calc(100dvh_-_var(--gnb-top-height)_-_var(--meeting-header-height)_-_var(--tab-height)_-_24pxr)] w-full overflow-y-auto">
+    <div className="md-proceeding scrollbar-component h-[calc(100dvh_-_var(--gnb-top-height)_-_var(--meeting-header-height)_-_var(--tab-height)_-_var(--tab-height))] w-full overflow-y-auto">
+      {/*  sections이 안 넘어왔을 때 스켈레톤*/}
+      {!sections && <ProceedingDocSkeleton />}
       {isNoSections(sections) ? (
         <p className="p-16pxr text-b2-rg text-gray-300">회의 진행 내용이 없습니다.</p>
       ) : (

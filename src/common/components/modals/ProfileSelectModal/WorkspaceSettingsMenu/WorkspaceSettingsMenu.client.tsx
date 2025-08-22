@@ -45,7 +45,7 @@ const WorkspaceSettingsMenu = ({ workspaceId }: WorkspaceSettingsMenuProps) => {
   const { setTitle: setWorkspaceTitle, setImageUrl, setMembers } = useWorkspaceActions();
   const { extra: instagram } = useInstagram(workspaceId);
   const { addToast } = useToastActions();
-  const { mutate: inviteMembers } = useInviteMembersMutation();
+  const { mutate: inviteMembers, isPending: isInvitingMembers } = useInviteMembersMutation();
 
   const handleAddWorkspace = () => {
     router.push(ROUTES.ONBOARDING);
@@ -209,6 +209,7 @@ const WorkspaceSettingsMenu = ({ workspaceId }: WorkspaceSettingsMenuProps) => {
           onInvite={handleInvite}
           onRemove={handleRemoveEmail}
           className="mt-12pxr w-534pxr"
+          isInviting={isInvitingMembers}
         />
 
         {/* 팀원 목록 */}

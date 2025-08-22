@@ -20,17 +20,17 @@ const SpeechPanel = ({ speeches, isMeetingPage, meetingStartTime }: SpeechPanelP
 
   useEffect(() => {
     if (isMeetingPage && lastItemRef.current) {
-      lastItemRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      lastItemRef.current.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
     }
   }, [isMeetingPage, speeches.length]);
 
   return (
     <div
       className={clsx(
-        'pl-20pxr pb-80pxr pr-14pxr scrollbar-component w-full overflow-y-auto',
+        'pl-20pxr pr-14pxr scrollbar-component w-full overflow-y-auto',
         isMeetingPage
-          ? 'pt-20pxr h-[calc(100dvh_-_var(--gnb-top-height)_-_var(--meeting-header-height))]'
-          : 'pt-10pxr h-[calc(100dvh_-_var(--gnb-top-height)_-_var(--meeting-header-height)_-_var(--tab-height))]',
+          ? 'pt-20pxr h-[calc(100dvh_-_var(--gnb-top-height)_-_var(--meeting-header-height)_-_var(--meeting-speech-panel-pb-height))] pb-[var(--meeting-speech-panel-pb-height)]'
+          : 'pt-10pxr pb-80pxr h-[calc(100dvh_-_var(--gnb-top-height)_-_var(--meeting-header-height)_-_var(--tab-height))]',
       )}
     >
       {noSpeeches ? (

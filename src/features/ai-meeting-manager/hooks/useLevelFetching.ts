@@ -41,14 +41,12 @@ const useMicLevelFetching = (micCtlRef: React.MutableRefObject<MicController | n
     const setOn = () => {
       if (!currentRef.current) {
         currentRef.current = true;
-        console.debug('[level] => ON (setIsFetching(true))');
         setIsFetching(true);
       }
     };
     const setOff = () => {
       if (currentRef.current) {
         currentRef.current = false;
-        console.debug('[level] => OFF (setIsFetching(false))');
         setIsFetching(false);
       }
     };

@@ -6,6 +6,7 @@
 
   /* ai-meeting-manager */
   --meeting-header-height: var(--spacing-104pxr);
+  --meeting-speech-panel-pb-height: var(--spacing-100pxr);
 }
 
 @layer utilities {

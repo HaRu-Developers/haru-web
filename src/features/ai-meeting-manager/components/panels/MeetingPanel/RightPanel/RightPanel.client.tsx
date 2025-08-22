@@ -40,7 +40,7 @@ const RightPanel = ({
         <CategoryOption label={label} active />
       </div>
       {/* 목록 부분 */}
-      <div className="scrollbar-component h-[calc(100dvh-var(--tab-height))] overflow-y-auto">
+      <div className="scrollbar-component flex h-[calc(100dvh-var(--tab-height))] flex-col items-center overflow-y-auto">
         {/* 설명 부분 */}
         <div className="gap-6pxr mt-36pxr mb-32pxr flex flex-col items-center">
           <div className="gap-3pxr flex items-center">

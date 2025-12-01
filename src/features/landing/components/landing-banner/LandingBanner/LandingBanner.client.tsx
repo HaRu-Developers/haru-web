@@ -27,7 +27,7 @@ const LandingBanner = ({ className }: LandingBannerProps) => {
         {/* 기능 버튼 */}
         <div className="mt-60pxr mb-61pxr gap-x-8pxr flex">
           <FeatureButton
-            name="AI Metetings"
+            name="AI Meetings"
             iconType={FeatureButtonType.MEETING}
             disabled={state === FeatureButtonType.MEETING}
             onButtonClick={setState}
